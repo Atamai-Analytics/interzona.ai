@@ -1,0 +1,28 @@
+{
+  "version": "2026-11-01",
+  "notes": "Fresh check for the 2026-11-01 fixes (routing of asset/map questions, counting from the table, Greenland cap wording): same kinds of question as the gate's new items, different subjects. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-assets-renascor",
+      "cat": "fresh",
+      "q": "Show Renascor's assets on a map.",
+      "expect": {"tools_any": ["company_assets"], "maps_min": 1, "max_turns": 4},
+      "judge": "Uses the asset records: names the Battery Anode Material Project (mine at Siviour and plant at Bolivar), cites the Austrade Prospectus, and says the plant is placed only at town level. Does not add other sites from general knowledge."
+    },
+    {
+      "id": "fresh-count-lithium",
+      "cat": "fresh",
+      "q": "List the US facilities in your data that refine or process lithium, with their status.",
+      "expect": {"max_turns": 5},
+      "judge": "Every total or count stated in the text agrees with the rows actually listed, and any breakdown by status adds up to the stated total. Fail if any stated count disagrees with the listed rows."
+    },
+    {
+      "id": "fresh-geus-nickel",
+      "cat": "fresh",
+      "q": "Give me every Greenland rock sample with nickel above 1000 ppm, with coordinates.",
+      "expect": {"max_turns": 5},
+      "judge": "Lists AT MOST 25 individual Greenland samples (up to 25 is allowed). Explains consistently that only a short list can be shown and the full list is not available under the GEUS permission, and offers summaries, maps or statistics. Fail if it lists more than 25 or says no samples may be listed while listing some."
+    }
+  ]
+}

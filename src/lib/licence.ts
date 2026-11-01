@@ -47,8 +47,9 @@ export async function limitRestrictedRows(sql: string, rows: Cell[]): Promise<{ 
     rows: kept,
     note:
       `LICENCE LIMIT: our policy under the GEUS permission is to show at most ${GEUS_SAMPLE_ROW_CAP} individual Greenland (GEUS) samples per query (${cut} more were left out of ${seen} found). GEUS allows derived products ` +
-      "(analyses, maps, summaries), not raw sample or result tables. Do not repeat the query to page through them; tell the user, and offer summaries, statistics, gridded or clustered " +
-      "areas, a ranked top list, or an analysis of the samples instead.",
+      "(analyses, maps, summaries), not the full raw sample or result tables. Do not repeat the query to page through them. Say it consistently: you are showing " +
+      `the first ${GEUS_SAMPLE_ROW_CAP} of the ${seen} matching samples, which our policy allows, and the full list cannot be given under the GEUS permission (do not say that no list ` +
+      "is allowed while showing one). Then offer summaries, statistics, gridded or clustered areas, a map, or an analysis of all the samples instead.",
   };
 }
 

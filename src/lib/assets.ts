@@ -130,6 +130,8 @@ export async function companyAssets(input: Record<string, unknown>): Promise<Too
       record_source: r.source_title ? `${r.source_title}${r.source_page ? `, p. ${r.source_page}` : ""}` : RECORD_CREDITS[recordKind(r)],
       all_recorded_owners: owners.get(r.project_id) ?? [], has_position: placed,
       position_precision: onCatalogue ? "catalogue entry" : onProject ? String(r.location_precision ?? "").toLowerCase() || null : null,
+      // The place the point stands for (mine, deposit or town), so the answer can name it: from the catalogue entry, or the feature named in location_source.
+      position_place: onCatalogue ? r.occ_name : onProject ? ([...String(r.location_source ?? "").matchAll(/:\s([^:(;]+?)\s\(/g)].pop()?.[1] ?? null) : null,
     };
   });
 

@@ -1,0 +1,107 @@
+"use client";
+
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import type { Conversation, Evidence } from "@/lib/types";
+import { chartSvgString } from "@/lib/chart";
+
+// A light-themed, print-only rendering of one conversation. It is mounted only while exporting; "Save as PDF" in the print dialog
+// produces the PDF. Visible on paper only (hidden on screen).
+
+function Sources({ evidence }: { evidence: Evidence[] }) {
+  const docs = new Map<string, number[]>();
+  const web: Extract<Evidence, { kind: "web" }>[] = [];
+  const data: string[] = [];
+  for (const e of evidence) {
+    if (e.kind === "document") {
+      const p = docs.get(e.title) ?? [];
+      if (e.page !== undefined && !p.includes(e.page)) p.push(e.page);
+      docs.set(e.title, p);
+    } else if (e.kind === "web") web.push(e);
+    else data.push(e.detail ? `${e.label} (${e.detail})` : e.label);
+  }
+  if (!docs.size && !web.length && !data.length) return null;
+  return (
+    <div className="mt-2 text-[11px] text-gray-600">
+      <div className="font-semibold uppercase tracking-wide">Sources</div>
+      <ul className="list-disc pl-4">
+        {[...new Set(data)].map((d) => (
+          <li key={d}>Data: {d}</li>
+        ))}
+        {[...docs.entries()].map(([t, p]) => (
+          <li key={t}>
+            {t}
+            {p.length ? `, p. ${p.sort((a, b) => a - b).join(", ")}` : ""}
+          </li>
+        ))}
+        {web.map((w) => (
+          <li key={w.url}>
+            Web: {w.title} ({w.url})
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export function PrintView({ conv }: { conv: Conversation }) {
+  const when = new Date(conv.updatedAt).toLocaleString("en-GB", { dateStyle: "long", timeStyle: "short" });
+  return (
+    <div className="bg-white p-6 text-sm leading-relaxed text-black [&_table]:my-2 [&_table]:border-collapse [&_td]:border [&_td]:border-gray-400 [&_td]:px-2 [&_td]:py-1 [&_th]:border [&_th]:border-gray-400 [&_th]:bg-gray-100 [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-2 [&_h1]:mb-1 [&_h1]:text-xl [&_h1]:font-semibold [&_h2]:mt-3 [&_h2]:font-semibold [&_h3]:mt-2 [&_h3]:font-semibold">
+      <h1>{conv.title}</h1>
+      <p className="text-xs text-gray-500">Critical Minerals AI Assistant · {when}</p>
+      {conv.messages.map((m, i) =>
+        m.role === "user" ? (
+          <div key={i} className="mt-4 break-inside-avoid rounded border border-gray-300 bg-gray-50 px-3 py-2">
+            <div className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">Question</div>
+            <div className="whitespace-pre-wrap">{m.content}</div>
+          </div>
+        ) : (
+          <div key={i} className="mt-3">
+            <div className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">Answer</div>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content}</ReactMarkdown>
+            {m.datasets?.map((d) => (d.chart ? <div key={d.id} dangerouslySetInnerHTML={{ __html: chartSvgString(d.chart, d.title) }} /> : null))}
+            {m.maps?.map((mp) => (
+              <div key={mp.id} className="my-2 break-inside-avoid">
+                <div className="text-[11px] text-gray-600">Map shown in the app: {mp.title} ({mp.points.length} places{mp.points.length > 15 ? ", first 15 listed" : ""})</div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Place</th>
+                      <th>Group</th>
+                      <th>Latitude</th>
+                      <th>Longitude</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {mp.points.slice(0, 15).map((p, k) => (
+                      <tr key={k}>
+                        <td>{p.label}</td>
+                        <td>{p.group}</td>
+                        <td>{p.lat.toFixed(3)}</td>
+                        <td>{p.lon.toFixed(3)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ))}
+            {m.images?.map((img, j) => (
+              <div key={j} className="my-2 break-inside-avoid">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`data:${img.mimeType};base64,${img.base64}`} alt={img.caption} className="max-w-full border border-gray-300" />
+                <div className="text-[11px] text-gray-500">{img.caption}</div>
+              </div>
+            ))}
+            {m.notice && <p className="text-xs italic text-gray-600">{m.notice}</p>}
+            {m.stopped && <p className="text-xs italic text-gray-600">Stopped before finishing.</p>}
+            <Sources evidence={m.evidence ?? []} />
+          </div>
+        )
+      )}
+      <p className="mt-6 border-t border-gray-300 pt-2 text-[11px] text-gray-500">
+        Generated by an AI assistant from the underlying datasets and documents; check important figures against the sources listed.
+      </p>
+    </div>
+  );
+}

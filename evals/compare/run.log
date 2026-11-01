@@ -1,0 +1,129 @@
+09:09:34 questions: 14
+09:09:34 ours: Greenland rare earths: from anomalies to owners
+09:09:37 plain: Greenland rare earths: from anomalies to owners
+09:10:01 web: Greenland rare earths: from anomalies to owners
+09:10:23 judge: plain Greenland rare earths: from anomalies to owners
+09:10:44 judge: web Greenland rare earths: from anomalies to owners
+09:11:01 ours: Where does Rio Tinto operate?
+09:11:04 plain: Where does Rio Tinto operate?
+09:11:36 web: Where does Rio Tinto operate?
+09:12:04 judge: plain Where does Rio Tinto operate?
+09:12:17 judge: web Where does Rio Tinto operate?
+09:12:32 ours: Producing lithium sites in Argentina
+09:12:33 plain: Producing lithium sites in Argentina
+09:12:57 web: Producing lithium sites in Argentina
+09:13:32 judge: plain Producing lithium sites in Argentina
+09:13:46 judge: web Producing lithium sites in Argentina
+09:14:00 ours: Who is most exposed to the uranium price?
+09:14:03 plain: Who is most exposed to the uranium price?
+09:14:33 web: Who is most exposed to the uranium price?
+09:15:08 judge: plain Who is most exposed to the uranium price?
+09:15:23 judge: web Who is most exposed to the uranium price?
+09:15:41 ours: The lithium price cycle: who was resilient?
+09:15:42 plain: The lithium price cycle: who was resilient?
+09:16:07 web: The lithium price cycle: who was resilient?
+09:16:40 judge: plain The lithium price cycle: who was resilient?
+09:16:54 judge: web The lithium price cycle: who was resilient?
+09:17:11 ours: The rare earth value chain
+09:17:13 plain: The rare earth value chain
+09:17:41 web: The rare earth value chain
+09:18:07 judge: plain The rare earth value chain
+09:18:17 judge: web The rare earth value chain
+09:18:32 ours: Diversified miners against their commodities
+09:18:35 plain: Diversified miners against their commodities
+09:19:10 web: Diversified miners against their commodities
+09:19:48 judge: plain Diversified miners against their commodities
+09:20:06 judge: web Diversified miners against their commodities
+09:20:24 ours: The best new leads, across every survey
+09:20:27 plain: The best new leads, across every survey
+09:20:36 web: The best new leads, across every survey
+09:20:44 judge: plain The best new leads, across every survey
+09:21:02 judge: web The best new leads, across every survey
+09:21:14 ours: What kind of deposit is it?
+09:21:16 plain: What kind of deposit is it?
+09:21:28 web: What kind of deposit is it?
+09:21:38 judge: plain What kind of deposit is it?
+09:21:49 judge: web What kind of deposit is it?
+09:22:01 judge: plain Who controls the supply?
+09:22:11 judge: web Who controls the supply?
+09:22:23 ours: What should we assay next?
+09:22:24 plain: What should we assay next?
+09:22:46 web: What should we assay next?
+09:23:07 judge: plain What should we assay next?
+09:23:18 judge: web What should we assay next?
+09:23:30 ours: From rock chemistry to recovery
+09:23:33 plain: From rock chemistry to recovery
+09:23:49 web: From rock chemistry to recovery
+09:24:06 judge: plain From rock chemistry to recovery
+09:24:18 judge: web From rock chemistry to recovery
+09:24:30 ours: An investor memo to send on
+09:24:32 plain: An investor memo to send on
+09:25:10 web: An investor memo to send on
+09:26:07 judge: plain An investor memo to send on
+09:26:22 judge: web An investor memo to send on
+09:26:39 ours: A company snapshot to send on
+09:26:40 plain: A company snapshot to send on
+09:27:01 web: A company snapshot to send on
+09:27:18 judge: plain A company snapshot to send on
+09:27:36 judge: web A company snapshot to send on
+# Assistant vs general model: demo questions (2026-10-27)
+
+Baseline answers: `claude-sonnet-5-5` with no tools (PLAIN) and with web search (WEB). Judge: `claude-opus-5-5`, blind, random order. One run per question (14 questions).
+
+## Ours vs PLAIN: general model, no tools or data
+
+Preferred: ours 14, tie 0, baseline 0 (of 14).
+
+| Score (1-5, mean) | Ours | Baseline |
+|---|---|---|
+| specificity | 4.86 | 2.71 |
+| traceability | 4.29 | 1.21 |
+| accuracy | 4.36 | 3.0 |
+| honesty about limits | 4.93 | 3.86 |
+| usefulness | 4.64 | 2.29 |
+
+| Claims listed | Supported | Contradicted | Specific, not checkable | General |
+|---|---|---|---|---|
+| Ours | 63 | 0 | 50 | 2 |
+| Baseline | 13 | 11 | 40 | 23 |
+
+Could not do what was asked: ours 0, baseline 9.
+
+## Ours vs WEB: general model with web search
+
+Preferred: ours 13, tie 0, baseline 1 (of 14).
+
+| Score (1-5, mean) | Ours | Baseline |
+|---|---|---|
+| specificity | 4.79 | 3.57 |
+| traceability | 4.29 | 2.0 |
+| accuracy | 4.5 | 3.07 |
+| honesty about limits | 4.93 | 3.71 |
+| usefulness | 4.5 | 2.93 |
+
+| Claims listed | Supported | Contradicted | Specific, not checkable | General |
+|---|---|---|---|---|
+| Ours | 69 | 0 | 36 | 3 |
+| Baseline | 18 | 7 | 64 | 14 |
+
+Could not do what was asked: ours 0, baseline 8.
+
+## Per question
+
+| Question | vs PLAIN | vs WEB |
+|---|---|---|
+| Greenland rare earths: from anomalies to owners | ours | ours |
+| Where does Rio Tinto operate? | ours | ours |
+| Producing lithium sites in Argentina | ours | ours |
+| Who is most exposed to the uranium price? | ours | ours |
+| The lithium price cycle: who was resilient? | ours | ours |
+| The rare earth value chain | ours | ours |
+| Diversified miners against their commodities | ours | ours |
+| The best new leads, across every survey | ours | ours |
+| What kind of deposit is it? | ours | ours |
+| Who controls the supply? | ours | ours |
+| What should we assay next? | ours | ours |
+| From rock chemistry to recovery | ours | ours |
+| An investor memo to send on | ours | web |
+| A company snapshot to send on | ours | ours |
+09:27:52 saved C:\Users\dean\critical-minerals-ai\evals\compare\comparison_2026-10-27.md

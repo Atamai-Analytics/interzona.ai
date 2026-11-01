@@ -1,0 +1,3 @@
+# clr_correlation_analysis.py only needs psycopg2 on top of the sandbox's own numpy/pandas (no pyrolite, no matplotlib).
+# Kept separate from requirements.txt so this script does not pay for installing pyrolite/geopandas/fractopo on every call.
+psycopg2-binary==2.9.13

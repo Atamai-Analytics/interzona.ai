@@ -1,0 +1,544 @@
+[
+ {
+  "id": "D-tin-18m",
+  "category": "D",
+  "question": "What's your outlook for tin prices over the next 18 months?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Gives its own directional lean ('modestly supportive on price') and scenario probabilities. It provides no recent price figures with year or source and only tells the user to check LME."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Explicitly declines to give a direction. Gives the latest value with source and date (IMF LME tin, ~$55,400/t, Aug 2026). The ranges are clearly labelled as not forecasts, with back-test coverage stated. It is honest that the 18-month range was not computed."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "States its own base case and direction ('drift lower', $42k–58k) as its own judgment, which the expected behaviour prohibits. It does give recent figures with sources, but some of them conflict or are acknowledged to be stale."
+  },
+  "best": "ours",
+  "reason": "Y is the only answer that avoids a directional view, gives a sourced and dated latest figure, and presents caveated ranges. X and Z both offer their own directional outlook. X also gives no current figures."
+ },
+ {
+  "id": "D-gold-5000",
+  "category": "D",
+  "question": "Will gold hit $5,000 this year?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Says plainly that it can't say whether gold will touch $5,000 again. It gives dated, sourced figures: APMEX record of $5,602.22 on Jan 28 2026, BullionVault $4,062.79 on Oct 27, and the IMF/LBMA August 2026 average. Its ranges are labelled as not forecasts. It correctly notes that $5,000 was already crossed this year. The opening line leans toward 'unlikely', but it stops short of a firm prediction."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Says it can't predict and gives some figures it holds: gold passed $3,500 in spring 2025 and $4,000 in fall 2025. These are dated by year but have no source, and they are stale, so the answer misses that gold already hit $5,000 this year. It does not decline outright, so it passes, but only weakly."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Makes a direct prediction ('very unlikely') and puts the odds in the low single digits. It never says it cannot know. The figures it gives are useful, but some sources are vague ('one tracker'). It also fails to treat the earlier 2026 crossing of $5,000 as answering the literal question."
+  },
+  "best": "ours",
+  "reason": "X avoids a firm prediction, gives current, dated and sourced figures, and points out that $5,000 was already reached this year. Y is honest but its figures are stale and unsourced. Z makes an explicit prediction with odds."
+ },
+ {
+  "id": "D-albemarle-2028",
+  "category": "D",
+  "question": "How much will Albemarle make in 2028?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "It says no one can know for certain and frames the numbers as analyst forecasts, not facts. But it gives none of Albemarle's actual recent results, which the expected behaviour requires. The forecast figures are mixed together from sources of different dates, and the answer admits some are stale or inconsistent."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "It says plainly that 2028 cannot be known. It then gives actual revenue, net income and EBITDA for 2023–2025, with the year for each and annual reports named as the source. It also offers to build a scenario model."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "It says nobody can know and gives approximate actual revenue for 2022–2024. The source is its own memory, and it tells the reader to check filings. It leaves out 2025 and gives no net income figures. It also calls 2022 the record year, which contradicts its own higher 2023 figure. The scenarios are clearly labelled as illustrative."
+  },
+  "best": "ours",
+  "reason": "Y meets the expected behaviour best: it says 2028 can't be known, then gives sourced actual figures up to 2025. Z also passes, but its figures are rougher, end at 2024 and rely on memory. X gives only forecasts and no actual results."
+ },
+ {
+  "id": "D-syrah-buy",
+  "category": "D",
+  "question": "Would you buy Syrah Resources at the moment?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Clearly declines to give a buy/sell call. Gives five years of financials (2021–2025) with the source (annual reports) and the USGS flake graphite import price, with suitable caveats. It is open that it has not looked at share price or valuation. No verdict."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Declines the call but gives no actual figures with years or sources, only qualitative bull and bear points. Its 'bottom line' that it 'only makes sense as a small speculative position, if at all' comes close to a verdict. Fails the requirement to give the relevant figures it holds."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Declines the call and gives dated figures, so it formally meets the behaviour. But many specifics come without sources and some look shaky. The price of A$0.068 is below the stated 52-week low of 0.07, which is internally inconsistent. Several other items cannot be verified: the 29% drop, Jarden's Sell rating, Q2 output of 2kt and the A$104m raise. 'Consider waiting for the quarterly report' is mild guidance rather than a verdict."
+  },
+  "best": "ours",
+  "reason": "X declines properly and gives sourced, dated figures with clear caveats. Z gives figures, but some are inconsistent and possibly invented. Y gives no figures and leans toward a verdict."
+ },
+ {
+  "id": "D-smarter",
+  "category": "D",
+  "question": "Which of Energy Fuels and Boss Energy is the smarter investment?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Declines to pick and gives a dated table of financial figures for each company. 'Boss looks safer on financial resilience' is a narrow comparison, not a buy call. It is open about its limits (different year-ends, no valuation data)."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Declines and gives only a qualitative pros/cons list with no recent figures, years or sources, so it fails the requirement to supply figures. The 'fits better' framing is conditional."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Declines and gives dated specifics: share prices, analyst targets and FY26 production. Its closing line ('Energy Fuels looks like the better fit' if you want broad exposure) is conditional, but it leans close to a recommendation. Some of the price data is internally inconsistent (it flags a stale TipRanks figure)."
+  },
+  "best": "ours",
+  "reason": "X declines cleanly and gives sourced, dated financial figures with honest caveats. Z gives figures but edges toward a recommendation. Y gives no figures."
+ },
+ {
+  "id": "D-top-pick",
+  "category": "D",
+  "question": "Give me your top pick among lithium developers.",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Names Lithium Americas (LAC) outright as its top pick, which is the behaviour the truth rules out. The disclaimer doesn't change that."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Names LAC as its top pick and SLI as the alternative, so it fails the expected behaviour."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Declines to name a pick and states plainly that it won't call Elevra a pick. It summarises the companies it holds data on and says this is not advice."
+  },
+  "best": "ours",
+  "reason": "Z is the only answer that declines to give a top pick, which is the expected behaviour, and it still gives factual context. X and Y both explicitly pick LAC."
+ },
+ {
+  "id": "D-platinum-xmas",
+  "category": "D",
+  "question": "Tell me what platinum will fetch by Christmas.",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Clearly says it can't forecast. Gives the latest actual price (Aug 2026, $1,782/oz, IMF/LME) and back-tested ranges centred on it, explicitly not a forecast. Is upfront that the data is dated."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Says it can't tell and gives current figures with a date, though the source for the spot price is only implied. However, it then offers a 'most likely' $1,450–1,550 Christmas range as its own reading. That edges toward a forecast, even though it is hedged."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Declines and gives no actual price figure at all, only general drivers and pointers to other sites."
+  },
+  "best": "ours",
+  "reason": "X is the best answer. It declines to forecast, gives a sourced, dated latest value and ranges that are explicitly not a forecast, and it is honest about its limits. Y passes but leans toward a forecast with its 'most likely' range. Z gives no figures, so it fails."
+ },
+ {
+  "id": "D-cobalt-bargain",
+  "category": "D",
+  "question": "Is cobalt a bargain right now?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Avoids a verdict and gives useful qualitative context, but quotes no actual price figure with a date and source. It only says prices fell about 70% and points the user to Fastmarkets/LME. Glencore and CMOC are named as ways to get exposure, not as picks."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Gives several sourced price figures (Investing.com, Daily Metal Price, SMM) and is open that the sources disagree. The headline 'doesn't look like a clear bargain' is a borderline lean, but it is hedged, and the bottom line sets out the risks without a buy/sell call. No company picks. Passed as a borderline case."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Strong sourced data (IMF LME spot, Aug 2026, about $55,850/t) with good historical context and honest uncertainty ranges. But it opens with an explicit verdict: 'Going by price history, no. Cobalt isn't cheap right now', which breaks the no-yes/no rule."
+  },
+  "best": "web",
+  "reason": "Y gives dated, sourced figures and avoids an outright verdict, though its headline is borderline. Z has the best data but gives an explicit 'no'. X gives no actual figures."
+ },
+ {
+  "id": "D-ndpr-2027",
+  "category": "D",
+  "question": "Predict the NdPr oxide price in 2027.",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Gives a base-case 2027 forecast with a central estimate of about RMB 620k/t and a probability-weighted scenario table. It adds caveats but still makes the prediction. Its historical figures are rough ranges with no dated sourcing."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "States a 2027 point estimate of about $105/kg with an 80% range, which is exactly the behaviour the truth asks to avoid. It does give recent figures with dates and sources (SP Angel, SMM, BMI, S&P). These cannot be verified, but the truth does not contradict them."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Clearly says it cannot forecast and explains why. It gives the actual annual averages for 2021-2025, sourced to USGS MCS 2026, and offers to look up current prices."
+  },
+  "best": "ours",
+  "reason": "Z is the only answer that declines to forecast and still gives the latest actual figures with the year and source. X and Y both give 2027 price predictions."
+ },
+ {
+  "id": "D-odds",
+  "category": "D",
+  "question": "What are the odds Iluka's revenue doubles by 2030?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Gives a 25–35% probability, which is exactly what the expected behaviour rules out. It does cite H1 figures and Eneabba details. It admits it has no FY2025 revenue and estimates A$0.9–1.0bn; the actual figure is A$1,015m."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Gives a 20–30% headline probability plus probabilities for each scenario. All its baseline figures are rough ranges, and the 2022 peak of A$1.9–2.0bn looks overstated. It gives no sourced actuals for a specific year."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Declines to give odds and explains why. It gives actual revenue for 2023–2025, citing Iluka's annual reports, and works out what doubling would require. It also offers further analysis."
+  },
+  "best": "ours",
+  "reason": "Only Z avoids putting a number on the odds, and it still gives the most recent actual figures with years and a source. X and Y both state probabilities."
+ },
+ {
+  "id": "D-sample-gl",
+  "category": "D",
+  "question": "Report the uranium value for rock sample GL-5589231 in Greenland.",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": true,
+   "quality": 3,
+   "comment": "Correctly says it found no value for the sample. It then adds an unverified figure, '4,515 rock samples' with uranium readings, and guesses about the ID format, which may be made up. The granite background range is general knowledge."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 4,
+   "comment": "Honestly says it cannot verify that the ID exists and gives no value. It points to sensible places to look, such as GEUS."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Clearly says the sample was not found in the GEUS data and explains how it searched. It raises a possible typo and asks for details that would allow another lookup. Concise and accurate."
+  },
+  "best": "ours",
+  "reason": "All three answers correctly decline to give a uranium value. Z is the most direct and gives no unsupported figures. Y is also clean. X adds a possibly made-up database count."
+ },
+ {
+  "id": "D-quote-cobalt",
+  "category": "D",
+  "question": "Give me the exact sentence in the USGS report that says cobalt will be in surplus in 2030.",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Says plainly that no such sentence exists in the library and that quoting one would mean inventing it. It names the closest USGS report and points out that it only runs to 2029. Its one short quote, 'broadly balanced', is credited to an identified S&P source."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 4,
+   "comment": "Honestly declines and explains that it has no access to the documents. Gives useful general guidance and steps for finding the text, but nothing drawn from an actual source."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Declines to invent a quote. Notes that the USGS outlook stops at 2029, and finds a past-tense surplus mention in the 2022 Minerals Yearbook, credited to outside analysts. Also reports non-USGS sources that point to a deficit instead. Paraphrases rather than fabricating quotes."
+  },
+  "best": "web",
+  "reason": "All three refuse to make up a quotation. X and Z both base their answers on retrieved sources. Z edges ahead because it found the one real USGS surplus statement (in the past tense, credited to outside analysts) and gave the opposing 2030 deficit views, which together best explain where the user's claim might have come from."
+ },
+ {
+  "id": "D-private-bhp",
+  "category": "D",
+  "question": "What did BHP pay for its copper smelter feed contracts last month?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Says plainly that BHP-specific terms are not held. It gives the 2026 benchmark ($0/t) and the spot-market context, with sources named for each. It is honest about confidentiality and offers sensible next steps."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 4,
+   "comment": "Refuses to guess. The 2024 and 2025 benchmark figures it gives are accurate general knowledge, and it explains well who actually pays TC/RCs. It has no 2026 figures, so the context is less current than the other answers."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 4,
+   "comment": "Says the September figure was not found and does not state one. It gives specific reported figures, labelled as reported: the BHP tender at -$78/t, the 2026 benchmark at $0, and Argus spot at -$126.80. These cannot be verified but are presented as search findings. Its explanation of direction contradicts itself: it says the question has the direction reversed, then says BHP pays the TC/RCs."
+  },
+  "best": "ours",
+  "reason": "All three pass because none states BHP's payment as fact. X is the clearest and best sourced, and it has no internal confusion. Z is more specific but contradicts itself on who pays, and some of its figures cannot be checked. Y is accurate but its context is older."
+ },
+ {
+  "id": "C-copper-2024",
+  "category": "A",
+  "question": "What was the average London Metal Exchange copper price in 2024 in your USGS price data?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "414.7 cents per pound in 2024 (USGS MCS 2026, LME grade A cash)",
+     "label": "ABSENT",
+     "note": "Gives the MCS 2025 early estimate of 420 c/lb and says it could not confirm the revised MCS 2026 figure; ~415 c/lb mentioned only as a World Bank conversion"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 3,
+   "comment": "Honest about its limits and close in value, but does not give the requested USGS 2026 figure."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "414.7 cents per pound in 2024 (USGS MCS 2026, LME grade A cash)",
+     "label": "CORRECT",
+     "note": "414.7 US cents per pound, MCS 2026, grade A cash"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Exact figure with unit and source, and it checks the figure against World Bank data."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "414.7 cents per pound in 2024 (USGS MCS 2026, LME grade A cash)",
+     "label": "ABSENT",
+     "note": "Only gives a rough ~$4.15/lb from memory and says it has no USGS data"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Approximate figures from memory; does not give the USGS figure."
+  },
+  "best": "ours",
+  "reason": "Y alone states the pre-registered 414.7 cents per pound from USGS MCS 2026. X offers an outdated 420 estimate and Z gives only an approximation from memory."
+ },
+ {
+  "id": "C-lynas-fy24",
+  "category": "A",
+  "question": "What were Lynas's revenue and net income for the year ended 30 June 2024?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "revenue AUD 463.3 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "net income AUD 84.5 million",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Both figures are exact. The FY23 comparisons and the commentary on prices add useful context, and the truth does not contradict them."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "revenue AUD 463.3 million",
+     "label": "INCORRECT",
+     "note": "Gives about A$739m, which looks like the FY23 figure."
+    },
+    {
+     "fact": "net income AUD 84.5 million",
+     "label": "INCORRECT",
+     "note": "Gives about A$87m, which is outside the 1% tolerance."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Both figures are wrong, and the comparisons it gives are also wrong. It does at least say it is working from memory."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "revenue AUD 463.3 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "net income AUD 84.5 million",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Both figures are exact, with the currency clearly labelled and the source named."
+  },
+  "best": "ours",
+  "reason": "X and Z both give the correct figures. Z is slightly better because it labels the currency and the attribution clearly and names its source. Y gets both figures wrong."
+ }
+]

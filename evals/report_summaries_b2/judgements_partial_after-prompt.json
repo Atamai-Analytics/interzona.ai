@@ -1,0 +1,417 @@
+[
+ {
+  "id": "B-touro-pfs",
+  "category": "B",
+  "question": "What reserves and economics did Atalaya report for its Touro copper project in Galicia?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of about 90.9 Mt at 0.43% Cu (about 392 kt contained copper)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "After-tax NPV8 of about US$180 million and IRR 20.5% at US$3.00/lb copper",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Initial development capital of about US$165 million and a mine life of about 12 years",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "From the 2018 NI 43-101 pre-feasibility technical report",
+     "label": "ABSENT",
+     "note": "Mentions NI 43-101 only generically"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest decline with accurate context, but it gives none of the requested figures."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of about 90.9 Mt at 0.43% Cu (about 392 kt contained copper)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV8 of about US$180 million and IRR 20.5% at US$3.00/lb copper",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial development capital of about US$165 million and a mine life of about 12 years",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "From the 2018 NI 43-101 pre-feasibility technical report",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts are correct, with detailed tables and caveats about the report's age."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of about 90.9 Mt at 0.43% Cu (about 392 kt contained copper)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV8 of about US$180 million and IRR 20.5% at US$3.00/lb copper",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial development capital of about US$165 million and a mine life of about 12 years",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "From the 2018 NI 43-101 pre-feasibility technical report",
+     "label": "CORRECT",
+     "note": "Gives April 2018 PFS and the technical report by ORE; it does not name NI 43-101 explicitly, but the identification is clear"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts are correct and it adds a useful status update; the J.P. Morgan figure is unverified but clearly attributed."
+  },
+  "best": "ours",
+  "reason": "Y and Z both get all four facts right. I picked Y by a narrow margin because it cites the NI 43-101 PFS precisely, presents the figures clearly, and makes fewer unverifiable claims than Z, such as Z's figure from a J.P. Morgan note. X declines to give any figures."
+ },
+ {
+  "id": "B-lascruces-pmr",
+  "category": "B",
+  "question": "What is the Cobre Las Cruces polymetallic primary sulphide (PMR) project in Spain expected to cost, and what does it return?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Initial capital of about US$846 million (including 14% contingency)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Pre-tax NPV8 of about US$519 million and pre-tax IRR of 17.4%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Combined Proven + Probable reserve about 41.6 Mt at 1.14% Cu (36.6 Mt underground plus 5.0 Mt stockpile)",
+     "label": "CORRECT",
+     "note": "41.6 Mt at 1.14% Cu including the 5 Mt stockpile; the 36.6 Mt underground figure is implied"
+    },
+    {
+     "fact": "First Quantum NI 43-101 report effective 30 September 2023",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts are correct. The capital breakdown adds up to $846M and the detail looks consistent with the report."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Initial capital of about US$846 million (including 14% contingency)",
+     "label": "INCORRECT",
+     "note": "Gives roughly €600-700M"
+    },
+    {
+     "fact": "Pre-tax NPV8 of about US$519 million and pre-tax IRR of 17.4%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Combined Proven + Probable reserve about 41.6 Mt at 1.14% Cu (36.6 Mt underground plus 5.0 Mt stockpile)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "First Quantum NI 43-101 report effective 30 September 2023",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest that it doesn't know, but the capital estimate it hedges with is wrong."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Initial capital of about US$846 million (including 14% contingency)",
+     "label": "INCORRECT",
+     "note": "Gives $600M from a presentation and €500M from an earlier dossier"
+    },
+    {
+     "fact": "Pre-tax NPV8 of about US$519 million and pre-tax IRR of 17.4%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Combined Proven + Probable reserve about 41.6 Mt at 1.14% Cu (36.6 Mt underground plus 5.0 Mt stockpile)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "First Quantum NI 43-101 report effective 30 September 2023",
+     "label": "ABSENT",
+     "note": "Mentions the February 2024 report but not the effective date"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Correctly points to the technical report but couldn't get the returns, and the capex figure it gives is out of date."
+  },
+  "best": "ours",
+  "reason": "X gets every pre-registered fact right. Y and Z both give a capital cost that contradicts the truth, and neither gives the returns."
+ },
+ {
+  "id": "B-hautalampi-reserve",
+  "category": "B",
+  "question": "What ore reserve and economics does the Hautalampi nickel-cobalt-copper project in Finland have?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "Ore Reserve 4.56 Mt at 0.30% Ni, 0.24% Cu and 0.08% Co (Proven 1.87 Mt, Probable 2.69 Mt)",
+     "label": "CORRECT",
+     "note": "Total and grades are correct, but the Proven/Probable split is missing."
+    },
+    {
+     "fact": "Capital cost about EUR 74.8 million including 15% contingency",
+     "label": "ABSENT",
+     "note": "Gives only €65.07m excluding contingency."
+    },
+    {
+     "fact": "NPV at 5% about EUR 58.8 million and IRR 20%",
+     "label": "ABSENT",
+     "note": "Says no NPV or IRR was found and quotes 2017 figures instead."
+    },
+    {
+     "fact": "From AFRY's March 2023 JORC pre-feasibility study for FinnCobalt",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "The reserve figures are accurate. The answer is honest that it could not find the NPV or IRR, but it misses the key economics."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Ore Reserve 4.56 Mt at 0.30% Ni, 0.24% Cu and 0.08% Co (Proven 1.87 Mt, Probable 2.69 Mt)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Capital cost about EUR 74.8 million including 15% contingency",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "NPV at 5% about EUR 58.8 million and IRR 20%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "From AFRY's March 2023 JORC pre-feasibility study for FinnCobalt",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "States every fact correctly and adds useful detail."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Ore Reserve 4.56 Mt at 0.30% Ni, 0.24% Cu and 0.08% Co (Proven 1.87 Mt, Probable 2.69 Mt)",
+     "label": "ABSENT",
+     "note": "Doubts that any reserve exists, which is wrong."
+    },
+    {
+     "fact": "Capital cost about EUR 74.8 million including 15% contingency",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "NPV at 5% about EUR 58.8 million and IRR 20%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "From AFRY's March 2023 JORC pre-feasibility study for FinnCobalt",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 1,
+   "comment": "Declines to give figures and wrongly suggests there is no published reserve."
+  },
+  "best": "ours",
+  "reason": "Y is the only answer that gets all four facts right: the reserve with its split, the capex including contingency, the NPV at 5% with the IRR, and the AFRY PFS source. X gives the reserve correctly but misses the NPV and IRR, and the capex it gives excludes contingency. Z declines to give figures."
+ },
+ {
+  "id": "B-hautalampi-resource",
+  "category": "B",
+  "question": "How large is the Hautalampi nickel deposit's measured and indicated resource?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Measured + Indicated 9.33 Mt at 0.28% Ni, 0.19% Cu and 0.07% Co",
+     "label": "CORRECT",
+     "note": "9.33 Mt at 0.28% Ni stated. Cu and Co grades are not given directly, but the contained metal figures (17,700 t Cu, 6,200 t Co) work out to about 0.19% Cu and 0.07% Co."
+    },
+    {
+     "fact": "Measured 2.81 Mt at 0.35% Ni and Indicated 6.52 Mt at 0.25% Ni",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Reported at a 0.25% NiEq cut-off, AFRY estimate of 29 September 2022",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Complete and accurate. All three facts are covered, plus the measured/indicated split."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Measured + Indicated 9.33 Mt at 0.28% Ni, 0.19% Cu and 0.07% Co",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Measured 2.81 Mt at 0.35% Ni and Indicated 6.52 Mt at 0.25% Ni",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Reported at a 0.25% NiEq cut-off, AFRY estimate of 29 September 2022",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honestly declined and pointed to sources, but gave no figures."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Measured + Indicated 9.33 Mt at 0.28% Ni, 0.19% Cu and 0.07% Co",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Measured 2.81 Mt at 0.35% Ni and Indicated 6.52 Mt at 0.25% Ni",
+     "label": "ABSENT",
+     "note": "No split between measured and indicated for 2022."
+    },
+    {
+     "fact": "Reported at a 0.25% NiEq cut-off, AFRY estimate of 29 September 2022",
+     "label": "ABSENT",
+     "note": "Says only '2022'. No cut-off, no exact date, and AFRY is credited only for the 2021 estimate."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "The headline M&I figure is correct, but the split and the cut-off/date details are missing. It adds historical estimates that cannot be checked against the truth."
+  },
+  "best": "ours",
+  "reason": "X covers all three pre-registered facts accurately: the M&I total, the measured/indicated split, and the 0.25% NiEq cut-off with the AFRY estimate dated 29 September 2022. Z gets only the headline total right, and Y declined to give any figures."
+ },
+ {
+  "id": "B-emili-resource",
+  "category": "B",
+  "question": "What is the current mineral resource at Imerys' Emili lithium project in France, and does it have a reserve?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "373 Mt at 1.00% Li2O in total",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Indicated 210 Mt at 1.01% Li2O and Inferred 163 Mt at 0.99% Li2O",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Effective 15 November 2023 at a 0.6% Li2O cut-off; no Mineral Reserve declared",
+     "label": "CORRECT",
+     "note": "Effective date and no reserve are correct; the 0.6% cut-off is not mentioned"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Accurate and complete apart from leaving out the cut-off grade."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "373 Mt at 1.00% Li2O in total",
+     "label": "INCORRECT",
+     "note": "Gives roughly 375 Mt at about 0.9% Li2O; the grade is wrong"
+    },
+    {
+     "fact": "Indicated 210 Mt at 1.01% Li2O and Inferred 163 Mt at 0.99% Li2O",
+     "label": "ABSENT",
+     "note": "No split given; it suggests the resource is mostly lower-confidence, which conflicts with the larger Indicated portion"
+    },
+    {
+     "fact": "Effective 15 November 2023 at a 0.6% Li2O cut-off; no Mineral Reserve declared",
+     "label": "ABSENT",
+     "note": "Correctly says no reserve, but gives no date or cut-off"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Hedged and honest about uncertainty, but the grade is wrong and there is no breakdown."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "373 Mt at 1.00% Li2O in total",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Indicated 210 Mt at 1.01% Li2O and Inferred 163 Mt at 0.99% Li2O",
+     "label": "ABSENT",
+     "note": "Says outright it cannot confirm the split"
+    },
+    {
+     "fact": "Effective 15 November 2023 at a 0.6% Li2O cut-off; no Mineral Reserve declared",
+     "label": "ABSENT",
+     "note": "Correctly says no reserve, but gives no date or cut-off"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Total is correct and no reserve is correct. Missing the split and the date. Some extra specifics (69 Mt core zone, decree date) cannot be checked against the truth."
+  },
+  "best": "ours",
+  "reason": "X gives the correct total, the Indicated/Inferred split, the effective date and the no-reserve status. Z gets the total right but has no split or date. Y gets the grade wrong."
+ }
+]

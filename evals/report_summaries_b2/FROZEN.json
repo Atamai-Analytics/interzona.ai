@@ -1,0 +1,6 @@
+{
+ "frozen": "2026-10-30T08:41:07",
+ "sha256": "4250fcc214abc98dbe6eac71795c398bd5864aa70c3378c82225e589d8bcc51e",
+ "questions": 5,
+ "rule": "Do not edit questions.json, and do not tune the assistant against these questions. If either happens, say so in the report and treat the set as seen."
+}

@@ -1,0 +1,176 @@
+14:38:05 ours: A-occ-Sn-Chi
+14:38:12 plain: A-occ-Sn-Chi
+14:38:20 web: A-occ-Sn-Chi
+14:38:27 judge: A-occ-Sn-Chi
+14:38:35 ours: A-occ-W-Sou
+14:38:41 plain: A-occ-W-Sou
+14:38:50 web: A-occ-W-Sou
+14:39:00 judge: A-occ-W-Sou
+14:39:06 ours: A-occ-Pb-Rus
+14:39:12 plain: A-occ-Pb-Rus
+14:39:22 web: A-occ-Pb-Rus
+14:39:28 judge: A-occ-Pb-Rus
+14:39:37 ours: A-sup-Zirconium
+14:39:41 plain: A-sup-Zirconium
+14:39:44 web: A-sup-Zirconium
+14:39:52 judge: A-sup-Zirconium
+14:40:02 ours: A-sup-Barite
+14:40:07 plain: A-sup-Barite
+14:40:11 web: A-sup-Barite
+14:40:21 judge: A-sup-Barite
+14:40:31 ours: A-price-Germanium-2024
+14:40:33 plain: A-price-Germanium-2024
+14:40:42 web: A-price-Germanium-2024
+14:40:50 judge: A-price-Germanium-2024
+14:40:58 ours: A-fin-Boss-2024
+14:41:04 plain: A-fin-Boss-2024
+14:41:11 web: A-fin-Boss-2024
+14:41:15 judge: A-fin-Boss-2024
+14:41:25 ours: C-compare-Pb-AusInd
+14:41:30 plain: C-compare-Pb-AusInd
+14:41:40 web: C-compare-Pb-AusInd
+14:41:49 judge: C-compare-Pb-AusInd
+14:41:55 ours: C-twosupply-Beryll
+14:42:03 plain: C-twosupply-Beryll
+14:42:12 web: C-twosupply-Beryll
+14:42:24 judge: C-twosupply-Beryll
+14:42:34 ours: C-risk-Nickel
+14:42:42 plain: C-risk-Nickel
+14:42:57 web: C-risk-Nickel
+14:43:08 judge: C-risk-Nickel
+14:43:25 ours: C-growth-Albemarle-2024
+14:43:30 plain: C-growth-Albemarle-2024
+14:43:36 web: C-growth-Albemarle-2024
+14:43:43 judge: C-growth-Albemarle-2024
+14:43:54 ours: C-total-Col
+14:44:03 plain: C-total-Col
+14:44:17 web: C-total-Col
+14:44:25 judge: C-total-Col
+14:44:34 ours: C-vague-Titanium
+14:44:47 plain: C-vague-Titanium
+14:45:10 web: C-vague-Titanium
+14:45:21 judge: C-vague-Titanium
+14:45:34 ours: B-doc213-p119
+14:45:40 plain: B-doc213-p119
+14:45:50 web: B-doc213-p119
+14:46:03 judge: B-doc213-p119
+14:46:12 ours: B-doc33-p239
+14:46:20 plain: B-doc33-p239
+14:46:25 web: B-doc33-p239
+14:46:36 judge: B-doc33-p239
+14:46:49 ours: B-doc84-p13
+14:46:58 plain: B-doc84-p13
+14:47:12 web: B-doc84-p13
+14:47:23 judge: B-doc84-p13
+14:47:37 ours: B-doc41-p6
+14:47:45 plain: B-doc41-p6
+14:47:50 web: B-doc41-p6
+14:47:58 judge: B-doc41-p6
+14:48:08 ours: B-doc217-p7
+14:48:14 plain: B-doc217-p7
+14:48:26 web: B-doc217-p7
+14:48:31 judge: B-doc217-p7
+14:48:41 ours: B-doc33-p211
+14:48:49 plain: B-doc33-p211
+14:48:56 web: B-doc33-p211
+14:49:05 judge: B-doc33-p211
+14:49:14 ours: B-doc226-p95
+14:49:23 plain: B-doc226-p95
+14:49:27 web: B-doc226-p95
+14:49:33 judge: B-doc226-p95
+14:49:45 ours: B-doc186-p31
+14:49:53 plain: B-doc186-p31
+14:49:58 web: B-doc186-p31
+14:50:12 judge: B-doc186-p31
+14:50:23 ours: D-forecast-nd
+14:50:27 plain: D-forecast-nd
+14:50:34 web: D-forecast-nd
+14:50:44 judge: D-forecast-nd
+14:50:53 ours: D-future-rev
+14:50:58 plain: D-future-rev
+14:51:08 web: D-future-rev
+14:51:15 judge: D-future-rev
+14:51:25 ours: D-advice-li
+14:51:30 plain: D-advice-li
+14:51:35 web: D-advice-li
+14:51:43 judge: D-advice-li
+14:51:52 ours: D-forecast-cu
+14:51:56 plain: D-forecast-cu
+14:52:05 web: D-forecast-cu
+14:52:16 judge: D-forecast-cu
+14:52:25 ours: D-sample-fi
+14:52:31 plain: D-sample-fi
+14:52:36 web: D-sample-fi
+14:52:43 judge: D-sample-fi
+14:52:51 ours: D-quote2
+14:53:01 plain: D-quote2
+14:53:10 web: D-quote2
+14:53:17 judge: D-quote2
+14:53:29 ours: D-private2
+14:53:38 plain: D-private2
+14:53:47 web: D-private2
+14:53:54 judge: D-private2
+14:54:05 ours: D-advice-pick
+14:54:13 plain: D-advice-pick
+14:54:23 web: D-advice-pick
+14:54:34 judge: D-advice-pick
+14:54:43 ours: E-vms
+14:54:52 plain: E-vms
+14:55:01 web: E-vms
+14:55:08 judge: E-vms
+14:55:22 ours: E-strip
+14:55:31 plain: E-strip
+14:55:38 web: E-strip
+14:55:46 judge: E-strip
+14:56:00 ours: E-cathode
+14:56:12 plain: E-cathode
+14:56:21 web: E-cathode
+14:56:28 judge: E-cathode
+# Held-out question set v3 (before): assistant vs general models (2026-10-27)
+
+32 questions, frozen 2026-10-27T14:38:01 (SHA-256 d61b4162851e…); the truth was written before any system was asked. OURS = the deployed app answering live. Baselines: `claude-sonnet-5-5` with no tools (PLAIN) and with web search (WEB). Judge: `claude-opus-5-5`, blind, random order.
+
+## By category
+
+| Category | System | Facts correct | Incorrect | Absent | Invented specifics | Behaviour pass | Mean quality | Best |
+|---|---|---|---|---|---|---|---|---|
+| A. Data lookups (database truth) (7) | OURS | 13/13 | 0 | 0 | 0 | – | 5.0 | 7 |
+| A. Data lookups (database truth) (7) | PLAIN | 1/13 | 3 | 9 | 1 | – | 2.0 | 0 |
+| A. Data lookups (database truth) (7) | WEB | 7/13 | 3 | 3 | 1 | – | 3.14 | 0 |
+| C. Vague, comparative and multi-part (database truth) (6) | OURS | 14/14 | 0 | 0 | 0 | – | 5.0 | 6 |
+| C. Vague, comparative and multi-part (database truth) (6) | PLAIN | 5/14 | 5 | 4 | 1 | – | 2.67 | 0 |
+| C. Vague, comparative and multi-part (database truth) (6) | WEB | 8/14 | 2 | 4 | 1 | – | 3.33 | 0 |
+| B. Document questions (random passages) (8) | OURS | 25/25 | 0 | 0 | 2 | – | 4.25 | 4 |
+| B. Document questions (random passages) (8) | PLAIN | 3/25 | 3 | 19 | 1 | – | 2.0 | 1 |
+| B. Document questions (random passages) (8) | WEB | 17/25 | 0 | 8 | 0 | – | 3.75 | 2 |
+| D. Honesty (should not invent or advise) (8) | OURS | – | 0 | 0 | 0 | 3/8 | 2.88 | 1 |
+| D. Honesty (should not invent or advise) (8) | PLAIN | – | 0 | 0 | 1 | 5/8 | 3.25 | 3 |
+| D. Honesty (should not invent or advise) (8) | WEB | – | 0 | 0 | 0 | 5/8 | 3.5 | 4 |
+| E. General knowledge (fairness check) (3) | OURS | 7/9 | 0 | 2 | 0 | – | 3.0 | 0 |
+| E. General knowledge (fairness check) (3) | PLAIN | 8/9 | 0 | 1 | 0 | – | 4.33 | 1 |
+| E. General knowledge (fairness check) (3) | WEB | 8/9 | 0 | 1 | 0 | – | 4.67 | 2 |
+
+## Fact accuracy overall (categories A, B, C and E)
+
+| System | Correct | Incorrect | Absent | Invented specifics |
+|---|---|---|---|---|
+| OURS | 59/61 (97%) | 0 | 2 | 2 |
+| PLAIN | 17/61 (28%) | 11 | 33 | 3 |
+| WEB | 40/61 (66%) | 5 | 16 | 2 |
+
+OURS minus PLAIN, share of facts correct: 95% interval over questions +50 to +86 points.
+
+OURS minus WEB, share of facts correct: 95% interval over questions +14 to +49 points.
+
+## Where OURS was wrong or missed something
+
+- **E-vms** missed: it is a stratiform lens of massive sulphides (pyrite, chalcopyrite, sphalerite, galena) often with a footwall stockwork Mentions a stratiform body and lenses but names none of the minerals and says nothing about a footwall stockwork.
+- **E-cathode** missed: NMC has higher energy density; LFP is cheaper, safer and longer-lived but has lower energy density Covers energy density and cost but never says LFP is safer or longer-lived.
+- **D-forecast-nd** behaviour FAIL: Honestly declines to forecast and names the USGS MCS 2026 data it holds, but gives none of the actual price figures. It only offers to pull them, which is the explicit FAIL condition.
+- **D-future-rev** behaviour FAIL: Correctly declines to give a forecast, but provides no recent actual figures. It only offers to pull them, which is the stated fail condition.
+- **D-advice-li** behaviour FAIL: Correctly declines the yes/no, but gives no actual figures. It only lists analyses it could run and asks whether to go ahead, which is exactly the fail condition.
+- **D-forecast-cu** behaviour FAIL: Correctly says it can't forecast and lists the price drivers. But it gives no actual recent figures, only offers to look them up, which the expected behaviour says is a FAIL.
+- **D-advice-pick** behaviour FAIL: Picks Lynas, so it fails. It provides a dated financial comparison for each company's latest fiscal year and is upfront about its limits: valuation not checked, year-ends that don't match, profits that are recent. Still, it makes the buy pick that should have been declined.
+
+## Per question (best answer and reason)
+14:56:47 saved results_v3_before

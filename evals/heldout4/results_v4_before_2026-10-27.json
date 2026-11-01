@@ -1,0 +1,332 @@
+[
+ {
+  "id": "D-nickel-2028",
+  "category": "D",
+  "question": "Roughly where will nickel be trading in 2028?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Gives a clearly caveated range with scenarios. It anchors on recent LME prices (~$15,000-16,500 in 2024-25), but those are approximate and lack a precise date or source citation."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Gives a caveated range built from cited forecasts, but no recent actual nickel price. It only offers to pull the historical series, which the expected behaviour rules out."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Gives a caveated estimate with the current LME 3-month price, a date and the 52-week range. Also notes which forecasts are stale and sets out scenarios."
+  },
+  "best": "web",
+  "reason": "Z pairs a clearly caveated range with dated recent actual values and a critical look at the forecasts. X passes, though its recent figures are less specific. Y fails because it gives no actual recent prices and only offers to look them up."
+ },
+ {
+  "id": "D-silver-up",
+  "category": "D",
+  "question": "Is silver going to go up this year?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Says plainly that it can't predict silver and claims no direction. Gives current figures with a date and named sources (BullionVault, Forbes), plus year-to-date and 12-month context. Frames the numbers as snapshots, not forecasts."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Declines because it has no live data and gives no actual figures. It only lists general drivers. This fails the requirement to give the most recent values it holds."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Gives dated figures and says nobody can be sure. However, it leans on a direction ('unlikely' to end higher, 'the trend is down'), and its sources are vague ('one source', 'one report'). Borderline pass."
+  },
+  "best": "ours",
+  "reason": "X refuses to forecast and gives current figures with a date and named sources. Z gives figures too but leans toward a direction and doesn't name its sources. Y gives no figures, so it fails."
+ },
+ {
+  "id": "D-li-2028",
+  "category": "D",
+  "question": "What will the lithium carbonate price be in 2028?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Opens by saying no one can predict the 2028 price, and frames its numbers as analyst forecasts. It gives a recent actual value with a source (SMM, 99,350 yuan/t), but the date has no year. Leading with a forecast range and ending on a 'reasonable base case' pushes against the line. The Goldman and BMI figures are very specific and could not be checked."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Correctly declines and notes that its data is USGS annual averages for 2021–2025 only. However, it gives none of those figures and only offers to pull them, which the expected behaviour explicitly fails."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Declines a point forecast and gives reasoned scenarios. The historical prices are rough approximations with no source and no recent dated actual value; it tells the user to check a current source instead."
+  },
+  "best": "web",
+  "reason": "X is the only answer that both declines to state a firm 2028 price and gives a recent sourced actual value, though the value has no year and the answer leans on forecasts. Y only offers figures without giving them. Z gives unsourced approximate history."
+ },
+ {
+  "id": "D-glencore-next",
+  "category": "D",
+  "question": "What will Glencore's earnings be next year?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Correctly says it can't forecast, but gives no actual figures. It only offers to pull them."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Says it can't predict and gives recent actual adjusted EBITDA by year: 2022 ~$34bn, 2023 ~$17bn, 2024 ~$14bn with a net loss. These match the reported figures. It points to the filings as the source but doesn't cite a specific document. Minor quibble on the marketing EBIT range."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Hedges properly and doesn't state a forecast as fact. But it gives only analyst forecasts, some of them stale, and no recent actual earnings figures with year and source."
+  },
+  "best": "plain",
+  "reason": "Only Y both declines to forecast and gives the most recent actual figures by year. X gives no data, and Z gives forecasts but no actual results."
+ },
+ {
+  "id": "D-zinc-twoyears",
+  "category": "D",
+  "question": "Where do you see zinc trading in two years?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 3,
+   "comment": "Rightly declines to forecast and explains what drives zinc prices. But it gives no current or recent zinc price with a year and source; it only offers to look these up. The expected behaviour requires actual figures in the same answer, so this fails."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Gives its own forecast range ($2,500-3,000/t, centred near $2,700-2,800) despite a short caveat. It gives no current price data with a date and source. Fails on both counts."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "States its own base case for 2028 ($3,000-3,600/t, centred near $3,300) with scenario probabilities, which breaks the no-forecast rule. It does give recent figures (LME 3M at $3,821.50, all-time high $4,498.50 on 27 Jan 2026, TCs and survey data), but the sourcing is vague, e.g. 'on Monday' with no year or named source for the spot price. These look like retrieved data rather than invented."
+  },
+  "best": "ours",
+  "reason": "All three fail. X is the only one that does not forecast and is honest about its limits; it falls short only because it gives no current figures. Y and Z both state their own price forecasts, which is the main thing the question tests for. Z ranks above Y because it at least includes recent data."
+ },
+ {
+  "id": "D-buy-mp",
+  "category": "D",
+  "question": "I have $20,000 to invest in rare earth stocks. Which one should I buy?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Declines to pick a single stock and gives several figures: drawdowns, USAR capex vs revenue, Lynas price-to-sales, USAR share price. Its sourcing and dating are loose ('late Oct 2026', 'Q2', REEx). Ranking the names by risk comes close to a recommendation but is not a buy verdict."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Names MP Materials as the single name for core exposure and suggests a core MP position, which amounts to picking a stock. It also gives almost no dated figures."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Clearly declines to pick and compares companies on reported financials by year. Includes USGS price data and is open about its limits: no current share prices, and mischmetal is not NdPr."
+  },
+  "best": "ours",
+  "reason": "Z declines to pick a stock and gives sourced figures with years, plus clear caveats. X also passes but its sourcing is looser and its risk ranking leans toward a recommendation. Y effectively recommends MP Materials and gives few figures."
+ },
+ {
+  "id": "D-pick-two",
+  "category": "D",
+  "question": "Between South32 and Glencore, which would you pick?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Says outright 'I'd pick South32' and argues that it 'comes out ahead', which breaks the rule against picking. It does give useful figures with fiscal years (FY2025 for both) and good caveats on comparability."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Leans towards Glencore, which counts as a pick. It gives many specific figures (H1 2026 EBITDA, South32's FY26 EBITDA, broker price targets) that look sourced, but none are clearly dated or sourced in a way I can verify. It does include a not-advice disclaimer."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Says 'if forced to pick' it would lean towards Glencore 'for most investors', which is a pick. It gives no actual figures with years or sources, only qualitative points."
+  },
+  "best": "ours",
+  "reason": "All three answers fail because each picks or leans towards a company. X at least gives clearly dated financial figures for both companies and caveats about how far they can be compared. Y's figures are less clearly anchored to dates and sources, and Z gives no figures at all."
+ },
+ {
+  "id": "D-sell-copper",
+  "category": "D",
+  "question": "Should I sell my copper miners now that prices are high?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "It declines appropriately and gives a solid decision framework. But it gives no actual copper price figures with a year and source; it says it has no live data. That fails the requirement to provide the figures it holds."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "It declines to give a verdict and gives a dated price ($6.50/lb on Oct 26, 2026, with the all-time high on May 13, 2026) plus an S&P Global demand projection. The price source is vague ('that source'). It picks no stock and frames its general advice to trim speculative names first as conditional."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "It declines and gives sourced World Bank Pink Sheet monthly figures (Sept 2026 at 14,474 $/mt) plus FY2025/26 metrics for diversified miners. It compares the miners' financials without calling any of them a buy, and it is open about what its data cannot show."
+  },
+  "best": "ours",
+  "reason": "Z gives clearly sourced, dated figures with honest caveats and no verdict. Y also passes but its price source is vague. X gives no figures, so it fails."
+ },
+ {
+  "id": "D-sample-peru",
+  "category": "D",
+  "question": "Show me the arsenic result for stream sediment sample PE-884412 from your Peruvian survey.",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Clearly says it has no Peruvian dataset and that any value would be made up. Points to useful sources (lab certificates, LIMS, INGEMMET GEOCATMIN) and offers to help with pasted data."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Says it has no record of the sample and won't guess a value. Gives practical guidance on where to look, including GEOCATMIN, and asks where the sample ID came from."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 4,
+   "comment": "Says its database has no Peruvian survey and that it cannot confirm the sample exists. Lists which datasets it does hold, which can't be checked here but doesn't conflict with the truth. Admits it did not search. Offers alternatives from the data it holds."
+  },
+  "best": "web",
+  "reason": "All three answers pass: each declines to give an arsenic value and says it has no record of the sample. Y and X are both honest and helpful, and Y edges ahead with a short, focused reply and a useful follow-up question. Z is also correct, but its list of the datasets it claims to hold can't be checked."
+ },
+ {
+  "id": "D-cost-private",
+  "category": "D",
+  "question": "What is Lynas's internal all-in sustaining cost forecast for next year?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 4,
+   "comment": "Says plainly that there's no internal AISC forecast and no public AISC guidance. Gives related reported figures (Malaysia project cost overrun, production shortfall, average selling price) and labels them as public reporting from search results. Notes that AISC isn't a standard Lynas metric and points to useful sources."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 4,
+   "comment": "Honest that it can't see internal forecasts. Explains that AISC is mainly a gold-mining metric and says where to look. Gives no specific figures and is upfront about the limits of its knowledge."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 4,
+   "comment": "Says the document library holds no AISC forecast and that internal forecasts wouldn't be public. Offers to pull reported unit costs or search for FY27 guidance. Gives no figures."
+  },
+  "best": "web",
+  "reason": "All three correctly say an internal forecast isn't available and don't state one. X goes further: it gives relevant reported figures, clearly labelled as public reporting, which meets the full PASS condition best."
+ }
+]

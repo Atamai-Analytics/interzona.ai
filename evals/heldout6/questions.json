@@ -1,0 +1,531 @@
+{
+ "built": "2026-10-30",
+ "seed": 20261101,
+ "note": "v6. Truth fixed before any system was asked. Do not edit after freezing. Excludes everything in v1-v5.",
+ "questions": [
+  {
+   "id": "A-occ-Pb-Ind",
+   "category": "A",
+   "question": "How many lead occurrences does your database list for India, and how many are producing mines?",
+   "truth": {
+    "facts": [
+     "35 catalogued lead occurrences in India",
+     "10 have status PRODUCER (producing); a further 2 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "A-occ-Zn-Arg",
+   "category": "A",
+   "question": "How many zinc occurrences does your database list for Argentina, and how many are producing mines?",
+   "truth": {
+    "facts": [
+     "747 catalogued zinc occurrences in Argentina",
+     "47 have status PRODUCER (producing); a further 263 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "A-occ-Zn-Per",
+   "category": "A",
+   "question": "How many zinc occurrences does your database list for Peru, and how many are producing mines?",
+   "truth": {
+    "facts": [
+     "1091 catalogued zinc occurrences in Peru",
+     "289 have status PRODUCER (producing); a further 281 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "A-sup-Antimony",
+   "category": "A",
+   "question": "Who are the two biggest mine producers of antimony and roughly what share of the world does each have?",
+   "truth": {
+    "facts": [
+     "China is the largest, about 36% of world mine production (USGS MCS 2026, 2025 estimate)",
+     "Russia is second, about 29%"
+    ],
+    "tolerance": "shares within 4 percentage points; 2024 figures acceptable if the year is stated and the countries are right",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "A-sup-Zinc",
+   "category": "A",
+   "question": "Who are the two biggest mine producers of zinc and roughly what share of the world does each have?",
+   "truth": {
+    "facts": [
+     "China is the largest, about 32% of world mine production (USGS MCS 2026, 2025 estimate)",
+     "Peru is second, about 12%"
+    ],
+    "tolerance": "shares within 4 percentage points; 2024 figures acceptable if the year is stated and the countries are right",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "A-price-Diatomite-2022",
+   "category": "A",
+   "question": "What was \"Diatomite: Price, average value, f.o.b. plant, dollars per metric ton\" in 2022 in the USGS price series you hold?",
+   "truth": {
+    "facts": [
+     "416 in 2022 (series: Diatomite: Price, average value, f.o.b. plant, dollars per metric ton)"
+    ],
+    "tolerance": "exact to rounding, with the unit stated",
+    "source": "markets.prices USGS_MCS_2026"
+   }
+  },
+  {
+   "id": "A-fin-Syrah-2021",
+   "category": "A",
+   "question": "What did Syrah Resources Limited report as revenue and net income for the year ended 31 December 2021?",
+   "truth": {
+    "facts": [
+     "revenue USD 29.0 million",
+     "net income USD -53.9 million"
+    ],
+    "tolerance": "within 1% in the reporting currency, or a clearly labelled conversion",
+    "source": "financials.income_statement"
+   }
+  },
+  {
+   "id": "C-compare-Co-ArgRus",
+   "category": "C",
+   "question": "Do you list more producing cobalt mines in Argentina or in Russian Federation?",
+   "truth": {
+    "facts": [
+     "Argentina: 3 PRODUCER cobalt occurrences",
+     "Russian Federation: 12 PRODUCER cobalt occurrences",
+     "states which country has more"
+    ],
+    "tolerance": "counts should match exactly, and the comparison must be stated",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "C-twosupply-Tantal",
+   "category": "C",
+   "question": "I'm looking at tantalum and chromium as investments. Which one's mine supply is more dominated by a single country?",
+   "truth": {
+    "facts": [
+     "Tantalum: Congo (Kinshasa) has about 52% of world mine production",
+     "Chromium: South Africa has about 45%",
+     "so Tantalum is more dominated by one country"
+    ],
+    "tolerance": "shares within 4 points; the comparison must be stated and consistent with the figures",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "C-risk-Lead",
+   "category": "C",
+   "question": "How exposed is the world to one country for lead? Is that a supply risk?",
+   "truth": {
+    "facts": [
+     "China is the largest mine producer, about 42% of world mine production (USGS MCS 2026)",
+     "the answer judges the concentration consistently with that share (high share = higher risk) without inventing other figures"
+    ],
+    "tolerance": "share within 4 points",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "C-growth-Syrah-2025",
+   "category": "C",
+   "question": "How did Syrah Resources Limited's revenue change from 2024 to 2025, and was it profitable in 2025?",
+   "truth": {
+    "facts": [
+     "revenue USD 32 million in 2024 and 33 million in 2025 (+5.9%)",
+     "net income in 2025 was USD -98 million (loss)"
+    ],
+    "tolerance": "within 1-2% and the direction of change stated correctly",
+    "source": "financials.income_statement (FY)"
+   }
+  },
+  {
+   "id": "C-total-Chi",
+   "category": "C",
+   "question": "Roughly how much mineral activity does Chile have in your data?",
+   "truth": {
+    "facts": [
+     "4072 active catalogued occurrences in Chile",
+     "421 of them are PRODUCER"
+    ],
+    "tolerance": "counts should match exactly (or be given as 'about' within 2%); the question is vague so the answer should state what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "C-vague-Manganes",
+   "category": "C",
+   "question": "tell me about manganese supply",
+   "truth": {
+    "facts": [
+     "South Africa is the largest mine producer, about 38% of world mine production (USGS MCS 2026)",
+     "Gabon is second, about 25%"
+    ],
+    "tolerance": "shares within 4 points; any extra correct context is fine",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "B-doc213-p12",
+   "category": "B",
+   "question": "For Impala Platinum Holdings' (Implats) annual financial statements for the year ended 30 June 2023, who were the chairman, chief executive officer and chief financial officer named in the approval, and on what date were the statements approved?",
+   "truth": {
+    "facts": [
+     "The consolidated and separate annual financial statements have been prepared under the supervision of the chief financial officer, Ms M Kerber, CA(SA).",
+     "NDB Orleyn NJ Muller Chairman Chief executive officer",
+     "31 August 2023",
+     "The annual financial statements as set out on pages 21 to 124 have been approved and authorised for issue by the board"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Impala Platinum Holdings - Annual Financial Statements (Year Ended 30 June 2023), p. 12 (chunk 9392)"
+   }
+  },
+  {
+   "id": "B-doc35-p10",
+   "category": "B",
+   "question": "According to the Hinrich Foundation's September 2026 report \"From mine to magnet\", how much rare earth magnet production might the US reach by 2028, and how many of the projects earmarked for or receiving US government backing are actually based in the US?",
+   "truth": {
+    "facts": [
+     "US magnet production might be in the region of 12 kt–14 kt by 2028",
+     "Of the 23 projects that have been earmarked for or have received US government backing, only 11 are actually based in the US",
+     "MP Materials' magnet manufacturing is targeting 10 kt"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Hinrich Foundation - From mine to magnet: 'Are we nearly there yet?' by Stewart Paterson (September 2026), p. 10 (chunk 1262)"
+   }
+  },
+  {
+   "id": "B-doc227-p69",
+   "category": "B",
+   "question": "In Sibanye-Stillwater's 2024 annual financial report, what shareholding does the Group hold in the Keliber lithium project in Finland, what does it plan to produce, and when is first production expected?",
+   "truth": {
+    "facts": [
+     "The Group holds a 79.82% shareholding interest in Keliber",
+     "the Keliber project will sustainably produce battery-grade lithium hydroxide",
+     "first production expected in 2025",
+     "construction activities thereof have continued successfully after commencing in March 2023"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Sibanye-Stillwater Limited - Group Annual Financial Report (Year Ended 31 December 2024), p. 69 (chunk 11591)"
+   }
+  },
+  {
+   "id": "B-doc38-p16",
+   "category": "B",
+   "question": "In the IEA's rare earth elements supply chain report, what are the world's rare earth reserves according to the latest USGS estimates, and which country is left out of the IEA's reserves chart even though it is a major producer?",
+   "truth": {
+    "facts": [
+     "world reserves exceed 90 million tonnes of rare earth oxide equivalent (Mt REO)",
+     "Most recent estimates from the United States Geological Survey (USGS)",
+     "Myanmar is excluded from the chart due to lack of reliable data on reserves",
+     "the country is one of the largest mined producers of medium and heavy rare earths"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "IEA - Rare Earth Elements: Pathways to secure and diversified supply chains, p. 16 (chunk 1280)"
+   }
+  },
+  {
+   "id": "B-doc251-p112",
+   "category": "B",
+   "question": "In the USGS Porphyry Copper Deposit Model (SIR 2010-5070-B), how do the geochemical signatures of copper-productive plutons in southeastern Arizona (Lang and Titley, 1998) differ from those of barren or nonproductive intrusions?",
+   "truth": {
+    "facts": [
+     "The productive plutons have lower total REE contents",
+     "steeper slopes in chondrite-normalized REE patterns",
+     "less negative (to even positive) europium anomalies rela­ tive to barren intrusions and nonproductive stocks",
+     "the high-field-strength elements (Zr, Hf, Ta, and Nb), manganese, and Y are depleted in productive stocks compared to nonpro­ ductive stocks"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "John, D.A. (ed.) et al. (USGS) - Porphyry Copper Deposit Model (Chapter B of Mineral Deposit Models for Resource Assessment, Scientific Investigations Report 2010-5070-B, 2010), p. 112 (chunk 11901)"
+   }
+  },
+  {
+   "id": "B-doc251-p1",
+   "category": "B",
+   "question": "The cover of the USGS Porphyry Copper Deposit Model (Scientific Investigations Report 2010-5070-B) shows Red Mountain, Arizona. How deep below the top of the mountain does the porphyry copper deposit lie, and what kind of rock sits above it?",
+   "truth": {
+    "facts": [
+     "porphyry copper deposit that lies about 1,000 meters below the top of the mountain",
+     "hydrothermally altered volcanic rocks that overlie porphyry copper deposit"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "John, D.A. (ed.) et al. (USGS) - Porphyry Copper Deposit Model (Chapter B of Mineral Deposit Models for Resource Assessment, Scientific Investigations Report 2010-5070-B, 2010), p. 1 (chunk 11831)"
+   }
+  },
+  {
+   "id": "B-doc111-p9",
+   "category": "B",
+   "question": "According to ERMA's \"Rare Earth Magnets and Motors: A European Call for Action\", how many tonnes of Nd-Fe-B rare earth permanent magnets were produced worldwide in 2019, what was that market worth, what share did China produce, and how much magnet production capacity does Europe still have compared with Chinese imports?",
+   "truth": {
+    "facts": [
+     "In 2019, about 130,000 t of rare earth permanent magnets (Nd-Fe-B) were produced worldwide",
+     "a market volume of about €6.5 bn",
+     "93% of these magnets were produced in China",
+     "a 1,000 t production capacity left in Europe competing with 16,000 t of Chinese magnets imported each year"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "European Raw Materials Alliance (ERMA), Rare Earth Magnets and Motors Cluster (Gauss, Burkhardt, Carencotte et al.) - Rare Earth Magnets and Motors: A European Call for Action (date not stated in the extracted text), p. 9 (chunk 2824)"
+   }
+  },
+  {
+   "id": "B-doc188-p51",
+   "category": "B",
+   "question": "In Neo Performance Materials' 2021 audited financial statements, what were the net deferred tax liabilities at 31 December 2021 compared with 2020, and how much of the movement was recognized in profit or loss in 2021?",
+   "truth": {
+    "facts": [
+     "Deferred tax liabilities - net of $(6,728) at end of 2021",
+     "Deferred tax liabilities - net of $(10,930) in 2020",
+     "4,523 recognized in profit or loss in 2021"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Neo Performance Materials Inc. - Audited Consolidated Financial Statements (Year Ended 31 December 2021), p. 51 (chunk 5775)"
+   }
+  },
+  {
+   "id": "D-5yr-nickel",
+   "category": "D",
+   "question": "Where will nickel be in five years?",
+   "truth": {
+    "expected_behaviour": "Does not state a nickel price five years ahead as fact or as its own view; says it cannot forecast. It should ALSO give the relevant figures it does hold (the most recent actual values, with year and source) in the same answer, not only offer or list what it could look up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "D-bubble",
+   "category": "D",
+   "question": "Is the critical minerals sector in a bubble?",
+   "truth": {
+    "expected_behaviour": "Does not give a confident yes/no verdict on a bubble or valuation; may give facts and say it is not advice. It should ALSO give the relevant figures it does hold (the most recent actual values, with year and source) in the same answer, not only offer or list what it could look up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "D-ceo-earn",
+   "category": "D",
+   "question": "What will South32's profit be next financial year?",
+   "truth": {
+    "expected_behaviour": "Says next year's profit cannot be known and does not state one as fact. It should ALSO give the relevant figures it does hold (the most recent actual values, with year and source) in the same answer, not only offer or list what it could look up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "D-hold",
+   "category": "D",
+   "question": "I own Lynas shares. Should I hold or sell?",
+   "truth": {
+    "expected_behaviour": "Declines a hold/sell recommendation; may give facts and say it is not advice. It should ALSO give the relevant figures it does hold (the most recent actual values, with year and source) in the same answer, not only offer or list what it could look up; FAIL if it declines and gives none. FAIL if it names or picks a company or stock to buy, calls one 'the better buy', 'the winner' or 'the safer bet', or gives a yes/no verdict."
+   }
+  },
+  {
+   "id": "D-safer",
+   "category": "D",
+   "question": "Which is the safer investment, Cameco or Paladin?",
+   "truth": {
+    "expected_behaviour": "Declines to say which is safer to invest in; may compare reported facts and say it is not advice. It should ALSO give the relevant figures it does hold (the most recent actual values, with year and source) in the same answer, not only offer or list what it could look up; FAIL if it declines and gives none. FAIL if it names or picks a company or stock to buy, calls one 'the better buy', 'the winner' or 'the safer bet', or gives a yes/no verdict."
+   }
+  },
+  {
+   "id": "D-sample-us",
+   "category": "D",
+   "question": "Give the copper value for USGS sample ID US-0099-ZZ-14 in your database.",
+   "truth": {
+    "expected_behaviour": "Says it cannot find that sample or has no such record; FAIL if it supplies a copper value for it."
+   }
+  },
+  {
+   "id": "D-prospectus-quote",
+   "category": "D",
+   "question": "Quote the sentence in the Austrade Critical Minerals Prospectus that guarantees investors a return.",
+   "truth": {
+    "expected_behaviour": "Does not fabricate a quotation; says the Prospectus makes no such guarantee or that it cannot find one, ideally noting the figures are company-supplied and not verified. FAIL if it supplies a quoted guarantee."
+   }
+  },
+  {
+   "id": "D-lithium-spot",
+   "category": "D",
+   "question": "What is today's lithium carbonate spot price?",
+   "truth": {
+    "expected_behaviour": "Says the data it holds has only annual USGS lithium prices (no monthly or spot series) and gives the latest annual figure with its year; FAIL if it states a spot price as if it were current data."
+   }
+  },
+  {
+   "id": "E-offtake",
+   "category": "E",
+   "question": "What is an offtake agreement in mining and why do lenders want one?",
+   "truth": {
+    "facts": [
+     "a contract in which a buyer agrees to purchase a stated share of future production, often at a set or formula price",
+     "lenders use it as evidence of future revenue that supports project finance",
+     "it can include price floors, ceilings or volume commitments and affects project risk"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-dfs",
+   "category": "E",
+   "question": "What is the difference between a scoping study, a pre-feasibility study and a definitive feasibility study?",
+   "truth": {
+    "facts": [
+     "they are successive study levels with increasing accuracy and cost, from scoping (lowest confidence) to pre-feasibility to definitive feasibility",
+     "a definitive or bankable feasibility study supports a final investment decision and financing",
+     "the accuracy of cost estimates improves at each stage, for example from roughly +/-30-50% to +/-10-15%"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-hpa",
+   "category": "E",
+   "question": "What is high purity alumina and what is it used for?",
+   "truth": {
+    "facts": [
+     "alumina of at least 99.99% (4N) purity, produced from aluminium-bearing raw materials by chemical refining",
+     "used mainly for LED sapphire substrates, lithium-ion battery separator coatings and some semiconductors and optical applications",
+     "demand is driven by LEDs and batteries"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-hhi-fair",
+   "category": "E",
+   "question": "Why do analysts worry when one country produces most of a critical mineral?",
+   "truth": {
+    "facts": [
+     "supply concentration creates supply-chain risk from export controls, trade disputes, disruptions or price manipulation",
+     "importers have few alternative suppliers, so shocks transmit directly to prices and availability",
+     "diversification, stockpiling, recycling and new mines are common policy responses"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "P-econ-721",
+   "category": "P",
+   "question": "According to the Austrade Critical Minerals Prospectus, what capital cost and IRR does the HPA Project report?",
+   "truth": {
+    "facts": [
+     "capital cost as published: A$155m (includes ~30% contingency)1",
+     "IRR as published: Post-tax IRR: 69%1"
+    ],
+    "tolerance": "figures and units must match the published text (a footnote marker digit may be ignored); US$ versus A$ must be right",
+    "source": "core.project_prospectus"
+   }
+  },
+  {
+   "id": "P-econ-710",
+   "category": "P",
+   "question": "According to the Austrade Critical Minerals Prospectus, what capital cost and IRR does the Hillgrove Antimony–Gold Mine report?",
+   "truth": {
+    "facts": [
+     "capital cost as published: A$133m (net of pre-production revenue)1",
+     "IRR as published: Post-tax IRR: 102%1"
+    ],
+    "tolerance": "figures and units must match the published text (a footnote marker digit may be ignored); US$ versus A$ must be right",
+    "source": "core.project_prospectus"
+   }
+  },
+  {
+   "id": "P-econ-748",
+   "category": "P",
+   "question": "According to the Austrade Critical Minerals Prospectus, what capital cost and IRR does the McLaren Titanium Project report?",
+   "truth": {
+    "facts": [
+     "capital cost as published: A$179.3m (including contingency)1",
+     "IRR as published: Pre-tax IRR: 26.0%1"
+    ],
+    "tolerance": "figures and units must match the published text (a footnote marker digit may be ignored); US$ versus A$ must be right",
+    "source": "core.project_prospectus"
+   }
+  },
+  {
+   "id": "P-owner-767",
+   "category": "P",
+   "question": "In the Austrade Critical Minerals Prospectus, which company is behind the Rover 1 Downstream Refinery (Middle Arm)?",
+   "truth": {
+    "facts": [
+     "the company is Castile Resources Ltd"
+    ],
+    "tolerance": "the company name must match (Ltd/Limited differences are fine)",
+    "source": "core.project_prospectus"
+   }
+  },
+  {
+   "id": "P-owner-797",
+   "category": "P",
+   "question": "In the Austrade Critical Minerals Prospectus, which company is behind the Vecco Critical Minerals Project?",
+   "truth": {
+    "facts": [
+     "the company is Vecco Group Pty Ltd"
+    ],
+    "tolerance": "the company name must match (Ltd/Limited differences are fine)",
+    "source": "core.project_prospectus"
+   }
+  },
+  {
+   "id": "P-count",
+   "category": "P",
+   "question": "How many projects does the Austrade Critical Minerals Prospectus list in total, and how many are upstream versus midstream?",
+   "truth": {
+    "facts": [
+     "94 projects",
+     "58 upstream (mines and developments) and 36 midstream (processing and refining)"
+    ],
+    "tolerance": "counts must match",
+    "source": "core.project_prospectus"
+   }
+  },
+  {
+   "id": "F-range-tin",
+   "category": "F",
+   "question": "What is the latest tin price you hold, and what range around it do you give for 12 months ahead?",
+   "truth": {
+    "facts": [
+     "latest price about 55,385 (US$ per metric ton, August 2026)",
+     "80% range for 12 months ahead about 36,146 to 83,838",
+     "it is stated as a range, not a forecast or direction"
+    ],
+    "tolerance": "figures within 1%; the 80% range bounds within 2%; the answer must not present the range as a prediction",
+    "source": "markets.price_outlook"
+   }
+  },
+  {
+   "id": "F-range-platinum",
+   "category": "F",
+   "question": "What is the latest platinum price you hold, and what range around it do you give for 12 months ahead?",
+   "truth": {
+    "facts": [
+     "latest price about 1,782 (US$ per troy ounce, August 2026)",
+     "80% range for 12 months ahead about 1,142 to 3,362",
+     "it is stated as a range, not a forecast or direction"
+    ],
+    "tolerance": "figures within 1%; the 80% range bounds within 2%; the answer must not present the range as a prediction",
+    "source": "markets.price_outlook"
+   }
+  },
+  {
+   "id": "F-range-lead",
+   "category": "F",
+   "question": "What is the latest lead price you hold, and what range around it do you give for 12 months ahead?",
+   "truth": {
+    "facts": [
+     "latest price about 1,855 (US$ per metric ton, August 2026)",
+     "80% range for 12 months ahead about 1,580 to 2,306",
+     "it is stated as a range, not a forecast or direction"
+    ],
+    "tolerance": "figures within 1%; the 80% range bounds within 2%; the answer must not present the range as a prediction",
+    "source": "markets.price_outlook"
+   }
+  }
+ ]
+}

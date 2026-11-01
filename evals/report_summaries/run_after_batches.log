@@ -1,0 +1,76 @@
+09:18:58 ours: B-cinovec-npv
+09:19:03 judge: B-cinovec-npv
+09:19:15 ours: B-cinovec-capex-reserve
+09:19:22 judge: B-cinovec-capex-reserve
+09:19:35 ours: B-barroso-reserve
+09:19:42 judge: B-barroso-reserve
+09:19:52 ours: B-barroso-econ
+09:19:58 judge: B-barroso-econ
+09:20:10 ours: B-songwe-econ
+09:20:24 judge: B-songwe-econ
+09:20:35 ours: B-songwe-reserve
+09:20:42 judge: B-songwe-reserve
+09:20:52 ours: B-hemerdon-reserve
+09:21:01 judge: B-hemerdon-reserve
+09:21:14 ours: B-hemerdon-econ
+09:21:24 judge: B-hemerdon-econ
+09:21:35 ours: B-keliber-econ
+09:21:41 judge: B-keliber-econ
+09:21:49 ours: B-keliber-reserve
+09:21:56 judge: B-keliber-reserve
+09:22:09 ours: B-dumont-econ
+09:22:13 judge: B-dumont-econ
+09:22:27 ours: B-dumont-resource
+09:22:32 judge: B-dumont-resource
+09:22:49 ours: B-vittangi-resource
+09:23:00 judge: B-vittangi-resource
+09:23:21 ours: B-amitsoq-resource
+09:23:32 judge: B-amitsoq-resource
+# Report-summary pilot set (after-batches): assistant vs general models (2026-10-30)
+
+14 questions, frozen 2026-10-29T18:02:22 (SHA-256 72edeb97bcbb…); the truth was written before any system was asked. OURS = the deployed app answering live. Baselines: `claude-sonnet-5-5` with no tools (PLAIN) and with web search (WEB). Judge: `claude-opus-5-5`, blind, random order.
+
+## By category
+
+| Category | System | Facts correct | Incorrect | Absent | Invented specifics | Behaviour pass | Mean quality | Best |
+|---|---|---|---|---|---|---|---|---|
+| B. Document questions (random passages) (14) | OURS | 42/48 | 3 | 3 | 1 | – | 4.64 | 10 |
+| B. Document questions (random passages) (14) | PLAIN | 1/48 | 11 | 36 | 3 | – | 1.86 | 0 |
+| B. Document questions (random passages) (14) | WEB | 29/48 | 13 | 6 | 6 | – | 3.36 | 3 |
+
+## Fact accuracy overall (categories A, B, C and E)
+
+| System | Correct | Incorrect | Absent | Invented specifics |
+|---|---|---|---|---|
+| OURS | 42/48 (88%) | 3 | 3 | 1 |
+| PLAIN | 1/48 (2%) | 11 | 36 | 3 |
+| WEB | 29/48 (60%) | 13 | 6 | 6 |
+
+OURS minus PLAIN, share of facts correct: 95% interval over questions +72 to +96 points.
+
+OURS minus WEB, share of facts correct: 95% interval over questions +9 to +47 points.
+
+## Where OURS was wrong or missed something
+
+- **B-vittangi-resource** INCORRECT: Total 70.8 Mt at 18.8% Cg containing about 13.3 Mt of graphite Gives the Vittangi total as 35.0 Mt at 23.8% Cg. It mentions 70.8 Mt at 18.8% only as a wider Swedish total and gives no contained-graphite figure for it.
+- **B-vittangi-resource** INCORRECT: Indicated 30.1 Mt at 22.4% Cg States 26.7 Mt at 24.3% Cg.
+- **B-vittangi-resource** INCORRECT: Inferred 40.7 Mt (at about 16.2% Cg) States 8.3 Mt at 22.1% Cg.
+- **B-hemerdon-reserve** missed: About 10.3 million mtu of contained WO3 Says the reserve figures give no contained tungsten. That is wrong, because the truth gives about 10.3 million mtu, but no wrong number is stated.
+- **B-keliber-reserve** missed: 79.82% attributable: 10.35 Mt, ~248 kt LCE States the 79.82% interest but does not compute the attributable figures.
+- **B-dumont-resource** missed: Inferred a further 499.8 Mt at 0.26% Ni 
+
+## Per question (best answer and reason)
+
+| Question | Best | OURS facts | PLAIN facts | WEB facts |
+|---|---|---|---|---|
+| B-cinovec-npv | OURS | 3/3 | 0/3 | 1/3 |
+| B-cinovec-capex-reserve | OURS | 3/3 | 0/3 | 3/3 |
+| B-barroso-reserve | TIE | 3/3 | 0/3 | 3/3 |
+| B-barroso-econ | OURS | 4/4 | 0/4 | 4/4 |
+| B-songwe-econ | OURS | 4/4 | 0/4 | 3/4 |
+| B-songwe-reserve | OURS | 3/3 | 0/3 | 1/3 |
+| B-hemerdon-reserve | WEB | 2/3 | 0/3 | 3/3 |
+| B-hemerdon-econ | OURS | 4/4 | 0/4 | 3/4 |
+| B-keliber-econ | OURS | 4/4 | 0/4 | 0/4 |
+| B-keliber-reserve | OURS | 2/3 | 0/3 | 0/3 |
+09:23:44 saved results_rs_after-batches

@@ -1,0 +1,34 @@
+09:33:56 resuming with 38 finished combinations
+09:45:16 USA_USGS_NGDB                    Cu   tested lift 1.74 [1.62, 1.88] flagged 1059 hit rate 0.88 vs expected 0.50
+09:51:15 USA_USGS_NGDB                    Zn   error: server closed the connection unexpectedly
+	This probably means  
+09:52:01 USA_USGS_NGDB                    Ni   tested lift 2.37 [1.87, 2.97] flagged 1188 hit rate 0.20 vs expected 0.08
+09:53:39 USA_USGS_NGDB                    W    tested lift 2.09 [1.80, 2.39] flagged 712 hit rate 0.47 vs expected 0.22
+09:54:20 USA_USGS_NGDB                    Sn   tested lift 2.78 [2.20, 3.54] flagged 1063 hit rate 0.20 vs expected 0.07
+09:55:30 USA_USGS_NGDB                    Mo   tested lift 2.16 [1.87, 2.49] flagged 1047 hit rate 0.44 vs expected 0.20
+09:58:02 USA_USGS_NGDB                    U    tested lift 2.83 [2.49, 3.21] flagged 378 hit rate 0.70 vs expected 0.25
+09:58:04 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   REE  not tested: fewer than 8 flagged cells 
+09:58:05 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Li   not tested: fewer than 8 flagged cells 
+09:58:17 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Cu   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+09:58:24 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Zn   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+09:58:26 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Ni   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+09:58:28 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   W    not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+09:58:30 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Sn   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+09:58:32 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Mo   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+09:58:34 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   U    not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+{
+  "run_date": "2026-10-27",
+  "grid_deg": 0.25,
+  "percentile": 0.95,
+  "min_anomalous": 3,
+  "near_km": 15.0,
+  "bootstrap": 1000,
+  "combinations": 54,
+  "tested": 27,
+  "better_than_chance": 16,
+  "no_clear_difference": 9,
+  "worse_than_chance": 2,
+  "median_lift": 2.3692593963259867,
+  "seconds": 1478
+}
+saved C:\Users\dean\critical-minerals-ai\evals\backtest\screen_backtest_2026-10-27.json

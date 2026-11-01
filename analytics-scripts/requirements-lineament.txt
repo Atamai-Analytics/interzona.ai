@@ -1,0 +1,9 @@
+# lineament_network_stats.py / lineament_rose_diagram.py: fractopo + geopandas stack, no pyrolite.
+# Pins match requirements.txt (the combination tested together in a real E2B sandbox).
+matplotlib==3.10.9
+psycopg2-binary==2.9.13
+pandas==2.2.3
+numpy==2.3.5
+fractopo==0.9.2
+geopandas==1.2.0
+shapely==2.1.2

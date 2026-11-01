@@ -1,0 +1,76 @@
+19:15:53 ours: B-cinovec-npv
+19:15:59 judge: B-cinovec-npv
+19:16:12 ours: B-cinovec-capex-reserve
+19:16:23 judge: B-cinovec-capex-reserve
+19:16:36 ours: B-barroso-reserve
+19:16:42 judge: B-barroso-reserve
+19:16:53 ours: B-barroso-econ
+19:17:00 judge: B-barroso-econ
+19:17:12 ours: B-songwe-econ
+19:17:23 judge: B-songwe-econ
+19:17:33 ours: B-songwe-reserve
+19:17:39 judge: B-songwe-reserve
+19:17:54 ours: B-hemerdon-reserve
+19:18:04 judge: B-hemerdon-reserve
+19:18:13 ours: B-hemerdon-econ
+19:18:19 judge: B-hemerdon-econ
+19:18:30 ours: B-keliber-econ
+19:18:36 judge: B-keliber-econ
+19:18:46 ours: B-keliber-reserve
+19:18:54 judge: B-keliber-reserve
+19:19:07 ours: B-dumont-econ
+19:19:13 judge: B-dumont-econ
+19:19:28 ours: B-dumont-resource
+19:19:34 judge: B-dumont-resource
+19:19:51 ours: B-vittangi-resource
+19:19:57 judge: B-vittangi-resource
+19:20:17 ours: B-amitsoq-resource
+19:20:24 judge: B-amitsoq-resource
+# Report-summary pilot set (after-prompt2): assistant vs general models (2026-10-29)
+
+14 questions, frozen 2026-10-29T18:02:22 (SHA-256 72edeb97bcbb…); the truth was written before any system was asked. OURS = the deployed app answering live. Baselines: `claude-sonnet-5-5` with no tools (PLAIN) and with web search (WEB). Judge: `claude-opus-5-5`, blind, random order.
+
+## By category
+
+| Category | System | Facts correct | Incorrect | Absent | Invented specifics | Behaviour pass | Mean quality | Best |
+|---|---|---|---|---|---|---|---|---|
+| B. Document questions (random passages) (14) | OURS | 42/48 | 3 | 3 | 2 | – | 4.43 | 11 |
+| B. Document questions (random passages) (14) | PLAIN | 2/48 | 10 | 36 | 2 | – | 1.86 | 0 |
+| B. Document questions (random passages) (14) | WEB | 31/48 | 12 | 5 | 7 | – | 3.36 | 3 |
+
+## Fact accuracy overall (categories A, B, C and E)
+
+| System | Correct | Incorrect | Absent | Invented specifics |
+|---|---|---|---|---|
+| OURS | 42/48 (88%) | 3 | 3 | 2 |
+| PLAIN | 2/48 (4%) | 10 | 36 | 2 |
+| WEB | 31/48 (65%) | 12 | 5 | 7 |
+
+OURS minus PLAIN, share of facts correct: 95% interval over questions +69 to +96 points.
+
+OURS minus WEB, share of facts correct: 95% interval over questions +5 to +44 points.
+
+## Where OURS was wrong or missed something
+
+- **B-vittangi-resource** INCORRECT: Total 70.8 Mt at 18.8% Cg containing about 13.3 Mt of graphite Gives the Vittangi total as 35.0 Mt at 23.8% Cg (8.33 Mt). It mentions 70.8 Mt only as a group total that includes other projects.
+- **B-vittangi-resource** INCORRECT: Indicated 30.1 Mt at 22.4% Cg States 26.7 Mt at 24.3% Cg.
+- **B-vittangi-resource** INCORRECT: Inferred 40.7 Mt (at about 16.2% Cg) States 8.3 Mt at 22.1% Cg.
+- **B-hemerdon-reserve** missed: About 10.3 million mtu of contained WO3 Contained metal not stated
+- **B-dumont-resource** missed: Inferred a further 499.8 Mt at 0.26% Ni 
+- **B-amitsoq-resource** missed: As of October 2026 it is still the current estimate; an update is pending Phase III drilling assays Says no newer estimate is in its records and it cannot confirm one; does not mention the pending update or Phase III.
+
+## Per question (best answer and reason)
+
+| Question | Best | OURS facts | PLAIN facts | WEB facts |
+|---|---|---|---|---|
+| B-cinovec-npv | OURS | 3/3 | 0/3 | 2/3 |
+| B-cinovec-capex-reserve | OURS | 3/3 | 0/3 | 3/3 |
+| B-barroso-reserve | OURS | 3/3 | 0/3 | 3/3 |
+| B-barroso-econ | OURS | 4/4 | 0/4 | 4/4 |
+| B-songwe-econ | OURS | 4/4 | 0/4 | 3/4 |
+| B-songwe-reserve | OURS | 3/3 | 0/3 | 2/3 |
+| B-hemerdon-reserve | WEB | 2/3 | 0/3 | 3/3 |
+| B-hemerdon-econ | OURS | 4/4 | 0/4 | 3/4 |
+| B-keliber-econ | OURS | 4/4 | 0/4 | 0/4 |
+| B-keliber-reserve | OURS | 3/3 | 0/3 | 0/3 |
+19:20:39 saved results_rs_after-prompt2

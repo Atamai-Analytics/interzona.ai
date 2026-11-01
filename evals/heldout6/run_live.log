@@ -1,0 +1,216 @@
+08:16:14 ours: A-occ-Pb-Ind
+08:16:23 plain: A-occ-Pb-Ind
+08:16:31 web: A-occ-Pb-Ind
+08:16:39 judge: A-occ-Pb-Ind
+08:16:49 ours: A-occ-Zn-Arg
+08:17:00 plain: A-occ-Zn-Arg
+08:17:08 web: A-occ-Zn-Arg
+08:17:17 judge: A-occ-Zn-Arg
+08:17:27 ours: A-occ-Zn-Per
+08:17:34 plain: A-occ-Zn-Per
+08:17:42 web: A-occ-Zn-Per
+08:17:50 judge: A-occ-Zn-Per
+08:18:01 ours: A-sup-Antimony
+08:18:07 plain: A-sup-Antimony
+08:18:12 web: A-sup-Antimony
+08:18:18 judge: A-sup-Antimony
+08:18:26 ours: A-sup-Zinc
+08:18:32 plain: A-sup-Zinc
+08:18:35 web: A-sup-Zinc
+08:18:41 judge: A-sup-Zinc
+08:18:52 ours: A-price-Diatomite-2022
+08:18:57 plain: A-price-Diatomite-2022
+08:19:04 web: A-price-Diatomite-2022
+08:19:11 judge: A-price-Diatomite-2022
+08:19:18 ours: A-fin-Syrah-2021
+08:19:23 plain: A-fin-Syrah-2021
+08:19:30 web: A-fin-Syrah-2021
+08:19:34 judge: A-fin-Syrah-2021
+08:19:44 ours: C-compare-Co-ArgRus
+08:19:49 plain: C-compare-Co-ArgRus
+08:19:57 web: C-compare-Co-ArgRus
+08:20:05 judge: C-compare-Co-ArgRus
+08:20:18 ours: C-twosupply-Tantal
+08:20:24 plain: C-twosupply-Tantal
+08:20:34 web: C-twosupply-Tantal
+08:20:45 judge: C-twosupply-Tantal
+08:20:58 ours: C-risk-Lead
+08:21:05 plain: C-risk-Lead
+08:21:21 web: C-risk-Lead
+08:21:35 judge: C-risk-Lead
+08:21:50 ours: C-growth-Syrah-2025
+08:21:54 plain: C-growth-Syrah-2025
+08:22:02 web: C-growth-Syrah-2025
+08:22:13 judge: C-growth-Syrah-2025
+08:22:23 ours: C-total-Chi
+08:22:31 plain: C-total-Chi
+08:22:40 web: C-total-Chi
+08:22:48 judge: C-total-Chi
+08:22:57 ours: C-vague-Manganes
+08:23:07 plain: C-vague-Manganes
+08:23:24 web: C-vague-Manganes
+08:23:36 judge: C-vague-Manganes
+08:23:47 ours: B-doc213-p12
+08:23:53 plain: B-doc213-p12
+08:24:01 web: B-doc213-p12
+08:24:16 judge: B-doc213-p12
+08:24:28 ours: B-doc35-p10
+08:24:35 plain: B-doc35-p10
+08:24:41 web: B-doc35-p10
+08:25:00 judge: B-doc35-p10
+08:25:09 ours: B-doc227-p69
+08:25:18 plain: B-doc227-p69
+08:25:31 web: B-doc227-p69
+08:25:41 judge: B-doc227-p69
+08:25:53 ours: B-doc38-p16
+08:26:03 plain: B-doc38-p16
+08:26:11 web: B-doc38-p16
+08:26:20 judge: B-doc38-p16
+08:26:36 ours: B-doc251-p112
+08:26:47 plain: B-doc251-p112
+08:27:03 web: B-doc251-p112
+08:27:15 judge: B-doc251-p112
+08:27:29 ours: B-doc251-p1
+08:27:35 plain: B-doc251-p1
+08:27:47 web: B-doc251-p1
+08:27:53 judge: B-doc251-p1
+08:28:03 ours: B-doc111-p9
+08:28:11 plain: B-doc111-p9
+08:28:20 web: B-doc111-p9
+08:28:25 judge: B-doc111-p9
+08:28:38 ours: B-doc188-p51
+08:28:45 plain: B-doc188-p51
+08:28:52 web: B-doc188-p51
+08:29:11 judge: B-doc188-p51
+08:29:19 ours: D-5yr-nickel
+08:29:25 plain: D-5yr-nickel
+08:29:35 web: D-5yr-nickel
+08:29:47 judge: D-5yr-nickel
+08:29:56 ours: D-bubble
+08:30:07 plain: D-bubble
+08:30:22 web: D-bubble
+08:30:35 judge: D-bubble
+08:30:48 ours: D-ceo-earn
+08:30:53 plain: D-ceo-earn
+08:31:03 web: D-ceo-earn
+08:31:12 judge: D-ceo-earn
+08:31:23 ours: D-hold
+08:31:34 plain: D-hold
+08:31:43 web: D-hold
+08:31:58 judge: D-hold
+08:32:07 ours: D-safer
+08:32:17 plain: D-safer
+08:32:28 web: D-safer
+08:32:41 judge: D-safer
+08:32:49 ours: D-sample-us
+08:33:06 plain: D-sample-us
+08:33:11 web: D-sample-us
+08:33:18 judge: D-sample-us
+08:33:26 ours: D-prospectus-quote
+08:33:32 plain: D-prospectus-quote
+08:33:38 web: D-prospectus-quote
+08:33:46 judge: D-prospectus-quote
+08:33:52 ours: D-lithium-spot
+08:33:56 plain: D-lithium-spot
+08:34:02 web: D-lithium-spot
+08:34:10 judge: D-lithium-spot
+08:34:22 ours: E-offtake
+08:34:30 plain: E-offtake
+08:34:40 web: E-offtake
+08:34:50 judge: E-offtake
+08:34:57 ours: E-dfs
+08:35:06 plain: E-dfs
+08:35:18 web: E-dfs
+08:35:30 judge: E-dfs
+08:35:42 ours: E-hpa
+08:35:51 plain: E-hpa
+08:36:00 web: E-hpa
+08:36:07 judge: E-hpa
+08:36:20 ours: E-hhi-fair
+08:36:30 plain: E-hhi-fair
+08:36:38 web: E-hhi-fair
+08:36:45 judge: E-hhi-fair
+08:37:00 ours: P-econ-721
+08:37:12 plain: P-econ-721
+08:37:19 web: P-econ-721
+08:37:32 judge: P-econ-721
+08:37:41 ours: P-econ-710
+08:37:48 plain: P-econ-710
+08:37:55 web: P-econ-710
+08:38:03 judge: P-econ-710
+08:38:14 ours: P-econ-748
+08:38:20 plain: P-econ-748
+08:38:26 web: P-econ-748
+08:38:33 judge: P-econ-748
+08:38:42 ours: P-owner-767
+08:38:50 plain: P-owner-767
+08:39:01 web: P-owner-767
+08:39:07 judge: P-owner-767
+08:39:15 ours: P-owner-797
+08:39:22 plain: P-owner-797
+08:39:28 web: P-owner-797
+08:39:33 judge: P-owner-797
+08:39:43 ours: P-count
+08:39:48 plain: P-count
+08:39:54 web: P-count
+08:40:00 judge: P-count
+08:40:10 ours: F-range-tin
+08:40:15 plain: F-range-tin
+08:40:25 web: F-range-tin
+08:40:38 judge: F-range-tin
+08:40:49 ours: F-range-platinum
+08:40:52 plain: F-range-platinum
+08:41:03 web: F-range-platinum
+08:41:14 judge: F-range-platinum
+08:41:27 ours: F-range-lead
+08:41:31 plain: F-range-lead
+08:41:39 web: F-range-lead
+08:41:51 judge: F-range-lead
+# Held-out question set v6 (live): assistant vs general models (2026-10-30)
+
+42 questions, frozen 2026-10-30T08:16:10 (SHA-256 ede3a879d7b7…); the truth was written before any system was asked. OURS = the deployed app answering live. Baselines: `claude-sonnet-5-5` with no tools (PLAIN) and with web search (WEB). Judge: `claude-opus-5-5`, blind, random order.
+
+## By category
+
+| Category | System | Facts correct | Incorrect | Absent | Invented specifics | Behaviour pass | Mean quality | Best |
+|---|---|---|---|---|---|---|---|---|
+| A. Data lookups (database truth) (7) | OURS | 13/13 | 0 | 0 | 0 | – | 5.0 | 6 |
+| A. Data lookups (database truth) (7) | PLAIN | 2/13 | 2 | 9 | 1 | – | 2.29 | 0 |
+| A. Data lookups (database truth) (7) | WEB | 6/13 | 5 | 2 | 3 | – | 3.14 | 0 |
+| C. Vague, comparative and multi-part (database truth) (6) | OURS | 14/14 | 0 | 0 | 0 | – | 4.67 | 6 |
+| C. Vague, comparative and multi-part (database truth) (6) | PLAIN | 6/14 | 3 | 5 | 0 | – | 2.67 | 0 |
+| C. Vague, comparative and multi-part (database truth) (6) | WEB | 7/14 | 2 | 5 | 4 | – | 2.67 | 0 |
+| P. Austrade Prospectus (published text) (6) | OURS | 10/10 | 0 | 0 | 1 | – | 4.5 | 5 |
+| P. Austrade Prospectus (published text) (6) | PLAIN | 1/10 | 0 | 9 | 0 | – | 2.17 | 0 |
+| P. Austrade Prospectus (published text) (6) | WEB | 7/10 | 3 | 0 | 2 | – | 3.33 | 1 |
+| F. Tested price ranges (3) | OURS | 9/9 | 0 | 0 | 0 | – | 5.0 | 3 |
+| F. Tested price ranges (3) | PLAIN | 3/9 | 2 | 4 | 0 | – | 2.0 | 0 |
+| F. Tested price ranges (3) | WEB | 2/9 | 7 | 0 | 3 | – | 1.67 | 0 |
+| B. Document questions (random passages) (8) | OURS | 26/28 | 0 | 2 | 0 | – | 4.88 | 8 |
+| B. Document questions (random passages) (8) | PLAIN | 10/28 | 7 | 11 | 3 | – | 2.12 | 0 |
+| B. Document questions (random passages) (8) | WEB | 20/28 | 1 | 7 | 2 | – | 3.5 | 0 |
+| D. Honesty (should not invent or advise) (8) | OURS | – | 0 | 0 | 1 | 7/8 | 4.12 | 6 |
+| D. Honesty (should not invent or advise) (8) | PLAIN | – | 0 | 0 | 0 | 3/8 | 2.75 | 1 |
+| D. Honesty (should not invent or advise) (8) | WEB | – | 0 | 0 | 1 | 5/8 | 3.0 | 1 |
+| E. General knowledge (fairness check) (4) | OURS | 10/12 | 0 | 2 | 0 | – | 4.25 | 0 |
+| E. General knowledge (fairness check) (4) | PLAIN | 12/12 | 0 | 0 | 0 | – | 5.0 | 2 |
+| E. General knowledge (fairness check) (4) | WEB | 12/12 | 0 | 0 | 0 | – | 5.0 | 1 |
+
+## Fact accuracy overall (categories A, B, C and E)
+
+| System | Correct | Incorrect | Absent | Invented specifics |
+|---|---|---|---|---|
+| OURS | 82/86 (95%) | 0 | 4 | 1 |
+| PLAIN | 34/86 (40%) | 14 | 38 | 4 |
+| WEB | 54/86 (63%) | 18 | 14 | 14 |
+
+OURS minus PLAIN, share of facts correct: 95% interval over questions +40 to +71 points.
+
+OURS minus WEB, share of facts correct: 95% interval over questions +18 to +49 points.
+
+## Where OURS was wrong or missed something
+
+- **B-doc213-p12** missed: AFS on pages 21 to 124 approved and authorised for issue by the board Mentions board approval but gives no page range
+- **B-doc227-p69** missed: construction activities thereof have continued successfully after commencing in March 2023 Says construction is ongoing but gives no March 2023 start date.
+- **E-hpa** missed: demand is driven by LEDs and batteries Lists uses but never says LEDs and batteries drive demand
+08:42:03 saved results_v6_live

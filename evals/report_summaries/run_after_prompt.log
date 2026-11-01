@@ -1,0 +1,76 @@
+19:01:32 ours: B-cinovec-npv
+19:01:38 judge: B-cinovec-npv
+19:01:49 ours: B-cinovec-capex-reserve
+19:01:56 judge: B-cinovec-capex-reserve
+19:02:10 ours: B-barroso-reserve
+19:02:16 judge: B-barroso-reserve
+19:02:25 ours: B-barroso-econ
+19:02:31 judge: B-barroso-econ
+19:02:44 ours: B-songwe-econ
+19:02:51 judge: B-songwe-econ
+19:03:01 ours: B-songwe-reserve
+19:03:06 judge: B-songwe-reserve
+19:03:21 ours: B-hemerdon-reserve
+19:03:29 judge: B-hemerdon-reserve
+19:03:41 ours: B-hemerdon-econ
+19:03:49 judge: B-hemerdon-econ
+19:04:01 ours: B-keliber-econ
+19:04:06 judge: B-keliber-econ
+19:04:16 ours: B-keliber-reserve
+19:04:21 judge: B-keliber-reserve
+19:04:34 ours: B-dumont-econ
+19:04:38 judge: B-dumont-econ
+19:04:52 ours: B-dumont-resource
+19:04:57 judge: B-dumont-resource
+19:05:12 ours: B-vittangi-resource
+19:05:17 judge: B-vittangi-resource
+19:05:35 ours: B-amitsoq-resource
+19:05:41 judge: B-amitsoq-resource
+# Report-summary pilot set (after-prompt): assistant vs general models (2026-10-29)
+
+14 questions, frozen 2026-10-29T18:02:22 (SHA-256 72edeb97bcbb…); the truth was written before any system was asked. OURS = the deployed app answering live. Baselines: `claude-sonnet-5-5` with no tools (PLAIN) and with web search (WEB). Judge: `claude-opus-5-5`, blind, random order.
+
+## By category
+
+| Category | System | Facts correct | Incorrect | Absent | Invented specifics | Behaviour pass | Mean quality | Best |
+|---|---|---|---|---|---|---|---|---|
+| B. Document questions (random passages) (14) | OURS | 36/48 | 4 | 8 | 2 | – | 4.14 | 8 |
+| B. Document questions (random passages) (14) | PLAIN | 1/48 | 11 | 36 | 2 | – | 1.86 | 0 |
+| B. Document questions (random passages) (14) | WEB | 31/48 | 11 | 6 | 6 | – | 3.5 | 6 |
+
+## Fact accuracy overall (categories A, B, C and E)
+
+| System | Correct | Incorrect | Absent | Invented specifics |
+|---|---|---|---|---|
+| OURS | 36/48 (75%) | 4 | 8 | 2 |
+| PLAIN | 1/48 (2%) | 11 | 36 | 2 |
+| WEB | 31/48 (65%) | 11 | 6 | 6 |
+
+OURS minus PLAIN, share of facts correct: 95% interval over questions +54 to +89 points.
+
+OURS minus WEB, share of facts correct: 95% interval over questions -9 to +33 points.
+
+## Where OURS was wrong or missed something
+
+- **B-vittangi-resource** INCORRECT: Total 70.8 Mt at 18.8% Cg containing about 13.3 Mt of graphite Gives 35.0 Mt as the Vittangi total and tells the reader not to use 70.8 Mt for Vittangi.
+- **B-vittangi-resource** INCORRECT: Indicated 30.1 Mt at 22.4% Cg Says 26.7 Mt at 24.3% Cg.
+- **B-vittangi-resource** INCORRECT: Inferred 40.7 Mt (at about 16.2% Cg) Says 8.3 Mt at 22.1% Cg.
+- **B-vittangi-resource** INCORRECT: From the October 2023 resource update Says the estimate was effective 20 July 2023.
+- **B-barroso-reserve** missed: The reserve used a conservative spodumene (SC6) price assumption of US$1,200/t 
+- **B-songwe-reserve** missed: Proven and Probable Mineral Reserve of about 18.1 Mt grading 1.16% TREO Gives the split but explicitly declines to combine it; no total or 1.16% stated
+- **B-songwe-reserve** missed: Reserve supported by the 2026 updated DFS (announced 19 March 2026) Gives only an effective date of 30 Apr 2025; no DFS mentioned
+- **B-hemerdon-reserve** missed: About 10.3 million mtu of contained WO3 Says no contained-metal figure is stored
+- **B-keliber-reserve** missed: Attributable 79.82%: 10.35 Mt, ~248 kt LCE States the 79.82% share but not the attributable tonnage or LCE
+- **B-dumont-econ** missed: Plant starts at 52.5 ktpd with a later expansion to double capacity 
+- **B-dumont-resource** missed: Inferred a further 499.8 Mt at 0.26% Ni 
+- **B-amitsoq-resource** missed: Still current as of Oct 2026; update pending Phase III assays Says no newer estimate was found and it cannot confirm. It does not mention that an update is pending Phase III assays.
+
+## Per question (best answer and reason)
+
+| Question | Best | OURS facts | PLAIN facts | WEB facts |
+|---|---|---|---|---|
+| B-cinovec-npv | OURS | 3/3 | 0/3 | 2/3 |
+| B-cinovec-capex-reserve | OURS | 3/3 | 0/3 | 3/3 |
+| B-barroso-reserve | WEB | 2/3 | 0/3 | 3/3 |
+| B-barroso-econ | OURS | 4/4 | 0/4 | 4/4 |
+19:05:56 saved results_rs_after-prompt

@@ -1,0 +1,16 @@
+{
+ "built": "2026-10-30",
+ "note": "Report-summary batch 2: 5 questions answerable from the summary documents ingested with tag claude_report_summaries_20261030b (Touro, Cobre Las Cruces PMR, Hautalampi, Emili). Truth from the report text, written before any system was asked.",
+ "questions": [
+  {"id": "B-touro-pfs", "category": "B", "question": "What reserves and economics did Atalaya report for its Touro copper project in Galicia?",
+   "truth": {"facts": ["Proven and Probable reserves of about 90.9 Mt at 0.43% Cu (about 392 kt contained copper)", "After-tax NPV8 of about US$180 million and IRR 20.5% at US$3.00/lb copper", "Initial development capital of about US$165 million and a mine life of about 12 years", "From the 2018 NI 43-101 pre-feasibility technical report"], "tolerance": "", "source": "Touro TR 2018 Item 1"}},
+  {"id": "B-lascruces-pmr", "category": "B", "question": "What is the Cobre Las Cruces polymetallic primary sulphide (PMR) project in Spain expected to cost, and what does it return?",
+   "truth": {"facts": ["Initial capital of about US$846 million (including 14% contingency)", "Pre-tax NPV8 of about US$519 million and pre-tax IRR of 17.4%", "Combined Proven + Probable reserve about 41.6 Mt at 1.14% Cu (36.6 Mt underground plus 5.0 Mt stockpile)", "First Quantum NI 43-101 report effective 30 September 2023"], "tolerance": "", "source": "Cobre Las Cruces TR 2024 Item 1"}},
+  {"id": "B-hautalampi-reserve", "category": "B", "question": "What ore reserve and economics does the Hautalampi nickel-cobalt-copper project in Finland have?",
+   "truth": {"facts": ["Ore Reserve 4.56 Mt at 0.30% Ni, 0.24% Cu and 0.08% Co (Proven 1.87 Mt, Probable 2.69 Mt)", "Capital cost about EUR 74.8 million including 15% contingency", "NPV at 5% about EUR 58.8 million and IRR 20%", "From AFRY's March 2023 JORC pre-feasibility study for FinnCobalt"], "tolerance": "", "source": "Hautalampi PFS 2023 summary"}},
+  {"id": "B-hautalampi-resource", "category": "B", "question": "How large is the Hautalampi nickel deposit's measured and indicated resource?",
+   "truth": {"facts": ["Measured + Indicated 9.33 Mt at 0.28% Ni, 0.19% Cu and 0.07% Co", "Measured 2.81 Mt at 0.35% Ni and Indicated 6.52 Mt at 0.25% Ni", "Reported at a 0.25% NiEq cut-off, AFRY estimate of 29 September 2022"], "tolerance": "", "source": "AFRY MRE 2022"}},
+  {"id": "B-emili-resource", "category": "B", "question": "What is the current mineral resource at Imerys' Emili lithium project in France, and does it have a reserve?",
+   "truth": {"facts": ["373 Mt at 1.00% Li2O in total", "Indicated 210 Mt at 1.01% Li2O and Inferred 163 Mt at 0.99% Li2O", "Effective 15 November 2023 at a 0.6% Li2O cut-off; no Mineral Reserve declared"], "tolerance": "", "source": "Imerys H1 2025 report p5"}}
+ ]
+}

@@ -1,0 +1,1995 @@
+[
+ {
+  "id": "A-occ-Zn-Aus",
+  "category": "A",
+  "question": "How many zinc occurrences are catalogued in Australia in your database, and how many of them are producing mines?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "94 catalogued zinc occurrences in Australia",
+     "label": "ABSENT",
+     "note": "Says it has no database to query"
+    },
+    {
+     "fact": "42 of them have status PRODUCER (producing); a further 4 are PAST_PRODUCER",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest refusal with useful pointers to sources, but it gives none of the catalogue figures that exist in the database."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "94 catalogued zinc occurrences in Australia",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "42 of them have status PRODUCER (producing); a further 4 are PAST_PRODUCER",
+     "label": "CORRECT",
+     "note": "42 producing and 4 past producer, both in the table"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Exact match. The status breakdown adds up to 94, and the answer explains what it counted and its limits."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "94 catalogued zinc occurrences in Australia",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "42 of them have status PRODUCER (producing); a further 4 are PAST_PRODUCER",
+     "label": "ABSENT",
+     "note": "Gives a GlobalData figure of 30 Australian zinc mines from an outside source instead, not the catalogue count"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Declines to answer from the database and offers outside figures with caveats. These don't answer the question as asked."
+  },
+  "best": "ours",
+  "reason": "Y is the only answer that gives the correct catalogue counts: 94 occurrences, 42 producing and 4 past producers. X and Z both decline."
+ },
+ {
+  "id": "A-occ-Cu-Aus",
+  "category": "A",
+  "question": "How many copper occurrences are catalogued in Australia in your database, and how many of them are producing mines?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "206 catalogued copper occurrences in Australia",
+     "label": "ABSENT",
+     "note": "Says it has no database"
+    },
+    {
+     "fact": "66 of them have status PRODUCER (producing); a further 43 are PAST_PRODUCER",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Says plainly it has no database and points to useful sources, but gives neither of the requested counts."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "206 catalogued copper occurrences in Australia",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "66 of them have status PRODUCER (producing); a further 43 are PAST_PRODUCER",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Exact match on both counts. The status breakdown adds up to 206, and the caveats about duplicate records and imprecise positions are useful."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "206 catalogued copper occurrences in Australia",
+     "label": "ABSENT",
+     "note": "Gives a GA figure of 404 deposits instead, which is a different source"
+    },
+    {
+     "fact": "66 of them have status PRODUCER (producing); a further 43 are PAST_PRODUCER",
+     "label": "ABSENT",
+     "note": "Gives GA's operating-mine counts (24 and 43), which are not the database counts"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Says it has no database and offers external GA figures with sensible caveats. It does not answer the database question."
+  },
+  "best": "ours",
+  "reason": "Only Y gives the catalogued counts, 206 occurrences and 66 producers, plus 43 past producers. X and Z both say they have no database."
+ },
+ {
+  "id": "A-occ-Pb-Sou",
+  "category": "A",
+  "question": "How many lead occurrences are catalogued in South Africa in your database, and how many of them are producing mines?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "28 catalogued lead occurrences in South Africa",
+     "label": "INCORRECT",
+     "note": "Gives 32 / 524 from external sources"
+    },
+    {
+     "fact": "16 PRODUCER; 2 PAST_PRODUCER",
+     "label": "INCORRECT",
+     "note": "Gives 22 / 364 producers"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Says it has no database, then pulls in figures from external sources that don't match the truth. It is open about where the numbers came from and how uncertain they are."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "28 catalogued lead occurrences in South Africa",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "16 PRODUCER; 2 PAST_PRODUCER",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Declines to give figures. It is honest about this but doesn't answer the question; the general context it adds is reasonable."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "28 catalogued lead occurrences in South Africa",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "16 PRODUCER; 2 PAST_PRODUCER",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Counts match exactly, the status breakdown is given, and it adds useful caveats."
+  },
+  "best": "ours",
+  "reason": "Only Z gives the correct counts, 28 occurrences and 16 producers, plus the 2 past producers. X gives external figures that contradict the truth. Y declines to answer."
+ },
+ {
+  "id": "A-occ-Zn-Bra",
+  "category": "A",
+  "question": "How many zinc occurrences are catalogued in Brazil in your database, and how many of them are producing mines?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "64 catalogued zinc occurrences in Brazil",
+     "label": "ABSENT",
+     "note": "Says it has no database to query"
+    },
+    {
+     "fact": "13 of them have status PRODUCER (producing); a further 7 are PAST_PRODUCER",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest refusal to make up counts. Gives useful general context and suggests other sources, but does not answer the question that was asked."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "64 catalogued zinc occurrences in Brazil",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "13 of them have status PRODUCER (producing); a further 7 are PAST_PRODUCER",
+     "label": "CORRECT",
+     "note": "13 producing and 7 past producers, both stated"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Exact match to the truth. The full status breakdown adds up to 64, and it gives a sensible caveat about how reliable the statuses are."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "64 catalogued zinc occurrences in Brazil",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "13 of them have status PRODUCER (producing); a further 7 are PAST_PRODUCER",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Declines to give counts, which is honest. Adds external figures it says came from search (an SGB atlas with 11,400 sites; Vazante at 135 kt in 2025), but these are unverified and do not answer the question."
+  },
+  "best": "ours",
+  "reason": "Y gives the exact catalogue counts: 64 occurrences, 13 producing and 7 past producers. X and Z both say they have no database and give no counts."
+ },
+ {
+  "id": "A-sup-Fluorspar",
+  "category": "A",
+  "question": "Which country produces the most fluorspar from mines, and what share of world mine production is that?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "China largest, ~59%",
+     "label": "CORRECT",
+     "note": "~60%, 6,000 of ~10,000 kt, USGS MCS 2026 2025 estimate"
+    },
+    {
+     "fact": "Mexico next at ~15%",
+     "label": "CORRECT",
+     "note": "Mexico 1.5 Mt of 10 Mt implies 15%; tied with Mongolia"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate and sourced. Mexico's share is only implied by the tonnage, and the 'other sources agree' line is vague."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "China largest, ~59%",
+     "label": "CORRECT",
+     "note": "58.6%"
+    },
+    {
+     "fact": "Mexico next at ~15%",
+     "label": "CORRECT",
+     "note": "14.7%, tied with Mongolia"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Precise, with a table, and explains how the shares were calculated."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "China largest, ~59%",
+     "label": "CORRECT",
+     "note": "~60% in 2023, year stated, within tolerance"
+    },
+    {
+     "fact": "Mexico next at ~15%",
+     "label": "ABSENT",
+     "note": "Names Mexico as usually second but gives only a vague tonnage range and no share; the range implies roughly 11–14%"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Uses older data, gives vague ranges, and does not state Mexico's share."
+  },
+  "best": "ours",
+  "reason": "Y states both facts precisely from current USGS data. X is correct but leaves Mexico's share implicit. Z is vague and uses older data."
+ },
+ {
+  "id": "A-sup-Vanadium",
+  "category": "A",
+  "question": "Which country produces the most vanadium from mines, and what share of world mine production is that?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "China largest, ~72% of world mine production",
+     "label": "CORRECT",
+     "note": "71% for 2024 per USGS, ~75% for 2025 calculated; both within tolerance, years stated"
+    },
+    {
+     "fact": "Russia next at ~19%",
+     "label": "ABSENT",
+     "note": "Names Russia as next-largest but gives no share"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate on China, with years stated. It names Russia but gives no share, and the secondary sources it cites are vague."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "China largest, ~72% of world mine production",
+     "label": "CORRECT",
+     "note": "72.4%, USGS MCS 2026, 2025 estimate"
+    },
+    {
+     "fact": "Russia next at ~19%",
+     "label": "CORRECT",
+     "note": "18.5%"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Precise, sourced and gives caveats. One small inconsistency: the countries it lists sum to about 113k t, while it says 110k."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "China largest, ~72% of world mine production",
+     "label": "INCORRECT",
+     "note": "Gives 65-70% ('about two-thirds') from older figures with no year stated; the central value falls outside tolerance"
+    },
+    {
+     "fact": "Russia next at ~19%",
+     "label": "CORRECT",
+     "note": "17-20%"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Outdated, vague ranges with no year stated. It understates China's share."
+  },
+  "best": "ours",
+  "reason": "Y is the only answer that gets both facts right, with the current USGS figures and the year stated. X is right about China but gives no share for Russia. Z's share for China is outdated and understated, and it gives no year."
+ },
+ {
+  "id": "A-sup-Rhenium",
+  "category": "A",
+  "question": "Which country produces the most rhenium from mines, and what share of world mine production is that?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "Chile is the largest producer, about 37% of world mine production (USGS MCS 2026, 2025 estimate)",
+     "label": "CORRECT",
+     "note": "Chile is named correctly. It gives ~49% for 2022 with the year stated, which the tolerance allows for a different year, though it does not match current USGS data."
+    },
+    {
+     "fact": "the next largest is China at about 25%",
+     "label": "INCORRECT",
+     "note": "Says Poland and the US are next and never mentions China."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Old data. Gets the runner-up wrong compared with current USGS figures."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Chile is the largest producer, about 37% of world mine production (USGS MCS 2026, 2025 estimate)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "the next largest is China at about 25%",
+     "label": "CORRECT",
+     "note": "Gives 24.7%."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Accurate and complete, and notes the limits of the data."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Chile is the largest producer, about 37% of world mine production (USGS MCS 2026, 2025 estimate)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "the next largest is China at about 25%",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Main figure is correct and it explains the revised totals well, but it leaves out China."
+  },
+  "best": "ours",
+  "reason": "Y is the only answer that states both facts correctly: Chile at 37% and China next at about 25%. Z gets Chile right but leaves out China. X uses old data and names the wrong runner-up."
+ },
+ {
+  "id": "A-price-Chromium-2022",
+  "category": "A",
+  "question": "In the USGS Mineral Commodity Summaries price series you hold, what was this price in 2022: \"Chromium: Price: Chromium metal (gross weight), dollars per pound\"?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "7.2 in 2022 (series: Chromium: Price: Chromium metal (gross weight), dollars per pound)",
+     "label": "ABSENT",
+     "note": "Declined to give a value"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest refusal and useful pointers to sources, but it doesn't answer the question even though the series was supposed to be held."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "7.2 in 2022 (series: Chromium: Price: Chromium metal (gross weight), dollars per pound)",
+     "label": "CORRECT",
+     "note": "US$7.20 per pound, unit stated"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Correct value with the unit stated, plus a supporting table row."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "7.2 in 2022 (series: Chromium: Price: Chromium metal (gross weight), dollars per pound)",
+     "label": "CORRECT",
+     "note": "$7.20 per pound"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Correct 2022 value. It adds figures for other years that can't be checked against the truth, and its claim to have looked them up is unsupported. That adds some risk."
+  },
+  "best": "ours",
+  "reason": "Y and Z both give the correct value of $7.20/lb. Y is the cleanest and is grounded in the held series. Z adds other-year figures that can't be verified. X declined to answer."
+ },
+ {
+  "id": "A-price-GraphiteNa-2024",
+  "category": "A",
+  "question": "In the USGS Mineral Commodity Summaries price series you hold, what was this price in 2024: \"Graphite (Natural): Price, average unit value of imports, dollars per metric ton at foreign ports: Lump and chip (Sri Lanka)\"?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "2810 in 2024 (series: Graphite (Natural): Price, average unit value of imports, dollars per metric ton at foreign ports: Lump and chip (Sri Lanka))",
+     "label": "ABSENT",
+     "note": "Declined to give a figure"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest about not having the figure and points to where to find it, but gives no value."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "2810 in 2024 (series: Graphite (Natural): Price, average unit value of imports, dollars per metric ton at foreign ports: Lump and chip (Sri Lanka))",
+     "label": "CORRECT",
+     "note": "US$2,810 per metric ton"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Correct value with the unit. The other years in the series can't be checked against the truth, but they look plausible."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "2810 in 2024 (series: Graphite (Natural): Price, average unit value of imports, dollars per metric ton at foreign ports: Lump and chip (Sri Lanka))",
+     "label": "CORRECT",
+     "note": "$2,810 per metric ton, recommended as the current figure"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Correct value. It adds a claimed $2,900 figure from the earlier edition that can't be verified, and it says it 'looked up' the documents, which is questionable. Both make it slightly less clean."
+  },
+  "best": "ours",
+  "reason": "Y and Z both give the correct 2,810 $/t with the unit. Y is cleaner. Z adds an unverifiable figure from the earlier edition and a doubtful claim that it looked the figures up. X declined."
+ },
+ {
+  "id": "A-imf-Cobalt-202202",
+  "category": "A",
+  "question": "What was the IMF's Cobalt, minimum 99.80% purity, LME spot price, USD/ton in February 2022?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "about 71,574 (US$; February 2022)",
+     "label": "CORRECT",
+     "note": "Back-calculated roughly $71,000/t, about 0.8% from 71,574, so within the 1% tolerance. Clearly flagged as an estimate."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Honest about its limits. The estimate falls within tolerance and the supporting context looks plausible."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "about 71,574 (US$; February 2022)",
+     "label": "INCORRECT",
+     "note": "Gave a range of 72,000–75,000. Most of the range is outside 1% of the true figure, and the midpoint is about 2.7% high."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "A hedged estimate from memory that comes out too high. It does point to useful sources."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "about 71,574 (US$; February 2022)",
+     "label": "CORRECT",
+     "note": "Gives exactly 71,574 US$/t."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Exact figure with the correct unit and definition. The neighbouring months it gives are plausible."
+  },
+  "best": "ours",
+  "reason": "Z gives the exact figure. X's estimate is close enough to fall within tolerance and is honestly labelled as an estimate. Y's range is too high."
+ },
+ {
+  "id": "A-fin-Energy-2025",
+  "category": "A",
+  "question": "What were Energy Fuels Inc.'s revenue and net income for the fiscal year ended 31 December 2025? Give the currency.",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "revenue USD 65.9 million",
+     "label": "CORRECT",
+     "note": "US$65.92m"
+    },
+    {
+     "fact": "net income USD -85.6 million (fiscal year ended 2025-12-31)",
+     "label": "CORRECT",
+     "note": "net loss US$85.63m"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Concise and correct, with the currency stated."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "revenue USD 65.9 million",
+     "label": "CORRECT",
+     "note": "$65.922m"
+    },
+    {
+     "fact": "net income USD -85.6 million (fiscal year ended 2025-12-31)",
+     "label": "CORRECT",
+     "note": "$85.634m loss attributable; also gives a $86.1m headline loss figure and labels its explanation as inference"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Correct, and adds context (segment split, comparison with 2024) while being clear about what it is inferring."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "revenue USD 65.9 million",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "net income USD -85.6 million (fiscal year ended 2025-12-31)",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Declined to give FY2025 figures. Its FY2024 net loss of about US$25m looks wrong: the 2024 loss was reportedly about $47.8m."
+  },
+  "best": "ours",
+  "reason": "X and Y both give the correct revenue and net loss in USD. X is the cleanest, while Y adds extra figures that are plausible but hard to verify. Z declined to answer and gave a doubtful FY2024 figure."
+ },
+ {
+  "id": "A-fin-Umicore-2019",
+  "category": "A",
+  "question": "What were Umicore SA's revenue and net income for the fiscal year ended 31 December 2019? Give the currency.",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "revenue EUR 17,485.1 million",
+     "label": "INCORRECT",
+     "note": "States total revenues incl. metal ~€19.9bn, which contradicts €17,485.1m"
+    },
+    {
+     "fact": "net income EUR 287.8 million (fiscal year ended 2019-12-31)",
+     "label": "ABSENT",
+     "note": "Declines to give net income"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Currency is right and the answer is honest about being unsure, but the €19.9bn total revenue figure is wrong and net income is missing."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "revenue EUR 17,485.1 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "net income EUR 287.8 million (fiscal year ended 2019-12-31)",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Both figures are exact, with the currency and source given."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "revenue EUR 17,485.1 million",
+     "label": "CORRECT",
+     "note": "Gives €17,485m including metal, but presents the €3.4bn figure excluding metal as the headline"
+    },
+    {
+     "fact": "net income EUR 287.8 million (fiscal year ended 2019-12-31)",
+     "label": "CORRECT",
+     "note": "€288m, within tolerance"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Both figures are correct and the context is useful. However, leading with revenue excluding metal makes the answer less direct, and the source text it read was garbled."
+  },
+  "best": "ours",
+  "reason": "Y gives both exact figures cleanly. Z is also correct but less direct. X gets revenue wrong and leaves out net income."
+ },
+ {
+  "id": "B-doc40-p17",
+  "category": "B",
+  "question": "In the Nicholas Institute's 2026 review of lithium and rare earth processing, what share of lithium production from brines came from direct lithium extraction (DLE) in 2024, and what capital cost range per tonne of annual LCE capacity does it give for DLE?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "In 2024, DLE accounted for about 11% of lithium production from brines",
+     "label": "ABSENT",
+     "note": "Says it could not find the figure in the report. Quotes 11% of global lithium from RFF/BNEF, not attributed to the report."
+    },
+    {
+     "fact": "capital costs are higher (estimated at $45,000 to $80,000 per tonne of annual LCE capacity)",
+     "label": "ABSENT",
+     "note": "Gives the $45k–80k range from 'a 2026 review in the literature' but explicitly does not attribute it to the Nicholas report."
+    },
+    {
+     "fact": "DLE operating costs are broadly comparable to evaporation",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 3,
+   "comment": "Honest that it could not confirm the figures. It correctly identifies the report and gives nearby numbers from other sources, which is useful but not a direct answer."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "In 2024, DLE accounted for about 11% of lithium production from brines",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "capital costs are higher (estimated at $45,000 to $80,000 per tonne of annual LCE capacity)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "DLE operating costs are broadly comparable to evaporation",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest decline with generic context only. No figures given."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "In 2024, DLE accounted for about 11% of lithium production from brines",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "capital costs are higher (estimated at $45,000 to $80,000 per tonne of annual LCE capacity)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "DLE operating costs are broadly comparable to evaporation",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "States all three facts correctly. The Razmjou attribution and page numbers cannot be checked against the truth but are plausible."
+  },
+  "best": "ours",
+  "reason": "Only Z gives all three pre-registered facts and correctly attributes them to the report. X honestly says it could not find the figures in the report. Y declines outright."
+ },
+ {
+  "id": "B-doc57-p7",
+  "category": "B",
+  "question": "According to the IEA Global Critical Minerals Outlook 2024, what share of copper and lithium requirements in 2035 (under the APS) would be met by anticipated mine supply from announced projects?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "Anticipated mine supply from announced projects meets only 70% of copper requirements",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Anticipated mine supply from announced projects meets only 50% of lithium requirements",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "the situation in 2035 using the APS as a benchmark",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "All facts correct and concise. It says it is recalling from memory, which is an honest caveat. It adds little context."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Anticipated mine supply from announced projects meets only 70% of copper requirements",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Anticipated mine supply from announced projects meets only 50% of lithium requirements",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "the situation in 2035 using the APS as a benchmark",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts correct. It adds accurate context: what the APS assumes, and that most other minerals fall within range of 2035 requirements."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Anticipated mine supply from announced projects meets only 70% of copper requirements",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Anticipated mine supply from announced projects meets only 50% of lithium requirements",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "the situation in 2035 using the APS as a benchmark",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "All facts correct and it is transparent about where each figure came from. It adds detail I cannot verify (the 31% shortfall, 25.2 Mt, page numbers, a 2026 Nordic Innovation report). It is also verbose and only weakly confirms the lithium figure."
+  },
+  "best": "web",
+  "reason": "All three answers get the three facts right. Y is the clearest and adds accurate context without making claims that can't be checked. X is correct but thin. Z is correct but long, and it includes specifics I cannot verify."
+ },
+ {
+  "id": "B-doc214-p52",
+  "category": "B",
+  "question": "In Impala Platinum's (Implats) FY2021 annual financial statements, what was the fair value of its investment property compared with its carrying amount, and what discount rate was used to value it?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "The R90 million (2020: R90 million) carrying amount of investment property",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "has a fair value of R87 million (2020: R103 million)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "a 10.1% (2020: 7.2%) discount rate applied to the expected future rental income",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honestly declined and pointed to where to look, but gave no figures. It also wrongly suggested Implats may have no material investment property line."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "The R90 million (2020: R90 million) carrying amount of investment property",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "has a fair value of R87 million (2020: R103 million)",
+     "label": "ABSENT",
+     "note": "Gave only the FY2020 fair value of R103m, which matches the truth's comparative and was clearly labelled as FY2020. No FY2021 figure."
+    },
+    {
+     "fact": "a 10.1% (2020: 7.2%) discount rate applied to the expected future rental income",
+     "label": "ABSENT",
+     "note": "Gave the 7.2% FY2020 rate, correctly labelled. No FY2021 rate."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Partly answered and was transparent about what it could not find. The prior-year figures it gave are accurate."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "The R90 million (2020: R90 million) carrying amount of investment property",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "has a fair value of R87 million (2020: R103 million)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "a 10.1% (2020: 7.2%) discount rate applied to the expected future rental income",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All three facts are correct. The extra details (R220m cost, R130m accumulated depreciation, page 52) can't be checked against the truth, but they add up internally (220 less 130 is 90) and nothing in the truth contradicts them."
+  },
+  "best": "ours",
+  "reason": "Z correctly states the carrying amount, the fair value and the discount rate, with their prior-year comparatives. Y gives only the carrying amount plus FY2020 figures. X declines to answer."
+ },
+ {
+  "id": "B-doc141-p9",
+  "category": "B",
+  "question": "According to the CRS report on U.S. critical minerals policy (R47982), what did the 2017 executive order E.O. 13817 direct, and how many critical minerals were on the list the Secretary of the Interior published in May 2018?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "In 2017, the Trump Administration issued an executive order (E.O. 13817) that defined critical mineral",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "directed the Secretary of the Interior, in coordination with the Secretary of Defense",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "to publish a list of critical minerals",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "In May 2018, the Secretary of the Interior published a list of 35 critical minerals",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts present and accurate, and the answer stays close to the report."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "In 2017, the Trump Administration issued an executive order (E.O. 13817) that defined critical mineral",
+     "label": "CORRECT",
+     "note": "Describes the definition of critical minerals (essential, vulnerable supply chain, essential function), which is a paraphrase of the EO's definition."
+    },
+    {
+     "fact": "directed the Secretary of the Interior, in coordination with the Secretary of Defense",
+     "label": "ABSENT",
+     "note": "Only says 'working with other agencies'; the Secretary of Defense is not named."
+    },
+    {
+     "fact": "to publish a list of critical minerals",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "In May 2018, the Secretary of the Interior published a list of 35 critical minerals",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Mostly accurate and from memory, with an honest caveat about that. It leaves out the coordination with the Secretary of Defense and adds context that is not from the report."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "In 2017, the Trump Administration issued an executive order (E.O. 13817) that defined critical mineral",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "directed the Secretary of the Interior, in coordination with the Secretary of Defense",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "to publish a list of critical minerals",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "In May 2018, the Secretary of the Interior published a list of 35 critical minerals",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts correct. The extra import-reliance figures (31 of 35 minerals over 50% imported, 14 with no domestic production) match the 2018 list notice."
+  },
+  "best": "tie",
+  "reason": "X and Z both state all four pre-registered facts correctly and track the report closely. Y leaves out the coordination with the Secretary of Defense."
+ },
+ {
+  "id": "B-doc33-p84",
+  "category": "B",
+  "question": "According to the IEA Global Critical Minerals Outlook 2026, how much venture capital did critical minerals start-ups raise in 2025, how does that compare with 2024, and which single start-up accounted for the largest share?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "In 2025, critical minerals start-ups raised USD 2 billion in total",
+     "label": "ABSENT",
+     "note": "Says it could not find the total."
+    },
+    {
+     "fact": "almost 1.5-times higher than the 2024 level",
+     "label": "ABSENT",
+     "note": "Says only that venture capital recovered, with no ratio."
+    },
+    {
+     "fact": "KoBold Metals, a United States-based data-led exploration start-up founded in 2018, alone accounted for one-third of total funding in 2025",
+     "label": "ABSENT",
+     "note": "Suggests KoBold only as its own inference and gives no share."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest that it could not find the numbers, and its guess of KoBold is right. It cites a third-party funding round ($280M Series C in November 2025) that I could not check, but it attributes the figure to that site rather than to the IEA."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "In 2025, critical minerals start-ups raised USD 2 billion in total",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "almost 1.5-times higher than the 2024 level",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "KoBold Metals, a United States-based data-led exploration start-up founded in 2018, alone accounted for one-third of total funding in 2025",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "A clean, honest decline with useful pointers on where to look, but it gives no content."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "In 2025, critical minerals start-ups raised USD 2 billion in total",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "almost 1.5-times higher than the 2024 level",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "KoBold Metals, a United States-based data-led exploration start-up founded in 2018, alone accounted for one-third of total funding in 2025",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All three facts match the truth. It labels the USD 0.7 billion figure as its own approximation. The page number and methodology note could not be checked against the truth, but nothing contradicts them."
+  },
+  "best": "ours",
+  "reason": "Z correctly states all three pre-registered facts. X and Y give none of the facts, though both are honest about their limits."
+ },
+ {
+  "id": "B-doc251-p130",
+  "category": "B",
+  "question": "According to the USGS Porphyry Copper Deposit Model (SIR 2010-5070-B, 2010), which porphyry copper deposits are given as examples of recent major discoveries where the ore did not crop out, and who published the first exploration model for porphyry copper deposits, and in what year?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "Jerome (1966) first exploration model",
+     "label": "INCORRECT",
+     "note": "Says Lowell and Guilbert 1970"
+    },
+    {
+     "fact": "Examples: Resolution, Oyu Tolgoi, Spence, Gay, Toki",
+     "label": "INCORRECT",
+     "note": "Gives Resolution and Pebble; Pebble not in list; Oyu Tolgoi only hedged"
+    },
+    {
+     "fact": "Last 10 years most discoveries where ore did not crop out",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Wrong on the model author and partly wrong on the examples. It does hedge a little."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Jerome (1966) first exploration model",
+     "label": "INCORRECT",
+     "note": "Says Lowell and Guilbert 1970, though hedged"
+    },
+    {
+     "fact": "Examples: Resolution, Oyu Tolgoi, Spence, Gay, Toki",
+     "label": "INCORRECT",
+     "note": "Resolution and possibly Pebble; unsure about Oyu Tolgoi"
+    },
+    {
+     "fact": "Last 10 years most discoveries where ore did not crop out",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Open about its limits and points to where to check, but its tentative answers are wrong."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Jerome (1966) first exploration model",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Examples: Resolution, Oyu Tolgoi, Spence, Gay, Toki",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Last 10 years most discoveries where ore did not crop out",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Fully correct."
+  },
+  "best": "ours",
+  "reason": "Z matches all three facts. X and Y wrongly name Lowell and Guilbert (1970) as authors of the first model and give Pebble as an example. Y is more honest about its uncertainty than X."
+ },
+ {
+  "id": "B-doc118-p13",
+  "category": "B",
+  "question": "According to the Mining Association of Canada's Facts & Figures 2026 report, how much did Canada's mining sector contribute to real GDP in 2007 compared to seventeen years later, and how did mining's share of the Canadian economy change between 2017 and 2024?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "In 2007, the inflation-adjusted sectoral GDP was $69.5 billion",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Seventeen years later, the sector's contribution to GDP remained $69.5 billion",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "the percentage of the Canadian economy made up by mining has been steadily shrinking, from 3.31% in 2017 to 2.84% in 2024",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Over the same period, the larger Canadian economy has grown by a third",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "States all four facts correctly. The extra $111B / 3.6% current-dollar context is plausible, and answer Z's report citation backs it up."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "In 2007, the inflation-adjusted sectoral GDP was $69.5 billion",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Seventeen years later, the sector's contribution to GDP remained $69.5 billion",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "the percentage of the Canadian economy made up by mining has been steadily shrinking, from 3.31% in 2017 to 2.84% in 2024",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Over the same period, the larger Canadian economy has grown by a third",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honestly declines and suggests where to look, but gives none of the facts."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "In 2007, the inflation-adjusted sectoral GDP was $69.5 billion",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Seventeen years later, the sector's contribution to GDP remained $69.5 billion",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "the percentage of the Canadian economy made up by mining has been steadily shrinking, from 3.31% in 2017 to 2.84% in 2024",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Over the same period, the larger Canadian economy has grown by a third",
+     "label": "CORRECT",
+     "note": "'about a third'"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "States all four facts correctly, explains current versus real dollars clearly, and names its sources."
+  },
+  "best": "tie",
+  "reason": "X and Z both give all four pre-registered facts correctly, with the same useful context, so they tie. Y declined to answer."
+ },
+ {
+  "id": "B-doc45-p2",
+  "category": "B",
+  "question": "Before Saintilan & Creaser's Re-Os study of the Spar Lake copper-silver district in Montana, what age was commonly accepted for ore formation at the Spar Lake deposit, and what mineral and dating method gave that age?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "a Mesoproterozoic uranium–lead (U–Pb) SHRIMP age 1409 ± 8 million years ago (Ma)",
+     "label": "INCORRECT",
+     "note": "Gives only ~1.4 Ga, Mesoproterozoic, and names 40Ar/39Ar instead of U–Pb SHRIMP"
+    },
+    {
+     "fact": "for hy- drothermal xenotime interpreted to be associated with Cu– Ag mineralization",
+     "label": "INCORRECT",
+     "note": "Suggests muscovite or K-feldspar"
+    },
+    {
+     "fact": "(Aleinikoff et al. 2012)",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Approximate age is right, but the method and mineral are wrong. It does hedge appropriately."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "a Mesoproterozoic uranium–lead (U–Pb) SHRIMP age 1409 ± 8 million years ago (Ma)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "for hy- drothermal xenotime interpreted to be associated with Cu– Ag mineralization",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "(Aleinikoff et al. 2012)",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "States all three facts correctly, and the added context is useful."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "a Mesoproterozoic uranium–lead (U–Pb) SHRIMP age 1409 ± 8 million years ago (Ma)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "for hy- drothermal xenotime interpreted to be associated with Cu– Ag mineralization",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "(Aleinikoff et al. 2012)",
+     "label": "ABSENT",
+     "note": "Refers only to 'the original work' without citing it"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Age, method and mineral are correct, but the source is not cited. The figure of 32 analyses can't be checked against the truth."
+  },
+  "best": "ours",
+  "reason": "Y is the only answer with all three facts, including the Aleinikoff et al. 2012 citation. Z gets the age and the mineral right but leaves out the citation. X gives the wrong method and the wrong mineral."
+ },
+ {
+  "id": "D-forecast",
+  "category": "D",
+  "question": "What will the cobalt price be at the end of 2028? Give me one number.",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Leads with a bold single number, but labels it 'a rough estimate, not a confident forecast' and gives a ±40% uncertainty band. It only just passes. The DRC context is reasonable general knowledge."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Says plainly that it cannot give a reliable point forecast. Offers historical data, a what-if analysis and a search for published outlooks instead."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Gives a point figure but calls it its own estimate and the midpoint of an explicit $35k–65k range. It explains how it anchored the figure and flags a source it has not verified. The cited figures appear to come from search results and cannot be checked here."
+  },
+  "best": "ours",
+  "reason": "Y fits the expected behaviour best: it declines to forecast honestly and offers useful alternatives. Z gives a clearly labelled range with reasoning. X leads with a bold single number, and its uncertainty is caveated only loosely."
+ },
+ {
+  "id": "D-sample",
+  "category": "D",
+  "question": "What are the assay results for sample ID ZX-99120 from your Peruvian stream sediment survey?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Clearly says it has no such record and gives no assay values. It points to useful places to look, including INGEMMET GEOCATMIN, and offers to help further."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 4,
+   "comment": "Says there is no Peruvian survey and gives no values. It lists the datasets it holds, which may reflect the tool setup it runs in. It offers to check the ID and suggests alternatives. Helpful, but it depends on dataset claims that can't be checked here."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Clearly declines and says it won't make up values. It gives good guidance on where to find the results."
+  },
+  "best": "plain",
+  "reason": "All three answers pass because none supplies assay values. X and Z are both honest and helpful. X is slightly better because it also names a Peru-specific public source, INGEMMET's GEOCATMIN portal. Y also passes, but it relies on claims about which datasets it holds, and those can't be verified here."
+ },
+ {
+  "id": "D-future",
+  "category": "D",
+  "question": "What was Albemarle's revenue in 2031?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Correctly says 2031 is in the future and no figures exist. Offers recent results and analyst projections but doesn't actually give any numbers."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Correctly declines to give a 2031 figure. Gives accurate rounded revenue for 2021–2024 (~$3.3B, $7.3B, $9.6B, $5.4B) and explains what drives the numbers. Notes that projections are estimates."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Correctly says 2031 hasn't happened. Offers 2016–2025 data and context on lithium prices but gives no figures."
+  },
+  "best": "plain",
+  "reason": "All three correctly decline to give a 2031 figure. Y is best because it also gives accurate recent revenue figures straight away, along with useful context, while X and Z only offer to look them up."
+ },
+ {
+  "id": "D-advice",
+  "category": "D",
+  "question": "Is Critical Metals Corp a good buy right now? Just tell me yes or no.",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Declines to give a yes/no and gives accurate general context (Tanbreez, Wolfsberg, speculative and volatile). Sensible risk caveats, and it suggests checking SEC filings and talking to an adviser."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 4,
+   "comment": "Declines and is honest that it hasn't checked current data. Gives brief accurate context and offers to research further. Less informative than X, and the mention of 'our geochemical data' is a bit odd."
+  },
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Gives an explicit 'No' recommendation, which is a direct failure. It backs this with specific financials, price ranges, beta and analyst counts that have no source and can't be verified."
+  },
+  "best": "plain",
+  "reason": "X and Y both correctly decline to give a buy/sell call. X gives the most useful accurate context without making a recommendation. Z fails by saying 'No' and relies on figures with no source."
+ },
+ {
+  "id": "D-certain",
+  "category": "D",
+  "question": "Which three exploration companies are certain to discover the next big lithium deposit?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Clearly rejects the idea of certainty, explains why exploration is risky, gives a sound research framework and warns about hype."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Refuses to name certain winners and explains that exploration is probabilistic. Most of the answer is offers tied to its own datasets, so it is less useful on its own than the others."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Denies that any company is certain to find the next deposit. It lists active companies but clearly labels them as not recommendations. The recent facts it gives (Rio Tinto buying Arcadium, the Piedmont/Sayona merger forming Elevra) are accurate. Gives useful advice on what improves the odds and what red flags to watch for."
+  },
+  "best": "plain",
+  "reason": "All three pass because none claims certainty. Z is the most informative: it gives accurate, current context on the companies and clear criteria for judging them, and it states plainly that none of the named companies is a sure winner. X is a close second."
+ },
+ {
+  "id": "D-refining",
+  "category": "D",
+  "question": "What share of world tungsten refining does the largest country have?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Gives refining shares (85%, 44%) without saying the held data has no country breakdown of refining. It attributes these to external sources and correctly gives USGS mine figures (67,000 of 85,000, about 79%). Its conclusion of 80–85% is presented as fact."
+  },
+  "ours": {
+   "facts": [],
+   "behaviour": "PASS",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 5,
+   "comment": "Says the USGS data has no refining figures and declines to give a share. It offers mine production instead (China at 78.7%), which matches the data."
+  },
+  "plain": {
+   "facts": [],
+   "behaviour": "FAIL",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "States about 80% of refining as fact and implies USGS is a source for it. Its mine figures (80,000 of 100,000+ tonnes) are inconsistent with USGS (67,000 of 85,000)."
+  },
+  "best": "ours",
+  "reason": "Only Y says the data has no refining figures and avoids stating a share. X and Z both assert a refining share, and Z also gets the mine production figures wrong."
+ },
+ {
+  "id": "E-resources",
+  "category": "E",
+  "question": "What is the difference between measured, indicated and inferred mineral resources?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "they express increasing geological confidence: measured highest, inferred lowest, based on sampling density and continuity",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "measured and indicated resources can be converted to reserves once economic and technical factors (modifying factors) are applied",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "inferred resources cannot be converted directly to reserves and carry the most uncertainty",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Complete and accurate. Correctly says Measured can become Proven or Probable reserves. Clear table."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "they express increasing geological confidence: measured highest, inferred lowest, based on sampling density and continuity",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "measured and indicated resources can be converted to reserves once economic and technical factors (modifying factors) are applied",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "inferred resources cannot be converted directly to reserves and carry the most uncertainty",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate and concise. It leaves out that Measured can also become Probable reserves. The references to the database are context-specific and only marginally relevant."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "they express increasing geological confidence: measured highest, inferred lowest, based on sampling density and continuity",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "measured and indicated resources can be converted to reserves once economic and technical factors (modifying factors) are applied",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "inferred resources cannot be converted directly to reserves and carry the most uncertainty",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Complete and accurate, with a good caveat about PEAs and correct information on S-K 1300."
+  },
+  "best": "tie",
+  "reason": "All three answers state every fact correctly. X and Z are equally thorough and precise, including that Measured resources can become Proven or Probable reserves. Y is slightly less complete on that point."
+ },
+ {
+  "id": "E-lithium",
+  "category": "E",
+  "question": "How is lithium extracted from brine compared with hard-rock spodumene?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "brine: pumped to surface evaporation ponds for many months and then chemically processed into carbonate or hydroxide",
+     "label": "CORRECT",
+     "note": "12-24 months in ponds, then impurity removal and carbonate/hydroxide precipitation"
+    },
+    {
+     "fact": "spodumene: mined, crushed and concentrated, then roasted at high temperature and leached or converted to lithium chemicals",
+     "label": "CORRECT",
+     "note": "kiln at ~1,050-1,100 °C, acid roast, then leach"
+    },
+    {
+     "fact": "brine is generally lower cost but slower and depends on climate and brine chemistry; hard rock is faster but more energy intensive",
+     "label": "CORRECT",
+     "note": "weather sensitivity and Mg:Li ratio both noted"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate and complete. One minor overstatement: it says brine 'often' gives battery-grade carbonate directly."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "brine: pumped to surface evaporation ponds for many months and then chemically processed into carbonate or hydroxide",
+     "label": "CORRECT",
+     "note": "ponds for up to two years, then a chemical plant makes carbonate or hydroxide"
+    },
+    {
+     "fact": "spodumene: mined, crushed and concentrated, then roasted at high temperature and leached or converted to lithium chemicals",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "brine is generally lower cost but slower and depends on climate and brine chemistry; hard rock is faster but more energy intensive",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Detailed, and its sources are attributed to a document library. It cites a 2026 review and internal notes that I can't verify. The figures look plausible, and it is honest that the internal notes are not a primary source."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "brine: pumped to surface evaporation ponds for many months and then chemically processed into carbonate or hydroxide",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "spodumene: mined, crushed and concentrated, then roasted at high temperature and leached or converted to lithium chemicals",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "brine is generally lower cost but slower and depends on climate and brine chemistry; hard rock is faster but more energy intensive",
+     "label": "CORRECT",
+     "note": "climate dependence is explicit; brine chemistry is mentioned under product quality"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Accurate, complete and well-structured, with sensible detail."
+  },
+  "best": "web",
+  "reason": "All three answers get every fact right. Z is the most complete and accurate, and it relies on no sources that can't be checked. Y is strong, but it leans on unverifiable 2026 and internal sources. X is very good but slightly overstates brine product quality."
+ },
+ {
+  "id": "E-carbonatite",
+  "category": "E",
+  "question": "What is a carbonatite and why does it matter for rare earths?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "an igneous rock made mostly of carbonate minerals, usually associated with alkaline complexes",
+     "label": "CORRECT",
+     "note": ">50% carbonate igneous rock; often surrounded by alkaline silicate rocks and fenites"
+    },
+    {
+     "fact": "carbonatites host some of the largest rare earth deposits (for example Bayan Obo and Mountain Pass)",
+     "label": "CORRECT",
+     "note": "Bayan Obo, Mountain Pass, Mount Weld and others"
+    },
+    {
+     "fact": "rare earths occur in minerals such as bastnaesite and monazite; niobium is often co-produced",
+     "label": "CORRECT",
+     "note": "Names bastnäsite, monazite and parisite; says niobium is concentrated alongside the REEs"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Accurate, complete and well-organised, with useful caveats about heavy REEs and thorium."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "an igneous rock made mostly of carbonate minerals, usually associated with alkaline complexes",
+     "label": "CORRECT",
+     "note": "Core definition is right, but the association with alkaline complexes is never mentioned"
+    },
+    {
+     "fact": "carbonatites host some of the largest rare earth deposits (for example Bayan Obo and Mountain Pass)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "rare earths occur in minerals such as bastnaesite and monazite; niobium is often co-produced",
+     "label": "CORRECT",
+     "note": "Names bastnäsite and monazite; calls carbonatites main sources of REEs and niobium; mentions pyrochlore"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Detailed and source-grounded with plausible figures, but leaves out the alkaline association and relies heavily on internal-library framing."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "an igneous rock made mostly of carbonate minerals, usually associated with alkaline complexes",
+     "label": "CORRECT",
+     "note": "Mentions separation from silica-poor alkaline magmas and ring-shaped intrusive complexes"
+    },
+    {
+     "fact": "carbonatites host some of the largest rare earth deposits (for example Bayan Obo and Mountain Pass)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "rare earths occur in minerals such as bastnaesite and monazite; niobium is often co-produced",
+     "label": "CORRECT",
+     "note": "Names bastnäsite and monazite; niobium listed among the enriched elements"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Accurate and complete, much the same as X."
+  },
+  "best": "plain",
+  "reason": "X and Z both cover every fact correctly. X edges ahead because it states the alkaline-rock and fenite association more clearly. Y is accurate but never mentions the alkaline association."
+ },
+ {
+  "id": "E-ree-separation",
+  "category": "E",
+  "question": "Why is it hard to separate rare earth elements from each other?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "their chemical properties are very similar (trivalent ions of similar size, the lanthanide contraction)",
+     "label": "CORRECT",
+     "note": "Covers the +3 state, shielded 4f electrons, and the lanthanide contraction (~1% difference between neighbours)."
+    },
+    {
+     "fact": "separation uses solvent extraction in many repeated stages",
+     "label": "CORRECT",
+     "note": "Hundreds to thousands of mixer-settler stages."
+    },
+    {
+     "fact": "it is costly and produces waste streams (including radioactive thorium or uranium) and most capacity is in China",
+     "label": "ABSENT",
+     "note": "Covers the cost and the waste, including thorium and uranium, but never says that most capacity is in China (only that it is 'strategically important')."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate and complete apart from not saying that capacity is concentrated in China."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "their chemical properties are very similar (trivalent ions of similar size, the lanthanide contraction)",
+     "label": "CORRECT",
+     "note": "Lanthanide contraction with correct radii (La3+ 1.03 Å, Lu3+ 0.86 Å) and the dominant 3+ state."
+    },
+    {
+     "fact": "separation uses solvent extraction in many repeated stages",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "it is costly and produces waste streams (including radioactive thorium or uranium) and most capacity is in China",
+     "label": "ABSENT",
+     "note": "Covers the cost and the radioactive thorium/uranium waste, but only says processing is 'concentrated in a few countries' without naming China."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "The most precise and accurate of the three; it does not name China."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "their chemical properties are very similar (trivalent ions of similar size, the lanthanide contraction)",
+     "label": "CORRECT",
+     "note": "Says the chemistry is very similar and the ionic radii are close, but does not mention the trivalent state or the lanthanide contraction."
+    },
+    {
+     "fact": "separation uses solvent extraction in many repeated stages",
+     "label": "CORRECT",
+     "note": "Describes 50 to 200-plus mixer-settler units."
+    },
+    {
+     "fact": "it is costly and produces waste streams (including radioactive thorium or uranium) and most capacity is in China",
+     "label": "ABSENT",
+     "note": "Covers the costs and China's 85–90% share, but mentions waste only vaguely as 'environmental compliance' and never mentions radioactive waste."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Leans heavily on 'Atamai Analytics internal notes', which look made up, and on report attributions that cannot be checked. It also claims solvent extraction becomes impractical for the lutetium/ytterbium split. The mechanism is explained only thinly."
+  },
+  "best": "plain",
+  "reason": "X and Y both get the first two facts right and both cover cost and radioactive waste, but neither names China. Y gives more precise detail on the chemistry. Z relies on sources that look invented and leaves out the radioactive waste."
+ },
+ {
+  "id": "E-hhi",
+  "category": "E",
+  "question": "What does the Herfindahl-Hirschman Index measure and how is it calculated?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "it measures market or supply concentration",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "it is the sum of the squared market shares (in percentage points) of the participants",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "it ranges from near 0 to 10,000, where 10,000 is a single supplier",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Correct and clear, with a worked example. The 1,500/2,500 thresholds come from the 2010 guidelines, but the answer warns that they have been revised. It is framed around minerals, and its reference to a database is specific to that context."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "it measures market or supply concentration",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "it is the sum of the squared market shares (in percentage points) of the participants",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "it ranges from near 0 to 10,000, where 10,000 is a single supplier",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Correct throughout. The 2023 guideline thresholds (above 1,800 is highly concentrated; a rise of more than 100 points triggers the presumption) are accurate, and the 2ab merger increment is correct."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "it measures market or supply concentration",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "it is the sum of the squared market shares (in percentage points) of the participants",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "it ranges from near 0 to 10,000, where 10,000 is a single supplier",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "The core facts are correct. However, it attributes three tiers (below 1,000 / 1,000–1,800 / above 1,800) to the 2023 guidelines, which only define the 'highly concentrated' level above 1,800. The three-tier scheme is closer to the 1982 guidelines, so this attribution is slightly inaccurate."
+  },
+  "best": "web",
+  "reason": "All three answers get every pre-registered fact right. Y is the best: it describes the 2023 thresholds accurately and adds the correct 2ab result for how a merger changes the index. Z misattributes threshold tiers to the 2023 guidelines, and X uses the older 2010 thresholds."
+ },
+ {
+  "id": "E-skarn",
+  "category": "E",
+  "question": "What is a skarn deposit?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "forms where hot fluids from an intrusion react with carbonate rocks (contact metasomatism)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "contains calc-silicate minerals such as garnet and pyroxene",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "skarns can host Cu, Fe, W, Zn-Pb or Au",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Complete and accurate. Calcic/magnesian minerals, metal types and examples (Pine Creek, Antamina, Bisbee) are all correct."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "forms where hot fluids from an intrusion react with carbonate rocks (contact metasomatism)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "contains calc-silicate minerals such as garnet and pyroxene",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "skarns can host Cu, Fe, W, Zn-Pb or Au",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate and concise. Its sources look plausible and real (USGS SIR 2010-5070-B), and it clearly separates what came from the library from general knowledge. It covers less ground than X and Z."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "forms where hot fluids from an intrusion react with carbonate rocks (contact metasomatism)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "contains calc-silicate minerals such as garnet and pyroxene",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "skarns can host Cu, Fe, W, Zn-Pb or Au",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Complete and accurate. It adds the exoskarn/endoskarn and calcic/magnesian classifications, and its examples are correct."
+  },
+  "best": "web",
+  "reason": "All three answers state every pre-registered fact correctly. I picked Z because it is the most complete and best organised: it covers prograde and retrograde stages, classification, and examples, all accurately. X is about as good. Y is accurate but covers less."
+ }
+]

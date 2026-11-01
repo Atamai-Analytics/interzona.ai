@@ -1,0 +1,2780 @@
+{
+ "date": "2026-10-27",
+ "base_model": "claude-sonnet-5-5",
+ "judge_model": "claude-opus-5-5",
+ "summary": {
+  "plain": {
+   "questions": 14,
+   "preference": {
+    "ours": 14,
+    "tie": 0,
+    "plain": 0
+   },
+   "mean_scores": {
+    "specificity": {
+     "ours": 4.86,
+     "baseline": 2.71
+    },
+    "traceability": {
+     "ours": 4.29,
+     "baseline": 1.21
+    },
+    "accuracy": {
+     "ours": 4.36,
+     "baseline": 3.0
+    },
+    "honesty_about_limits": {
+     "ours": 4.93,
+     "baseline": 3.86
+    },
+    "usefulness": {
+     "ours": 4.64,
+     "baseline": 2.29
+    }
+   },
+   "claims": {
+    "ours": {
+     "SUPPORTED": 63,
+     "CONTRADICTED": 0,
+     "SPECIFIC_NOT_CHECKABLE": 50,
+     "GENERAL": 2
+    },
+    "theirs": {
+     "SUPPORTED": 13,
+     "CONTRADICTED": 11,
+     "SPECIFIC_NOT_CHECKABLE": 40,
+     "GENERAL": 23
+    }
+   },
+   "could_not_do_the_task": {
+    "ours": 0,
+    "baseline": 9
+   }
+  },
+  "web": {
+   "questions": 14,
+   "preference": {
+    "ours": 13,
+    "tie": 0,
+    "web": 1
+   },
+   "mean_scores": {
+    "specificity": {
+     "ours": 4.79,
+     "baseline": 3.57
+    },
+    "traceability": {
+     "ours": 4.29,
+     "baseline": 2.0
+    },
+    "accuracy": {
+     "ours": 4.5,
+     "baseline": 3.07
+    },
+    "honesty_about_limits": {
+     "ours": 4.93,
+     "baseline": 3.71
+    },
+    "usefulness": {
+     "ours": 4.5,
+     "baseline": 2.93
+    }
+   },
+   "claims": {
+    "ours": {
+     "SUPPORTED": 69,
+     "CONTRADICTED": 0,
+     "SPECIFIC_NOT_CHECKABLE": 36,
+     "GENERAL": 3
+    },
+    "theirs": {
+     "SUPPORTED": 18,
+     "CONTRADICTED": 7,
+     "SPECIFIC_NOT_CHECKABLE": 64,
+     "GENERAL": 14
+    }
+   },
+   "could_not_do_the_task": {
+    "ours": 0,
+    "baseline": 8
+   }
+  }
+ },
+ "results": [
+  {
+   "title": "Greenland rare earths: from anomalies to owners",
+   "prompt": "Where should I explore for rare earth elements in Greenland, which companies hold projects there, and what does our literature say about the geology of the main deposits? Keep it to the top leads.",
+   "ours_chars": 5036,
+   "plain_chars": 2924,
+   "web_chars": 4582,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "GEUS screen: ~49,000 samples screened, ~18,000 with REE data; top 5% per sample type flagged",
+       "label": "SUPPORTED",
+       "note": "Pack lists the GEUS sample geochemistry anomaly screen as a source; the exact counts are not shown in the pack"
+      },
+      {
+       "claim": "Top new lead: Godthåbsfjord area ~64.0N 49.7W, 95 of 232 samples anomalous, max ~22,980 ppm TREE",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Rests on the screen; A itself says to check the outlier value"
+      },
+      {
+       "claim": "Energy Transition Minerals holds Kvanefjeld; SDSG gives ~450 Mt M+I at ~11,000-12,000 ppm TREO; stalled by the 2021 uranium ban",
+       "label": "SUPPORTED",
+       "note": "Cites SDSG inventory p.39, which is in the pack"
+      },
+      {
+       "claim": "Greenland Mines holds Sarfartoq (development project, 2026 initial assessment)",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "From the asset records; holder name differs from the commonly cited Hudson Resources"
+      },
+      {
+       "claim": "Critical Metals Corp acquired a controlling interest in Tanbreez (per SDSG)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Gardar Province: Mesoproterozoic alkaline suite of 14 intrusive complexes, magmas from metasomatised lithospheric mantle (Jonsson et al.)",
+       "label": "SUPPORTED",
+       "note": "Cites Jonsson et al., which is in the pack"
+      },
+      {
+       "claim": "Kringlerne: kakortokite cumulate, 28 Mt TREO total resource, LREE:HREE ~2:1",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "'28 Mt TREO' looks like ore tonnage reported as contained oxide, so it may be misstated"
+      },
+      {
+       "claim": "Niaqornakassak 26 Mt at 1.4% TREO with 13% HREO; Milne Land ~4 Mt at 0.6-1.2% TREO",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Attributed to Jonsson et al."
+      },
+      {
+       "claim": "Motzfeldt ~340 Mt ore, ~760,000 t REO from internal notes",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Sourced from the internal notes, which A correctly flags as not a primary source"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 5,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Cannot see internal literature; geology comes from general knowledge",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Kvanefjeld held by Energy Transition Minerals with Shenghe as largest shareholder; blocked by the 2021 uranium ban; in arbitration",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "The uranium-ban part matches the SDSG source"
+      },
+      {
+       "claim": "Tanbreez held by Critical Metals Corp; eudialyte-hosted, HREE-enriched kakortokite, low U/Th",
+       "label": "SUPPORTED",
+       "note": "Holder matches SDSG"
+      },
+      {
+       "claim": "Sarfartoq held by Hudson Resources",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Differs from the asset records, which list Greenland Mines"
+      },
+      {
+       "claim": "Grønnedal-Íka possibly held by Eclipse Metals (unverified)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Ilímaussaq ~1.16 Ga, Gardar Province",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 2,
+      "accuracy": 4,
+      "honesty_about_limits": 4,
+      "usefulness": 3
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "I prefer A. It answers all three parts of the question from the cited sources. It gives quantified geochemical leads from the GEUS screen with coordinates, sample counts and distances to known sites. It names holders with their sources, and it summarises the literature on the geology with figures attributed to Jonsson et al. and the SDSG inventory. It is also frank about its limits: OCR text, internal notes that are not a primary source, uncertain catalogue positions, and an outlier value it says to check. There are two minor problems. The '28 Mt TREO' figure for Kringlerne may misstate ore tonnage as contained oxide. And A says the Ivittuut-area lead sits in different geology, although Ivittuut is part of the Gardar system. B openly says it cannot access the literature, so it could not do the literature part of the task. It falls back on general knowledge that is sensible but untraceable and gives no new targets beyond the known deposits.",
+    "ours_was": "A"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "The GEUS screen flags a Godthåbsfjord cell at ~64.0N 49.7W: 232 samples, 95 anomalous, max ~22,980 ppm TREE",
+       "label": "SUPPORTED",
+       "note": "Comes from the GEUS anomaly screen shown in the pack."
+      },
+      {
+       "claim": "Further anomaly leads in SW Greenland (60.75N 48.1W) and the Gardar belt (61.0N 45.3W)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Energy Transition Minerals holds Kvanefjeld; SDSG gives ~450 Mt M+I at ~11,000–12,000 ppm TREO, stalled by the 2021 uranium ban",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Greenland Mines holds Sarfartoq, with a 2026 initial assessment",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Critical Metals holds Tanbreez, according to the SDSG inventory",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Jonsson et al.: Kringlerne is a kakortokite cumulate with 28 Mt TREO",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Niaqornakassak holds 26 Mt at 1.4% TREO, 13% HREO",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Motzfeldt holds ~340 Mt of ore and ~760,000 t REO, from the internal notes",
+       "label": "SUPPORTED",
+       "note": "Labelled as coming from the compiled notes, which are not a primary source."
+      },
+      {
+       "claim": "Milne Land palaeoplacer holds ~4 Mt at 0.6–1.2% TREO",
+       "label": "SUPPORTED"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 5,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Greenland's minister approved the Tanbreez mining and closure plans on 29 Sept 2026, valid to 2050",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Greenland rejected renewal of the Kvanefjeld exploration licence in June 2026",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "The pack's SDSG inventory mentions only the 2021 uranium ban stalling Kvanefjeld."
+      },
+      {
+       "claim": "Critical Metals' Tanbreez stake rose from 42% to 92.5% in April 2026",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Greenland Mines (GRML) holds Sarfartoq",
+       "label": "SUPPORTED",
+       "note": "Matches the asset records."
+      },
+      {
+       "claim": "Energy Transition Minerals holds Kvanefjeld",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Tanbreez is hosted in kakortokite and Kvanefjeld in lujavrite with steenstrupine",
+       "label": "SUPPORTED",
+       "note": "Matches Jonsson et al."
+      },
+      {
+       "claim": "Kakortokite has 29 units, with red layer +16 a 3.5 m eudialyte-rich zone",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Motzfeldt grades 0.260% TREO and Gronnedal 0.63% REO",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Could not see the internal literature, so it used public sources",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 2,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 3
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "B is the stronger answer. It gives concrete exploration targets taken from the GEUS geochemistry screen, ties each company holding to a named source, and draws the geology from the literature (Jonsson et al., SDSG), citing it throughout. Its caveats are clear: these are single-sample assays, catalogued positions may be off, and the compiled notes are not a primary source. One small slip: B refers to an \"Ivittuut-area lead\" that does not match its listed leads. A openly admits it could not see the internal literature, so it fails the \"our literature\" part of the question. It also relies on many unverifiable 2026 news claims and adds no new exploration targets.",
+    "ours_was": "B"
+   }
+  },
+  {
+   "title": "Where does Rio Tinto operate?",
+   "prompt": "Show me where Rio Tinto's mines and plants are and what share Rio Tinto owns in each.",
+   "ours_chars": 3208,
+   "plain_chars": 3156,
+   "web_chars": 3537,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Rio Tinto's share is recorded for 37 assets; 18 can be placed on the map",
+       "label": "SUPPORTED",
+       "note": "Matches the pack: 37 assets, 18 positions"
+      },
+      {
+       "claim": "Oyu Tolgoi 66%, Escondida 30%, Simandou 45%",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "The pack gives counts only; these figures are consistent with public data"
+      },
+      {
+       "claim": "Diavik 100%, Tiwai Point 100%",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Consistent with Rio's buyouts in 2021 and 2024"
+      },
+      {
+       "claim": "Porto Trombetas (MRN) 22%, QMM 85%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Stakes range from 100% down to 10% (Alumar)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "No output or size figures in the source",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Cannot draw a map",
+       "label": "GENERAL",
+       "note": "The requested map is not produced"
+      },
+      {
+       "claim": "Diavik ~60% with a partner holding 40%",
+       "label": "CONTRADICTED",
+       "note": "Out of date: Rio took 100% in 2021, and A's records show 100%"
+      },
+      {
+       "claim": "Tiwai Point ~79.4%",
+       "label": "CONTRADICTED",
+       "note": "Out of date: Rio took 100% in 2024"
+      },
+      {
+       "claim": "MRN ~12%",
+       "label": "CONTRADICTED",
+       "note": "Rio's stake was raised to 22%"
+      },
+      {
+       "claim": "QMM ~80%",
+       "label": "CONTRADICTED",
+       "note": "Now 85%"
+      },
+      {
+       "claim": "Oyu Tolgoi ~66%, Escondida 30%, Simandou ~45%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Resolution Copper 55%, Winu ~70%, Alouette 40%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 1,
+      "accuracy": 2,
+      "honesty_about_limits": 4,
+      "usefulness": 3
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "A gives the map and a full table of ownership shares, and it matches the evidence pack (37 assets, 18 with positions). It is also open about which assets cannot be placed and why. B cannot produce a map and works from memory. Several of B's shares are out of date (Diavik, Tiwai Point, MRN and QMM), and the answer is cut off at the end. B does mention some assets that A leaves out, such as Resolution Copper and Alouette, but it is less reliable overall.",
+    "ours_was": "A"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Ownership is recorded for 37 assets, of which 18 have positions and are mapped",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Simandou (SimFer) 45%, with an approximate position",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Tomago 51.6%, Boyne Island 73.5%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Lithium assets: Olaroz 66.5%; Fenix, Rincon, Sal de Vida and Cauchari 100%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "QMM 85%, RBM 74%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Stakes range from 100% down to 10% (Alumar)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Some positions are only accurate to tens of kilometres; there are no output figures",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Boyne Island smelter: Rio Tinto share 74% (rose from 59% to 73.5%)",
+       "label": "SUPPORTED",
+       "note": "B's table, which matches the pack, gives 73.5%"
+      },
+      {
+       "claim": "Tomago: 52%",
+       "label": "SUPPORTED",
+       "note": "Rounded from 51.6%"
+      },
+      {
+       "claim": "Simandou: SimFer 85%, Government of Guinea 15%; Rio Tinto's share is 27 of 60 Mtpa",
+       "label": "SUPPORTED",
+       "note": "27/60 works out to the 45% shown in B"
+      },
+      {
+       "claim": "Oyu Tolgoi 66%, Escondida 30%, IOC 58.7%, Robe River 53%, Hope Downs 50%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "MRN 22%, Sangaredi 22.95%, Alumar 10%, Sohar 20%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Alouette 40%, Bécancour 25%, Matalco 50%, Rio Tinto Fer et Titane 100%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Lithium assets (Rincon, Arcadium) are not in the data pulled",
+       "label": "CONTRADICTED",
+       "note": "The pack's 37 assets include Rincon, Fenix, Olaroz, Sal de Vida and Cauchari"
+      },
+      {
+       "claim": "Cannot draw a map",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 3,
+      "accuracy": 3,
+      "honesty_about_limits": 3,
+      "usefulness": 3
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "The question asks where the assets are, and B delivers a map. It places the 18 assets that have positions, flags which ones are missing from the map, and gives ownership shares that match the 37-asset evidence pack, including the lithium assets. A cannot draw a map and only groups operations by country. It also wrongly says the lithium assets are not in the data. Some of A's extra assets, such as Alouette and Bécancour, could not be checked against the pack.",
+    "ours_was": "B"
+   }
+  },
+  {
+   "title": "Producing lithium sites in Argentina",
+   "prompt": "Show me the producing and past-producing lithium occurrences in Argentina on a map.",
+   "ours_chars": 1203,
+   "plain_chars": 2735,
+   "web_chars": 5149,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "32 lithium occurrences in Argentina have producing or past-producing status",
+       "label": "SUPPORTED",
+       "note": "Pack shows 32 SEGEMAR records"
+      },
+      {
+       "claim": "9 producing and 23 past producing",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Adds up to 32"
+      },
+      {
+       "claim": "Producing sites include Olaroz, Salar del Hombre Muerto, Salar Centenario, Salar Ratones and Tres Quebradas",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Past-producing list includes Salar del Rincon, Pastos Grandes and San Elías",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Conlara-Géminis and San Elías may be duplicate records",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Data come from SEGEMAR/SIGAM (CC BY 4.0)",
+       "label": "SUPPORTED"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 4,
+      "accuracy": 4,
+      "honesty_about_limits": 4,
+      "usefulness": 4
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Fénix at Salar del Hombre Muerto has been producing since 1997",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Olaroz (Sales de Jujuy) has been producing since 2015",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Cauchari-Olaroz (Minera Exar) has been producing since 2023-24",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Centenario-Ratones (Eramet) started production in 2024",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Approximate coordinates for 8 brine operations (salar centres)",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Self-described as approximate"
+      },
+      {
+       "claim": "Hard-rock pegmatites were historically worked in San Luis, Córdoba and Catamarca, with no coordinates given",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Cannot render a map; gives a folium script instead",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 2,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 2
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "B gives a map from catalogue data. Its 32-record count and its SEGEMAR source match the evidence pack, and it flags possible duplicates and limits on what the status labels mean. It does miss some quirks in the data: Reflejos del Mar appears under both producing and past producing, and some names look garbled, such as 'La Viquitasan Luis'. A could not render a map. It gives approximate salar-centre coordinates from memory and a script, and leaves out all past-producing hard-rock sites. That means it skips half of what was asked.",
+    "ours_was": "B"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "32 producing or past-producing lithium occurrences in Argentina (9 producing, 23 past producing)",
+       "label": "SUPPORTED",
+       "note": "Matches the 32 SEGEMAR/SIGAM records in the evidence pack"
+      },
+      {
+       "claim": "Producing sites include Olaroz, Salar Centenario, Salar Ratones, Salar del Hombre Muerto, Tres Quebradas, among others",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "The pack does not list individual names"
+      },
+      {
+       "claim": "Past-producing list includes Conlara-Géminis and San Elías as duplicate records",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Data source: SEGEMAR / SIGAM (CC BY 4.0)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Positions may be off by a few kilometres; past-producing status reflects the catalogue, not verified production",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 4,
+      "accuracy": 4,
+      "honesty_about_limits": 4,
+      "usefulness": 4
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Cannot draw a map in chat; provides Leaflet HTML code with approximate coordinates",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Seven producing brine projects: Cauchari-Olaroz, Centenario-Ratones, Fénix, Mariana, Olaroz, Sal de Oro, Tres Quebradas",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Cauchari-Olaroz 2026 guidance of about 35,000–40,000 t lithium carbonate",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Fénix was the only operating lithium project in Argentina for almost 20 years",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Maria del Huerto dykes in San Luis were mined for spodumene between 1936 and 1940",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Lists both Rincón and Salar del Rincón as separate projects under construction",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Looks like a double count of the same project"
+      },
+      {
+       "claim": "Past-producing pegmatites are plotted only as district-level markers; Las Tapias was left out",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 2,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 3
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "A presents a map built from the 32 SEGEMAR catalogue records. Its producing and past-producing counts match the evidence pack, and it flags the likely duplicate records. B cannot show a map. Instead it hands the user Leaflet code whose coordinates are approximate guesses. It plots only district-level markers for past-producing sites, and it appears to list Rincón twice. A is grounded in data and directly does what was asked.",
+    "ours_was": "A"
+   }
+  },
+  {
+   "title": "Who is most exposed to the uranium price?",
+   "prompt": "How sensitive are Cameco's, Kazatomprom's and Energy Fuels' revenue to the uranium price, and who is most exposed? Show the chart.",
+   "ours_chars": 2521,
+   "plain_chars": 3255,
+   "web_chars": 4211,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Kazatomprom same-year R² 0.97, elasticity 1.2, about ±US$254m for a ±10% price move (2017–2025, 9 yrs)",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "The pack has Kazatomprom revenue from 2017 onward, and it rises steadily with price, which fits a strong result. The statistics themselves aren't shown."
+      },
+      {
+       "claim": "Cameco same-year R² 0.56, elasticity 0.43; lagged R² 0.77",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Cameco revenue falls from 2016 to 2021 while the price rises, which fits a weaker same-year fit and a better lagged fit."
+      },
+      {
+       "claim": "Energy Fuels revenue fell to about US$2–6m in 2019–2021",
+       "label": "SUPPORTED",
+       "note": "Pack: 5.9, 1.7, 3.2"
+      },
+      {
+       "claim": "Energy Fuels revenue was US$66m in 2025",
+       "label": "SUPPORTED",
+       "note": "Pack: 65.9"
+      },
+      {
+       "claim": "Series cover 2016–2025 (2017–2025 for Kazatomprom) and use the Nuexco IMF spot price",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Energy Fuels has the highest elasticity (1.32 same-year, 1.66 lagged)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Cameco had a 2021 loss year with near-zero gross profit while McArthur River was suspended",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Kazatomprom figures are converted from tenge and Cameco's from Canadian dollars",
+       "label": "SUPPORTED",
+       "note": "The sources include BIS exchange rates"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Kazatomprom estimated revenue elasticity is about 0.6, the highest",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Recalled from memory. The ranking matches A, but the size differs a lot from A's 1.2."
+      },
+      {
+       "claim": "Energy Fuels elasticity is about 0.3–0.4",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Cameco elasticity is about 0.3 and Cameco is least exposed",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Uranium is about 65–70% of Cameco's revenue and 90%+ of Kazatomprom's",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Kazatomprom's mineral extraction tax is price-linked",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Energy Fuels' revenue swings more on volume sold than on price",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 1,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 2
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "I prefer Answer A. It works from actual revenue and price series that match the evidence pack: the year ranges and the Energy Fuels revenue figures check out. It reports R², elasticities, dollar impacts, results with and without a one-year lag, and what happens when outlier years are dropped. It also gives sensible caveats and refers to a chart. Answer B says it can't render the chart, so it doesn't fully do the task. It offers only a text chart and plotting code, and its elasticities are rough figures recalled from memory with no data behind them. B is honest about these limits, but it is much less reliable.",
+    "ours_was": "A"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Kazatomprom's revenue tracks the price most closely (same-year R² 0.97, elasticity 1.2)",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Consistent with the strong co-movement in the pack (revenue 849.6 to 3866.7 as price rose)"
+      },
+      {
+       "claim": "Cameco's elasticity is 0.43, about ±US$74m of revenue for a 10% price move",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Plausible given Cameco's pack revenue of 1176–2490"
+      },
+      {
+       "claim": "Energy Fuels' revenue was about US$2–6m in 2019–2021 and US$66m in 2025",
+       "label": "SUPPORTED",
+       "note": "Pack: 5.9, 1.7, 3.2 and 65.9"
+      },
+      {
+       "claim": "The series run 2016–2025 (2017–2025 for Kazatomprom) and use the Nuexco IMF spot price averaged by fiscal year",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Kazatomprom's figures are converted from tenge and Cameco's from Canadian dollars to US$",
+       "label": "SUPPORTED",
+       "note": "The pack lists BIS exchange rates as a source"
+      },
+      {
+       "claim": "Lagged fit for Cameco is R² 0.77",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Cameco's 2021 was a loss year while McArthur River was suspended",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 4
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Energy Fuels is most exposed per dollar of spot; about half its volume is sold at spot",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Based on Q2 2026 sales figures, which the pack does not cover"
+      },
+      {
+       "claim": "Cameco's 2026 realized prices at spot $40–$160 are 58, 62, 66, 67, 68, 69, 69 (from Cameco's sensitivity table as of June 30, 2026)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Spot uranium is about $90/lb; 'the uranium price today is 90.10'",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "The pack's latest annual average is 69.69 or 58.77"
+      },
+      {
+       "claim": "Kazatomprom's realized prices rose 13–16% on a 25% rise in spot in H1 2026",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Energy Fuels' Q2 uranium revenue was $24.95M, up from $3.85M; inventory is about 2.2M lb at a cost of $33.92/lb",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Kazatomprom's 1Q26 realized price was $61.33/lb against spot of $88.49/lb",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Cameco is least exposed in the near term because of fixed-price legacy contracts",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 2,
+      "accuracy": 2,
+      "honesty_about_limits": 3,
+      "usefulness": 3
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "I prefer B. It answers the revenue-sensitivity question directly and refers to a chart it produced. It runs a quantified regression of revenue against the price (R², elasticity, dollar impact of a 10% move) on the same revenue/price data shown in the evidence pack. The figures I could check match the pack, it names its data sources, and its caveats are clear (short series, association rather than cause, currency conversion).\n\nA could not render a chart and offers text bars instead. It looks at realized prices rather than revenue. It also relies on many 2026 figures the pack does not cover, plus an odd 'price today 90.10' line, and does not cite specific documents for them. Its qualitative ranking may be insightful, but I can't verify it from what is on the page.",
+    "ours_was": "B"
+   }
+  },
+  {
+   "title": "The lithium price cycle: who was resilient?",
+   "prompt": "How did Albemarle and SQM come through the 2022 to 2024 lithium price cycle? Compare their revenue and margins with the lithium price and tell me who was more resilient.",
+   "ours_chars": 2713,
+   "plain_chars": 2927,
+   "web_chars": 3395,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Lithium price 63,700 (2022), 39,000 (2023), 11,800 (2024) $/t, from USGS",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "SQM revenue peaked at $10.7bn in 2022 and was down 58% by 2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Albemarle revenue peaked at $9.6bn in 2023, then fell 44% in 2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Albemarle gross margin 1.2% and operating margin -33% in 2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "SQM gross margin 29.3% and operating margin 23.5% in 2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "SQM net income stayed positive throughout (685 in 2024)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "2023 free cash flow: SQM -$1.3bn, Albemarle -$0.8bn; 2024: SQM +$303m, Albemarle -$993m",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Albemarle debt fell from $4.2bn to $3.2bn; SQM's rose to $4.8bn",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Albemarle's 2021 operating profit was flattered by a one-off gain; SQM's 2023 figure includes a one-off lithium mining tax",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "SQM was more resilient",
+       "label": "SUPPORTED"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Albemarle revenue ~$7.3B (2022), ~$9.6B (2023), ~$5.4B (2024)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Albemarle net income ~+$2.7B, ~+$1.6B, ~-$1.2B for 2022-2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "SQM net income ~+$4.6B in 2022",
+       "label": "CONTRADICTED",
+       "note": "Pack shows $3,906m"
+      },
+      {
+       "claim": "SQM net income ~+$1.5B in 2023",
+       "label": "CONTRADICTED",
+       "note": "Pack shows $923m"
+      },
+      {
+       "claim": "SQM revenue ~$10.7B (2022), ~$7.5B (2023), ~$4.0-4.5B (2024)",
+       "label": "SUPPORTED",
+       "note": "2024 actual is $4,529m, at the top of the range"
+      },
+      {
+       "claim": "SQM adj. EBITDA margin ~60%+ in 2022",
+       "label": "CONTRADICTED",
+       "note": "Pack EBITDA/revenue is about 54%"
+      },
+      {
+       "claim": "Lithium spot peaked at ~$70-80k/t in Q4 2022 and was ~$9-12k/t in 2024",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Pack gives only annual averages: 63,700 in 2022 and 11,800 in 2024"
+      },
+      {
+       "claim": "Albemarle's revenue lagged because of index-based contracts",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "The Codelco partnership takes effect from 2025",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "SQM was more resilient",
+       "label": "SUPPORTED"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 1,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 3
+     },
+     "could_not": false
+    },
+    "winner": "ours",
+    "reason": "B gives exact figures that match the evidence pack and lines up revenue and margins against the USGS price year by year. It also adds cash flow and debt, and its caveats are clear (US GAAP vs IFRS, the US-based price series, one-off items). A works from memory and says so. Its Albemarle figures are right, but it overstates SQM's net income for 2022 and 2023 and its 2022 EBITDA margin, and it cites no sources. Both reach the same verdict, but B is the one an investor could check and rely on.",
+    "ours_was": "B"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "The lithium price peaked at $63,700/t in 2022, then fell to $39,000 in 2023 and $11,800 in 2024, a drop of about 81%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "SQM's revenue peaked at $10.7bn in 2022 and was 58% lower by 2024 ($4.5bn)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Albemarle's revenue peaked at $9.6bn in 2023, then fell 44% to $5.4bn in 2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Albemarle's gross margin went from 42% to 12.3% to 1.2%, and its operating margin was -33% in 2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "SQM stayed profitable throughout, with net income of $3,906m, $923m and $685m in 2022–2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Free cash flow in 2024 was $303m for SQM and -$993m for Albemarle",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Albemarle's debt fell from $4.2bn to $3.2bn (2023 to 2025), while SQM's rose to $4.8bn",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "SQM's 2023 tax includes a one-off lithium mining tax, and Albemarle's 2021 operating profit was flattered by a one-off gain",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Albemarle's revenue was $7.3B, $9.6B and $5.4B in 2022–2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "SQM's gross margin was 53.6%, 41.2% and 29.3% in 2022–2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Albemarle's 2024 adjusted EBITDA was $1.14B",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "SQM posted a 2024 net loss because of a ~$1.1B tax charge",
+       "label": "CONTRADICTED",
+       "note": "The pack shows SQM's 2024 net income as +$685.1m"
+      },
+      {
+       "claim": "SQM's 2024 adjusted EBITDA was $1.48B",
+       "label": "CONTRADICTED",
+       "note": "The pack shows $1,408.3m"
+      },
+      {
+       "claim": "Lithium was close to $78,000/t at end-2022 and about $13,500/t at end-2023",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Albemarle had a $604M inventory write-down and a $223M valuation allowance in 2023",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "SQM's Q2 2026 revenue was $2.47B and its adjusted EBITDA $1.32B",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "SQM's 2025 adjusted EBITDA was $1.58B",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "The pack shows EBITDA of $1,485.6m, so this may use a different definition"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 2,
+      "accuracy": 3,
+      "honesty_about_limits": 3,
+      "usefulness": 3
+     },
+     "could_not": false
+    },
+    "winner": "ours",
+    "reason": "I prefer Answer A. It compares a consistent annual lithium price series directly with both companies' revenue, margins, net income, free cash flow and debt. Every figure I checked matches the evidence pack, and A is open about its limits: different accounting standards (US GAAP versus IFRS), one-off items and too few data points for a statistical fit. Answer B mixes price reference points that can't be checked. It says SQM made a net loss in 2024, which the pack contradicts, and its SQM EBITDA figure doesn't match the pack. It also mentions 2026 data without naming a source. Both answers reach the same conclusion, but A is much easier to rely on and to trace back to its sources.",
+    "ours_was": "A"
+   }
+  },
+  {
+   "title": "The rare earth value chain",
+   "prompt": "Compare Lynas, MP Materials and China Northern Rare Earth: revenue, margins and what each earns per kilogram of rare earths, then tell me what our reports say about China's share of rare earth processing.",
+   "ours_chars": 4133,
+   "plain_chars": 551,
+   "web_chars": 3409,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Revenue and margin table for all three companies, 2023-2025",
+       "label": "SUPPORTED",
+       "note": "Matches the financials table exactly"
+      },
+      {
+       "claim": "Lynas average realised price A$38.1/kg (FY24), A$50.6/kg (FY25), A$46.2/kg (FY23)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Lynas FY2025 sales 10,970 t REO",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "MP NdPr sales of 1,994 t in 2025, up from 1,142 t",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "China Northern 2023 sales: 31,052 t metal, 28,823 t oxide, 87,245 t salts",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "MP concentrate price US$4,414/t (2024), US$4,707/t (2025); concentrate sales 8,922 t in 2025 vs 32,703 t",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Not among the 25 rows shown"
+      },
+      {
+       "claim": "IEA: China held 92% of refined magnet rare earth output in 2023, projected 77% by 2030",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Source is listed, but its content is not in the pack"
+      },
+      {
+       "claim": "Deutsche Bank: ~90% of processing, peak of 97.5% in 2009",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Lynas FY2025 net FX loss of A$15m",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "EU Today: ~98% of heavy rare earth processing",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Lynas FY2025 revenue ~A$550m (~US$360m)",
+       "label": "SUPPORTED",
+       "note": "US$360m matches the pack"
+      },
+      {
+       "claim": "MP Materials CY2024 revenue ~US$204m",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "China Northern CY2023 revenue ~RMB 38bn (~US$5.4bn)",
+       "label": "CONTRADICTED",
+       "note": "Pack shows US$4,730m for 2023"
+      },
+      {
+       "claim": "Cannot see the user's reports",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 2,
+      "traceability": 1,
+      "accuracy": 2,
+      "honesty_about_limits": 4,
+      "usefulness": 1
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "A cannot reach the reports. Its answer is cut off and gives approximate figures from memory, one of which (China Northern's revenue) conflicts with the pack. B gives the full revenue and margin table, which matches the pack. It explains clearly why a per-kg comparison is limited, and it summarises several named reports on China's processing share, with honest caveats.",
+    "ours_was": "B"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Revenue and margin table for all three companies, 2023-2025",
+       "label": "SUPPORTED",
+       "note": "Matches the financials table exactly"
+      },
+      {
+       "claim": "Lynas realised price A$38.1/kg (FY24), A$50.6/kg (FY25), A$46.2/kg (FY23)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Lynas FY2025 sales 10,970 t REO",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "MP NdPr sales 1,994 t in 2025, up from 1,142 t",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "China Northern 2023 sales: 31,052 t metal, 28,823 t oxide, 87,245 t salts",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "MP concentrate price US$4,414/t (2024), US$4,707/t (2025)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "IEA GCMO 2024: China 92% of refined magnet REE output in 2023, falling to 77% by 2030",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Deutsche Bank: ~90% of processing, peak of 97.5% in 2009",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "EU Today: ~98% of heavy REE processing",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 5,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Lynas FY26 revenue A$977.9m, NPAT A$222.4m",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Lynas FY26 average selling price A$80.7/kg; June quarter A$98.2/kg",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "MP Q2 2026 revenue $108.5m, net loss $20.3m",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "China Northern 9M 2026 revenue RMB 41.3bn, net profit RMB 3.65bn",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "China Northern main-product gross margin 13.97% in 2025",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "The pack shows 12.2% overall gross margin; A's figure covers a different scope"
+      },
+      {
+       "claim": "No China Northern volume disclosure found",
+       "label": "CONTRADICTED",
+       "note": "The pack has 2023 tonnage by product"
+      },
+      {
+       "claim": "IEA: China 91% of refined output in 2024, 94% of magnets",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Has no access to the user's reports",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 2,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 2
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "B's revenue, margin and volume figures match the evidence pack, and it cites several named reports with page sources for China's share of processing. It is also open about the limits of the per-kg comparison. A says it has no access to the user's reports, so it cannot answer the \"what our reports say\" part. A also uses unsourced 2026 figures, and its claim that China Northern disclosed no volumes conflicts with the pack.",
+    "ours_was": "B"
+   }
+  },
+  {
+   "title": "Diversified miners against their commodities",
+   "prompt": "Compare Glencore, Rio Tinto and South32: how have their earnings tracked their main commodity prices, and what are their biggest copper, iron ore or aluminium assets and ownership shares?",
+   "ours_chars": 3946,
+   "plain_chars": 929,
+   "web_chars": 4102,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Rio Tinto EBITDA was about US$37.7bn in 2021, when iron ore was near $162/dmtu",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Rio Tinto EBITDA was about US$25.4bn in 2025, with iron ore near $100",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Glencore EBITDA peaked at about US$31.2bn in 2022, while copper was below its 2021 level",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "South32 FY2022 aluminium was about $2,880/t and EBITDA about US$4.8bn; FY2024 has no EBITDA figure",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "R² fits: Rio 0.89, South32 0.46, Glencore 0.16",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Derived from the pack data, consistent with the visible pattern"
+      },
+      {
+       "claim": "Rio Tinto owns 66% of Oyu Tolgoi, 30% of Escondida and 45% of Simandou",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Glencore owns 44% of Collahuasi, 33.75% of Antamina and 70% of Kamoto Copper Company",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "South32 owns 45% of Sierra Gorda, 86% of Worsley Alumina and 63.67% of Mozal",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Rio Tinto underlying earnings peaked in 2021 at about $21bn",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Pack has EBITDA, not underlying earnings"
+      },
+      {
+       "claim": "Iron ore averaged about $160/t in 2021",
+       "label": "SUPPORTED",
+       "note": "Pack: 161.7"
+      },
+      {
+       "claim": "Iron ore is about 70% or more of Rio group EBITDA",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "South32 earnings are driven by aluminium and alumina and squeezed by input costs",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 2,
+      "traceability": 1,
+      "accuracy": 3,
+      "honesty_about_limits": 3,
+      "usefulness": 1
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "Answer A works from memory, stops partway through the Rio Tinto section and never covers assets or ownership. Answer B's earnings and price figures match the evidence pack. It quantifies how closely each company's EBITDA tracks its main commodity price and covers the main assets with ownership stakes for all three companies. It is open about its limits, such as the small number of years and having no output data to rank assets.",
+    "ours_was": "B"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Rio Tinto EBITDA was about US$37.7bn in 2021, when iron ore was about $162/dmtu, and about US$25.4bn in 2025, with iron ore near $100",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Glencore EBITDA peaked at about US$31.2bn in 2022 while copper was below its 2021 level",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "South32 FY2022: aluminium about $2,880/t, EBITDA about US$4.8bn; FY2024 has no EBITDA figure",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "R² fits: Rio 0.89, South32 0.46, Glencore 0.16",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Plausible given the pack data"
+      },
+      {
+       "claim": "Rio iron ore: Hamersley 100%, Robe River 53%, Hope Downs 50%, IOC 58.7%, Simandou 45%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Glencore copper: Collahuasi 44%, Antamina 33.75%, KCC 70%, Mutanda 95%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "South32: Worsley 86%, Hillside 100%, Mozal 63.67%, Sierra Gorda 45%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Glencore aluminium: Century Aluminum 36.6%, Alunorte 33%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "South32 FY26 underlying EBITDA rose 28% to US$2,462m",
+       "label": "SUPPORTED",
+       "note": "Pack has FY2026 at 2462 and FY2025 at 1928, which is about +28%"
+      },
+      {
+       "claim": "Rio Tinto H1 2026 underlying EBITDA rose 28% to $14.8bn, with price adding $3.6bn ($2bn copper, $1.3bn aluminium)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Glencore H1 2026 group adjusted EBITDA up 86% to $10.1bn; Marketing EBIT $3.3bn",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Glencore copper stakes: Collahuasi 44%, Antamina 33.75%, Mutanda 95%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Rio Tinto: Oyu Tolgoi 66%, Escondida 30%, Kennecott 100%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Simandou: 53% of Simfer Jersey, giving a 45.05% indirect interest",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "South32 to sell its aluminium value chain to Alcoa for up to US$5.6bn",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Glencore has no significant aluminium assets",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Answer B lists Century Aluminum and Alunorte stakes"
+      },
+      {
+       "claim": "Sierra Gorda 45% and Brazil Aluminium about 40%, given from memory",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 2,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 4
+     },
+     "could_not": false
+    },
+    "winner": "ours",
+    "reason": "I prefer B. It answers the \"how have earnings tracked prices\" part over many years, with numbers that match the evidence pack. Every figure I could check is supported: Rio Tinto 2021 and 2025, Glencore's 2022 peak, South32 FY2022 and the missing FY2024. It is also open about its limits: a small sample, no lagged fits, Glencore's EBITDA being a proxy rather than the company's adjusted figure, and no output data to rank assets. Its asset table is fuller, covering alumina, bauxite and Glencore's minor aluminium stakes. A is detailed, but it covers only a single half-year (H1 2026) and those figures can't be checked against the pack. Some of A's ownership stakes come from memory, and it says Glencore has no significant aluminium assets, while B lists its Century Aluminum and Alunorte stakes.",
+    "ours_was": "B"
+   }
+  },
+  {
+   "title": "The best new leads, across every survey",
+   "prompt": "Where are the best new rare earth leads across all the geochemical surveys you have? Rank them.",
+   "ours_chars": 3792,
+   "plain_chars": 2144,
+   "web_chars": 1788,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "#1 Sweden (SGU) 57.95°N 16.35°E, 428/2,426 anomalous, max ~45,980 ppm",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "#2 Greenland 63.99°N 49.76°W, 95/232, max ~22,980 ppm, median anomalous ~1,390",
+       "label": "SUPPORTED",
+       "note": "Median works out from max/ratio 16.6"
+      },
+      {
+       "claim": "#10 Poland cell max ~30,260, about 40x median: possible data error",
+       "label": "SUPPORTED",
+       "note": "Ratio 39.7 in pack"
+      },
+      {
+       "claim": "#8 Greenland about 25 km from Motzfeldt Centre; #4 about 275 km",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Nearest rare earth site for #1 is Kodal, Norway (~390 km)",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Pack lists nearest occurrence of any kind (Zinkgruvan, 120.6 km); different metric"
+      },
+      {
+       "claim": "About 18% of Swedish samples are anomalous",
+       "label": "SUPPORTED",
+       "note": "17.6%"
+      },
+      {
+       "claim": "Finnish cells have only 5 samples each",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Victoria had only 136 samples with REE data and no top-12 leads",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Ranked by unlikelihood of anomaly count within each survey",
+       "label": "SUPPORTED",
+       "note": "Order matches pack"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Has no access to geochemical survey data; any ranking would be fabricated",
+       "label": "GENERAL",
+       "note": "Declines task"
+      },
+      {
+       "claim": "Ranking framework: anomaly contrast, spatial coherence, geology, magnet REE share, mineralogy, Th/U, access",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Four-acid digestion can under-report refractory phases like zircon",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 1,
+      "traceability": 1,
+      "accuracy": 3,
+      "honesty_about_limits": 5,
+      "usefulness": 1
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "B produces the requested ranking. Its ranks, coordinates, sample counts and maximum values match the evidence pack, its medians check out against the pack's ratios, and it flags caveats (lead #10's outlier, small Finnish samples, sediment-only Argentine data). Its nearest-site column uses a different measure from the pack (nearest rare earth site rather than nearest occurrence of any kind), but nothing in it is contradicted. A declines the task.",
+    "ours_was": "B"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "#1 Sweden (SGU) 57.95°N 16.35°E, 428/2,426 anomalous, max ~45,980 ppm",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "#2 Greenland 63.99°N 49.76°W, 95/232, max ~22,980 ppm",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "#10 Poland cell max ~30,260 ppm, about 40x the anomalous median, may be a data error",
+       "label": "SUPPORTED",
+       "note": "Pack ratio is 39.7"
+      },
+      {
+       "claim": "#8 Greenland is ~25 km from Motzfeldt Centre; #4 is ~275 km away",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Finnish cells have only 5/5 samples each",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Nearest known rare earth sites, e.g. Kodal ~390 km for #1 and Ilimaussaq ~111 km for #2",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Pack lists the nearest occurrence of any kind, which is a different measure"
+      },
+      {
+       "claim": "Six surveys screened, including Victoria with 136 samples and no top-12 leads",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Median anomalous values, e.g. ~9,650 ppm for #1",
+       "label": "SUPPORTED",
+       "note": "Consistent with max divided by the pack's ratio"
+      },
+      {
+       "claim": "Ranked by chance-based anomaly count rather than raw ppm",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "No geochemical surveys are available to it; ranking would be invented",
+       "label": "GENERAL",
+       "note": "Declines the task"
+      },
+      {
+       "claim": "Ranking criteria: TREO, HREE share, magnet REE share, coherence, pathfinders, radioactivity, access",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 1,
+      "traceability": 1,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 1
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "B gives a ranked list of 12 leads that matches the evidence pack: the rank order, areas, sample counts and maximum values all agree. It also flags its limits honestly, including the outlier-driven cell #10, the small Finnish samples, the thin deposit catalogues and that anomalies are not deposits. A declined to do the task.",
+    "ours_was": "B"
+   }
+  },
+  {
+   "title": "What kind of deposit is it?",
+   "prompt": "What kind of deposit do the rare-earth-rich rocks in Greenland look like? Use rock samples with lanthanum above 300 ppm.",
+   "ours_chars": 2166,
+   "plain_chars": 1709,
+   "web_chars": 1817,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Carbonatite/peralkaline igneous: 66.7% of lead samples vs 9.7% of background, +56.9 points",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Epithermal 10% vs 4.6%; Laterite 6.7% vs 3.4%; Sediment-hosted 10% vs 9%; Porphyry 3.3% vs 2.9%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "The carbonatite reference group has only about 8 deposits",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "47 samples have La ≥300 ppm; 30 were usable",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "30 is consistent with the percentages (e.g. 66.7% = 20/30)"
+      },
+      {
+       "claim": "Compared against about 1,250 known deposits",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Nb about 47x and Ce about 22x higher than background",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Method ranks the correct type first 37% of the time and in the top three 61% of the time",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Cu, Mo, Au, Ag and Pb were not measured",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Data from GEUS and the Geoscience Australia CMMI database",
+       "label": "SUPPORTED"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 5,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "No sample data available; cannot apply La filter",
+       "label": "GENERAL",
+       "note": "Did not perform the requested analysis"
+      },
+      {
+       "claim": "Ilímaussaq (Kvanefjeld, Sørensen, Zone 3) lujavrite hosts REE in steenstrupine, eudialyte, rinkite",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Kvanefjeld-type deposits are about 1% total REO, with U, Zn, F",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Tanbreez/Kringlerne is eudialyte-hosted kakortokite rich in HREE, Zr, Nb, Ta",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Carbonatites at Sarfartoq, Qaqarssuk, Gardiner, with La up to thousands of ppm",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "High-La rocks in Greenland most likely represent alkaline igneous / carbonatite deposits",
+       "label": "SUPPORTED",
+       "note": "Fits in general terms with the carbonatite/peralkaline dominance in the pack"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 1,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 2
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "B did the analysis asked for. It filtered samples by lanthanum and compared them with deposit types, and its figures match the evidence pack exactly. It is also open about the weak spots: the small reference group, the method's accuracy, the elements that were not measured, and the difference between ore reference samples and regional rock samples. It names its sources. A said it could not apply the filter and fell back on general published geology. That background may be correct, but none of it can be checked here and it does not answer the question.",
+    "ours_was": "B"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Carbonatite/peralkaline igneous: 66.7% of lead samples vs 9.7% background, +56.9 points",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Epithermal 10% vs 4.6%, Laterite 6.7% vs 3.4%, Sediment-hosted 10% vs 9%, Porphyry 3.3% vs 2.9%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Reference group for carbonatite has only about 8 deposits",
+       "label": "SUPPORTED",
+       "note": "Reference deposits = 8 in table"
+      },
+      {
+       "claim": "47 samples with La>=300 ppm, 30 usable",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "30 consistent with percentages (e.g., 66.7% = 20/30)"
+      },
+      {
+       "claim": "Nb ~47x and Ce ~22x background",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Method top-1 accuracy ~37%, top-3 ~61% vs ~4% chance",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Cu, Mo, Au, Ag, Pb not measured",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Compared against about 1,250 known deposits",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Cannot filter rock samples for La>300 ppm; lacks sample-level data",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "GEUS stream-sediment database ~10,600 samples covering 70% of ice-free margin",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Anomaly thresholds La>364, Eu>7.4, Yb>16 ppm",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "High-La samples mostly resemble alkaline-igneous-hosted deposits (carbonatite, peralkaline syenite, alkaline granite)",
+       "label": "SUPPORTED",
+       "note": "Consistent with carbonatite/peralkaline dominance"
+      },
+      {
+       "claim": "Kvanefjeld on Ilimaussaq complex, large REO with U and Zn",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Kringlerne hosted in kakortokite agpaitic nepheline syenites",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 3,
+      "accuracy": 4,
+      "honesty_about_limits": 4,
+      "usefulness": 2
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "I prefer A. It did what was asked: it filtered the rock samples at La ≥300 ppm and compared their chemistry with known deposit types. Every number in its table matches the evidence pack, and it is open about its limits: a reference group of only 8 deposits, modest accuracy on known deposits, missing elements, and the gap between ore samples and regional rock samples. B said it could not filter the rock samples. It fell back on a stream-sediment study that uses a different cutoff, so it did not do the task, although its broad conclusion (alkaline-igneous rocks) agrees with the pack.",
+    "ours_was": "A"
+   }
+  },
+  {
+   "title": "Who controls the supply?",
+   "prompt": "Which critical minerals have the most concentrated mining supply?",
+   "ours_chars": 1849,
+   "plain_chars": 1821,
+   "web_chars": 2397,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Niobium: Brazil 92.9%, top three 99.1%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Tungsten: China 78.7%, top three 85.0%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Natural graphite: China 77.8%, top three 86.4%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Cobalt: DR Congo 73.1%, top three 89.5%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Vanadium China 72.4% (top three 95.6%), Platinum South Africa 70.6% (top three 92.9%)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Nickel: Indonesia 66.7%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "China 99% primary gallium, 86% magnesium metal, 86% bismuth refining, 80% tellurium refining",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Source is USGS MCS 2026, 2025 estimates",
+       "label": "SUPPORTED"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 5,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Niobium: Brazil ~90%, mostly CBMM",
+       "label": "SUPPORTED",
+       "note": "Pack gives 92.9%; CBMM detail not covered"
+      },
+      {
+       "claim": "Gallium: China ~98% of primary production",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Tungsten China ~80%; graphite ~75-80%; cobalt ~70-75%; platinum ~70%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Nickel: Indonesia ~50-60%",
+       "label": "CONTRADICTED",
+       "note": "Pack shows 66.7% for 2025"
+      },
+      {
+       "claim": "Vanadium: China ~65-70%",
+       "label": "CONTRADICTED",
+       "note": "Pack shows 72.4%, and B puts it below the 70% tier"
+      },
+      {
+       "claim": "Tantalum: DRC ~40%",
+       "label": "CONTRADICTED",
+       "note": "Pack shows 52%"
+      },
+      {
+       "claim": "Rhodium/iridium/ruthenium South Africa ~80-90%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Lithium Australia ~45%; China refines ~65%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Rare earths China ~65-70% mining",
+       "label": "SUPPORTED"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 2,
+      "accuracy": 3,
+      "honesty_about_limits": 3,
+      "usefulness": 3
+     },
+     "could_not": false
+    },
+    "winner": "ours",
+    "reason": "Every figure in A matches the USGS 2025 evidence table. A names its source, keeps mining and processing stages apart, and gives fair caveats. B covers more minerals, but its figures are rough, older (2023-24) estimates. Several conflict with the current data (nickel, vanadium, tantalum), and B puts processing-stage minerals like gallium and bismuth into a mining ranking. B also says processing is generally more concentrated than mining without backing it up.",
+    "ours_was": "A"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Niobium most concentrated: Brazil 92.9%, top three 99.1%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Tungsten China 78.7%, top three 85.0%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Natural graphite China 77.8%, top three 86.4%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Cobalt DR Congo 73.1%, top three 89.5%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Vanadium top three 95.6%, platinum top three 92.9%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Rare earths China 69.2%; Nickel Indonesia 66.7%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "China 99% primary gallium, 86% magnesium metal, 86% bismuth refining, 80% tellurium refining",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Source: USGS MCS 2026, 2025 estimates; some company data withheld",
+       "label": "SUPPORTED"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 5,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Niobium Brazil about 90%",
+       "label": "SUPPORTED",
+       "note": "Roughly matches 92.9%"
+      },
+      {
+       "claim": "Tungsten China about 80%",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Cobalt DRC about 70% or more",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Rare earths China around 60% of mining in 2024",
+       "label": "CONTRADICTED",
+       "note": "Pack gives 69.2% for 2025"
+      },
+      {
+       "claim": "Nickel Indonesia about 60%",
+       "label": "CONTRADICTED",
+       "note": "Pack gives 66.7%"
+      },
+      {
+       "claim": "Top-three refining share averaged 86% in 2024, up from 82% in 2020 (IEA)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "IEA puts top rare-earth refining supplier at 85% in 2025",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Mining figures are recalled and not checked against current sources",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 2,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 3
+     },
+     "could_not": false
+    },
+    "winner": "ours",
+    "reason": "I prefer A. It answers the mining-concentration question directly with a full ranked table. Every figure in the table matches the USGS 2025 estimates in the evidence pack, the source is named, and the caveats are clear: some company data is withheld, the shares cover only the countries USGS names, and production location is not ownership. B admits its mining shares are approximate figures from memory. Two of them are below the pack (rare earths about 60% against 69.2%, nickel about 60% against 66.7%). B also spends much of the answer on refining and supply risk, which the question didn't ask about.",
+    "ours_was": "A"
+   }
+  },
+  {
+   "title": "What should we assay next?",
+   "prompt": "What should I assay next for Sweden SGU rock samples with zinc above 5000 ppm to tell what type of deposit they might be?",
+   "ours_chars": 1967,
+   "plain_chars": 3133,
+   "web_chars": 3620,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Tl is best next element: +4.7 points (range 1.4 to 8), clear gain",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Bi second: +2.0 points (range 0.8 to 3.2), clear gain",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Candidate types are sediment-hosted, replacement and skarn",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Tl already measured on 24%, Bi 34%, Ge 5%, Sb 32%, Ag 40%, As 31% of samples",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Ge, Sb, Ag, As gains are not clear",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "640 SGU samples with Zn >= 5000 ppm",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Baseline accuracy about 50% vs 33% by guessing",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Only 43 trace elements tested; Au, PGE, Li, Be, Se, Te, Re not tested",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 4
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Recommends broad 4-acid ICP-MS package incl. Tl, Bi, Ge, Ga, In, Ba, Mn etc.",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Low-T MVT/sandstone-hosted Pb-Zn (e.g., Laisvall) tends to have high Ge and Ga",
+       "label": "GENERAL",
+       "note": "Plausible geological generalisation"
+      },
+      {
+       "claim": "Gahnite common in metamorphosed Swedish deposits",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Cu-Zn-Au-rich suggests Skellefte-type VMS",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Ni-Mo-V-U with high C points to alum shale",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 2,
+      "traceability": 1,
+      "accuracy": 4,
+      "honesty_about_limits": 3,
+      "usefulness": 3
+     },
+     "could_not": false
+    },
+    "winner": "ours",
+    "reason": "I prefer Answer A. It answers the question with numbers from the actual data. It names thallium (Tl) as the best next element to assay and bismuth (Bi) as second, and gives the gain for each with a range. Every figure in its table matches the evidence pack. It also says how much of each element has already been measured, names its sources and states its limits clearly: the gains are small, regional rock samples are not ore, and some elements were not tested. Answer B is a sound textbook exploration checklist. But it never looks at the SGU samples themselves, cites no data and recommends nearly every element. That makes it much less useful for choosing what to assay next.",
+    "ours_was": "A"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Thallium is the best next element to assay, +4.7 points (range 1.4 to 8), clear gain",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Bismuth is second, +2.0 points (range 0.8 to 3.2), clear gain",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Candidate types are sediment-hosted, replacement and skarn",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Tl already measured on 24% and Bi on 34% of samples",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Ge, Sb, Ag and As give no clear gain",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "640 SGU samples have Zn of at least 5000 ppm",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Current chance of picking the right type is about 50% against a 33% baseline",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Only 43 trace elements were tested; Au, PGE, Li, Be, Se, Te and Re were not",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 4
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Run a multi-element 4-acid package plus majors, S and C; the advice is general, not based on SGU data",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Aqua regia can under-report Zn held in gahnite, which is common in Bergslagen",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Garpenberg, Sala and Zinkgruvan are Bergslagen Zn-Pb-Ag deposits",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Laisvall is the Swedish sandstone-hosted/MVT example",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Skellefte district hosts Cu-Au-rich VMS deposits",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Tl, Ge and Ga are checks for MVT systems",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 2,
+      "accuracy": 4,
+      "honesty_about_limits": 4,
+      "usefulness": 3
+     },
+     "could_not": false
+    },
+    "winner": "ours",
+    "reason": "A screened the actual SGU samples and gives a ranked, quantified recommendation (Tl, then Bi) that matches the evidence pack exactly. It is also candid about its limits: the gains are small, some elements were not tested, and the reference deposits are ore rather than regional rock samples. B is a sound but generic exploration-geochemistry checklist. It openly says it did not search SGU data, so it does not answer the question for this specific sample set. B does add useful practical advice (digestion, gahnite, QA/QC).",
+    "ours_was": "A"
+   }
+  },
+  {
+   "title": "From rock chemistry to recovery",
+   "prompt": "Run the Halley scandium chart (scandium against thorium, titanium, vanadium and niobium) on Finnish rock samples, then tell me what our literature says about how scandium is recovered commercially.",
+   "ours_chars": 4019,
+   "plain_chars": 2188,
+   "web_chars": 3527,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "USGS MCS 2026: scandium produced exclusively as byproduct; ~80 t oxide world output 2025, China leading",
+       "label": "SUPPORTED",
+       "note": "USGS p.168/170 cited in pack"
+      },
+      {
+       "claim": "Bayan Obo tailings ~200 ppm Sc, NaOH roast then acid leach; ~90% of global production (internal notes)",
+       "label": "SUPPORTED",
+       "note": "Internal summary cited; A flags it as not a primary source"
+      },
+      {
+       "claim": "Nyngan, Australia 12 Mt at 261 ppm Sc; mining licence granted 2025",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Kiviniemi, Finland ~2,184 t Sc, almost all known Nordic Sc; no current Nordic production",
+       "label": "SUPPORTED",
+       "note": "Nordic Innovation report cited"
+      },
+      {
+       "claim": "Sc–V log correlation +0.83, Sc–Ti +0.71, Sc–Th −0.49, Sc–Nb −0.12 on GTK data",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "geochemical data source shown but the figures aren't in the pack"
+      },
+      {
+       "claim": "6,544 samples, 5,545 with all five elements",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "DLA plans to buy >6,000 kg oxide from Sorel-Tracy; Canadian funding to expand to 9 t/yr",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Red mud leaching up to ~80% recovery, pilot/experimental",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 5,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Cannot run chart; no data or tools",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Scandium is recovered as a byproduct",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Feedstocks include TiO2 wastes (Rio Tinto Quebec), red mud, HPAL (Sumitomo Philippines)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Process: acid leach, SX with D2EHPA/P507, precipitation, calcination",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Finnish V-Ti magnetite deposits (Otanmäki, Mustavaara) and Sokli as possible settings",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 2,
+      "traceability": 1,
+      "accuracy": 3,
+      "honesty_about_limits": 5,
+      "usefulness": 2
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "A did both parts of the request. It ran the chart on the GTK samples, stated the sample counts and its caveats, and gave a literature summary that cites its sources. Its key literature claims match the evidence pack: by-product-only production, about 80 t of world output, the Bayan Obo route, Nyngan and Kiviniemi. It also labels the internal notes as a secondary source and points out where they disagree with the Nordic report. B said plainly that it could not do either part and offered only general background with no sources, which helps an investor much less.",
+    "ours_was": "A"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Chart run on GTK rock samples: 6,544 samples, 5,545 with all five elements",
+       "label": "SUPPORTED",
+       "note": "The pack lists the geochemical data source; the exact counts can't be checked"
+      },
+      {
+       "claim": "Log correlations: Sc–V +0.83, Sc–Ti +0.71, Sc–Th −0.49, Sc–Nb −0.12",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "USGS MCS 2026: Sc is produced only as a byproduct; ~80 t oxide in 2025; China leads",
+       "label": "SUPPORTED",
+       "note": "Cites USGS pp.168/170"
+      },
+      {
+       "claim": "Bayan Obo tailings ~200 ppm Sc, NaOH roast then acid leach; ~90% of global production, per internal notes",
+       "label": "SUPPORTED",
+       "note": "Cites the internal summary pp.1/4 and flags it as not a primary source"
+      },
+      {
+       "claim": "Nyngan: 12 Mt at 261 ppm Sc; mining licence granted in 2025",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Kiviniemi, Finland: ~2,184 t Sc; no current Nordic Sc production",
+       "label": "SUPPORTED",
+       "note": "Cites the Nordic Innovation report pp.79/99"
+      },
+      {
+       "claim": "DLA plans to buy >6,000 kg oxide from Sorel-Tracy; plant expansion to 9 t/yr",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Red mud leaching up to ~80% in studies, still pilot stage",
+       "label": "SUPPORTED"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 5,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Cannot run the chart: no Finnish data provided and no code tool",
+       "label": "CONTRADICTED",
+       "note": "The pack shows regional rock-sample geochemistry data was available"
+      },
+      {
+       "claim": "No access to internal literature; uses public sources",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Scandium is produced mainly as a byproduct from tailings and residues",
+       "label": "SUPPORTED",
+       "note": "Matches what the USGS MCS says"
+      },
+      {
+       "claim": "Solvent extraction with D2EHPA/P204, TBP, P507 and C272 is the main commercial method",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Impurities are typically more than 10x the Sc concentration",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "A 1961 paper describes commercial Sc recovery as a uranium byproduct",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "The review names bauxite and nickel laterite as the most promising resources",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 2,
+      "traceability": 1,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 2
+     },
+     "could_not": true
+    },
+    "winner": "ours",
+    "reason": "B is the better answer. It ran the chart on the Finnish rock data, gave correlations and sample counts with caveats, and drew on the document library with clear citations: USGS, the internal notes (flagged as not a primary source) and the Nordic report. It also noted where its sources disagree on China's share. A did neither part of the task. It refused the chart and said it had no internal literature, then gave a generic summary of public sources with no traceable citations.",
+    "ours_was": "B"
+   }
+  },
+  {
+   "title": "An investor memo to send on",
+   "prompt": "Prepare an investor memo on Greenland rare earths.",
+   "ours_chars": 1732,
+   "plain_chars": 4545,
+   "web_chars": 7461,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "An investor memo on Greenland rare earths was generated and is available at /memo/greenland-ree",
+       "label": "SUPPORTED",
+       "note": "The pack lists a memo built from stored data and the document library."
+      },
+      {
+       "claim": "Screening 18,089 samples found 8 anomalous REE areas with no catalogued occurrence nearby",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "The strongest lead is near 63.99°N, 49.76°W, where 95 of 232 samples are anomalous (GEUS data)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Samples with at least 300 ppm La most resemble carbonatite/peralkaline deposits (66.7% of enriched samples vs 9.7% of background)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "7 REE occurrences are catalogued, and 1 is producing or at development/feasibility stage",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Project holders on record are ETM and Greenland Mines (2 assets)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "The deposit-type match picks the right type first about 37% of the time, and within the top three about 61%",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 4,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 3
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Greenland has no producing REE mine",
+       "label": "GENERAL",
+       "note": "Broadly true."
+      },
+      {
+       "claim": "Critical Metals Corp (CRML) holds about 92.5% of Tanbreez, which has a 30-year exploitation license granted in 2020",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Plausible, but the ownership share has been staged over time."
+      },
+      {
+       "claim": "Tanbreez grade is about 0.4% TREO and heavy-REE enriched",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Greenland's 2021 uranium ban halted Kvanefjeld, and ETM is pursuing arbitration",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Consistent with public record."
+      },
+      {
+       "claim": "Shenghe Resources is ETM's largest shareholder",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "China imposed export controls on seven medium/heavy REEs in April 2025",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "The US DoD–MP Materials deal includes an NdPr price floor of about $110/kg",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "A Demokraatit-led coalition was elected in March 2025",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 1,
+      "accuracy": 3,
+      "honesty_about_limits": 3,
+      "usefulness": 3
+     },
+     "could_not": false
+    },
+    "winner": "ours",
+    "reason": "I prefer A. It delivered an actual memo artifact and a summary built from data it can trace (GEUS samples, coordinates, catalogued occurrences, project holders). Its caveats are frank: single-sample assays, location uncertainty, and the 37%/61% accuracy of the deposit-type match. Its main weakness is that it admits it didn't read the memo page itself, and it gives little market or political context. B is a readable sector overview with plausible facts, but it rests entirely on possibly stale model knowledge and cites no sources. It is also cut off mid-sentence in the bear case. For decisions I can check, A is the more reliable of the two.",
+    "ours_was": "A"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "The memo was produced and is available at /memo/greenland-ree",
+       "label": "SUPPORTED",
+       "note": "Pack shows a memo built from stored data"
+      },
+      {
+       "claim": "Screening 18,089 GEUS samples found 8 anomalous areas with no catalogued occurrence nearby; the strongest is near 63.99N, 49.76W (95 of 232 samples anomalous)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Samples with at least 300 ppm La most resemble carbonatite or peralkaline deposits (66.7% of enriched samples vs 9.7% of background)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "7 rare earth occurrences are catalogued, one of them producing or at development/feasibility stage",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Project holders on record are ETM and Greenland Mines (2 assets)",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Leaves out Critical Metals/Tanbreez, which is a notable gap"
+      },
+      {
+       "claim": "The deposit-type match picks the right type first about 37% of the time and within the top three about 61% of the time",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 4,
+      "accuracy": 3,
+      "honesty_about_limits": 5,
+      "usefulness": 2
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Tanbreez (Critical Metals, CRML) holds the only rare earth exploitation permit in Greenland, and its mine plan is approved",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Kvanefjeld (ETM) is blocked by the 2021 Uranium Act's 100 ppm uranium limit; exploration licence renewal rejected in June 2026",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Tanbreez resource is 45Mt at 0.40% TREO, about 27% heavy rare earths",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "March 2025 PEA gives after-tax NPV of $2.1B at a 15% discount rate, with capex of about $290M",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "CRML raised its Tanbreez stake from 42% to 92.5% in April 2026; European Lithium holders approved the all-stock takeover on Oct 22",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "SEC filings show a $228.2M net loss, going-concern doubt, four material weaknesses and an expired $120M EXIM letter of interest",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Flags that its EXIM sources conflict and tells the reader to verify"
+      },
+      {
+       "claim": "US-Greenland-Denmark security agreement signed Sept 22 limits investment by non-NATO countries in strategic sectors",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "China controls 69% of rare earth production",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Targets are first ore in late 2028 to early 2029 and concentrate export in Q3 2029",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 2,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 5
+     },
+     "could_not": false
+    },
+    "winner": "web",
+    "reason": "The evidence pack only confirms that a memo was built, so almost none of either answer's specifics can be checked against it. I prefer A. It is a complete investor memo covering assets, Tanbreez economics, ownership, permits, financing risks, the Kvanefjeld legal position, catalysts and a positioning view. That gives an investor what they need to decide what to look at next. A also flags early-stage studies and conflicting EXIM sources and says to verify them, but it seldom names specific sources. B gives a link to the memo and sound, well-caveated geochemical screening points tied to the GEUS data. However, B admits it hasn't read the memo, offers no investment framing, and leaves Tanbreez/Critical Metals out of its project holders. That makes it much less useful for an investor.",
+    "ours_was": "B"
+   }
+  },
+  {
+   "title": "A company snapshot to send on",
+   "prompt": "Give me a one-page snapshot of Cameco I can send to a colleague, and summarise in three lines what stands out.",
+   "ours_chars": 1531,
+   "plain_chars": 3167,
+   "web_chars": 3568,
+   "plain": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Revenue rose from about US$1.2bn in 2021 to about US$2.5bn in 2025",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Operating margin went from -9% (2021) to about 18% (2025)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "FCF was about US$769m in 2025, up from US$506m in 2024",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Total debt was about US$728m",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Net income was US$125m in 2024 and US$422m in 2025",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Revenue vs uranium price R² 0.56; a 10% price move goes with ~US$74m of revenue",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "Derived from the price table, but the regression is not shown."
+      },
+      {
+       "claim": "McArthur River was suspended in 2021 and resumed in November 2022",
+       "label": "SPECIFIC_NOT_CHECKABLE",
+       "note": "The suspension actually began in 2018. As worded, the claim is slightly misleading."
+      },
+      {
+       "claim": "Cameco has used the equity method for its 49% Westinghouse stake since November 2023",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Converted from CAD using BIS average rates, with year-end rates for debt",
+       "label": "SUPPORTED"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 4,
+      "accuracy": 4,
+      "honesty_about_limits": 5,
+      "usefulness": 4
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Revenue is in the low-to-mid C$3 billion range annually",
+       "label": "SUPPORTED",
+       "note": "2025 revenue was US$2,490m × 1.3983 ≈ C$3.48bn, so the claim is roughly consistent. It is vague and labelled approximate."
+      },
+      {
+       "claim": "Cameco owns 49% of Westinghouse with Brookfield, acquired in 2023",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "McArthur River/Key Lake ~70% owned, Cigar Lake ~55%, Inkai 40% JV with Kazatomprom",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Production guidance is around 18 million lbs each from McArthur River and Cigar Lake (100% basis)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Minority stake in Global Laser Enrichment (enrichment option)",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "The balance sheet is solid",
+       "label": "GENERAL"
+      },
+      {
+       "claim": "Cameco is the Western world's highest-quality uranium pure play",
+       "label": "GENERAL"
+      }
+     ],
+     "scores": {
+      "specificity": 3,
+      "traceability": 1,
+      "accuracy": 3,
+      "honesty_about_limits": 4,
+      "usefulness": 3
+     },
+     "could_not": false
+    },
+    "winner": "ours",
+    "reason": "I prefer B. Its three points on what stands out are tied to figures that the evidence pack confirms: revenue, margin, free cash flow, debt and net income. It also explains how it converted currencies and flags caveats such as the Westinghouse accounting change. Finally, it gives a snapshot link that can be shared, though it admits it has not read the snapshot itself. Its McArthur River timing is slightly misleading, because the suspension began in 2018, not 2021. A gives a readable qualitative one-pager, but it rests on training data with no sources, and its financial figures are vague. A does honestly say its numbers are approximate. Overall, B is the more reliable and checkable answer.",
+    "ours_was": "B"
+   },
+   "web": {
+    "ours": {
+     "claims": [
+      {
+       "claim": "Revenue rose from ~US$1.2bn (2021) to ~US$2.5bn (2025)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Operating margin went from –9% (2021) to ~18% (2025)",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "FCF US$769m in 2025 vs US$506m in 2024; total debt US$728m",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Net income US$125m in 2024 and US$422m in 2025",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "Revenue vs uranium price R² 0.56; a 10% price move goes with ~US$74m of revenue",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "US$ figures converted from CAD using BIS average and year-end FX rates",
+       "label": "SUPPORTED"
+      },
+      {
+       "claim": "McArthur River suspended in 2021, resumed Nov 2022; Westinghouse equity-accounted since Nov 2023",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Snapshot available at the link, printable to PDF, with a 30-day share link",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 4,
+      "traceability": 4,
+      "accuracy": 5,
+      "honesty_about_limits": 5,
+      "usefulness": 4
+     },
+     "could_not": false
+    },
+    "theirs": {
+     "claims": [
+      {
+       "claim": "Long-term uranium price hit a record US$96.50/lb at end of September, while Cameco's realized price was US$67.79/lb",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Stock at US$78.60, 42% below the 28 Jan record close of US$134.09; market cap about US$34.2B",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Q2 2026: revenue C$814M (down 7%), net earnings C$25M, adjusted EBITDA C$391M",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "2026 guidance: production 19.5–21.5M lb, revenue C$3,320–3,570M",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "About 89x trailing P/E; MarketBeat consensus target US$148.10",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Debt about C$1.0B",
+       "label": "SUPPORTED",
+       "note": "Consistent with US$728m at the 1.3692 year-end rate (~C$1.0B)"
+      },
+      {
+       "claim": "Owns 49% of Westinghouse; Westinghouse has filed a draft S-1",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      },
+      {
+       "claim": "Missed estimates five straight quarters; Q3 results due 30 Oct",
+       "label": "SPECIFIC_NOT_CHECKABLE"
+      }
+     ],
+     "scores": {
+      "specificity": 5,
+      "traceability": 2,
+      "accuracy": 3,
+      "honesty_about_limits": 3,
+      "usefulness": 4
+     },
+     "could_not": false
+    },
+    "winner": "ours",
+    "reason": "I prefer B because every figure it gives can be checked, and the checkable ones match the evidence pack: revenue, margins, free cash flow, debt and net income. It explains its currency conversions and is open about its limits, including that it never read the snapshot it links to. A writes a full, polished one-pager with plenty of detail. However, almost none of it can be checked: share prices, Q2 2026 results, guidance and analyst targets. Apart from MarketBeat, it names no sources, and it admits that the sources it used disagree on valuation. That makes A more readable but riskier to send. B delivers the requested snapshot as a link plus a three-line summary I can stand behind.",
+    "ours_was": "B"
+   }
+  }
+ ]
+}

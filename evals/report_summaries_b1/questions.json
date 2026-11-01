@@ -1,0 +1,26 @@
+{
+ "built": "2026-10-30",
+ "note": "Report-summary batch 1: 10 questions answerable from the summary documents ingested with tag claude_report_summaries_20261030 (Chvaletice, Zinnwald, Vulcan, Rovina, Skouries, Neves-Corvo, Aguablanca, Maniry, Sarytogan, Viscaria). Truth written from the report text before any system was asked. Run before ingest (tag before) and after (tag after, --fresh-ours).",
+ "questions": [
+  {"id": "B-chvaletice-econ", "category": "B", "question": "What did Euro Manganese's 2026 study for the Chvaletice manganese project in Czechia conclude about NPV, IRR and capital cost?",
+   "truth": {"facts": ["It is a Preliminary Economic Assessment (NI 43-101), effective 14 May 2026, replacing the 2022 feasibility study", "Post-tax NPV of about US$492 million at an 8% real discount rate, post-tax IRR 13.8%", "Pre-tax NPV about US$740 million, pre-tax IRR 16.0%", "Total initial capital about US$825 million (Phase 1 and Phase 2)"], "tolerance": "rounding fine", "source": "Chvaletice PEA 2026 Item 1"}},
+  {"id": "B-zinnwald-reserve", "category": "B", "question": "Does the Zinnwald lithium project in Germany have a mineral reserve, and how big is it?",
+   "truth": {"facts": ["Yes: a maiden Mineral Reserve effective 31 March 2025 from the PFS", "Proven 27.2 Mt and Probable 100.9 Mt, total 128.1 Mt at about 2,056 ppm Li (4,428 ppm Li2O)", "About 1.4 Mt LCE contained (263 kt Li)"], "tolerance": "", "source": "Zinnwald PFS executive summary Table 1.4"}},
+  {"id": "B-zinnwald-econ", "category": "B", "question": "What NPV, IRR and initial capex did the Zinnwald lithium PFS report?",
+   "truth": {"facts": ["Pre-tax NPV8 about EUR 3.3 billion and pre-tax IRR 23.6%", "Post-tax NPV8 about EUR 2.2 billion and post-tax IRR 19.8%", "Initial construction capex EUR 1,048 million (Phase 1)"], "tolerance": "", "source": "Zinnwald PFS ES 2025"}},
+  {"id": "B-vulcan-reserve", "category": "B", "question": "What ore reserve does Vulcan Energy report for its Phase One Lionheart lithium project in the Upper Rhine?",
+   "truth": {"facts": ["Proved and Probable Ore Reserves of about 0.57 Mt LCE at 181 mg/l Li", "Proved 318 kt LCE (first 15 years of production) and Probable 252 kt LCE (years 16-30)", "From the Phase One Bridging Engineering Study released November 2023"], "tolerance": "", "source": "Vulcan BES Nov 2023"}},
+  {"id": "B-rovina-econ", "category": "B", "question": "What are the after-tax NPV, IRR and initial capex of Euro Sun's Rovina Valley copper-gold project in Romania?",
+   "truth": {"facts": ["After-tax NPV US$512 million with an IRR of 20.5%", "Pre-tax NPV US$630 million, IRR 22.7%", "Initial capex about US$448 million", "From the 2022 updated DFS (NI 43-101)"], "tolerance": "", "source": "Rovina NI 43-101 2022 Item 1"}},
+  {"id": "B-skouries-reserve", "category": "B", "question": "How big are the mineral reserves at Eldorado's Skouries copper-gold project in Greece?",
+   "truth": {"facts": ["Proven and Probable 147.1 Mt at 0.77 g/t Au and 0.50% Cu", "About 3.63 Moz gold and 740 kt copper contained", "Reserves as of 30 September 2021 (2022 feasibility technical report)"], "tolerance": "", "source": "Skouries TR 2022 Table 1.3"}},
+  {"id": "B-nevescorvo-reserve", "category": "B", "question": "What are the copper and zinc reserves at the Neves-Corvo mine in Portugal?",
+   "truth": {"facts": ["Copper zones: Proven + Probable 21.2 Mt at 2.1% Cu (about 438 kt Cu)", "Zinc zones: Proven + Probable 22.3 Mt at 7.5% Zn (about 1.67 Mt Zn)", "Effective 31 December 2022 (Lundin Mining NI 43-101 report)"], "tolerance": "", "source": "Neves-Corvo TR 2023 Table 1.4"}},
+  {"id": "B-aguablanca-econ", "category": "B", "question": "What are the economics of restarting the Aguablanca nickel-copper mine in Spain?",
+   "truth": {"facts": ["After-tax NPV (5%) of US$83.1 million with an after-tax IRR of 213%", "LOM capital costs about US$36.2 million and payback about 1.2 years", "About a six-year mine life processing about 4.8 Mt underground", "From Denarius Metals' 2024 pre-feasibility study (NI 43-101)"], "tolerance": "", "source": "Aguablanca PFS 2024 Item 1"}},
+  {"id": "B-sarytogan-dfs", "category": "B", "question": "What did Sarytogan Graphite's October 2026 upstream DFS report for reserves and economics?",
+   "truth": {"facts": ["Ore Reserve 14.5 Mt at 29.1% TGC (2.5 Mt Proved, 12.0 Mt Probable)", "Pre-tax NPV8 US$132.7 million and IRR 19.8%", "Total capex US$80.5 million", "Mineral Resource 225 Mt at 29.2% TGC"], "tolerance": "", "source": "Sarytogan DFS ASX 21 Oct 2026"}},
+  {"id": "B-viscaria-fs", "category": "B", "question": "What reserve and NPV did the Viscaria copper project in Sweden report in its feasibility study?",
+   "truth": {"facts": ["Proved + Probable Mineral Reserve 41.8 Mt at 0.90% Cu (about 375 kt Cu)", "NPV (7%) about SEK 4.5 billion (4,466 MSEK) and IRR 17.8%", "Initial capital about SEK 4.5 billion (4,494 MSEK)", "Feasibility study issued 8 May 2025, reported under PERC"], "tolerance": "", "source": "Viscaria FS executive summary May 2025"}}
+ ]
+}

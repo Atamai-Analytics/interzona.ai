@@ -1,0 +1,40 @@
+===== Fri 10/30/2026  8:36:02.64 
+Traceback (most recent call last):
+  File "C:\Users\dean\critical-minerals-ai\evals\forecast\publish_outlook.py", line 6, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+exit code 1 
+===== Fri 10/30/2026  8:36:52.88 
+Traceback (most recent call last):
+  File "C:\Users\dean\critical-minerals-ai\evals\forecast\publish_outlook.py", line 6, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+exit code 1 
+===== Fri 10/30/2026  8:37:46.59 
+Traceback (most recent call last):
+  File "C:\Users\dean\critical-minerals-ai\evals\forecast\publish_outlook.py", line 6, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+exit code 1 
+===== Fri 10/30/2026  8:38:24.31 user=dean appdata=C:\Users\dean\AppData\Roaming 
+sys.path ['', 'C:\\Users\\dean\\AppData\\Roaming\\Python\\Python314\\site-packages', 'C:\\Python314\\python314.zip', 'C:\\Python314\\DLLs', 'C:\\Python314\\Lib', 'C:\\Python314', 'C:\\Python314\\Lib\\site-packages']
+False
+Traceback (most recent call last):
+  File "C:\Users\dean\critical-minerals-ai\evals\forecast\publish_outlook.py", line 6, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
+exit code 1 
+===== Fri 10/30/2026  8:40:57.07 user=dean appdata=C:\Users\dean\AppData\Roaming 
+sys.path ['', 'C:\\Users\\dean\\AppData\\Roaming\\Python\\Python314\\site-packages', 'C:\\Python314\\python314.zip', 'C:\\Python314\\DLLs', 'C:\\Python314\\Lib', 'C:\\Python314', 'C:\\Python314\\Lib\\site-packages']
+True
+latest common month: 2026-08
+published month: 2026-08
+nothing new: 2026-08 is already published
+exit code 1 
+===== Fri 10/30/2026  8:41:50.12 user=dean appdata=C:\Users\dean\AppData\Roaming 
+sys.path ['', 'C:\\Users\\dean\\AppData\\Roaming\\Python\\Python314\\site-packages', 'C:\\Python314\\python314.zip', 'C:\\Python314\\DLLs', 'C:\\Python314\\Lib', 'C:\\Python314', 'C:\\Python314\\Lib\\site-packages']
+True
+latest common month: 2026-08
+published month: 2026-08
+nothing new: 2026-08 is already published
+exit code 0 

@@ -1,0 +1,68 @@
+09:09:15 ours: B-chvaletice-econ
+09:09:24 judge: B-chvaletice-econ
+09:09:39 ours: B-zinnwald-reserve
+09:09:47 judge: B-zinnwald-reserve
+09:10:00 ours: B-zinnwald-econ
+09:10:06 judge: B-zinnwald-econ
+09:10:17 ours: B-vulcan-reserve
+09:10:27 judge: B-vulcan-reserve
+09:10:39 ours: B-rovina-econ
+09:10:45 judge: B-rovina-econ
+09:10:57 ours: B-skouries-reserve
+09:11:08 judge: B-skouries-reserve
+09:11:21 ours: B-nevescorvo-reserve
+09:11:29 judge: B-nevescorvo-reserve
+09:11:44 ours: B-aguablanca-econ
+09:11:57 judge: B-aguablanca-econ
+09:12:11 ours: B-sarytogan-dfs
+09:12:22 judge: B-sarytogan-dfs
+09:12:33 ours: B-viscaria-fs
+09:12:42 judge: B-viscaria-fs
+# Report-summary batch 1 set (after-prompt): assistant vs general models (2026-10-30)
+
+10 questions, frozen 2026-10-30T08:17:34 (SHA-256 07b43acb595b…); the truth was written before any system was asked. OURS = the deployed app answering live. Baselines: `claude-sonnet-5-5` with no tools (PLAIN) and with web search (WEB). Judge: `claude-opus-5-5`, blind, random order.
+
+## By category
+
+| Category | System | Facts correct | Incorrect | Absent | Invented specifics | Behaviour pass | Mean quality | Best |
+|---|---|---|---|---|---|---|---|---|
+| B. Document questions (random passages) (10) | OURS | 35/35 | 0 | 0 | 0 | – | 5.0 | 10 |
+| B. Document questions (random passages) (10) | PLAIN | 0/35 | 6 | 29 | 1 | – | 1.8 | 0 |
+| B. Document questions (random passages) (10) | WEB | 26/35 | 5 | 4 | 1 | – | 3.6 | 0 |
+
+## Fact accuracy overall (categories A, B, C and E)
+
+| System | Correct | Incorrect | Absent | Invented specifics |
+|---|---|---|---|---|
+| OURS | 35/35 (100%) | 0 | 0 | 0 |
+| PLAIN | 0/35 (0%) | 6 | 29 | 1 |
+| WEB | 26/35 (74%) | 5 | 4 | 1 |
+
+OURS minus PLAIN, share of facts correct: 95% interval over questions +100 to +100 points.
+
+OURS minus WEB, share of facts correct: 95% interval over questions +8 to +46 points.
+
+## Where OURS was wrong or missed something
+
+None.
+
+## Per question (best answer and reason)
+
+| Question | Best | OURS facts | PLAIN facts | WEB facts |
+|---|---|---|---|---|
+| B-chvaletice-econ | OURS | 4/4 | 0/4 | 4/4 |
+| B-zinnwald-reserve | OURS | 3/3 | 0/3 | 0/3 |
+| B-zinnwald-econ | OURS | 3/3 | 0/3 | 3/3 |
+| B-vulcan-reserve | OURS | 3/3 | 0/3 | 3/3 |
+| B-rovina-econ | OURS | 4/4 | 0/4 | 3/4 |
+| B-skouries-reserve | OURS | 3/3 | 0/3 | 1/3 |
+| B-nevescorvo-reserve | OURS | 3/3 | 0/3 | 3/3 |
+| B-aguablanca-econ | OURS | 4/4 | 0/4 | 3/4 |
+| B-sarytogan-dfs | OURS | 4/4 | 0/4 | 4/4 |
+| B-viscaria-fs | OURS | 4/4 | 0/4 | 2/4 |
+
+## Limits
+
+- One run per question, 32 questions: differences of a few facts are within noise; the intervals above are the guide.
+- The judge and every system are Claude models; a judge from another vendor would reduce shared bias.
+09:13:00 saved results_rsb1_after-prompt

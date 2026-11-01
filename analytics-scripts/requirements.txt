@@ -1,0 +1,16 @@
+# Every dependency here is pinned to a specific version/commit verified working together in a
+# real E2B sandbox run (all 7 registered scripts tested, 2026-09-29) — NOT left to float. This
+# project already hit one real incident from an unpinned dependency: upstream pyrolite `main`
+# drifted and introduced a type hint (`matplotlib.colors.Norm`) that a newer matplotlib doesn't
+# have, silently breaking every pyrolite-based script with no warning until it was actually run.
+# Bump any pin deliberately (re-run the full regression test in test-sandbox.mts style before
+# committing to a new version) rather than letting any of these float and break silently again.
+git+https://github.com/morganjwilliams/pyrolite.git@ab651b448ecd2ce1bc22d752b80a977a1f4dd1ca
+matplotlib==3.10.9
+psycopg2-binary==2.9.13
+pandas==2.2.3
+numpy==2.3.5
+fractopo==0.9.2
+geopandas==1.2.0
+shapely==2.1.2
+numpy-financial==1.0.0

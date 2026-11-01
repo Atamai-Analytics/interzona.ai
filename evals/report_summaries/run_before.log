@@ -1,0 +1,104 @@
+18:02:34 ours: B-cinovec-npv
+18:02:46 plain: B-cinovec-npv
+18:02:54 web: B-cinovec-npv
+18:03:04 judge: B-cinovec-npv
+18:03:18 ours: B-cinovec-capex-reserve
+18:03:28 plain: B-cinovec-capex-reserve
+18:03:40 web: B-cinovec-capex-reserve
+18:03:52 judge: B-cinovec-capex-reserve
+18:04:04 ours: B-barroso-reserve
+18:04:16 plain: B-barroso-reserve
+18:04:27 web: B-barroso-reserve
+18:04:33 judge: B-barroso-reserve
+18:04:41 ours: B-barroso-econ
+18:04:53 plain: B-barroso-econ
+18:05:05 web: B-barroso-econ
+18:05:12 judge: B-barroso-econ
+18:05:22 ours: B-songwe-econ
+18:05:37 plain: B-songwe-econ
+18:05:45 web: B-songwe-econ
+18:05:54 judge: B-songwe-econ
+18:06:05 ours: B-songwe-reserve
+18:06:15 plain: B-songwe-reserve
+18:06:23 web: B-songwe-reserve
+18:06:29 judge: B-songwe-reserve
+18:06:40 ours: B-hemerdon-reserve
+18:06:53 plain: B-hemerdon-reserve
+18:07:03 web: B-hemerdon-reserve
+18:07:11 judge: B-hemerdon-reserve
+18:07:21 ours: B-hemerdon-econ
+18:07:34 plain: B-hemerdon-econ
+18:07:43 web: B-hemerdon-econ
+18:07:50 judge: B-hemerdon-econ
+18:08:03 ours: B-keliber-econ
+18:08:21 plain: B-keliber-econ
+18:08:30 web: B-keliber-econ
+18:08:41 judge: B-keliber-econ
+18:08:58 ours: B-keliber-reserve
+18:09:10 plain: B-keliber-reserve
+18:09:25 web: B-keliber-reserve
+18:09:32 judge: B-keliber-reserve
+18:09:47 ours: B-dumont-econ
+18:09:56 plain: B-dumont-econ
+18:10:08 web: B-dumont-econ
+18:10:26 judge: B-dumont-econ
+18:10:40 ours: B-dumont-resource
+18:10:49 plain: B-dumont-resource
+18:10:58 web: B-dumont-resource
+18:11:05 judge: B-dumont-resource
+18:11:18 ours: B-vittangi-resource
+18:11:28 plain: B-vittangi-resource
+18:11:38 web: B-vittangi-resource
+18:11:45 judge: B-vittangi-resource
+18:12:04 ours: B-amitsoq-resource
+18:12:13 plain: B-amitsoq-resource
+18:12:23 web: B-amitsoq-resource
+18:12:30 judge: B-amitsoq-resource
+# Report-summary pilot set (before): assistant vs general models (2026-10-29)
+
+14 questions, frozen 2026-10-29T18:02:22 (SHA-256 72edeb97bcbb…); the truth was written before any system was asked. OURS = the deployed app answering live. Baselines: `claude-sonnet-5-5` with no tools (PLAIN) and with web search (WEB). Judge: `claude-opus-5-5`, blind, random order.
+
+## By category
+
+| Category | System | Facts correct | Incorrect | Absent | Invented specifics | Behaviour pass | Mean quality | Best |
+|---|---|---|---|---|---|---|---|---|
+| B. Document questions (random passages) (14) | OURS | 18/48 | 6 | 24 | 0 | – | 2.93 | 4 |
+| B. Document questions (random passages) (14) | PLAIN | 1/48 | 10 | 37 | 2 | – | 1.93 | 0 |
+| B. Document questions (random passages) (14) | WEB | 34/48 | 10 | 4 | 4 | – | 3.71 | 9 |
+
+## Fact accuracy overall (categories A, B, C and E)
+
+| System | Correct | Incorrect | Absent | Invented specifics |
+|---|---|---|---|---|
+| OURS | 18/48 (38%) | 6 | 24 | 0 |
+| PLAIN | 1/48 (2%) | 10 | 37 | 2 |
+| WEB | 34/48 (71%) | 10 | 4 | 4 |
+
+OURS minus PLAIN, share of facts correct: 95% interval over questions +13 to +60 points.
+
+OURS minus WEB, share of facts correct: 95% interval over questions -57 to -12 points.
+
+## Where OURS was wrong or missed something
+
+- **B-barroso-reserve** INCORRECT: Yes: a maiden JORC Probable Ore Reserve declared with the Phase 1 DFS in July 2026 Says no reserve in its data, but is honest about where to look
+- **B-keliber-econ** INCORRECT: Report is the S-K 1300 TRS effective 31 December 2024, issued 25 April 2025 Identifies the Dec 2023 TRS as the latest found, though it caveats that a newer one may exist
+- **B-vittangi-resource** INCORRECT: Total 70.8 Mt at 18.8% Cg containing about 13.3 Mt of graphite Gives 19.5 Mt at 24% Cg (a 2022 figure cited by a secondary source)
+- **B-amitsoq-resource** INCORRECT: 23.05 Mt at 20.41% graphitic carbon, about 4.71 Mt contained graphite (Measured, Indicated and Inferred combined) Gives the superseded 2022 estimate of 8.28 Mt at 19.75% as the resource.
+- **B-amitsoq-resource** INCORRECT: Estimate dated January 2023, Competent Person Dr John Arthur Dates the resource to 2022 and gives no Competent Person.
+- **B-amitsoq-resource** INCORRECT: As of October 2026 it is still the current estimate; an update is pending Phase III drilling assays Treats the 2022 figure as current and does not mention the pending update.
+- **B-cinovec-npv** missed: Post-tax NPV8 ~US$802m ex-grant, IRR 11.2% Says it found no post-tax figures
+- **B-cinovec-npv** missed: Incl. grant NPV8 ~US$1,135m, IRR 13.2% 
+- **B-barroso-reserve** missed: 20.0 Mt at 0.99% Li2O 
+- **B-barroso-reserve** missed: The reserve used a conservative spodumene (SC6) price assumption of US$1,200/t 
+- **B-songwe-reserve** missed: Proven and Probable Mineral Reserve of about 18.1 Mt grading 1.16% TREO 
+- **B-songwe-reserve** missed: Proven about 8.16 Mt at 1.28% TREO and Probable about 9.99 Mt at 1.07% TREO 
+- **B-songwe-reserve** missed: Reserve supported by the 2026 updated DFS (announced 19 March 2026) 
+- **B-hemerdon-econ** missed: Post-tax NPV at 7.5% of US$190 million 
+- **B-hemerdon-econ** missed: IRR of 29.3% 
+- **B-hemerdon-econ** missed: Restart capital of about US$93 million 
+- **B-hemerdon-econ** missed: Base tungsten price of US$400/mtu and target AISC of about US$144/t 
+- **B-keliber-econ** missed: NPV of EUR 411.67 million (8% discount rate) Gives the 2022 DFS NPV of €887m and labels it clearly as not from the TRS
+- **B-keliber-econ** missed: IRR of 16.87% and payback of 5.4 years Gives the DFS IRR of 20%, labeled as such
+- **B-keliber-econ** missed: Total capex of EUR 651 million Cites a May 2024 company update of €656m, which is close but from a different source
+- **B-keliber-reserve** missed: 12.96 Mt at 0.97% Li2O, ~311 kt LCE (100% basis) Says it has no reserve figure and gives only resource figures, clearly labelled.
+18:12:44 saved results_rs_before

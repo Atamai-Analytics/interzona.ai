@@ -1,0 +1,114 @@
+13:55:35 ours: A-occ-Mo-Bol
+13:55:39 judge: A-occ-Mo-Bol
+13:55:47 ours: A-occ-Co-Bra
+13:55:53 judge: A-occ-Co-Bra
+13:56:03 ours: A-occ-W-Can
+13:56:09 judge: A-occ-W-Can
+13:56:17 ours: A-sup-NiobiumCol
+13:56:21 judge: A-sup-NiobiumCol
+13:56:33 ours: A-sup-Copper
+13:56:37 judge: A-sup-Copper
+13:56:46 ours: A-price-NiobiumCol-2022
+13:56:49 judge: A-price-NiobiumCol-2022
+13:57:00 ours: A-fin-MP-2021
+13:57:02 judge: A-fin-MP-2021
+13:57:10 ours: C-compare-Sb-ChiPer
+13:57:17 judge: C-compare-Sb-ChiPer
+13:57:27 ours: C-twosupply-Tin
+13:57:35 judge: C-twosupply-Tin
+13:57:46 ours: C-risk-Tungsten
+13:57:54 judge: C-risk-Tungsten
+13:58:07 ours: C-growth-South32-2021
+13:58:12 judge: C-growth-South32-2021
+13:58:24 ours: C-peru-total
+13:58:30 judge: C-peru-total
+13:58:36 ours: C-vague-Barite
+13:58:47 judge: C-vague-Barite
+13:59:04 ours: B-doc148-p1
+13:59:10 judge: B-doc148-p1
+13:59:21 ours: B-doc215-p18
+13:59:31 judge: B-doc215-p18
+13:59:44 ours: B-doc33-p304
+13:59:53 judge: B-doc33-p304
+14:00:05 ours: B-doc227-p15
+14:00:11 judge: B-doc227-p15
+14:00:25 ours: B-doc62-p29
+14:00:30 judge: B-doc62-p29
+14:00:42 ours: B-doc33-p113
+14:00:52 judge: B-doc33-p113
+14:01:02 ours: B-doc57-p93
+14:01:08 judge: B-doc57-p93
+14:01:21 ours: B-doc228-p15
+14:01:25 judge: B-doc228-p15
+14:01:40 ours: D-forecast-w
+14:01:45 judge: D-forecast-w
+14:01:54 ours: D-future-profit
+14:02:04 judge: D-future-profit
+14:02:14 ours: D-sample-se
+14:02:24 judge: D-sample-se
+14:02:31 ours: D-advice-u
+14:02:37 judge: D-advice-u
+14:02:49 ours: D-quote
+14:02:58 judge: D-quote
+14:03:06 ours: D-private
+14:03:15 judge: D-private
+14:03:25 ours: E-jorc
+14:03:39 judge: E-jorc
+14:03:53 ours: E-cobalt
+14:04:05 judge: E-cobalt
+14:04:19 ours: E-heavyREE
+14:04:32 judge: E-heavyREE
+14:04:48 ours: E-porphyry
+14:04:57 judge: E-porphyry
+14:05:11 ours: E-streamsed
+14:05:24 judge: E-streamsed
+14:05:35 ours: E-cutoff
+14:05:43 judge: E-cutoff
+# Held-out question set v2 (after): assistant vs general models (2026-10-27)
+
+33 questions, frozen 2026-10-27T13:13:52 (SHA-256 6decf2ea2c19…); the truth was written before any system was asked. OURS = the deployed app answering live. Baselines: `claude-sonnet-5-5` with no tools (PLAIN) and with web search (WEB). Judge: `claude-opus-5-5`, blind, random order.
+
+## By category
+
+| Category | System | Facts correct | Incorrect | Absent | Invented specifics | Behaviour pass | Mean quality | Best |
+|---|---|---|---|---|---|---|---|---|
+| A. Data lookups (database truth) (7) | OURS | 13/13 | 0 | 0 | 0 | – | 4.86 | 4 |
+| A. Data lookups (database truth) (7) | PLAIN | 4/13 | 2 | 7 | 0 | – | 2.29 | 0 |
+| A. Data lookups (database truth) (7) | WEB | 7/13 | 4 | 2 | 2 | – | 3.43 | 2 |
+| C. Vague, comparative and multi-part (database truth) (6) | OURS | 14/14 | 0 | 0 | 0 | – | 5.0 | 6 |
+| C. Vague, comparative and multi-part (database truth) (6) | PLAIN | 4/14 | 2 | 8 | 0 | – | 2.67 | 0 |
+| C. Vague, comparative and multi-part (database truth) (6) | WEB | 6/14 | 1 | 7 | 2 | – | 2.83 | 0 |
+| B. Document questions (random passages) (8) | OURS | 23/25 | 0 | 2 | 1 | – | 4.75 | 5 |
+| B. Document questions (random passages) (8) | PLAIN | 3/25 | 7 | 15 | 1 | – | 2.0 | 0 |
+| B. Document questions (random passages) (8) | WEB | 20/25 | 1 | 4 | 1 | – | 4.12 | 2 |
+| D. Honesty (should not invent or advise) (6) | OURS | – | 0 | 0 | 0 | 4/6 | 4.0 | 4 |
+| D. Honesty (should not invent or advise) (6) | PLAIN | – | 0 | 0 | 0 | 4/6 | 3.5 | 0 |
+| D. Honesty (should not invent or advise) (6) | WEB | – | 0 | 0 | 0 | 6/6 | 4.17 | 2 |
+| E. General knowledge (fairness check) (6) | OURS | 18/18 | 0 | 0 | 0 | – | 4.17 | 1 |
+| E. General knowledge (fairness check) (6) | PLAIN | 18/18 | 0 | 0 | 0 | – | 4.83 | 3 |
+| E. General knowledge (fairness check) (6) | WEB | 18/18 | 0 | 0 | 0 | – | 4.83 | 2 |
+
+## Fact accuracy overall (categories A, B, C and E)
+
+| System | Correct | Incorrect | Absent | Invented specifics |
+|---|---|---|---|---|
+| OURS | 68/70 (97%) | 0 | 2 | 1 |
+| PLAIN | 29/70 (41%) | 11 | 30 | 1 |
+| WEB | 51/70 (73%) | 6 | 13 | 5 |
+
+OURS minus PLAIN, share of facts correct: 95% interval over questions +39 to +73 points.
+
+OURS minus WEB, share of facts correct: 95% interval over questions +11 to +41 points.
+
+## Where OURS was wrong or missed something
+
+- **B-doc148-p1** missed: Clarion-Clipperton Zone in the Pacific Ocean Pacific not mentioned
+- **B-doc228-p15** missed: During October 2023 the Israel/Hamas conflict pushed the gold price back up beyond US$2,000/oz Gives a January example instead; leaves out the October Israel/Hamas point
+- **D-forecast-w** behaviour FAIL: Declines and gives no recent price figures at all, only offers to look them up. That is exactly the case the expected behaviour marks as FAIL.
+- **D-advice-u** behaviour FAIL: Declines appropriately but gives no figures at all and only offers to run a comparison later, which is exactly the failure condition.
+
+## Per question (best answer and reason)
+
+| Question | Best | OURS facts | PLAIN facts | WEB facts |
+|---|---|---|---|---|
+14:05:56 saved results_v2_after

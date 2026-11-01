@@ -1,0 +1,824 @@
+[
+ {
+  "id": "B-chvaletice-econ",
+  "category": "B",
+  "question": "What did Euro Manganese's 2026 study for the Chvaletice manganese project in Czechia conclude about NPV, IRR and capital cost?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "PEA (NI 43-101), effective 14 May 2026, replacing 2022 FS",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Post-tax NPV ~US$492M at 8%, IRR 13.8%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Pre-tax NPV ~US$740M, IRR 16.0%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Total initial capital ~US$825M",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Says plainly that it doesn't know and gives useful pointers to sources, but answers none of the question."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "PEA (NI 43-101), effective 14 May 2026, replacing 2022 FS",
+     "label": "CORRECT",
+     "note": "PEA, NI 43-101 and the 14 May 2026 date are stated; it says the study is not a feasibility study but does not say it replaces the 2022 one"
+    },
+    {
+     "fact": "Post-tax NPV ~US$492M at 8%, IRR 13.8%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Pre-tax NPV ~US$740M, IRR 16.0%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Total initial capital ~US$825M",
+     "label": "CORRECT",
+     "note": "US$825.2M, split into Phase 1 and Phase 2"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Accurate, well organised and complete, with a sensible caveat about how early-stage a PEA is."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "PEA (NI 43-101), effective 14 May 2026, replacing 2022 FS",
+     "label": "CORRECT",
+     "note": "Gives the PEA and 14 May 2026; NI 43-101 is only implied through the technical report filing; does not mention replacing the 2022 study"
+    },
+    {
+     "fact": "Post-tax NPV ~US$492M at 8%, IRR 13.8%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Pre-tax NPV ~US$740M, IRR 16.0%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Total initial capital ~US$825M",
+     "label": "CORRECT",
+     "note": "Gives Phase 1 at 627.5 and Phase 2 at 197.8, which sum to about 825, but the only total it states is 964.4 including sustaining capital"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Core figures are correct. Many extra specifics (upside case, sensitivity figures) can't be verified. The A$/US$ currency remark is muddled, and the headline total capital could confuse readers."
+  },
+  "best": "ours",
+  "reason": "Y states all the key figures correctly, including total initial capital as one clear number. Z's figures are also correct, but it headlines the capital total that includes sustaining capital and adds unverifiable extras. X declined to answer."
+ },
+ {
+  "id": "B-zinnwald-reserve",
+  "category": "B",
+  "question": "Does the Zinnwald lithium project in Germany have a mineral reserve, and how big is it?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Yes: a maiden Mineral Reserve effective 31 March 2025 from the PFS",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Proven 27.2 Mt and Probable 100.9 Mt, total 128.1 Mt at about 2,056 ppm Li (4,428 ppm Li2O)",
+     "label": "CORRECT",
+     "note": "Li2O equivalent not given, but tonnages and Li grade match"
+    },
+    {
+     "fact": "About 1.4 Mt LCE contained (263 kt Li)",
+     "label": "CORRECT",
+     "note": "1,402 kt LCE, 263 kt Li"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Matches the truth on every point, with a clear breakdown by category and a caveat that this is PFS-stage."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Yes: a maiden Mineral Reserve effective 31 March 2025 from the PFS",
+     "label": "ABSENT",
+     "note": "Not sure whether a reserve exists"
+    },
+    {
+     "fact": "Proven 27.2 Mt and Probable 100.9 Mt, total 128.1 Mt at about 2,056 ppm Li (4,428 ppm Li2O)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "About 1.4 Mt LCE contained (263 kt Li)",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest about its uncertainty, but gives no reserve figure. Its resource figures are rough and hedged."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Yes: a maiden Mineral Reserve effective 31 March 2025 from the PFS",
+     "label": "INCORRECT",
+     "note": "Points to the old 2019-2020 FS reserve instead and says it doesn't know of any newer reserve"
+    },
+    {
+     "fact": "Proven 27.2 Mt and Probable 100.9 Mt, total 128.1 Mt at about 2,056 ppm Li (4,428 ppm Li2O)",
+     "label": "INCORRECT",
+     "note": "Gives 31.2 Mt at 3,004 ppm"
+    },
+    {
+     "fact": "About 1.4 Mt LCE contained (263 kt Li)",
+     "label": "INCORRECT",
+     "note": "Gives 94 kt Li"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Gives an outdated reserve from the earlier design. It does warn that this may be stale, but it misses the current 2025 reserve."
+  },
+  "best": "ours",
+  "reason": "X is the only answer that correctly reports the maiden reserve from the March 2025 PFS (128.1 Mt at 2,056 ppm Li, about 1.4 Mt LCE). Y gave no figure, and Z gave the outdated 2019-2020 reserve."
+ },
+ {
+  "id": "B-zinnwald-econ",
+  "category": "B",
+  "question": "What NPV, IRR and initial capex did the Zinnwald lithium PFS report?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "Pre-tax NPV8 about EUR 3.3 billion and pre-tax IRR 23.6%",
+     "label": "CORRECT",
+     "note": "€3,328M, 23.6%"
+    },
+    {
+     "fact": "Post-tax NPV8 about EUR 2.2 billion and post-tax IRR 19.8%",
+     "label": "CORRECT",
+     "note": "€2,187M, 19.8%"
+    },
+    {
+     "fact": "Initial construction capex EUR 1,048 million (Phase 1)",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts correct. Extra context, such as the 2019 study figures and the TipRanks note, is plausible but could not be checked against the truth."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Pre-tax NPV8 about EUR 3.3 billion and pre-tax IRR 23.6%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Post-tax NPV8 about EUR 2.2 billion and post-tax IRR 19.8%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial construction capex EUR 1,048 million (Phase 1)",
+     "label": "CORRECT",
+     "note": "States clearly that this is Phase 1 capex"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts correct and Phase 1 is explicitly identified. Extra figures (Phase 2 capex, opex) are plausible but could not be checked."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Pre-tax NPV8 about EUR 3.3 billion and pre-tax IRR 23.6%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Post-tax NPV8 about EUR 2.2 billion and post-tax IRR 19.8%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Initial construction capex EUR 1,048 million (Phase 1)",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest decline with useful pointers on where to check, but it gives none of the figures asked for."
+  },
+  "best": "ours",
+  "reason": "X and Y both give every fact correctly. Y edges ahead because it states explicitly that the €1,048M capex is Phase 1 only and lays out the figures clearly. Z declined to answer."
+ },
+ {
+  "id": "B-vulcan-reserve",
+  "category": "B",
+  "question": "What ore reserve does Vulcan Energy report for its Phase One Lionheart lithium project in the Upper Rhine?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Proved and Probable Ore Reserves of about 0.57 Mt LCE at 181 mg/l Li",
+     "label": "CORRECT",
+     "note": "Gives 570 kt LCE at 181 mg/l"
+    },
+    {
+     "fact": "Proved 318 kt LCE (first 15 years) and Probable 252 kt LCE (years 16-30)",
+     "label": "CORRECT",
+     "note": "States both the figures and the years each class covers"
+    },
+    {
+     "fact": "From the Phase One Bridging Engineering Study released November 2023",
+     "label": "CORRECT",
+     "note": "Gives the date as 16 Nov 2023"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Accurate and complete. The extra details are plausible, and the answer admits it has not checked for a newer estimate."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Proved and Probable Ore Reserves of about 0.57 Mt LCE at 181 mg/l Li",
+     "label": "INCORRECT",
+     "note": "Claims 1.6 Mt of Probable reserves"
+    },
+    {
+     "fact": "Proved 318 kt LCE (first 15 years) and Probable 252 kt LCE (years 16-30)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "From the Phase One Bridging Engineering Study released November 2023",
+     "label": "INCORRECT",
+     "note": "Attributes the figure to a DFS update in late 2022"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Wrong reserve figure and wrong source, though it does hedge."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Proved and Probable Ore Reserves of about 0.57 Mt LCE at 181 mg/l Li",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Proved 318 kt LCE (first 15 years) and Probable 252 kt LCE (years 16-30)",
+     "label": "CORRECT",
+     "note": "Ties the figures to production after 15 and 30 years"
+    },
+    {
+     "fact": "From the Phase One Bridging Engineering Study released November 2023",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Correct. Some extra claims cannot be verified, such as the May 2026 AGM presentation and the earlier 0.54 Mt figure. It is a little less clear than X about the year basis for each class."
+  },
+  "best": "ours",
+  "reason": "X and Z both get all three facts right. X sets out the year basis for each class more clearly and adds fewer claims that cannot be checked. Y gives the wrong reserve and the wrong study."
+ },
+ {
+  "id": "B-rovina-econ",
+  "category": "B",
+  "question": "What are the after-tax NPV, IRR and initial capex of Euro Sun's Rovina Valley copper-gold project in Romania?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "After-tax NPV US$512 million with an IRR of 20.5%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Pre-tax NPV US$630 million, IRR 22.7%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capex about US$448 million",
+     "label": "CORRECT",
+     "note": "US$447.8M"
+    },
+    {
+     "fact": "From the 2022 updated DFS (NI 43-101)",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts are correct, and the answer is open about the missing discount rate and the study's age."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "After-tax NPV US$512 million with an IRR of 20.5%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Pre-tax NPV US$630 million, IRR 22.7%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Initial capex about US$448 million",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "From the 2022 updated DFS (NI 43-101)",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Declines to give figures. It is honest about this and points to SEDAR+ and the company's releases."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "After-tax NPV US$512 million with an IRR of 20.5%",
+     "label": "CORRECT",
+     "note": "Given as the earlier 2022 figures"
+    },
+    {
+     "fact": "Pre-tax NPV US$630 million, IRR 22.7%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Initial capex about US$448 million",
+     "label": "CORRECT",
+     "note": "US$447.7M"
+    },
+    {
+     "fact": "From the 2022 updated DFS (NI 43-101)",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Leads with figures from a November 2025 study that the truth does not cover and that cannot be verified. It does correctly give the 2022 DFS figures as the earlier study, but omits the 2022 pre-tax figures."
+  },
+  "best": "ours",
+  "reason": "X gives all four pre-registered facts accurately. Z gets the 2022 figures right but puts unverified 2025 numbers first and leaves out the 2022 pre-tax results. Y gives no figures at all."
+ },
+ {
+  "id": "B-skouries-reserve",
+  "category": "B",
+  "question": "How big are the mineral reserves at Eldorado's Skouries copper-gold project in Greece?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "Proven and Probable 147.1 Mt at 0.77 g/t Au and 0.50% Cu",
+     "label": "INCORRECT",
+     "note": "Gives 148.0 Mt (grades match) from a different, 2025-dated statement"
+    },
+    {
+     "fact": "About 3.63 Moz gold and 740 kt copper contained",
+     "label": "CORRECT",
+     "note": "3.666 Moz and 741 kt, close enough to count as 'about'"
+    },
+    {
+     "fact": "Reserves as of 30 September 2021 (2022 feasibility technical report)",
+     "label": "INCORRECT",
+     "note": "Dates the reserves to 30 September 2025"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "The figures are close, but the reserve date is different and the answer includes doubtful 2026 production dates and a Grokipedia citation."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Proven and Probable 147.1 Mt at 0.77 g/t Au and 0.50% Cu",
+     "label": "INCORRECT",
+     "note": "Roughly 140 Mt at about 0.8 g/t: only approximate"
+    },
+    {
+     "fact": "About 3.63 Moz gold and 740 kt copper contained",
+     "label": "INCORRECT",
+     "note": "Gives 3–3.5 Moz and 0.6–0.7 Mt, both below the true figures"
+    },
+    {
+     "fact": "Reserves as of 30 September 2021 (2022 feasibility technical report)",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Says openly that it is working from memory, but its ranges understate the reserves."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Proven and Probable 147.1 Mt at 0.77 g/t Au and 0.50% Cu",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "About 3.63 Moz gold and 740 kt copper contained",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Reserves as of 30 September 2021 (2022 feasibility technical report)",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Matches every fact exactly, with a consistent breakdown and a correct source."
+  },
+  "best": "ours",
+  "reason": "Z matches all three pre-registered facts exactly and gives the correct source. X's numbers are close, but they come from a different date. Y's figures are too vague and too low."
+ },
+ {
+  "id": "B-nevescorvo-reserve",
+  "category": "B",
+  "question": "What are the copper and zinc reserves at the Neves-Corvo mine in Portugal?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Copper zones: Proven + Probable 21.2 Mt at 2.1% Cu (about 438 kt Cu)",
+     "label": "CORRECT",
+     "note": "Gives 21.2 Mt and 438 kt Cu. Grades are split into Proven 3.2% and Probable 1.9%; these are consistent with an overall ~2.1%."
+    },
+    {
+     "fact": "Zinc zones: Proven + Probable 22.3 Mt at 7.5% Zn (about 1.67 Mt Zn)",
+     "label": "CORRECT",
+     "note": "Gives 22.3 Mt and 1,667 kt Zn. Grades are split into Proven 8.1% and Probable 7.4%."
+    },
+    {
+     "fact": "Effective 31 December 2022 (Lundin Mining NI 43-101 report)",
+     "label": "CORRECT",
+     "note": "States 31 Dec 2022 and NI 43-101."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Accurate and precise. The resource figures add up to totals that are consistent with the other answers. It does not state the combined grades directly."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Copper zones: Proven + Probable 21.2 Mt at 2.1% Cu (about 438 kt Cu)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Zinc zones: Proven + Probable 22.3 Mt at 7.5% Zn (about 1.67 Mt Zn)",
+     "label": "CORRECT",
+     "note": "Gives 1.7 Mt; the 'and payable lead' wording is odd."
+    },
+    {
+     "fact": "Effective 31 December 2022 (Lundin Mining NI 43-101 report)",
+     "label": "CORRECT",
+     "note": "Year-end 2022, Lundin; NI 43-101 is not mentioned."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Core figures are correct. The added Boliden 2023 grades and the 2008 history cannot be verified."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Copper zones: Proven + Probable 21.2 Mt at 2.1% Cu (about 438 kt Cu)",
+     "label": "INCORRECT",
+     "note": "Gives a range of 0.5-0.8 Mt contained Cu, which contradicts 438 kt."
+    },
+    {
+     "fact": "Zinc zones: Proven + Probable 22.3 Mt at 7.5% Zn (about 1.67 Mt Zn)",
+     "label": "INCORRECT",
+     "note": "Gives 10-20 Mt of ore and ~1 Mt Zn."
+    },
+    {
+     "fact": "Effective 31 December 2022 (Lundin Mining NI 43-101 report)",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Vague ranges that miss the true values, though it is honest about its uncertainty."
+  },
+  "best": "ours",
+  "reason": "X and Y both give the correct 2022 reserves. X is more precise and cites NI 43-101 correctly, while Y adds material that cannot be verified. Z is vague and partly wrong."
+ },
+ {
+  "id": "B-aguablanca-econ",
+  "category": "B",
+  "question": "What are the economics of restarting the Aguablanca nickel-copper mine in Spain?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "After-tax NPV (5%) of US$83.1 million with an after-tax IRR of 213%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "LOM capital costs about US$36.2 million and payback about 1.2 years",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "About a six-year mine life processing about 4.8 Mt underground",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "From Denarius Metals' 2024 pre-feasibility study (NI 43-101)",
+     "label": "ABSENT",
+     "note": "Only advises checking an NI 43-101 report, without naming Denarius or the PFS"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Admits it lacks sourced figures. Its illustrative model concludes the mine is marginal to negative, which contradicts the PFS. It is honest about its limits but doesn't answer the question."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "After-tax NPV (5%) of US$83.1 million with an after-tax IRR of 213%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "LOM capital costs about US$36.2 million and payback about 1.2 years",
+     "label": "ABSENT",
+     "note": "Gives the US$36.2M capital cost correctly but leaves out the 1.2-year payback"
+    },
+    {
+     "fact": "About a six-year mine life processing about 4.8 Mt underground",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "From Denarius Metals' 2024 pre-feasibility study (NI 43-101)",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate and well caveated. The only gap is the missing payback period."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "After-tax NPV (5%) of US$83.1 million with an after-tax IRR of 213%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "LOM capital costs about US$36.2 million and payback about 1.2 years",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "About a six-year mine life processing about 4.8 Mt underground",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "From Denarius Metals' 2024 pre-feasibility study (NI 43-101)",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Covers every fact, cites the source, and gives clear caveats."
+  },
+  "best": "ours",
+  "reason": "Z states all four pre-registered facts correctly, with a source and sensible caveats. Y gets most of them but leaves out the payback period. X gives no actual figures and comes to the wrong conclusion about the economics."
+ },
+ {
+  "id": "B-sarytogan-dfs",
+  "category": "B",
+  "question": "What did Sarytogan Graphite's October 2026 upstream DFS report for reserves and economics?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "Ore Reserve 14.5 Mt at 29.1% TGC (2.5 Mt Proved, 12.0 Mt Probable)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Pre-tax NPV8 US$132.7 million and IRR 19.8%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Total capex US$80.5 million",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Mineral Resource 225 Mt at 29.2% TGC",
+     "label": "ABSENT",
+     "note": "Says roughly 200+ Mt at 28-29%, which is vague and not tied to the DFS"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honestly declines and points to sources, but gives none of the facts."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Ore Reserve 14.5 Mt at 29.1% TGC (2.5 Mt Proved, 12.0 Mt Probable)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Pre-tax NPV8 US$132.7 million and IRR 19.8%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Total capex US$80.5 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Mineral Resource 225 Mt at 29.2% TGC",
+     "label": "CORRECT",
+     "note": "Gives 225Mt @ 29%, which rounds 29.2%"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "All four facts are correct and the scope caveats are useful. The resource grade is rounded."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Ore Reserve 14.5 Mt at 29.1% TGC (2.5 Mt Proved, 12.0 Mt Probable)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Pre-tax NPV8 US$132.7 million and IRR 19.8%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Total capex US$80.5 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Mineral Resource 225 Mt at 29.2% TGC",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts are exact and the answer is thorough with clear caveats. The extra detail is coherent."
+  },
+  "best": "ours",
+  "reason": "Z states all four facts exactly, including the 29.2% resource grade, and adds well-organised context and caveats. Y is also correct but rounds the resource grade. X declined to answer."
+ },
+ {
+  "id": "B-viscaria-fs",
+  "category": "B",
+  "question": "What reserve and NPV did the Viscaria copper project in Sweden report in its feasibility study?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "Proved + Probable Mineral Reserve 41.8 Mt at 0.90% Cu (about 375 kt Cu)",
+     "label": "CORRECT",
+     "note": "Gives about 41 Mt and 376 kt contained Cu, which is close. It does not give the reserve grade, and it attaches 0.90% to the resource instead."
+    },
+    {
+     "fact": "NPV (7%) about SEK 4.5 billion (4,466 MSEK) and IRR 17.8%",
+     "label": "CORRECT",
+     "note": "MSEK 4,466 at 7%, IRR 17.8%."
+    },
+    {
+     "fact": "Initial capital about SEK 4.5 billion (4,494 MSEK)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Feasibility study issued 8 May 2025, reported under PERC",
+     "label": "ABSENT",
+     "note": "The 8 May 2025 date is correct, but PERC is not mentioned."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Gets the NPV and IRR right and the reserve roughly right. Leaves out capex and PERC, and is muddled about the reserve tonnage and grade."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Proved + Probable Mineral Reserve 41.8 Mt at 0.90% Cu (about 375 kt Cu)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "NPV (7%) about SEK 4.5 billion (4,466 MSEK) and IRR 17.8%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Initial capital about SEK 4.5 billion (4,494 MSEK)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Feasibility study issued 8 May 2025, reported under PERC",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 1,
+   "comment": "Declined to answer. It also wrongly says the company was formerly Nordic Iron Ore."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Proved + Probable Mineral Reserve 41.8 Mt at 0.90% Cu (about 375 kt Cu)",
+     "label": "CORRECT",
+     "note": "41.9 Mt and 375.5 kt Cu, with a proved/probable split. The implied grade is about 0.90%."
+    },
+    {
+     "fact": "NPV (7%) about SEK 4.5 billion (4,466 MSEK) and IRR 17.8%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital about SEK 4.5 billion (4,494 MSEK)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Feasibility study issued 8 May 2025, reported under PERC",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Complete and accurate, with a detailed reserve table."
+  },
+  "best": "ours",
+  "reason": "Z gets all four facts right and adds useful detail. X gets the NPV, IRR and date right but leaves out capex and PERC. Y declines to answer."
+ }
+]

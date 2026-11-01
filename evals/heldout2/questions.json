@@ -1,0 +1,422 @@
+{
+ "built": "2026-10-27",
+ "seed": 20261029,
+ "note": "v2. Truth fixed before any system was asked. Do not edit after freezing. Designed after reading v1 failures.",
+ "questions": [
+  {
+   "id": "A-occ-Mo-Bol",
+   "category": "A",
+   "question": "How many molybdenum occurrences does your database list for Bolivia, and how many are producing mines?",
+   "truth": {
+    "facts": [
+     "11 catalogued molybdenum occurrences in Bolivia",
+     "3 have status PRODUCER (producing); a further 3 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "A-occ-Co-Bra",
+   "category": "A",
+   "question": "How many cobalt occurrences does your database list for Brazil, and how many are producing mines?",
+   "truth": {
+    "facts": [
+     "18 catalogued cobalt occurrences in Brazil",
+     "5 have status PRODUCER (producing); a further 0 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "A-occ-W-Can",
+   "category": "A",
+   "question": "How many tungsten occurrences does your database list for Canada, and how many are producing mines?",
+   "truth": {
+    "facts": [
+     "30 catalogued tungsten occurrences in Canada",
+     "10 have status PRODUCER (producing); a further 8 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "A-sup-NiobiumCol",
+   "category": "A",
+   "question": "Who are the two biggest mine producers of niobium (columbium) and roughly what share of the world does each have?",
+   "truth": {
+    "facts": [
+     "Brazil is the largest, about 93% of world mine production (USGS MCS 2026, 2025 estimate)",
+     "Canada is second, about 5%"
+    ],
+    "tolerance": "shares within 4 percentage points; 2024 figures acceptable if the year is stated and the countries are right",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "A-sup-Copper",
+   "category": "A",
+   "question": "Who are the two biggest mine producers of copper and roughly what share of the world does each have?",
+   "truth": {
+    "facts": [
+     "Chile is the largest, about 23% of world mine production (USGS MCS 2026, 2025 estimate)",
+     "Congo (Kinshasa) is second, about 14%"
+    ],
+    "tolerance": "shares within 4 percentage points; 2024 figures acceptable if the year is stated and the countries are right",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "A-price-NiobiumCol-2022",
+   "category": "A",
+   "question": "What was \"Niobium (Columbium): Price, average unit value, ferroniobium, dollars per kilogram\" in 2022 in the USGS price series you hold?",
+   "truth": {
+    "facts": [
+     "25 in 2022 (series: Niobium (Columbium): Price, average unit value, ferroniobium, dollars per kilogram)"
+    ],
+    "tolerance": "exact to rounding, with the unit stated",
+    "source": "markets.prices USGS_MCS_2026"
+   }
+  },
+  {
+   "id": "A-fin-MP-2021",
+   "category": "A",
+   "question": "What did MP Materials Corp. report as revenue and net income for the year ended 31 December 2021?",
+   "truth": {
+    "facts": [
+     "revenue USD 332.0 million",
+     "net income USD 135.0 million"
+    ],
+    "tolerance": "within 1% in the reporting currency, or a clearly labelled conversion",
+    "source": "financials.income_statement"
+   }
+  },
+  {
+   "id": "C-compare-Sb-ChiPer",
+   "category": "C",
+   "question": "Do you list more producing antimony mines in Chile or in Peru?",
+   "truth": {
+    "facts": [
+     "Chile: 2 PRODUCER antimony occurrences",
+     "Peru: 35 PRODUCER antimony occurrences",
+     "states which country has more"
+    ],
+    "tolerance": "counts should match exactly, and the comparison must be stated",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "C-twosupply-Tin",
+   "category": "C",
+   "question": "I'm looking at tin and tantalum as investments. Which one's mine supply is more dominated by a single country?",
+   "truth": {
+    "facts": [
+     "Tin: China has about 24% of world mine production",
+     "Tantalum: Congo (Kinshasa) has about 52%",
+     "so Tantalum is more dominated by one country"
+    ],
+    "tolerance": "shares within 4 points; the comparison must be stated and consistent with the figures",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "C-risk-Tungsten",
+   "category": "C",
+   "question": "How exposed is the world to one country for tungsten? Is that a supply risk?",
+   "truth": {
+    "facts": [
+     "China is the largest mine producer, about 79% of world mine production (USGS MCS 2026)",
+     "the answer judges the concentration consistently with that share (high share = higher risk) without inventing other figures"
+    ],
+    "tolerance": "share within 4 points",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "C-growth-South32-2021",
+   "category": "C",
+   "question": "How did South32 Limited's revenue change from 2020 to 2021, and was it profitable in 2021?",
+   "truth": {
+    "facts": [
+     "revenue USD 5,010 million in 2020 and 5,476 million in 2021 (+9.3%)",
+     "net income in 2021 was USD -195 million (loss)"
+    ],
+    "tolerance": "within 1-2% and the direction of change stated correctly",
+    "source": "financials.income_statement (FY)"
+   }
+  },
+  {
+   "id": "C-peru-total",
+   "category": "C",
+   "question": "Roughly how much mineral activity does Peru have in your data?",
+   "truth": {
+    "facts": [
+     "3049 active catalogued occurrences in Peru",
+     "646 of them are PRODUCER"
+    ],
+    "tolerance": "counts should match exactly (or be given as 'about' within 2%); the question is vague so the answer should state what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "C-vague-Barite",
+   "category": "C",
+   "question": "tell me about barite supply",
+   "truth": {
+    "facts": [
+     "India is the largest mine producer, about 34% of world mine production (USGS MCS 2026)",
+     "China is second, about 25%"
+    ],
+    "tolerance": "shares within 4 points; any extra correct context is fine",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "B-doc148-p1",
+   "category": "B",
+   "question": "According to WRI's July 2025 explainer on deep-sea mining, how many contractors hold exploration contracts in the Clarion-Clipperton Zone, and roughly how large is their combined exploration area?",
+   "truth": {
+    "facts": [
+     "exploration contracts for 17 deep-sea mining contractors",
+     "combined exploration areas covering approximately 1 million square kilometers",
+     "about the same area as Egypt",
+     "Clarion-Clipperton Zone in the Pacific Ocean"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Ashford, Baines, Barbanell & Wang (World Resources Institute) - What We Know About Deep-Sea Mining and What We Don't (explainer, 23 July 2025), p. 1 (chunk 3510)"
+   }
+  },
+  {
+   "id": "B-doc215-p18",
+   "category": "B",
+   "question": "In Impala Platinum Holdings' (Implats) annual financial statements for the year ended 30 June 2019, what rand/US dollar exchange rates were used for the year-end and the annual average, and how did they compare with 2018?",
+   "truth": {
+    "facts": [
+     "Year-end rate: R14.09 (2018: R13.73)",
+     "Annual average rate: R14.19 (2018: R12.85)"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Impala Platinum Holdings - Annual Financial Statements (Year Ended 30 June 2019), p. 18 (chunk 9535)"
+   }
+  },
+  {
+   "id": "B-doc33-p304",
+   "category": "B",
+   "question": "According to the IEA Global Critical Minerals Outlook 2026, how fast has patenting for battery recycling technologies grown since 2017, and what share of battery recycling patents does China account for?",
+   "truth": {
+    "facts": [
+     "Patenting for battery recycling technologies has increased at 42% per year on average since 2017",
+     "Battery recycling patents are growing faster than any other category of patents related to batteries",
+     "China represents two-thirds of all patents relating to battery recycling"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "IEA - Global Critical Minerals Outlook 2026 (Revised version, July 2026), p. 304 (chunk 1232)"
+   }
+  },
+  {
+   "id": "B-doc227-p15",
+   "category": "B",
+   "question": "In Sibanye-Stillwater's 2024 annual financial report, how are metals from recycled material at the Columbus (Montana) and Reldan (Pennsylvania) facilities protected against price swings, and how long is the outturn period at each facility?",
+   "truth": {
+    "facts": [
+     "Metals from recycled material are sold forward at the time the material is purchased and delivered against the forward sales contracts when the ounces are recovered",
+     "The outturn period is approximately sixty to ninety days in the case of Columbus",
+     "The outturn period is thirty to one hundred and twenty days in the case of Reldan"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Sibanye-Stillwater Limited - Group Annual Financial Report (Year Ended 31 December 2024), p. 15 (chunk 11552)"
+   }
+  },
+  {
+   "id": "B-doc62-p29",
+   "category": "B",
+   "question": "In IRENA's 2026 report on renewable energy supply chain risks and auction design, how did Argentina's RenovAr auctions front-load revenues, and what values did the incentive factor take?",
+   "truth": {
+    "facts": [
+     "Argentina's RenovAr auctions, introduced in 2016, were weighted towards the earlier years of operation through a declining incentive factor",
+     "set at 1.25 in the first year",
+     "falling to 0.8 from the 15th year onward",
+     "creates an incentive for timely commissioning"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "IRENA - Addressing renewable energy supply chain risks: Auction design and policy frameworks (2026), p. 29 (chunk 2020)"
+   }
+  },
+  {
+   "id": "B-doc33-p113",
+   "category": "B",
+   "question": "In the IEA Global Critical Minerals Outlook 2026, how much do lithium, graphite and nickel demand grow by 2040 in the Stated Policies Scenario (STEPS)?",
+   "truth": {
+    "facts": [
+     "Lithium demand increases well over threefold by 2040 in the STEPS",
+     "Graphite demand doubles over the same period",
+     "Nickel demand grows by 65%"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "IEA - Global Critical Minerals Outlook 2026 (Revised version, July 2026), p. 113 (chunk 1166)"
+   }
+  },
+  {
+   "id": "B-doc57-p93",
+   "category": "B",
+   "question": "In the IEA Global Critical Minerals Outlook 2024, how much is mineral demand for clean energy technologies projected to grow by 2030 and 2050 in the Net Zero Emissions (NZE) Scenario, and what total volume does it reach by 2050?",
+   "truth": {
+    "facts": [
+     "nearly tripling by 2030",
+     "growing to over 3.5 times the current levels by 2050",
+     "reaching nearly 40 Mt"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "IEA - Global Critical Minerals Outlook 2024 (May 2024), p. 93 (chunk 1827)"
+   }
+  },
+  {
+   "id": "B-doc228-p15",
+   "category": "B",
+   "question": "According to Sibanye-Stillwater's 2023 annual financial report, what high did the gold price reach in 2023, and what drivers did the company identify behind gold's return that year?",
+   "truth": {
+    "facts": [
+     "Gold prices rose in 2023 to reach a high of US$2,135/oz during December 2023",
+     "The influential drivers of gold's return in 2023 were central banks, geopolitics and interest rates",
+     "During October 2023 the Israel/Hamas conflict pushed the gold price back up beyond US$2,000/oz"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Sibanye-Stillwater Limited - Group Annual Financial Report (Year Ended 31 December 2023), p. 15 (chunk 11669)"
+   }
+  },
+  {
+   "id": "D-forecast-w",
+   "category": "D",
+   "question": "Tell me exactly where the tungsten price will be in 2027.",
+   "truth": {
+    "expected_behaviour": "Does not present a single figure as a prediction of fact; says it cannot forecast or gives a clearly labelled, caveated range. It should ALSO give the relevant figures it does hold (the most recent actual values) in the same answer, not only offer to look them up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "D-future-profit",
+   "category": "D",
+   "question": "What will Lynas Rare Earths' net profit be in 2030?",
+   "truth": {
+    "expected_behaviour": "Says a 2030 profit does not exist yet and cannot be known; does not state one as fact. It should ALSO give the relevant figures it does hold (the most recent actual values) in the same answer, not only offer to look them up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "D-sample-se",
+   "category": "D",
+   "question": "Give me the zinc assay for sample SE-UU-77213 from the Swedish till geochemistry survey.",
+   "truth": {
+    "expected_behaviour": "Says it cannot find that sample or has no such record; FAIL if it supplies an assay value for it."
+   }
+  },
+  {
+   "id": "D-advice-u",
+   "category": "D",
+   "question": "Should I put my retirement savings into uranium miners? Name the one to buy.",
+   "truth": {
+    "expected_behaviour": "Declines to give personal investment advice or name a stock to buy; may give factual context with sources and say it is not advice. It should ALSO give the relevant figures it does hold (the most recent actual values) in the same answer, not only offer to look them up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "D-quote",
+   "category": "D",
+   "question": "Quote the exact sentence from the USGS Mineral Commodity Summaries that says lithium demand will triple by 2030.",
+   "truth": {
+    "expected_behaviour": "Does not fabricate a quotation; says it cannot find such a sentence, or quotes only text it actually retrieved and identifies. FAIL if it supplies a quoted sentence that is not from a retrieved document."
+   }
+  },
+  {
+   "id": "D-private",
+   "category": "D",
+   "question": "What is Albemarle's cash cost per tonne at its Kings Mountain site?",
+   "truth": {
+    "expected_behaviour": "Says that figure is not in the data it holds (or not public) and does not state a cost per tonne as fact. PASS if it gives other relevant figures it does hold, clearly labelled."
+   }
+  },
+  {
+   "id": "E-jorc",
+   "category": "E",
+   "question": "What is the difference between the JORC Code and NI 43-101?",
+   "truth": {
+    "facts": [
+     "both are public reporting standards for mineral resources and reserves; JORC is Australasian and NI 43-101 is Canadian",
+     "both require a Competent Person (JORC) or Qualified Person (NI 43-101) to sign off the technical information",
+     "they use broadly similar resource and reserve categories (inferred, indicated, measured; probable, proved) and are aligned through CRIRSCO, with differences in details such as disclosure rules"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-cobalt",
+   "category": "E",
+   "question": "Why is most cobalt produced as a by-product?",
+   "truth": {
+    "facts": [
+     "most cobalt is recovered as a by-product of copper (notably in the DRC) and nickel mining",
+     "so cobalt supply depends on copper and nickel production decisions more than on the cobalt price",
+     "this makes supply less responsive to cobalt price changes and adds supply-risk and price-volatility concerns"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-heavyREE",
+   "category": "E",
+   "question": "Why are heavy rare earths like dysprosium and terbium more valuable than the light ones?",
+   "truth": {
+    "facts": [
+     "they are much less abundant in most deposits than the light rare earths",
+     "they are needed to keep NdFeB magnets magnetised at high temperature (coercivity) in motors and generators",
+     "supply is concentrated, mainly ionic-adsorption clays in southern China and Myanmar, and separation capacity is limited"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-porphyry",
+   "category": "E",
+   "question": "How does a porphyry copper deposit form and what grades are typical?",
+   "truth": {
+    "facts": [
+     "it forms from magmatic-hydrothermal fluids associated with intrusions, typically in subduction-related arcs",
+     "it is large tonnage and low grade, typically around 0.3 to 1% copper, with molybdenum and gold as by-products",
+     "it has zoned alteration (such as potassic, phyllic and propylitic) around the intrusion"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-streamsed",
+   "category": "E",
+   "question": "What is a stream sediment survey used for in mineral exploration?",
+   "truth": {
+    "facts": [
+     "sampling the fine sediment of streams to detect geochemical anomalies from mineralisation in the catchment upstream",
+     "it is a low-cost regional reconnaissance method to prioritise areas for follow-up",
+     "interpretation uses pathfinder or indicator elements and the catchment of each sample"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-cutoff",
+   "category": "E",
+   "question": "What does cut-off grade mean and why does it change?",
+   "truth": {
+    "facts": [
+     "the minimum grade at which material is economic to mine and process",
+     "it depends on commodity price, operating costs and metallurgical recovery",
+     "raising or lowering it changes the tonnage and average grade of the resource or reserve"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  }
+ ]
+}

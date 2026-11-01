@@ -1,0 +1,7 @@
+# Pre-registration 3: rolling calibration of the ranges (written 2026-10-27, after ranges.py was run, before ranges_rolling.py was run)
+
+What ranges.py found (ranges_results.json): a single widening factor fitted on 2005-2015 overshoots on 2016 onward (calibrated 80% ranges covered 83-93% of outcomes, 50% ranges 57-58%), because 2005-2015 held the 2008 crash and the 2014-15 commodity fall, which were more volatile than the following decade. The uncalibrated ranges were too narrow (71-74% for 80%). Neither passed PREREG_2's acceptance test.
+
+Step 3 uses the only version a live service can actually use: at every forecast origin the widening factors are re-estimated from the most recent 120 months of origins whose outcome is already known at that date (origin month no later than the forecast origin minus h), pooled over the 15 series, using the same grid and rule as PREREG_2 (smallest factor on 1.00-2.50 that reaches nominal coverage). Everything else is unchanged. It is tested over origins 2016-01 onward, with the first 120 months of data for calibration always lying before the origin, so no outcome is used before it is known.
+
+Acceptance is the same as PREREG_2: test coverage of the 80% range within 75-85% and of the 50% range within 45-55%, at every horizon. If it fails at a horizon the range ships only with the measured coverage and "narrower/wider than stated". This is the last variant tried; if it fails the module reports that ranges are not reliably calibrated and does not try a fourth.

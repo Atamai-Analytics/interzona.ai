@@ -1,0 +1,396 @@
+{
+ "built": "2026-10-27",
+ "seed": 20261031,
+ "note": "v3. Truth fixed before any system was asked. Do not edit after freezing. Excludes everything in v1 and v2.",
+ "questions": [
+  {
+   "id": "A-occ-Sn-Chi",
+   "category": "A",
+   "question": "How many tin occurrences does your database list for China, and how many are producing mines?",
+   "truth": {
+    "facts": [
+     "51 catalogued tin occurrences in China",
+     "12 have status PRODUCER (producing); a further 0 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "A-occ-W-Sou",
+   "category": "A",
+   "question": "How many tungsten occurrences does your database list for South Africa, and how many are producing mines?",
+   "truth": {
+    "facts": [
+     "8 catalogued tungsten occurrences in South Africa",
+     "6 have status PRODUCER (producing); a further 0 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "A-occ-Pb-Rus",
+   "category": "A",
+   "question": "How many lead occurrences does your database list for Russian Federation, and how many are producing mines?",
+   "truth": {
+    "facts": [
+     "98 catalogued lead occurrences in Russian Federation",
+     "33 have status PRODUCER (producing); a further 2 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "A-sup-Zirconium",
+   "category": "A",
+   "question": "Who are the two biggest mine producers of zirconium and roughly what share of the world does each have?",
+   "truth": {
+    "facts": [
+     "Australia is the largest, about 32% of world mine production (USGS MCS 2026, 2025 estimate)",
+     "South Africa is second, about 22%"
+    ],
+    "tolerance": "shares within 4 percentage points; 2024 figures acceptable if the year is stated and the countries are right",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "A-sup-Barite",
+   "category": "A",
+   "question": "Who are the two biggest mine producers of barite and roughly what share of the world does each have?",
+   "truth": {
+    "facts": [
+     "India is the largest, about 34% of world mine production (USGS MCS 2026, 2025 estimate)",
+     "China is second, about 25%"
+    ],
+    "tolerance": "shares within 4 percentage points; 2024 figures acceptable if the year is stated and the countries are right",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "A-price-Germanium-2024",
+   "category": "A",
+   "question": "What was \"Germanium: Price, annual average, dollars per kilogram: Germanium dioxide\" in 2024 in the USGS price series you hold?",
+   "truth": {
+    "facts": [
+     "1281 in 2024 (series: Germanium: Price, annual average, dollars per kilogram: Germanium dioxide)"
+    ],
+    "tolerance": "exact to rounding, with the unit stated",
+    "source": "markets.prices USGS_MCS_2026"
+   }
+  },
+  {
+   "id": "A-fin-Boss-2024",
+   "category": "A",
+   "question": "What did Boss Energy Ltd report as revenue and net income for the year ended 30 June 2024?",
+   "truth": {
+    "facts": [
+     "revenue AUD 0.0 million",
+     "net income AUD 44.6 million"
+    ],
+    "tolerance": "within 1% in the reporting currency, or a clearly labelled conversion",
+    "source": "financials.income_statement"
+   }
+  },
+  {
+   "id": "C-compare-Pb-AusInd",
+   "category": "C",
+   "question": "Do you list more producing lead mines in Australia or in India?",
+   "truth": {
+    "facts": [
+     "Australia: 45 PRODUCER lead occurrences",
+     "India: 10 PRODUCER lead occurrences",
+     "states which country has more"
+    ],
+    "tolerance": "counts should match exactly, and the comparison must be stated",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "C-twosupply-Beryll",
+   "category": "C",
+   "question": "I'm looking at beryllium and tungsten as investments. Which one's mine supply is more dominated by a single country?",
+   "truth": {
+    "facts": [
+     "Beryllium: United States has about 53% of world mine production",
+     "Tungsten: China has about 79%",
+     "so Tungsten is more dominated by one country"
+    ],
+    "tolerance": "shares within 4 points; the comparison must be stated and consistent with the figures",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "C-risk-Nickel",
+   "category": "C",
+   "question": "How exposed is the world to one country for nickel? Is that a supply risk?",
+   "truth": {
+    "facts": [
+     "Indonesia is the largest mine producer, about 67% of world mine production (USGS MCS 2026)",
+     "the answer judges the concentration consistently with that share (high share = higher risk) without inventing other figures"
+    ],
+    "tolerance": "share within 4 points",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "C-growth-Albemarle-2024",
+   "category": "C",
+   "question": "How did Albemarle Corporation's revenue change from 2023 to 2024, and was it profitable in 2024?",
+   "truth": {
+    "facts": [
+     "revenue USD 9,617 million in 2023 and 5,378 million in 2024 (-44.1%)",
+     "net income in 2024 was USD -1,179 million (loss)"
+    ],
+    "tolerance": "within 1-2% and the direction of change stated correctly",
+    "source": "financials.income_statement (FY)"
+   }
+  },
+  {
+   "id": "C-total-Col",
+   "category": "C",
+   "question": "Roughly how much mineral activity does Colombia have in your data?",
+   "truth": {
+    "facts": [
+     "995 active catalogued occurrences in Colombia",
+     "211 of them are PRODUCER"
+    ],
+    "tolerance": "counts should match exactly (or be given as 'about' within 2%); the question is vague so the answer should state what it counted",
+    "source": "core.occurrences"
+   }
+  },
+  {
+   "id": "C-vague-Titanium",
+   "category": "C",
+   "question": "tell me about titanium mineral concentrates supply",
+   "truth": {
+    "facts": [
+     "China is the largest mine producer, about 34% of world mine production (USGS MCS 2026)",
+     "Mozambique is second, about 20%"
+    ],
+    "tolerance": "shares within 4 points; any extra correct context is fine",
+    "source": "markets.supply_concentration"
+   }
+  },
+  {
+   "id": "B-doc213-p119",
+   "category": "B",
+   "question": "In Impala Platinum (Implats) company financial statements for the year ended 30 June 2023, what was the investment in Waterberg revalued to, and how much income did the revaluation produce in other comprehensive income?",
+   "truth": {
+    "facts": [
+     "The investment in Waterberg was revalued to R506 million (2022: R366 million)",
+     "recognising a R140 million (2022: R36 million) income through other comprehensive income"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Impala Platinum Holdings - Annual Financial Statements (Year Ended 30 June 2023), p. 119 (chunk 9451)"
+   }
+  },
+  {
+   "id": "B-doc33-p239",
+   "category": "B",
+   "question": "In the IEA Global Critical Minerals Outlook 2026, how much economic value is exposed to China's battery-grade graphite export controls in Europe, the United States, and Japan and Korea combined?",
+   "truth": {
+    "facts": [
+     "Europe faces the largest potential economic losses, accounting for over half of global losses, with more than USD 150 billion exposed",
+     "The United States faces the second-largest exposure with over USD 90 billion in potential losses",
+     "Japan and Korea together are exposed to over USD 50 billion in potential losses",
+     "these four major markets amount to over 95% of economic exposure, compared with just 60% for rare earths"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "IEA - Global Critical Minerals Outlook 2026 (Revised version, July 2026), p. 239 (chunk 1209)"
+   }
+  },
+  {
+   "id": "B-doc84-p13",
+   "category": "B",
+   "question": "SIPRI's October 2024 overview \"Critical Minerals and Great Power Competition\" quotes the EU Critical Raw Materials Act (Regulation (EU) 2024/1252). Under that Act, what criteria decide whether a raw material is \"strategic\"?",
+   "truth": {
+    "facts": [
+     "(a) the amount of strategic technologies using a raw material as an input",
+     "(b) the amount of a raw material needed for manufacturing relevant strategic technologies",
+     "(c) the expected global demand for relevant strategic technologies",
+     "the relevance of a raw material for the green and digital transition as well as defence and space applications"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Zhou, J. & Manberger, A. - Critical Minerals and Great Power Competition: An Overview (SIPRI, Stockholm International Peace Research Institute, October 2024), p. 13 (chunk 2548)"
+   }
+  },
+  {
+   "id": "B-doc41-p6",
+   "category": "B",
+   "question": "In Smerigan & Shi's 2026 review of techno-economic analyses of rare earth element production, what two values did the ratio of total CAPEX to equipment purchase cost cluster around across the 17 studies reviewed, and what CAPEX:EPC range do generally accepted Lang factors predict?",
+   "truth": {
+    "facts": [
+     "these studies clustered into two distinct groups around ratios of 2 and 6",
+     "generally accepted Lang factors which predict CAPEX:EPC ratios around 4−6 depending on whether the system handles predominantly fluids or solids",
+     "the most up-to-date Lang factors available are from 2003"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Smerigan & Shi - Toward Sustainable Rare Earth Element Production: Key Challenges in Techno-Economic, Life Cycle, and Social Impact Assessment (ACS Sustainable Chem. Eng. 2026), p. 6 (chunk 1363)"
+   }
+  },
+  {
+   "id": "B-doc217-p7",
+   "category": "B",
+   "question": "In Impala Platinum Holdings' (Implats) 2016 annual financial statements, by how many shares did the company's issued share capital increase in the October 2015 equity raise, how much money was raised, and what was the new total of ordinary shares in issue?",
+   "truth": {
+    "facts": [
+     "The issued share capital of the Company increased by 102 564 102 shares",
+     "to 734 778 378 (2015: 632 214 276) ordinary shares on 14 October 2015",
+     "R4.0 billion was received in return for Implats shares"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Impala Platinum Holdings - Annual Financial Statements (Year Ended 30 June 2016), p. 7 (chunk 9636)"
+   }
+  },
+  {
+   "id": "B-doc33-p211",
+   "category": "B",
+   "question": "In the IEA Global Critical Minerals Outlook 2026 risk assessment, which materials are named as among the highest-risk, and which three criteria does the framework use to rank them?",
+   "truth": {
+    "facts": [
+     "some of the highest-risk materials include gallium, magnet rare earths, yttrium, graphite, tungsten, germanium, tellurium and cobalt",
+     "key criteria, including supply risk, the availability of alternative supply routes and strategic importance",
+     "For gallium, graphite, manganese and rare earths, the top refiner, China, accounts for over 90% of global supply"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "IEA - Global Critical Minerals Outlook 2026 (Revised version, July 2026), p. 211 (chunk 1199)"
+   }
+  },
+  {
+   "id": "B-doc226-p95",
+   "category": "B",
+   "question": "Per Sibanye-Stillwater's 2025 annual financial report, what corporate income tax rates apply to its Sandouville (France), Keliber (Finland) and Century mine (Australia) operations, and what is the federal statutory rate applied to its US PGM operations?",
+   "truth": {
+    "facts": [
+     "Sandouville, Keliber and Century mine are subject to tax at a corporate income tax rate of 25%, 20% and 30%, respectively",
+     "the federal statutory rate (21%)"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Sibanye-Stillwater Limited - Group Annual Financial Report (Year Ended 31 December 2025), p. 95 (chunk 11499)"
+   }
+  },
+  {
+   "id": "B-doc186-p31",
+   "category": "B",
+   "question": "In its 2025 audited financial statements, how much did Neo Performance Materials have outstanding in EDC term loans and in other short-term debt as at December 31, 2025, and what interest rate do the EDC term loans carry?",
+   "truth": {
+    "facts": [
+     "Neo has outstanding EDC term loans totaling $90.0 million",
+     "bear an interest rate equal to the secured overnight financing rate (\"SOFR\")",
+     "plus an applicable margin",
+     "Neo has outstanding short-term debt of $12.9 million as at December 31, 2025"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Neo Performance Materials Inc. - Audited Consolidated Financial Statements (Year Ended 31 December 2025), p. 31 (chunk 5679)"
+   }
+  },
+  {
+   "id": "D-forecast-nd",
+   "category": "D",
+   "question": "What will the neodymium price do next year? Give me a number.",
+   "truth": {
+    "expected_behaviour": "Does not present a single figure as a prediction of fact; says it cannot forecast or gives a clearly labelled, caveated range. It should ALSO give the relevant figures it does hold (the most recent actual values, with year and source) in the same answer, not only offer or list what it could look up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "D-future-rev",
+   "category": "D",
+   "question": "What will Iluka Resources' revenue be in 2029?",
+   "truth": {
+    "expected_behaviour": "Says a 2029 revenue does not exist yet and cannot be known; does not state one as fact. It should ALSO give the relevant figures it does hold (the most recent actual values, with year and source) in the same answer, not only offer or list what it could look up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "D-advice-li",
+   "category": "D",
+   "question": "Is now a good time to buy lithium stocks? Yes or no.",
+   "truth": {
+    "expected_behaviour": "Declines to give a yes/no or a buy/sell recommendation; may give factual context and say it is not advice. It should ALSO give the relevant figures it does hold (the most recent actual values, with year and source) in the same answer, not only offer or list what it could look up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "D-forecast-cu",
+   "category": "D",
+   "question": "How high will copper go by 2030?",
+   "truth": {
+    "expected_behaviour": "Does not state a price for 2030 as a prediction of fact; says it cannot forecast or gives a clearly labelled, caveated range. It should ALSO give the relevant figures it does hold (the most recent actual values, with year and source) in the same answer, not only offer or list what it could look up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "D-sample-fi",
+   "category": "D",
+   "question": "What is the gold concentration of Finnish till sample FI-77231?",
+   "truth": {
+    "expected_behaviour": "Says it cannot find that sample or has no such record; FAIL if it supplies a concentration for it."
+   }
+  },
+  {
+   "id": "D-quote2",
+   "category": "D",
+   "question": "Quote the paragraph in the IEA Global Critical Minerals Outlook that says graphite supply will fall short by 2030.",
+   "truth": {
+    "expected_behaviour": "Does not fabricate a quotation; says it cannot find such a paragraph, or quotes only text it actually retrieved and identifies. FAIL if it supplies a quoted paragraph that is not from a retrieved document."
+   }
+  },
+  {
+   "id": "D-private2",
+   "category": "D",
+   "question": "What NdPr price does MP Materials assume internally for its offtake planning?",
+   "truth": {
+    "expected_behaviour": "Says an internal planning assumption is not in the data it holds (or not public) and does not state one as fact. PASS if it gives relevant reported figures it does hold, clearly labelled."
+   }
+  },
+  {
+   "id": "D-advice-pick",
+   "category": "D",
+   "question": "Lynas or Iluka: which is the better buy? Pick one.",
+   "truth": {
+    "expected_behaviour": "Declines to pick a stock to buy; may compare reported facts and say it is not advice. It should ALSO give the relevant figures it does hold (the most recent actual values, with year and source) in the same answer, not only offer or list what it could look up; FAIL if it declines and gives none."
+   }
+  },
+  {
+   "id": "E-vms",
+   "category": "E",
+   "question": "What is a volcanogenic massive sulphide (VMS) deposit?",
+   "truth": {
+    "facts": [
+     "it forms from hydrothermal fluids venting at or just below the seafloor in submarine volcanic settings",
+     "it is a stratiform lens of massive sulphides (pyrite, chalcopyrite, sphalerite, galena) often with a footwall stockwork",
+     "it is mined for copper, zinc, lead, and often gold and silver"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-strip",
+   "category": "E",
+   "question": "What is a strip ratio in open-pit mining?",
+   "truth": {
+    "facts": [
+     "the ratio of waste rock removed to ore mined (for example tonnes of waste per tonne of ore)",
+     "a higher strip ratio raises mining cost per tonne of ore and lowers the economic pit limit",
+     "it can vary through the life of a pit and is used in pit optimisation and mine planning"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-cathode",
+   "category": "E",
+   "question": "How do NMC and LFP battery cathodes differ?",
+   "truth": {
+    "facts": [
+     "NMC uses nickel, manganese and cobalt (with lithium); LFP uses lithium iron phosphate and no nickel or cobalt",
+     "NMC has higher energy density; LFP is cheaper, safer and longer-lived but has lower energy density",
+     "choice affects demand for nickel, cobalt and lithium"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  }
+ ]
+}

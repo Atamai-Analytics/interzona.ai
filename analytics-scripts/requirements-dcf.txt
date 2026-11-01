@@ -1,0 +1,2 @@
+# project_dcf_model.py: numpy/pandas/matplotlib come from the sandbox image; only numpy-financial is extra. Never touches the database.
+numpy-financial==1.0.0

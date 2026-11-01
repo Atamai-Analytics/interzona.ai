@@ -1,0 +1,1143 @@
+[
+ {
+  "id": "B-cinovec-npv",
+  "category": "B",
+  "question": "What post-tax NPV and IRR did European Metals' December 2025 definitive feasibility study give for the Cinovec lithium project, and what lithium carbonate price was it based on?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "Post-tax NPV8 ~US$802m ex-grant, IRR 11.2%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Incl. grant NPV8 ~US$1,135m, IRR 13.2%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Lithium carbonate price US$26,000/t",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Declines to answer, which is honest, and points to sensible sources, but gives no figures."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Post-tax NPV8 ~US$802m ex-grant, IRR 11.2%",
+     "label": "ABSENT",
+     "note": "Says it found no post-tax figures"
+    },
+    {
+     "fact": "Incl. grant NPV8 ~US$1,135m, IRR 13.2%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Lithium carbonate price US$26,000/t",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Gets the price right and gives pre-tax context. It is open about lacking post-tax figures but wrongly suggests the headline figures were only pre-tax."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Post-tax NPV8 ~US$802m ex-grant, IRR 11.2%",
+     "label": "INCORRECT",
+     "note": "Gives US$596m / 10.7% ex-grant as the headline (revised 23-yr case)"
+    },
+    {
+     "fact": "Incl. grant NPV8 ~US$1,135m, IRR 13.2%",
+     "label": "CORRECT",
+     "note": "States US$1.135bn / 13.2% with grants, attributed to the original release"
+    },
+    {
+     "fact": "Lithium carbonate price US$26,000/t",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Includes the truth's with-grant figures and the right price. However, its headline post-tax figures (US$929m/12.7% with grants, US$596m/10.7% without) contradict the pre-registered truth, though they may reflect a revision."
+  },
+  "best": "web",
+  "reason": "Z correctly states the with-grant NPV of US$1,135m and IRR of 13.2%, plus the US$26,000/t price. Its headline ex-grant figures contradict the truth. Y gets only the price right, and X declines to answer."
+ },
+ {
+  "id": "B-cinovec-capex-reserve",
+  "category": "B",
+  "question": "How much up-front capital does the Cinovec lithium project in Czechia need according to its latest feasibility study, and how big is its ore reserve?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Initial capex of about US$2.16 billion (US$2,164.9 million, real)",
+     "label": "CORRECT",
+     "note": "Gives US$2.164bn before grants; headline uses net US$1.72bn, but the gross figure is stated"
+    },
+    {
+     "fact": "Proved and Probable Ore Reserves of 54.4 Mt (about 0.27% Li)",
+     "label": "CORRECT",
+     "note": "54.40 Mt at 0.27% Li, 14.5 Proven + 39.9 Probable"
+    },
+    {
+     "fact": "Study is the definitive feasibility study released 19 December 2025",
+     "label": "CORRECT",
+     "note": "DFS December 2025; exact day not given"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate. The headline leads with the net-of-grants figure, but the gross capex is clearly given."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Initial capex of about US$2.16 billion (US$2,164.9 million, real)",
+     "label": "INCORRECT",
+     "note": "Says ~US$1bn"
+    },
+    {
+     "fact": "Proved and Probable Ore Reserves of 54.4 Mt (about 0.27% Li)",
+     "label": "INCORRECT",
+     "note": "Gives old 34.5 Mt reserve"
+    },
+    {
+     "fact": "Study is the definitive feasibility study released 19 December 2025",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Hedged, but its figures are outdated or wrong."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Initial capex of about US$2.16 billion (US$2,164.9 million, real)",
+     "label": "CORRECT",
+     "note": "US$2.165bn before grants; headline uses the net US$1.72bn"
+    },
+    {
+     "fact": "Proved and Probable Ore Reserves of 54.4 Mt (about 0.27% Li)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Study is the definitive feasibility study released 19 December 2025",
+     "label": "CORRECT",
+     "note": "December 2025 DFS"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Correct core figures. The extra claims (the ASX revision, the schedule cut from 27 to 23 years, the NPV change) can't be checked and conflict with X's 26-year life."
+  },
+  "best": "ours",
+  "reason": "X and Z both give the gross capex of about US$2.16bn, the 54.4 Mt reserve and the December 2025 DFS. X wins because it doesn't add claims that can't be checked. Y's numbers are outdated or wrong."
+ },
+ {
+  "id": "B-barroso-reserve",
+  "category": "B",
+  "question": "Does Savannah's Barroso lithium project in Portugal have a declared ore reserve? If so, how large and at what grade?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "Yes: a maiden JORC Probable Ore Reserve declared with the Phase 1 DFS in July 2026",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "20.0 Mt at 0.99% Li2O",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "The reserve used a conservative spodumene (SC6) price assumption of US$1,200/t",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts correct; extra details look plausible."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Yes: a maiden JORC Probable Ore Reserve declared with the Phase 1 DFS in July 2026",
+     "label": "INCORRECT",
+     "note": "Says no reserve in its data, but is honest about where to look"
+    },
+    {
+     "fact": "20.0 Mt at 0.99% Li2O",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "The reserve used a conservative spodumene (SC6) price assumption of US$1,200/t",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Opens with 'No', which misleads, though it hedges by saying it could not verify."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Yes: a maiden JORC Probable Ore Reserve declared with the Phase 1 DFS in July 2026",
+     "label": "INCORRECT",
+     "note": "Says 2023"
+    },
+    {
+     "fact": "20.0 Mt at 0.99% Li2O",
+     "label": "INCORRECT",
+     "note": "Gives 15-16 Mt"
+    },
+    {
+     "fact": "The reserve used a conservative spodumene (SC6) price assumption of US$1,200/t",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Gets the 'yes' right, but the date and tonnage are wrong. It is hedged."
+  },
+  "best": "web",
+  "reason": "X states all three pre-registered facts correctly. Y wrongly answers no. Z gets the date and tonnage wrong."
+ },
+ {
+  "id": "B-barroso-econ",
+  "category": "B",
+  "question": "What are the headline economics of the Barroso lithium project DFS: NPV, IRR, payback and mine life?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Unlevered post-tax NPV8 of US$913 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Post-tax IRR of 43% (the release also says 42% in one place)",
+     "label": "CORRECT",
+     "note": "43.2%"
+    },
+    {
+     "fact": "Post-tax payback of 1.9 years",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial 14-year life producing about 183,000 tpa of 5.5% Li2O spodumene concentrate",
+     "label": "CORRECT",
+     "note": "14 years, ~183 ktpa; grade not stated"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All headline figures correct. Says where the numbers came from and flags the discrepancy in the presentation summary."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Unlevered post-tax NPV8 of US$913 million",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Post-tax IRR of 43% (the release also says 42% in one place)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Post-tax payback of 1.9 years",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Initial 14-year life producing about 183,000 tpa of 5.5% Li2O spodumene concentrate",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honestly declines and points to sources, but gives no figures."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Unlevered post-tax NPV8 of US$913 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Post-tax IRR of 43% (the release also says 42% in one place)",
+     "label": "CORRECT",
+     "note": "43.2%"
+    },
+    {
+     "fact": "Post-tax payback of 1.9 years",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial 14-year life producing about 183,000 tpa of 5.5% Li2O spodumene concentrate",
+     "label": "CORRECT",
+     "note": "14 years, 183 ktpa; grade not stated"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All headline figures correct. Notes the payback discrepancy and the difference from the scoping study."
+  },
+  "best": "tie",
+  "reason": "X and Z both give all four headline figures correctly, with similar context and caveats. Y gives no figures."
+ },
+ {
+  "id": "B-songwe-econ",
+  "category": "B",
+  "question": "What did Mkango's March 2026 updated feasibility study say about the cost and returns of the Songwe Hill rare earths project in Malawi?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Initial capex of about US$325.5 million including a US$27.8 million contingency",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Post-tax NPV of about US$339 million at a 10% nominal discount rate",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "IRR of 24% with a payback of 3.4 years from start of full production",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "18-year operating life",
+     "label": "CORRECT",
+     "note": "Gives the 18-year figure from Sharecast, notes that another source says 29 years, and tells the user to check the original study. Hedged, but the correct figure is stated."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "All core figures are accurate. Sources are clearly identified and the conflict over operating life is flagged honestly. The hedging on operating life is a slight weakness."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Initial capex of about US$325.5 million including a US$27.8 million contingency",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Post-tax NPV of about US$339 million at a 10% nominal discount rate",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "IRR of 24% with a payback of 3.4 years from start of full production",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "18-year operating life",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Declines honestly and points to useful places to look, but gives no figures."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Initial capex of about US$325.5 million including a US$27.8 million contingency",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Post-tax NPV of about US$339 million at a 10% nominal discount rate",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "IRR of 24% with a payback of 3.4 years from start of full production",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "18-year operating life",
+     "label": "INCORRECT",
+     "note": "Says the study sets out a 29-year mine life."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "The financial figures are right, but it states a 29-year life as fact, which contradicts the truth, and it gives no sources."
+  },
+  "best": "ours",
+  "reason": "X and Z both get the cost and return figures right. X also reports the 18-year operating life and flags the conflicting source, while Z wrongly asserts a 29-year life. Y gives no figures."
+ },
+ {
+  "id": "B-songwe-reserve",
+  "category": "B",
+  "question": "How big is the ore reserve at Songwe Hill and what grade is it?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "Proven and Probable Mineral Reserve of about 18.1 Mt grading 1.16% TREO",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Proven about 8.16 Mt at 1.28% TREO and Probable about 9.99 Mt at 1.07% TREO",
+     "label": "ABSENT",
+     "note": "No split by class given (optional for fact 1 credit)"
+    },
+    {
+     "fact": "Reserve supported by the 2026 updated DFS (announced 19 March 2026)",
+     "label": "CORRECT",
+     "note": "Cites Mkango's March 2026 updated DFS release with the same figure, though it credits the reserve mainly to the 2022 DFS"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Headline reserve correct and it explains clearly how reserve differs from resource. It gives no split by class and partly attributes the reserve to the 2022 DFS."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Proven and Probable Mineral Reserve of about 18.1 Mt grading 1.16% TREO",
+     "label": "INCORRECT",
+     "note": "States ~8 Mt Probable at ~1.5% TREO"
+    },
+    {
+     "fact": "Proven about 8.16 Mt at 1.28% TREO and Probable about 9.99 Mt at 1.07% TREO",
+     "label": "INCORRECT",
+     "note": "No Proven figure; Probable figure wrong"
+    },
+    {
+     "fact": "Reserve supported by the 2026 updated DFS (announced 19 March 2026)",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Outdated or wrong figures stated from memory. It does add a hedge."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Proven and Probable Mineral Reserve of about 18.1 Mt grading 1.16% TREO",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Proven about 8.16 Mt at 1.28% TREO and Probable about 9.99 Mt at 1.07% TREO",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Reserve supported by the 2026 updated DFS (announced 19 March 2026)",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honestly says it has no figures and offers to search. Not useful for the question."
+  },
+  "best": "web",
+  "reason": "X alone gives the correct 18.1 Mt at 1.16% TREO reserve and links it to the March 2026 DFS. Y's figures are wrong, and Z gives no figures."
+ },
+ {
+  "id": "B-hemerdon-reserve",
+  "category": "B",
+  "question": "What is the current JORC ore reserve at the Hemerdon tungsten-tin mine in Devon, and who signed it off?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Ore Reserve of 70.7 Mt at 0.15% WO3 and 0.03% Sn",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "About 10.3 million mtu of contained WO3",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Competent Person Alan Turner of AMC Consultants",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "All three facts are correct, with a consistent breakdown and good context. The claim that the mine 'began processing ore in September 2026' is unverified and odd, so I've docked it slightly."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Ore Reserve of 70.7 Mt at 0.15% WO3 and 0.03% Sn",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "About 10.3 million mtu of contained WO3",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Competent Person Alan Turner of AMC Consultants",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All three facts are correct. It clearly separates the reserve from the resource and is suitably cautious about whether a newer statement exists."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Ore Reserve of 70.7 Mt at 0.15% WO3 and 0.03% Sn",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "About 10.3 million mtu of contained WO3",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Competent Person Alan Turner of AMC Consultants",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "It honestly says it can't give the figures and points to useful sources, but it provides none of the required facts."
+  },
+  "best": "web",
+  "reason": "X and Y both state all three facts correctly. Y wins because it has no questionable claims, while X includes an odd, unverified line saying processing began in September 2026. Z declined to answer."
+ },
+ {
+  "id": "B-hemerdon-econ",
+  "category": "B",
+  "question": "What returns and costs does Tungsten West's 2025 restart plan for Hemerdon show, and what tungsten price did it assume?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "Post-tax NPV at 7.5% of US$190 million",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "IRR of 29.3%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Restart capital of about US$93 million",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Base tungsten price of US$400/mtu and target AISC of about US$144/t",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest decline. The background is accurate (Wolf Minerals, mothballed in 2018), but it gives none of the requested figures."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Post-tax NPV at 7.5% of US$190 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "IRR of 29.3%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Restart capital of about US$93 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Base tungsten price of US$400/mtu and target AISC of about US$144/t",
+     "label": "ABSENT",
+     "note": "The US$400/mtu price is correct, but the AISC is missing; the answer says it found no unit costs."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Gets the core returns, capital and price right and is honest that it lacks unit costs. A few extras can't be verified (the US$456M cash flow, the 2026 update) and '65% APT' is slightly confused, but nothing clearly contradicts the truth."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Post-tax NPV at 7.5% of US$190 million",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "IRR of 29.3%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Restart capital of about US$93 million",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Base tungsten price of US$400/mtu and target AISC of about US$144/t",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest decline, with some context on the CRMA strategic project. Gives none of the requested figures."
+  },
+  "best": "web",
+  "reason": "Y is the only answer that gives the requested figures: the NPV, IRR, US$93M restart capital and US$400/mtu price are all correct. Its only gap is the AISC. X and Z both declined."
+ },
+ {
+  "id": "B-keliber-econ",
+  "category": "B",
+  "question": "According to Sibanye-Stillwater's latest technical report summary for the Keliber lithium project, what are its NPV, IRR and capex?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "NPV of EUR 411.67 million (8% discount rate)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "IRR of 16.87% and payback of 5.4 years",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Total capex of EUR 651 million",
+     "label": "ABSENT",
+     "note": "Gives only a vague €500-700m range for the older feasibility study"
+    },
+    {
+     "fact": "Report is the S-K 1300 TRS effective 31 December 2024, issued 25 April 2025",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest decline with useful pointers to sources, but none of the requested figures."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "NPV of EUR 411.67 million (8% discount rate)",
+     "label": "INCORRECT",
+     "note": "States EUR 136.4m at 10% (mine/concentrator only)"
+    },
+    {
+     "fact": "IRR of 16.87% and payback of 5.4 years",
+     "label": "INCORRECT",
+     "note": "States IRR 21.5%, payback ~5 years"
+    },
+    {
+     "fact": "Total capex of EUR 651 million",
+     "label": "INCORRECT",
+     "note": "States EUR 582.5m"
+    },
+    {
+     "fact": "Report is the S-K 1300 TRS effective 31 December 2024, issued 25 April 2025",
+     "label": "INCORRECT",
+     "note": "Names the Dec 2023 TRS (effective 31 Dec 2022) as the latest"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Confidently gives figures from an outdated report, and the truth contradicts them. The capex breakdown also looks internally inconsistent."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "NPV of EUR 411.67 million (8% discount rate)",
+     "label": "ABSENT",
+     "note": "Gives the 2022 DFS NPV of €887m and labels it clearly as not from the TRS"
+    },
+    {
+     "fact": "IRR of 16.87% and payback of 5.4 years",
+     "label": "ABSENT",
+     "note": "Gives the DFS IRR of 20%, labeled as such"
+    },
+    {
+     "fact": "Total capex of EUR 651 million",
+     "label": "ABSENT",
+     "note": "Cites a May 2024 company update of €656m, which is close but from a different source"
+    },
+    {
+     "fact": "Report is the S-K 1300 TRS effective 31 December 2024, issued 25 April 2025",
+     "label": "INCORRECT",
+     "note": "Identifies the Dec 2023 TRS as the latest found, though it caveats that a newer one may exist"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Transparent about its sources and limits, and its capex trend is close to the truth, but it misses the latest TRS figures."
+  },
+  "best": "ours",
+  "reason": "None of the answers gives the correct figures from the 2025 TRS. Z is clear about where each figure comes from, says plainly that its sources are dated, and gives the most useful context (capex rising to about €656m). X is honest but gives nothing usable. Y presents outdated figures as the answer."
+ },
+ {
+  "id": "B-keliber-reserve",
+  "category": "B",
+  "question": "How large are the lithium ore reserves at Keliber in Finland?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "12.96 Mt at 0.97% Li2O, ~311 kt LCE (100% basis)",
+     "label": "INCORRECT",
+     "note": "States 12.7 Mt at 0.92% Li2O from a March 2024 update. This is close to the true tonnage but is an older figure with the wrong grade and no LCE."
+    },
+    {
+     "fact": "Attributable 79.82%: 10.35 Mt, ~248 kt LCE",
+     "label": "INCORRECT",
+     "note": "Gives an 84.96% attributable interest and 8.2 Mt from year-end 2022."
+    },
+    {
+     "fact": "Effective 31 December 2024",
+     "label": "INCORRECT",
+     "note": "Dates its figures to March 2024 and year-end 2022."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Its main figure is in the right range but outdated, with the wrong grade and ownership share. The unsourced 21.6 Mt figure looks doubtful. It does advise checking Sibanye-Stillwater's latest statement."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "12.96 Mt at 0.97% Li2O, ~311 kt LCE (100% basis)",
+     "label": "INCORRECT",
+     "note": "Gives 7-9 Mt at about 1%."
+    },
+    {
+     "fact": "Attributable 79.82%: 10.35 Mt, ~248 kt LCE",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Effective 31 December 2024",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "It admits uncertainty, but its reserve range is too low."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "12.96 Mt at 0.97% Li2O, ~311 kt LCE (100% basis)",
+     "label": "ABSENT",
+     "note": "Says it has no reserve figure and gives only resource figures, clearly labelled."
+    },
+    {
+     "fact": "Attributable 79.82%: 10.35 Mt, ~248 kt LCE",
+     "label": "ABSENT",
+     "note": "Correctly notes the ~79.8% ownership but gives no attributable reserve tonnage."
+    },
+    {
+     "fact": "Effective 31 December 2024",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 3,
+   "comment": "Honest about what its sources do not cover. It separates resources from reserves, gets the ownership share right and offers to search further."
+  },
+  "best": "ours",
+  "reason": "No answer gave the correct reserve figures. Z states nothing false, correctly separates resources from reserves, gets the 79.8% ownership right and is open about what it lacks. X's tonnage is closest to the truth, but it is outdated and has the wrong grade and ownership share. Y's reserve range is wrong."
+ },
+ {
+  "id": "B-dumont-econ",
+  "category": "B",
+  "question": "What were the post-tax NPV and IRR in the most recent feasibility study for the Dumont nickel project in Quebec?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "Post-tax NPV8% of US$920 million (C$1,226 million)",
+     "label": "CORRECT",
+     "note": "Gives both the US$920M and C$1,226M figures"
+    },
+    {
+     "fact": "Post-tax IRR of 15.4%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "From the July 2019 NI 43-101 updated feasibility study (RNC Minerals / Ausenco)",
+     "label": "CORRECT",
+     "note": "Gives the 2019 update and the July 2019 NI 43-101 filing; does not name RNC or Ausenco"
+    },
+    {
+     "fact": "Plant starts at 52.5 ktpd with a later expansion to double capacity",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Figures and comparison with the 2013 study are accurate. It mentions a 2026 study and news release that the truth does not cover, but presents them carefully and says it could not find that study's economics."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Post-tax NPV8% of US$920 million (C$1,226 million)",
+     "label": "INCORRECT",
+     "note": "Says roughly US$1 billion"
+    },
+    {
+     "fact": "Post-tax IRR of 15.4%",
+     "label": "INCORRECT",
+     "note": "Says high teens"
+    },
+    {
+     "fact": "From the July 2019 NI 43-101 updated feasibility study (RNC Minerals / Ausenco)",
+     "label": "CORRECT",
+     "note": "Names the 2019 update by Royal Nickel"
+    },
+    {
+     "fact": "Plant starts at 52.5 ktpd with a later expansion to double capacity",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Hedges honestly, but the approximate figures it recalls are wrong."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Post-tax NPV8% of US$920 million (C$1,226 million)",
+     "label": "CORRECT",
+     "note": "Gives the US$ figure only"
+    },
+    {
+     "fact": "Post-tax IRR of 15.4%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "From the July 2019 NI 43-101 updated feasibility study (RNC Minerals / Ausenco)",
+     "label": "CORRECT",
+     "note": "Cites RNC's May 2019 announcement of the updated study"
+    },
+    {
+     "fact": "Plant starts at 52.5 ktpd with a later expansion to double capacity",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate core figures, well sourced, and says it did not look for newer studies."
+  },
+  "best": "web",
+  "reason": "X and Z both give the correct NPV and IRR. X also gives the C$1,226M figure and the July 2019 NI 43-101 filing, so it edges ahead. Y's figures are wrong."
+ },
+ {
+  "id": "B-dumont-resource",
+  "category": "B",
+  "question": "How big is the Dumont nickel deposit's measured and indicated resource and at what cut-off?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Measured + Indicated 1,665.6 Mt at 0.27% Ni (about 4.43 Mt contained nickel)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Reported at a 0.15% Ni cut-off",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Inferred a further 499.8 Mt at 0.26% Ni",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Says plainly that it has no resource data and offers to search. The context it gives is useful, but it does not answer the question."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Measured + Indicated 1,665.6 Mt at 0.27% Ni (about 4.43 Mt contained nickel)",
+     "label": "ABSENT",
+     "note": "Gives only a hedged range of 1.5-1.7 Bt at about 0.27%. The grade is right, but the range is too wide to count as stating the figure."
+    },
+    {
+     "fact": "Reported at a 0.15% Ni cut-off",
+     "label": "ABSENT",
+     "note": "Gives a range of 0.15-0.20%, which is not a definite value."
+    },
+    {
+     "fact": "Inferred a further 499.8 Mt at 0.26% Ni",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Honestly hedged and directionally right, but it gives no exact figures."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Measured + Indicated 1,665.6 Mt at 0.27% Ni (about 4.43 Mt contained nickel)",
+     "label": "CORRECT",
+     "note": "States 1,665.6 Mt. The measured and indicated split at 0.28% and 0.26% implies about 0.27%, and 9.75 billion lb is about 4.42 Mt of contained nickel."
+    },
+    {
+     "fact": "Reported at a 0.15% Ni cut-off",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Inferred a further 499.8 Mt at 0.26% Ni",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate and specific. It leaves out the inferred resource. The claim that the website rounds to 1.62 Bt and the pit-shell price and recovery details could not be checked."
+  },
+  "best": "web",
+  "reason": "Z correctly gives the M&I tonnage, grade and 0.15% cut-off. Y offers only ranges, and X does not answer."
+ },
+ {
+  "id": "B-vittangi-resource",
+  "category": "B",
+  "question": "What is Talga's graphite resource at Vittangi in Sweden, broken down by Indicated and Inferred?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Total 70.8 Mt at 18.8% Cg containing about 13.3 Mt of graphite",
+     "label": "INCORRECT",
+     "note": "Gives 19.5 Mt at 24% Cg (a 2022 figure cited by a secondary source)"
+    },
+    {
+     "fact": "Indicated 30.1 Mt at 22.4% Cg",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Inferred 40.7 Mt (at about 16.2% Cg)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "From the October 2023 resource update",
+     "label": "ABSENT",
+     "note": "Cites a 2022 resource"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest that it found no split, but the total it gives is outdated and wrong compared with the truth."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Total 70.8 Mt at 18.8% Cg containing about 13.3 Mt of graphite",
+     "label": "INCORRECT",
+     "note": "Recalls roughly 30-35 Mt at ~24% Cg, 7-8 Mt contained"
+    },
+    {
+     "fact": "Indicated 30.1 Mt at 22.4% Cg",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Inferred 40.7 Mt (at about 16.2% Cg)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "From the October 2023 resource update",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Hedged and honest, but the approximate total contradicts the truth and it gives no split."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Total 70.8 Mt at 18.8% Cg containing about 13.3 Mt of graphite",
+     "label": "CORRECT",
+     "note": "Gives 70.8 Mt at 18.8% Cg, but only as the 'wider Swedish' total, and leaves out the contained 13.3 Mt. Its headline answer is 35.0 Mt."
+    },
+    {
+     "fact": "Indicated 30.1 Mt at 22.4% Cg",
+     "label": "INCORRECT",
+     "note": "Mentions 30.1 Mt but gives no grade. Its headline Indicated figure is 26.7 Mt at 24.3% Cg."
+    },
+    {
+     "fact": "Inferred 40.7 Mt (at about 16.2% Cg)",
+     "label": "CORRECT",
+     "note": "Gives 40.7 Mt Inferred in the wider total"
+    },
+    {
+     "fact": "From the October 2023 resource update",
+     "label": "CORRECT",
+     "note": "6 October 2023"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Includes the truth's 70.8/30.1/40.7 Mt figures and the October 2023 date, but presents a 35.0 Mt subset as the Vittangi resource. That framing conflicts with the truth."
+  },
+  "best": "web",
+  "reason": "Z is the only answer with the truth's total, the Indicated/Inferred tonnages and the October 2023 date, though it puts them second to a 35 Mt figure. X and Y give totals that contradict the truth and no split."
+ },
+ {
+  "id": "B-amitsoq-resource",
+  "category": "B",
+  "question": "What is the JORC resource at GreenRoc's Amitsoq graphite project in Greenland, and has it been updated recently?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "23.05 Mt at 20.41% graphitic carbon, about 4.71 Mt contained graphite (Measured, Indicated and Inferred combined)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Estimate dated January 2023, Competent Person Dr John Arthur",
+     "label": "CORRECT",
+     "note": "Gives the date as 23 January 2023 but leaves out the Competent Person."
+    },
+    {
+     "fact": "As of October 2026 it is still the current estimate; an update is pending Phase III drilling assays",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Accurate and specific. It correctly says the estimate is still current, with a revision pending after Phase III drilling. The only gap is the missing Competent Person."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "23.05 Mt at 20.41% graphitic carbon, about 4.71 Mt contained graphite (Measured, Indicated and Inferred combined)",
+     "label": "INCORRECT",
+     "note": "Gives the superseded 2022 estimate of 8.28 Mt at 19.75% as the resource."
+    },
+    {
+     "fact": "Estimate dated January 2023, Competent Person Dr John Arthur",
+     "label": "INCORRECT",
+     "note": "Dates the resource to 2022 and gives no Competent Person."
+    },
+    {
+     "fact": "As of October 2026 it is still the current estimate; an update is pending Phase III drilling assays",
+     "label": "INCORRECT",
+     "note": "Treats the 2022 figure as current and does not mention the pending update."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Clear that its data is limited, but it reports an outdated resource as the current one."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "23.05 Mt at 20.41% graphitic carbon, about 4.71 Mt contained graphite (Measured, Indicated and Inferred combined)",
+     "label": "ABSENT",
+     "note": "Gives no figures; its vague 'mid-to-high teens' grade is slightly off."
+    },
+    {
+     "fact": "Estimate dated January 2023, Competent Person Dr John Arthur",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "As of October 2026 it is still the current estimate; an update is pending Phase III drilling assays",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest about what it does not know, but it gives almost no useful information and its vague characterisation is slightly inaccurate."
+  },
+  "best": "web",
+  "reason": "X matches the truth on the current resource, its January 2023 date and the pending update. Y gives the superseded 2022 estimate as current, and Z declines to give figures."
+ }
+]

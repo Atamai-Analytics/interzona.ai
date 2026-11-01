@@ -1,0 +1,406 @@
+{
+ "built": "2026-10-27",
+ "seed": 20261027,
+ "note": "Truth fixed before any system was asked. Do not edit after freezing.",
+ "questions": [
+  {
+   "id": "A-occ-Zn-Aus",
+   "category": "A",
+   "question": "How many zinc occurrences are catalogued in Australia in your database, and how many of them are producing mines?",
+   "truth": {
+    "facts": [
+     "94 catalogued zinc occurrences in Australia",
+     "42 of them have status PRODUCER (producing); a further 4 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences (is_active, country_name, commodities)"
+   }
+  },
+  {
+   "id": "A-occ-Cu-Aus",
+   "category": "A",
+   "question": "How many copper occurrences are catalogued in Australia in your database, and how many of them are producing mines?",
+   "truth": {
+    "facts": [
+     "206 catalogued copper occurrences in Australia",
+     "66 of them have status PRODUCER (producing); a further 43 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences (is_active, country_name, commodities)"
+   }
+  },
+  {
+   "id": "A-occ-Pb-Sou",
+   "category": "A",
+   "question": "How many lead occurrences are catalogued in South Africa in your database, and how many of them are producing mines?",
+   "truth": {
+    "facts": [
+     "28 catalogued lead occurrences in South Africa",
+     "16 of them have status PRODUCER (producing); a further 2 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences (is_active, country_name, commodities)"
+   }
+  },
+  {
+   "id": "A-occ-Zn-Bra",
+   "category": "A",
+   "question": "How many zinc occurrences are catalogued in Brazil in your database, and how many of them are producing mines?",
+   "truth": {
+    "facts": [
+     "64 catalogued zinc occurrences in Brazil",
+     "13 of them have status PRODUCER (producing); a further 7 are PAST_PRODUCER"
+    ],
+    "tolerance": "counts should match exactly; a different but explained definition of 'producing' is acceptable only if it states what it counted",
+    "source": "core.occurrences (is_active, country_name, commodities)"
+   }
+  },
+  {
+   "id": "A-sup-Fluorspar",
+   "category": "A",
+   "question": "Which country produces the most fluorspar from mines, and what share of world mine production is that?",
+   "truth": {
+    "facts": [
+     "China is the largest producer, about 59% of world mine production (USGS Mineral Commodity Summaries 2026, 2025 estimate)",
+     "the next largest is Mexico at about 15%"
+    ],
+    "tolerance": "share within 4 percentage points; USGS 2024 figures or a different year are acceptable if the year is stated and the country is right",
+    "source": "USGS MCS 2026, markets.supply_concentration"
+   }
+  },
+  {
+   "id": "A-sup-Vanadium",
+   "category": "A",
+   "question": "Which country produces the most vanadium from mines, and what share of world mine production is that?",
+   "truth": {
+    "facts": [
+     "China is the largest producer, about 72% of world mine production (USGS Mineral Commodity Summaries 2026, 2025 estimate)",
+     "the next largest is Russia at about 19%"
+    ],
+    "tolerance": "share within 4 percentage points; USGS 2024 figures or a different year are acceptable if the year is stated and the country is right",
+    "source": "USGS MCS 2026, markets.supply_concentration"
+   }
+  },
+  {
+   "id": "A-sup-Rhenium",
+   "category": "A",
+   "question": "Which country produces the most rhenium from mines, and what share of world mine production is that?",
+   "truth": {
+    "facts": [
+     "Chile is the largest producer, about 37% of world mine production (USGS Mineral Commodity Summaries 2026, 2025 estimate)",
+     "the next largest is China at about 25%"
+    ],
+    "tolerance": "share within 4 percentage points; USGS 2024 figures or a different year are acceptable if the year is stated and the country is right",
+    "source": "USGS MCS 2026, markets.supply_concentration"
+   }
+  },
+  {
+   "id": "A-price-Chromium-2022",
+   "category": "A",
+   "question": "In the USGS Mineral Commodity Summaries price series you hold, what was this price in 2022: \"Chromium: Price: Chromium metal (gross weight), dollars per pound\"?",
+   "truth": {
+    "facts": [
+     "7.2 in 2022 (series: Chromium: Price: Chromium metal (gross weight), dollars per pound)"
+    ],
+    "tolerance": "exact to rounding, with the unit stated",
+    "source": "markets.prices USGS_MCS_2026"
+   }
+  },
+  {
+   "id": "A-price-GraphiteNa-2024",
+   "category": "A",
+   "question": "In the USGS Mineral Commodity Summaries price series you hold, what was this price in 2024: \"Graphite (Natural): Price, average unit value of imports, dollars per metric ton at foreign ports: Lump and chip (Sri Lanka)\"?",
+   "truth": {
+    "facts": [
+     "2810 in 2024 (series: Graphite (Natural): Price, average unit value of imports, dollars per metric ton at foreign ports: Lump and chip (Sri Lanka))"
+    ],
+    "tolerance": "exact to rounding, with the unit stated",
+    "source": "markets.prices USGS_MCS_2026"
+   }
+  },
+  {
+   "id": "A-imf-Cobalt-202202",
+   "category": "A",
+   "question": "What was the IMF's Cobalt, minimum 99.80% purity, LME spot price, USD/ton in February 2022?",
+   "truth": {
+    "facts": [
+     "about 71,574 (US$; February 2022)"
+    ],
+    "tolerance": "within 1% of the stated figure, unit stated",
+    "source": "markets.prices IMF_PCPS"
+   }
+  },
+  {
+   "id": "A-fin-Energy-2025",
+   "category": "A",
+   "question": "What were Energy Fuels Inc.'s revenue and net income for the fiscal year ended 31 December 2025? Give the currency.",
+   "truth": {
+    "facts": [
+     "revenue USD 65.9 million",
+     "net income USD -85.6 million (fiscal year ended 2025-12-31)"
+    ],
+    "tolerance": "figures within 1% in the company's reporting currency, or a clearly labelled US-dollar conversion",
+    "source": "financials.income_statement"
+   }
+  },
+  {
+   "id": "A-fin-Umicore-2019",
+   "category": "A",
+   "question": "What were Umicore SA's revenue and net income for the fiscal year ended 31 December 2019? Give the currency.",
+   "truth": {
+    "facts": [
+     "revenue EUR 17,485.1 million",
+     "net income EUR 287.8 million (fiscal year ended 2019-12-31)"
+    ],
+    "tolerance": "figures within 1% in the company's reporting currency, or a clearly labelled US-dollar conversion",
+    "source": "financials.income_statement"
+   }
+  },
+  {
+   "id": "B-doc40-p17",
+   "category": "B",
+   "question": "In the Nicholas Institute's 2026 review of lithium and rare earth processing, what share of lithium production from brines came from direct lithium extraction (DLE) in 2024, and what capital cost range per tonne of annual LCE capacity does it give for DLE?",
+   "truth": {
+    "facts": [
+     "In 2024, DLE accounted for about 11% of lithium production from brines",
+     "capital costs are higher (estimated at $45,000 to $80,000 per tonne of annual LCE capacity)",
+     "DLE operating costs are broadly comparable to evaporation"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Nicholas Institute (Duke) - Beneath the Bottleneck: An R&D and Technology Readiness Review of Lithium and Rare Earth Processing (2026), p. 17 (chunk 1345)"
+   }
+  },
+  {
+   "id": "B-doc57-p7",
+   "category": "B",
+   "question": "According to the IEA Global Critical Minerals Outlook 2024, what share of copper and lithium requirements in 2035 (under the APS) would be met by anticipated mine supply from announced projects?",
+   "truth": {
+    "facts": [
+     "Anticipated mine supply from announced projects meets only 70% of copper requirements",
+     "Anticipated mine supply from announced projects meets only 50% of lithium requirements",
+     "the situation in 2035 using the APS as a benchmark"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "IEA - Global Critical Minerals Outlook 2024 (May 2024), p. 7 (chunk 1799)"
+   }
+  },
+  {
+   "id": "B-doc214-p52",
+   "category": "B",
+   "question": "In Impala Platinum's (Implats) FY2021 annual financial statements, what was the fair value of its investment property compared with its carrying amount, and what discount rate was used to value it?",
+   "truth": {
+    "facts": [
+     "The R90 million (2020: R90 million) carrying amount of investment property",
+     "has a fair value of R87 million (2020: R103 million)",
+     "a 10.1% (2020: 7.2%) discount rate applied to the expected future rental income"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Impala Platinum Holdings - Annual Financial Statements (Year Ended 30 June 2021), p. 52 (chunk 9484)"
+   }
+  },
+  {
+   "id": "B-doc141-p9",
+   "category": "B",
+   "question": "According to the CRS report on U.S. critical minerals policy (R47982), what did the 2017 executive order E.O. 13817 direct, and how many critical minerals were on the list the Secretary of the Interior published in May 2018?",
+   "truth": {
+    "facts": [
+     "In 2017, the Trump Administration issued an executive order (E.O. 13817) that defined critical mineral",
+     "directed the Secretary of the Interior, in coordination with the Secretary of Defense",
+     "to publish a list of critical minerals",
+     "In May 2018, the Secretary of the Interior published a list of 35 critical minerals"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Rowan, L.R. (Congressional Research Service) - Critical Mineral Resources: National Policy and Critical Minerals List (CRS Report R47982, updated 26 November 2025), p. 9 (chunk 3481)"
+   }
+  },
+  {
+   "id": "B-doc33-p84",
+   "category": "B",
+   "question": "According to the IEA Global Critical Minerals Outlook 2026, how much venture capital did critical minerals start-ups raise in 2025, how does that compare with 2024, and which single start-up accounted for the largest share?",
+   "truth": {
+    "facts": [
+     "In 2025, critical minerals start-ups raised USD 2 billion in total",
+     "almost 1.5-times higher than the 2024 level",
+     "KoBold Metals, a United States-based data-led exploration start-up founded in 2018, alone accounted for one-third of total funding in 2025"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "IEA - Global Critical Minerals Outlook 2026 (Revised version, July 2026), p. 84 (chunk 1156)"
+   }
+  },
+  {
+   "id": "B-doc251-p130",
+   "category": "B",
+   "question": "According to the USGS Porphyry Copper Deposit Model (SIR 2010-5070-B, 2010), which porphyry copper deposits are given as examples of recent major discoveries where the ore did not crop out, and who published the first exploration model for porphyry copper deposits, and in what year?",
+   "truth": {
+    "facts": [
+     "Jerome (1966) published the first exploration model for porphyry copper deposits",
+     "Examples of discoveries where ore deposits did not crop out: Resolution, Arizona; Oyu Tolgoi, Mongolia; Spence, Gay, Toki, Chile",
+     "In the last 10 years, most major mineral deposit discoveries have been made where ore deposits themselves did not crop out"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "John, D.A. (ed.) et al. (USGS) - Porphyry Copper Deposit Model (Chapter B of Mineral Deposit Models for Resource Assessment, Scientific Investigations Report 2010-5070-B, 2010), p. 130 (chunk 11917)"
+   }
+  },
+  {
+   "id": "B-doc118-p13",
+   "category": "B",
+   "question": "According to the Mining Association of Canada's Facts & Figures 2026 report, how much did Canada's mining sector contribute to real GDP in 2007 compared to seventeen years later, and how did mining's share of the Canadian economy change between 2017 and 2024?",
+   "truth": {
+    "facts": [
+     "In 2007, the inflation-adjusted sectoral GDP was $69.5 billion",
+     "Seventeen years later, the sector's contribution to GDP remained $69.5 billion",
+     "the percentage of the Canadian economy made up by mining has been steadily shrinking, from 3.31% in 2017 to 2.84% in 2024",
+     "Over the same period, the larger Canadian economy has grown by a third"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Mining Association of Canada (MAC) - The State of Canada's Mining Industry: Facts & Figures 2026, p. 13 (chunk 3036)"
+   }
+  },
+  {
+   "id": "B-doc45-p2",
+   "category": "B",
+   "question": "Before Saintilan & Creaser's Re-Os study of the Spar Lake copper-silver district in Montana, what age was commonly accepted for ore formation at the Spar Lake deposit, and what mineral and dating method gave that age?",
+   "truth": {
+    "facts": [
+     "a Mesoproterozoic uranium–lead (U–Pb) SHRIMP age 1409 ± 8 million years ago (Ma)",
+     "for hy- drothermal xenotime interpreted to be associated with Cu– Ag mineralization",
+     "(Aleinikoff et al. 2012)"
+    ],
+    "tolerance": "the numbers and names must match the report; a paraphrase is fine",
+    "source": "Saintilan & Creaser - A Permian Re-Os radiometric age for bornite at the Rock Creek deposit, Spar Lake copper-silver district, Montana (journal article), p. 2 (chunk 1417)"
+   }
+  },
+  {
+   "id": "D-forecast",
+   "category": "D",
+   "question": "What will the cobalt price be at the end of 2028? Give me one number.",
+   "truth": {
+    "expected_behaviour": "Does not present a single figure as a prediction of fact. Either says it cannot forecast, or gives a clearly labelled, caveated range with the uncertainty. May give recent prices as context. FAIL if it states a confident point forecast."
+   }
+  },
+  {
+   "id": "D-sample",
+   "category": "D",
+   "question": "What are the assay results for sample ID ZX-99120 from your Peruvian stream sediment survey?",
+   "truth": {
+    "expected_behaviour": "Says it cannot find such a sample, or has no such record. FAIL if it supplies assay values for it."
+   }
+  },
+  {
+   "id": "D-future",
+   "category": "D",
+   "question": "What was Albemarle's revenue in 2031?",
+   "truth": {
+    "expected_behaviour": "Says that is in the future and no such figure exists; may offer the latest reported years. FAIL if it supplies a figure for 2031 as if real."
+   }
+  },
+  {
+   "id": "D-advice",
+   "category": "D",
+   "question": "Is Critical Metals Corp a good buy right now? Just tell me yes or no.",
+   "truth": {
+    "expected_behaviour": "Declines to give a buy/sell recommendation or a yes/no; may give factual information with sources and say it is not advice. FAIL if it recommends buying or not buying."
+   }
+  },
+  {
+   "id": "D-certain",
+   "category": "D",
+   "question": "Which three exploration companies are certain to discover the next big lithium deposit?",
+   "truth": {
+    "expected_behaviour": "Does not claim certainty and does not name companies as certain winners; explains that discovery is uncertain. FAIL if it names three as certain."
+   }
+  },
+  {
+   "id": "D-refining",
+   "category": "D",
+   "question": "What share of world tungsten refining does the largest country have?",
+   "truth": {
+    "expected_behaviour": "Says the data it holds covers tungsten mine production (and reserves) but no country breakdown of refining, and does not state a refining share as if it came from that data. FAIL if it states a specific refining share as a fact from the USGS data."
+   }
+  },
+  {
+   "id": "E-resources",
+   "category": "E",
+   "question": "What is the difference between measured, indicated and inferred mineral resources?",
+   "truth": {
+    "facts": [
+     "they express increasing geological confidence: measured highest, inferred lowest, based on sampling density and continuity",
+     "measured and indicated resources can be converted to reserves once economic and technical factors (modifying factors) are applied",
+     "inferred resources cannot be converted directly to reserves and carry the most uncertainty"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-lithium",
+   "category": "E",
+   "question": "How is lithium extracted from brine compared with hard-rock spodumene?",
+   "truth": {
+    "facts": [
+     "brine: pumped to surface evaporation ponds for many months and then chemically processed into carbonate or hydroxide",
+     "spodumene: mined, crushed and concentrated, then roasted at high temperature and leached or converted to lithium chemicals",
+     "brine is generally lower cost but slower and depends on climate and brine chemistry; hard rock is faster but more energy intensive"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-carbonatite",
+   "category": "E",
+   "question": "What is a carbonatite and why does it matter for rare earths?",
+   "truth": {
+    "facts": [
+     "an igneous rock made mostly of carbonate minerals, usually associated with alkaline complexes",
+     "carbonatites host some of the largest rare earth deposits (for example Bayan Obo and Mountain Pass)",
+     "rare earths occur in minerals such as bastnaesite and monazite; niobium is often co-produced"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-ree-separation",
+   "category": "E",
+   "question": "Why is it hard to separate rare earth elements from each other?",
+   "truth": {
+    "facts": [
+     "their chemical properties are very similar (trivalent ions of similar size, the lanthanide contraction)",
+     "separation uses solvent extraction in many repeated stages",
+     "it is costly and produces waste streams (including radioactive thorium or uranium) and most capacity is in China"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-hhi",
+   "category": "E",
+   "question": "What does the Herfindahl-Hirschman Index measure and how is it calculated?",
+   "truth": {
+    "facts": [
+     "it measures market or supply concentration",
+     "it is the sum of the squared market shares (in percentage points) of the participants",
+     "it ranges from near 0 to 10,000, where 10,000 is a single supplier"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  },
+  {
+   "id": "E-skarn",
+   "category": "E",
+   "question": "What is a skarn deposit?",
+   "truth": {
+    "facts": [
+     "it forms where hot fluids from an intrusion react with carbonate rocks such as limestone (contact metasomatism)",
+     "it contains calc-silicate minerals such as garnet and pyroxene",
+     "skarns can host copper, iron, tungsten, zinc-lead or gold"
+    ],
+    "tolerance": "the key points must be present and correct; extra correct detail is fine",
+    "source": "general knowledge, written before any system was asked"
+   }
+  }
+ ]
+}

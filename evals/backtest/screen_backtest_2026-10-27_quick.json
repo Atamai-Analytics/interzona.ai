@@ -1,0 +1,229 @@
+{
+  "summary": {
+    "run_date": "2026-10-27",
+    "grid_deg": 0.25,
+    "percentile": 0.95,
+    "min_anomalous": 3,
+    "near_km": 15.0,
+    "bootstrap": 1000,
+    "combinations": 6,
+    "tested": 5,
+    "better_than_chance": 2,
+    "no_clear_difference": 2,
+    "worse_than_chance": 1,
+    "median_lift": 1.5324806779931297,
+    "seconds": 222
+  },
+  "results": [
+    {
+      "survey": "GREENLAND_GEUS",
+      "indicator": "REE",
+      "cells": 1066,
+      "flagged_cells": 76,
+      "precise_occurrences_of_commodity": 1400,
+      "occurrences_any_accuracy": 1418,
+      "cells_with_hit": 15,
+      "status": "tested",
+      "hit_rate_flagged": 0.09210526315789473,
+      "hit_rate_unflagged": 0.00808080808080808,
+      "hit_rate_expected_for_flagged": 0.017664072973130503,
+      "lift": 5.21427098370798,
+      "lift_ci95": [
+        1.2585490868024802,
+        19.246691505216077
+      ],
+      "p_lift_le_1": 0.016177957532861477,
+      "strata_edges": [
+        5.0,
+        9.0,
+        19.0
+      ],
+      "top_n": {
+        "top10": {
+          "hit_rate": 0.2,
+          "expected": 0.02132705795496493,
+          "lift": 9.377758546083948
+        },
+        "top20": {
+          "hit_rate": 0.2,
+          "expected": 0.02036267995570321,
+          "lift": 9.821889870836168
+        }
+      },
+      "sensitivity": {
+        "any_accuracy_lift": 5.21427098370798,
+        "radius_25km_lift": 4.493756786102063
+      },
+      "flagged_hits": 7
+    },
+    {
+      "survey": "GREENLAND_GEUS",
+      "indicator": "Li",
+      "cells": 47,
+      "flagged_cells": 5,
+      "precise_occurrences_of_commodity": 605,
+      "occurrences_any_accuracy": 636,
+      "cells_with_hit": 0,
+      "status": "not tested: fewer than 8 flagged cells"
+    },
+    {
+      "survey": "GREENLAND_GEUS",
+      "indicator": "Cu",
+      "cells": 1209,
+      "flagged_cells": 151,
+      "precise_occurrences_of_commodity": 41899,
+      "occurrences_any_accuracy": 41948,
+      "cells_with_hit": 12,
+      "status": "tested",
+      "hit_rate_flagged": 0.013245033112582781,
+      "hit_rate_unflagged": 0.00945179584120983,
+      "hit_rate_expected_for_flagged": 0.013402774935258618,
+      "lift": 0.9882306594389744,
+      "lift_ci95": [
+        0.0,
+        6.162884761525858
+      ],
+      "p_lift_le_1": 0.54,
+      "strata_edges": [
+        5.0,
+        10.0,
+        22.0
+      ],
+      "top_n": {
+        "top10": {
+          "hit_rate": 0.0,
+          "expected": 0.017543859649122806,
+          "lift": 0.0
+        },
+        "top20": {
+          "hit_rate": 0.0,
+          "expected": 0.017078345683703842,
+          "lift": 0.0
+        }
+      },
+      "sensitivity": {
+        "any_accuracy_lift": 0.9882306594389744,
+        "radius_25km_lift": 1.257630881548986
+      },
+      "flagged_hits": 2
+    },
+    {
+      "survey": "ARGENTINA_SEGEMAR",
+      "indicator": "REE",
+      "cells": 917,
+      "flagged_cells": 154,
+      "precise_occurrences_of_commodity": 1400,
+      "occurrences_any_accuracy": 1418,
+      "cells_with_hit": 9,
+      "status": "tested",
+      "hit_rate_flagged": 0.032467532467532464,
+      "hit_rate_unflagged": 0.005242463958060288,
+      "hit_rate_expected_for_flagged": 0.007007278435849864,
+      "lift": 4.633401221995927,
+      "lift_ci95": [
+        0.0,
+        109.72500000000008
+      ],
+      "p_lift_le_1": 0.08870116156282999,
+      "strata_edges": [
+        11.0,
+        25.0,
+        51.0
+      ],
+      "top_n": {
+        "top10": {
+          "hit_rate": 0.0,
+          "expected": 0.011538461538461537,
+          "lift": 0.0
+        },
+        "top20": {
+          "hit_rate": 0.05,
+          "expected": 0.008974358974358975,
+          "lift": 5.571428571428571
+        }
+      },
+      "sensitivity": {
+        "any_accuracy_lift": 4.633401221995927,
+        "radius_25km_lift": 5.260484181760851
+      },
+      "flagged_hits": 5
+    },
+    {
+      "survey": "ARGENTINA_SEGEMAR",
+      "indicator": "Li",
+      "cells": 163,
+      "flagged_cells": 17,
+      "precise_occurrences_of_commodity": 605,
+      "occurrences_any_accuracy": 636,
+      "cells_with_hit": 6,
+      "status": "tested",
+      "hit_rate_flagged": 0.0,
+      "hit_rate_unflagged": 0.0410958904109589,
+      "hit_rate_expected_for_flagged": 0.042279037088725664,
+      "lift": 0.0,
+      "lift_ci95": [
+        0.0,
+        0.0
+      ],
+      "p_lift_le_1": 1.0,
+      "strata_edges": [
+        7.5,
+        13.0,
+        23.0
+      ],
+      "top_n": {
+        "top10": {
+          "hit_rate": 0.0,
+          "expected": 0.047602013778484366,
+          "lift": 0.0
+        }
+      },
+      "sensitivity": {
+        "any_accuracy_lift": 0.0,
+        "radius_25km_lift": 0.0
+      },
+      "flagged_hits": 0
+    },
+    {
+      "survey": "ARGENTINA_SEGEMAR",
+      "indicator": "Cu",
+      "cells": 934,
+      "flagged_cells": 164,
+      "precise_occurrences_of_commodity": 41899,
+      "occurrences_any_accuracy": 41948,
+      "cells_with_hit": 360,
+      "status": "tested",
+      "hit_rate_flagged": 0.573170731707317,
+      "hit_rate_unflagged": 0.34545454545454546,
+      "hit_rate_expected_for_flagged": 0.37401498102926595,
+      "lift": 1.5324806779931297,
+      "lift_ci95": [
+        1.198060442840323,
+        1.9481820918557908
+      ],
+      "p_lift_le_1": 0.0,
+      "strata_edges": [
+        11.0,
+        26.0,
+        51.0
+      ],
+      "top_n": {
+        "top10": {
+          "hit_rate": 0.6,
+          "expected": 0.42603550295857995,
+          "lift": 1.408333333333333
+        },
+        "top20": {
+          "hit_rate": 0.7,
+          "expected": 0.4096114711499328,
+          "lift": 1.7089365149731717
+        }
+      },
+      "sensitivity": {
+        "any_accuracy_lift": 1.5324806779931297,
+        "radius_25km_lift": 1.2318765867188466
+      },
+      "flagged_hits": 94
+    }
+  ]
+}

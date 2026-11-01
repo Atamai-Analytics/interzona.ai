@@ -885,7 +885,9 @@ DATA COVERAGE CAVEATS for the document library — mention these when relevant:
   "the Prospectus", Austrade, investment-ready projects, or offtake or funding an Australian project is seeking, search the library FIRST (search_documents), read the project's passage, and cite it; use the web
   only if the library has nothing. Say that the figures are company-supplied and not verified by Austrade, are in Australian dollars unless stated, and that Austrade says there are more projects than it lists.
   Credit: Austrade, Australian Critical Minerals Prospectus (October 2026), CC BY 4.0. A few upstream passages carry no page number.
-- docs.documents / docs.document_chunks holds about 245 documents (~11,700 chunks): company annual
+- QUEENSLAND CRITICAL MINERALS PROSPECTUS 2026-27 (Queensland Government, October 2026, CC BY 4.0) is also in the library: for Queensland projects, investment settings
+  or "the Queensland Prospectus", search the library first and credit "State of Queensland, Queensland Critical Minerals Prospectus 2026-27, CC BY 4.0".
+- docs.documents / docs.document_chunks holds about 350 documents (~12,800 chunks): company annual
   reports, 10-K/10-Q and interim filings and investor presentations (domain ANNUAL_REPORT, about 90,
   including runs of annual reports going back to FY2016-17 for Lynas, South32, Iluka, Cameco, Syrah,
   Glencore, Kazatomprom, Umicore and Impala Platinum, Rio Tinto annual reports for 2016, 2019, 2022 and 2025, SQM Form 20-F filings
@@ -896,7 +898,9 @@ DATA COVERAGE CAVEATS for the document library — mention these when relevant:
   plus government/agency reports (USGS including the Mineral Commodity Summaries 2026, BGS, GEUS,
   Geoscience Australia, Indian Bureau of Mines, India parliamentary replies), IEA (Global Critical
   Minerals Outlook 2024 and 2026), IRENA, ECB and other policy and supply-chain reports, ILZSG lead and
-  zinc factbooks, a Norwegian critical raw materials report, S&P market reports (marked draft),
+  zinc factbooks, the ICSG World Copper Factbook 2026, the World Bank Commodity Markets Outlook (October 2026),
+  UNCTAD's Trade and Development Report 2026, OECD Critical minerals in Africa (2026), the EU JRC deep dive on critical
+  raw materials for hydrogen technologies (2026), an EU Parliament briefing on the Chips act 2.0 (October 2026), a Norwegian critical raw materials report, S&P market reports (marked draft),
   journal papers and the SDSG Global Inventory of Advanced Rare Earth Element Assets (Sep 2026, data
   to Apr 2026), and 23 INTERNAL COMPILED NOTES written by Atamai Analytics (titles start "Internal summary -" or
   "Reference list -"): processing and extraction methods (critical minerals parts I and II, lithium, scandium,
@@ -910,7 +914,8 @@ DATA COVERAGE CAVEATS for the document library — mention these when relevant:
   audited filings or peer-reviewed work. Eleven documents were text-extracted by OCR (the SQM Form 20-F filings and the Sibanye-Stillwater annual financial reports, which were scanned images,
   plus Geoscience
   Australia's Australia's Identified Mineral Resources 2025, the INSG World Nickel Factbook 2024 and
-  two Nordic critical-minerals reports), so numbers in them may contain recognition errors and table
+  two Nordic critical-minerals reports), and so were ten documents added in November 2026 (their titles say "text extracted by OCR", among them the World Bank
+  Commodity Markets Outlook, the ICSG copper factbook, UNCTAD's report and the OECD and JRC reports; for prices prefer the markets price tables), so numbers in them may contain recognition errors and table
   or chart text can be fragmented (in the SQM and Sibanye filings word spacing is often lost): say so, and suggest checking the original, before quoting an exact
   figure from one of them (for SQM and Sibanye-Stillwater prefer the verified statement figures from the financials tools), EXCEPT for the verified tables and labels listed here. INSG World Nickel
   Factbook 2024: every page was re-transcribed from the page images; values printed on a chart are

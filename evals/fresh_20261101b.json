@@ -1,0 +1,21 @@
+{
+  "version": "2026-11-01",
+  "notes": "Fresh check for the 14 library documents added 2026-11-01 (docs 401-414). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-lib-hydrogen",
+      "cat": "fresh",
+      "q": "Which critical raw materials do hydrogen electrolysers depend on, according to the EU's own analysis?",
+      "expect": {"tools_any": ["search_documents"], "max_turns": 5},
+      "judge": "Cites the EU Joint Research Centre deep dive on critical raw materials for hydrogen technologies (2026) from the library and names materials such as platinum-group metals (iridium, platinum), nickel or rare earths. Notes or allows that the text was OCR-extracted if quoting exact numbers. Fail if it does not use the JRC report."
+    },
+    {
+      "id": "fresh-lib-queensland",
+      "cat": "fresh",
+      "q": "What does the Queensland Critical Minerals Prospectus say about the North West Minerals Province?",
+      "expect": {"tools_any": ["search_documents"], "max_turns": 5},
+      "judge": "Uses the Queensland Critical Minerals Prospectus 2026-27 from the library, describes the North West Minerals Province (around Mount Isa / Cloncurry) as presented there, and credits the State of Queensland. Fail if it relies only on general knowledge or the web."
+    }
+  ]
+}

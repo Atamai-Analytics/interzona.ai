@@ -101,7 +101,7 @@ export function ActivityAdmin() {
   const last = (k: number) => data.days.slice(-k);
   const sum = (ds: ActivityDay[], f: keyof ActivityDay) => ds.reduce((a, d) => a + (d[f] as number), 0);
   const weekAgo = Math.floor(Date.now() / 1000) - 7 * 86400;
-  const activeGuests = data.invites.filter((i) => (i.stats.lastSeen ?? 0) >= weekAgo).length;
+  const activeGuests = data.invites.filter((i) => i.status === "active" && (i.stats.lastSeen ?? 0) >= weekAgo).length;
   const toolMax = Math.max(1, ...data.tools.map((t) => t.count));
   const firstDay = data.days.find((d) => d.questions + d.refused + d.multivariate > 0)?.day;
 

@@ -268,12 +268,26 @@ def main():
     ap.add_argument("--compare", default="")
     ap.add_argument("--check-truths", action="store_true", help="only evaluate the ground-truth queries and print them")
     ap.add_argument("--min-pass", type=float, default=0.0, help="exit 1 if the pass rate is below this fraction")
+    ap.add_argument("--set", default="", help="named question set, e.g. 'gate' (evals/gate.json: listed golden ids plus its own questions)")
     args = ap.parse_args()
 
     password = ENV.get("EVAL_PASSWORD") or ENV.get("APP_PASSWORD")
+    # The local dev server (next dev) uses its own test password from .env.development.local, not the production one.
+    devenv = os.path.join(ROOT, ".env.development.local")
+    if not ENV.get("EVAL_PASSWORD") and re.match(r"https?://(localhost|127\.0\.0\.1)\b", args.base) and os.path.exists(devenv):
+        for line in open(devenv, encoding="utf-8"):
+            if line.startswith("APP_PASSWORD="):
+                password = line.split("=", 1)[1].strip().strip('"')
     if not password:
         sys.exit("No APP_PASSWORD / EVAL_PASSWORD available.")
     qs = json.load(open(os.path.join(HERE, "questions.json"), encoding="utf-8"))["questions"]
+    if args.set:
+        spec = json.load(open(os.path.join(HERE, f"{args.set}.json"), encoding="utf-8"))
+        by_id = {q["id"]: q for q in qs}
+        missing = [i for i in spec["ids"] if i not in by_id]
+        if missing:
+            sys.exit(f"{args.set}.json names questions that are not in questions.json: {missing}")
+        qs = [by_id[i] for i in spec["ids"]] + spec.get("questions", [])
     if args.filter:
         fs = [f.strip() for f in args.filter.split(",") if f.strip()]
         qs = [q for q in qs if any(f in q["id"] or f == q["cat"] for f in fs)]

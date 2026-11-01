@@ -1,6 +1,23 @@
 # Evaluation suite
 
-56 golden questions covering company financials, comparisons, commodity prices, occurrences, geochemistry,
+## Pre-deploy gate (run before every deploy)
+
+`evals/gate.json` is a fixed, quick set: 26 golden questions covering every area plus 5 aimed at recent features and slips
+(facility counts, asset maps that name only recorded assets, stated totals that match the rows listed, honest town-level
+positions, the Greenland 25-sample cap). With the dev server running (`npm run dev`):
+
+```
+python evals/run_evals.py --set gate --min-pass 0.9 --label predeploy
+```
+
+It exits with code 1 below 90%; read the failures in `evals/results/<time>-predeploy.md` before deciding. For a local server
+the runner signs in with the dev test password from `.env.development.local`; against production it uses `APP_PASSWORD`.
+About 5 to 8 minutes and a few dollars per run. It is an alarm, not a measurement: do not tune the assistant to these
+questions (use a fresh held-out set to measure a change).
+
+## Full suite
+
+168 golden questions covering company financials, comparisons, commodity prices, occurrences, geochemistry,
 documents, honesty about data limits, and the plain-language rule. Run it after any change to the prompt
 (`src/lib/schema-context.ts`), the tools (`src/app/api/chat/route.ts`, `src/lib/finance-tools.ts`) or the model.
 

@@ -1,0 +1,30 @@
+{
+  "version": "2026-11-02",
+  "notes": "Fresh check for the Tasmania (MRT) geochemistry and drill-hole load of 2026-11-02. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-tas-sn-anomalies",
+      "cat": "fresh",
+      "q": "Where are the strongest tin anomalies in Tasmania's stream sediment data?",
+      "expect": {"tools_any": ["find_geochemical_anomalies", "run_sql"], "maps_min": 1, "max_turns": 6},
+      "judge": "Uses the Tasmanian (Mineral Resources Tasmania) stream-sediment samples, reports anomalous areas with sample counts, distinguishes new leads from areas near known tin occurrences or deposits, and credits Mineral Resources Tasmania. It must not present drill-hole assays as stream-sediment anomalies. Says anomalies are not deposits."
+    },
+    {
+      "id": "fresh-tas-hole",
+      "cat": "fresh",
+      "q": "What are the best copper intervals in drill hole DD97BC9 at Balfour, and who drilled it?",
+      "truth": {"max_cu": "SELECT max(w.cu_p) FROM geochem.sample_chemistry_wide w JOIN drilling.drillholes h USING (drillhole_id) WHERE h.hole_name = 'DD97BC9'"},
+      "expect": {"contains_any": ["(?i)rio tinto"], "max_turns": 5},
+      "judge": "Lists the highest copper intervals with their depths (from-to, metres), the top one about 5.34% Cu (53,400 ppm), names Rio Tinto Exploration as the company, and credits Mineral Resources Tasmania. Does not invent intervals or a resource."
+    },
+    {
+      "id": "fresh-tas-holes-count",
+      "cat": "fresh",
+      "q": "How many drill holes do you have in Tasmania, and what drilling methods were used?",
+      "truth": {"holes": "SELECT count(*) FROM drilling.drillholes WHERE source_system = 'AUSTRALIA_TAS_MRT'"},
+      "expect": {"numbers": [{"truth": "holes"}], "max_turns": 4},
+      "judge": "States 34,871 drill holes (open-file data from Mineral Resources Tasmania, to February 2023) with a breakdown by drill type (diamond the largest, then auger, percussion, RC, air core, rotary ...) whose parts are consistent with the total, and credits MRT."
+    }
+  ]
+}

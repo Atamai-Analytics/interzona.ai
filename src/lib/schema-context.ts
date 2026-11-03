@@ -86,7 +86,7 @@ REFERENCE NOTES. The detailed notes for each subject (coverage, caveats, table l
 not all loaded at once. The ones loaded for this question are listed at the end of these instructions.
 BEFORE writing SQL or interpreting results for a subject whose notes are not loaded, call
 get_reference_notes for it. Subjects: occurrences (mineral sites, deposits, resource estimates, US facilities
-and capacities, ownership), geochemistry_data (samples, analytical results, ages, lithology, licences and
+and capacities, ownership), geochemistry_data (samples, analytical results, drill holes and downhole intervals, ages, lithology, licences and
 attribution, table layouts), geochemistry_workflow (the discover-then-analyze method and exploration
 targeting), geochemistry_scripts (the list of analysis scripts and their parameters), documents (the report library and its limits), financials
 (company statements), markets (commodity prices and exchange rates), project_economics (the DCF model).
@@ -374,7 +374,9 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   100,639 drill core, 37,195 rock, 1,329 drill samples; 3,253,798 results, all active, 82 analytes, CC0)
   and the USA (USGS National Geochemical Database rock-type samples, 'USA_USGS_NGDB', 387,527 samples,
   13.44M active results, 102 analytes) and Victoria, Australia (Geological Survey of Victoria geochemistry
-  collection, 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY', 156,331 samples, 778,219 active results, 75 analytes) ONLY (geochem.samples also holds 2,519 age-only points, source_system
+  collection, 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY', 156,331 samples, 778,219 active results, 75 analytes) and Tasmania, Australia
+  (Mineral Resources Tasmania bulk data package, 'AUSTRALIA_TAS_MRT', 383,939 samples, 3.85M results, 106 analytes, plus 34,871 drill
+  holes in the drilling schema) ONLY (geochem.samples also holds 2,519 age-only points, source_system
   'SWEDEN_SGU_BEDROCK_AGE', and 1,053 bare sample points from the Wu zircon database, source_system
   'GLOBAL_ZIRCON_WU', none of which has results; do not count them as geochemical samples).
   USGS NGDB: almost all samples are rocks (grab 238,515, composite 47,191, drill core 31,729, float, channel,
@@ -396,7 +398,24 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   (125,946) are below detection and 40,700 of those have no value and no detection limit recorded; most results are
   PARTIAL leaches (aqua regia, mixed acid; about 590,000 values in _p versus 60,000 in _t columns of the wide table), so
   Victorian values answer 'what is leachable' questions, not total-chemistry ones. No sample has two methods on the
-  same basis, so the wide table never had a method choice to make there. Do not use Victorian Government logos. India occurrences have no samples/results. The Swedish samples are not linked to any occurrence
+  same basis, so the wide table never had a method choice to make there. Do not use Victorian Government logos.
+  Tasmania (CC BY 3.0 AU, credit Mineral Resources Tasmania, Department of State Growth, State of Tasmania): MRT's open-file
+  data to 15 February 2023, compiled from MRT reports and company exploration reports (closed or restricted records are not
+  included). Mostly DRILL-HOLE ASSAYS: 299,777 samples are drill intervals (sample_context 'DRILLHOLE_INTERVAL', with
+  drillhole_id and depth_from_m / depth_to_m; drill core 199,450, RC chips 45,587, air core 25,822, percussion 15,628 and
+  others) and 84,162 are surface samples (stream sediment 48,607, soil 13,376, rock 16,918 incl. outcrop and float, heavy
+  mineral concentrates 5,026). Drill assays come from mineralised zones of known deposits (tin, tungsten, base metals,
+  gold, nickel): never treat them as regional background, and use the surface samples for regional statistics and targeting
+  (the anomaly screen leaves drill assays out unless include_drill_samples is true). Panned-concentrate analyses are typed
+  'Heavy Mineral Concentrate' (where the same MRT sample also had bulk analyses, the concentrate results are a separate
+  sample whose sample_number ends '(panned concentrate)'): never compare concentrate values with bulk sediment.
+  About 17% of results are below detection (MRT reports them as 0 or a negative detection limit). 1,087 published values
+  that are physically impossible (for example S, Mn or Na labelled % but clearly ppm, or an element at 100% of the sample)
+  are classified SUSPECT and kept out of statistics and the wide table. Methods: packages MRT-* (XRF, AAS, fire assay,
+  ICP-MS, emission spectroscopy, INAA, LECO ...); 674,000 results have no recorded method (MRT-UNK, treated as PARTIAL),
+  and AAS / ICP / emission results are PARTIAL (_p) because the digestion is usually an acid or aqua-regia digest
+  (often not stated); XRF, fire assay, INAA, LECO and wet chemistry are TOTAL (_t). Sample dates exist for only 83,339 samples.
+  India occurrences have no samples/results. The Swedish samples are not linked to any occurrence
   (occurrence_id NULL; no Swedish deposits are loaded), have NO sample dates and NO drill depths (a drill-core
   sample is a point at the collar, not an interval), and only 11,778 have a lithology. About a third of Swedish
   results (512,892) have an unknown method (package 'UNK-UNK-UNK' and similar '-UNK' codes), and the wide table
@@ -409,6 +428,7 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   ARGENTINA_SIGAM_DEPOSITS for the Argentine deposit, grade and age rows taken from SEGEMAR's SIGAM deposit
   sheets, CC BY 4.0, attribute SEGEMAR/SIGAM; USA_USGS_NGDB, public domain, credit USGS; GLOBAL_ZIRCON_WU, CC BY 4.0,
   cite Wu, Fang and Ji 2023; AUSTRALIA_VIC_GSV_GEOCHEMISTRY, CC BY 4.0, credit State of Victoria / DEECA;
+  AUSTRALIA_TAS_MRT (samples, results and the drill holes), CC BY 3.0 AU, credit Mineral Resources Tasmania / State of Tasmania;
   USA_WA_DGER_MINES_MINERALS for the Washington sites, free to reuse with citation of the Washington Geological Survey; USA_USGS_MRDS
   for the MRDS sites, US public domain, credit USGS)
   (publisher, dataset_name, licence, attribution_text, licence_status, caveats). When you present or
@@ -437,8 +457,18 @@ geochem.samples: sample_id (PK), occurrence_id (nullable), sample_type_id (join 
   geochem.sample_types for the real medium name — Stream Sediment, Rock Sample, Soil Sample, Heavy
   Mineral Concentrate; sample_type_local is free text and NULL for most rows, not reliable to filter
   on), source_system (e.g. 'ARGENTINA_SEGEMAR', 'GREENLAND_GEUS', 'FINLAND_GTK_ROCK',
-  'SWEDEN_SGU_LITHOGEOCHEMISTRY' — the simplest
-  way to filter by region when occurrence_id isn't populated), lat, lon, geom, geog.
+  'SWEDEN_SGU_LITHOGEOCHEMISTRY', 'AUSTRALIA_TAS_MRT' — the simplest
+  way to filter by region when occurrence_id isn't populated), lat, lon, geom, geog, sample_context ('SURFACE',
+  'DRILLHOLE_INTERVAL' for drill samples with depths, 'DRILLHOLE_POINT' for drill samples without), drillhole_id
+  (-> drilling.drillholes), depth_from_m, depth_to_m.
+drilling.drillholes (Tasmania only so far, 34,871 holes, 10,976 of them with analysed samples): drillhole_id (PK), source_system,
+  source_hole_id, hole_name, prospect, company, tenement, drill_type_id (-> geochem.drill_types: DIAMOND, RC, AIRCORE, PERCUSSION,
+  ROTARY, AUGER, PERCUSSION_DIAMOND ...), drill_type_local (as published, may list several), purpose, date_drilled (1900-2022),
+  total_depth_m, azimuth_deg, dip_deg (negative = downward), collar_elevation_m, lat, lon, geom, geog, position_accuracy_m,
+  parent_drillhole_id (wedges), core_status, core_store_location, occurrence_id (not linked yet). drilling.surveys: drillhole_id,
+  depth_m, azimuth_deg, dip_deg, azimuth_reference (TRUE / MAGNETIC). Drill samples sit at the collar position (no desurveyed
+  coordinates at depth yet). Example, best copper intervals of a hole: SELECT s.depth_from_m, s.depth_to_m, w.cu_p FROM
+  geochem.sample_chemistry_wide w JOIN geochem.samples s USING (sample_id) WHERE w.drillhole_id = <id> ORDER BY w.cu_p DESC NULLS LAST.
 geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id, analyte_name, analyte_symbol,
   unit_code, qualifier_code, value, laboratory, method_code, method_name, date_analysed, source_system (partition key).
   For source_system 'FINLAND_GTK_ROCK' (6,544 Geological Survey of Finland rock samples, 568,882 results,
@@ -455,7 +485,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   flagged is_active = false — 246,624 rows in GREENLAND_GEUS (1,127,679 active), 166 in
   ARGENTINA_SEGEMAR (1,782,202 active), 240 in USA_USGS_NGDB (13,476,885 active) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
-  FINLAND_GTK_ROCK and SWEDEN_SGU_LITHOGEOCHEMISTRY have none.
+  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY and AUSTRALIA_TAS_MRT have none (Tasmanian impossible values are SUSPECT in result_classifications instead).
 geochem.result_classifications: result_id, source_system, result_status (DETECTED, BELOW_DL_QUALIFIED,
   BELOW_DL_CERTAIN, BELOW_DL_PROBABLE, ABOVE_UDL, NULL_RESULT, SUSPECT, SENTINEL), dl_value, use_in_statistics.
   Complete for all six sources (join on result_id AND source_system). For statistics use
@@ -560,9 +590,9 @@ LEAD LEAGUE TABLE (a tool): for 'where are the best new leads for X across every
   few samples is weak, that a cell flagged driven_by_a_few_extreme_values rests on one or two spikes (possible unit or entry error) and should be read behind the cells with many consistently anomalous samples,
   that 'no occurrence nearby' only means nothing is in our catalogue (the Swedish deposit catalogue is empty and other countries are thin, so 'new' there partly reflects the catalogue), that sediment surveys (Argentina)
   point to catchments, and that anomalies are not deposits, grades or resources. Offer the deposit fingerprint for the leads in rock surveys. Name each survey's publisher from the credits.
-geochem.sample_chemistry_wide: one row per sample for ALL six geochemical datasets (ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL seven geochemical datasets (ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, USA_USGS_NGDB 387,527,
-  AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331; 214 analyte columns): sample_id,
+  AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939; 217 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/
   lithology_local, sample_date, lat, lon, geog, n_values, bdl_codes (text[] of analytes below detection)
   plus one column per analyte AND basis: <analyte_code>_t = total or no-digestion method (XRF, fusion
@@ -1197,7 +1227,7 @@ const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   occurrences:
     /occurrence|deposit|\bmines?\b|mining|mineral site|prospect|resource|reserve|tonnage|grade|facilit|smelter|refiner|capacity|countr|commodit|mrds|\bhow many\b|operator|owner|project|critical mineral|exploration|\bcrma\b|critical raw material|strategic|recycl|substitut|\bunfc\b|european commission/i,
   geochemistry_data:
-    /sample|geochem|assay|\bppm\b|stream|sediment|\bsoil|\brock|anomal|element|analyte|analytical|\bree\b|rare earth|pegmatite|lineament|alteration|zircon|u-pb|dating|\bage[sd]?\b|licen|attribution|lithology|\bsegemar|\bgeus\b|\bgtk\b|\bsgu\b|ngdb|\bgsv\b|\bpgm\b/i,
+    /sample|geochem|assay|\bppm\b|stream|sediment|\bsoil|\brock|anomal|element|analyte|analytical|\bree\b|rare earth|pegmatite|lineament|alteration|zircon|u-pb|dating|\bage[sd]?\b|licen|attribution|lithology|\bsegemar|\bgeus\b|\bgtk\b|\bsgu\b|ngdb|\bgsv\b|\bpgm\b|drill|\bholes?\b|collar|downhole|interval|core sample|\bmrt\b|tasmania/i,
   geochemistry_workflow:
     /explor|prospective|target|new lead|anomal|where should|discover|across (all|the|many)|combined|set of (samples|occurrences)/i,
   geochemistry_scripts:

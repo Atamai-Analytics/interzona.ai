@@ -185,7 +185,7 @@ const tools: Anthropic.ToolUnion[] = [
   {
     name: "rank_leads",
     description:
-      "A league table of the best UNEXPLORED geochemical leads for a commodity across ALL our geochemical surveys at once (Argentina, Greenland, Finland, Sweden, the USA and Victoria): " +
+      "A league table of the best UNEXPLORED geochemical leads for a commodity across ALL our geochemical surveys at once (Argentina, Greenland, Finland, Sweden, the USA, Victoria and Tasmania): " +
       "runs the anomaly screen on each survey and ranks the cells together by how unlikely their anomaly count is by chance within their own survey (raw ppm values are not comparable between surveys). " +
       "Only 'new lead' cells (no catalogued occurrence of any kind nearby) are ranked unless include_near_known is true. Shows the user a map (coloured by survey) and a table, " +
       "and says which surveys had data for the elements and which did not. USE THIS for 'where are the best new lithium / rare earth / cobalt / tungsten / copper leads across everything we have', " +
@@ -196,7 +196,7 @@ const tools: Anthropic.ToolUnion[] = [
       properties: {
         commodity: { type: "string", description: "Preset indicator: REE, LREE, HREE or PGE. Omit when using elements." },
         elements: { type: "array", items: { type: "string" }, description: "Element symbols to sum, e.g. [\"li\"], [\"w\"], [\"co\"]." },
-        surveys: { type: "array", items: { type: "string" }, description: "Optional subset of surveys: ARGENTINA_SEGEMAR, GREENLAND_GEUS, FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, USA_USGS_NGDB, AUSTRALIA_VIC_GSV_GEOCHEMISTRY. Default all." },
+        surveys: { type: "array", items: { type: "string" }, description: "Optional subset of surveys: ARGENTINA_SEGEMAR, GREENLAND_GEUS, FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, USA_USGS_NGDB, AUSTRALIA_VIC_GSV_GEOCHEMISTRY, AUSTRALIA_TAS_MRT. Default all." },
         basis: { type: "string", description: "total, partial or any (default any: total-digestion value where there is one, otherwise the partial-leach value)." },
         percentile: { type: "number", description: "Anomaly threshold percentile within each sample type, 0.9 to 0.99, default 0.95." },
         top_n: { type: "number", description: "Leads in the table, default 12, max 25." },
@@ -451,7 +451,7 @@ const tools: Anthropic.ToolUnion[] = [
       "the top sample_ids (pass them to run_geochem_analysis), the nearest catalogued occurrence of that commodity and of ANY kind, " +
       "and a group: NEW_LEAD (nothing catalogued nearby), NEAR_OTHER_OCCURRENCE, or NEAR_KNOWN_COMMODITY (the data see a known system). " +
       "Also returns coverage by sample type. Needs a region: source_system (ARGENTINA_SEGEMAR, GREENLAND_GEUS, FINLAND_GTK_ROCK, " +
-      "SWEDEN_SGU_LITHOGEOCHEMISTRY, USA_USGS_NGDB, AUSTRALIA_VIC_GSV_GEOCHEMISTRY) and/or a bbox. Non-oxide elements only, in ppm. " +
+      "SWEDEN_SGU_LITHOGEOCHEMISTRY, USA_USGS_NGDB, AUSTRALIA_VIC_GSV_GEOCHEMISTRY, AUSTRALIA_TAS_MRT) and/or a bbox. Non-oxide elements only, in ppm. Drill-hole assays are left out unless include_drill_samples is true. " +
       "Lead your answer with the NEW_LEAD cells, then confirmation near known deposits; say how many samples have the data.",
     input_schema: {
       type: "object",
@@ -470,6 +470,7 @@ const tools: Anthropic.ToolUnion[] = [
         min_anomalous: { type: "number", description: "Minimum anomalous samples for a cell to be reported, default 3." },
         min_elements: { type: "number", description: "Elements that must have been analysed for a sample to count, default 60% of the list." },
         sample_type_contains: { type: "array", items: { type: "string" }, description: "Optional filter on sample type names, e.g. [\"stream\"] or [\"rock\"]." },
+        include_drill_samples: { type: "boolean", description: "Include drill-hole assays (default false: they come from known mineralised zones and would swamp a new-leads screen; set true only when the user asks about drill results)." },
         occurrence_commodity_pattern: { type: "string", description: "Optional regex over core.occurrences.commodities to define 'known occurrence of this commodity'; presets and element lists have sensible defaults." },
         near_km: { type: "number", description: "Distance counted as 'near' a catalogued occurrence, default 15 km." },
         limit: { type: "number", description: "Cells returned, default 15, max 40." },

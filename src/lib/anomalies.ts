@@ -24,6 +24,7 @@ export type AnomalyParams = {
   min_anomalous?: number; // minimum anomalous samples in a cell, default 3
   min_elements?: number; // elements that must have been analysed, default 60% of the list
   sample_type_contains?: string[]; // e.g. ["stream", "rock"]
+  include_drill_samples?: boolean; // default false: drill-hole assays (sample_context DRILLHOLE_INTERVAL) sit in known mineralised zones and are left out
   occurrence_commodity_pattern?: string; // regex over core.occurrences.commodities
   near_km?: number; // 'near a catalogued occurrence' distance, default 15
   limit?: number; // cells returned, default 15, max 40
@@ -132,6 +133,7 @@ export async function findGeochemicalAnomalies(p: AnomalyParams) {
     where.push(`lon BETWEEN ${w} AND ${e}`, `lat BETWEEN ${s} AND ${n}`);
   }
   if (!p.source_system && !p.bbox) throw new Error("Give a source_system and/or a bbox so the analysis has a region.");
+  if (p.include_drill_samples !== true) where.push("sample_context IS DISTINCT FROM 'DRILLHOLE_INTERVAL'");
   if (p.sample_type_contains?.length) {
     const parts = p.sample_type_contains.map((t) => {
       if (!/^[A-Za-z0-9 ()\-/]{2,40}$/.test(t)) throw new Error(`Invalid sample_type_contains value "${t}".`);

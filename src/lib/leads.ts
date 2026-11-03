@@ -16,6 +16,7 @@ const SURVEYS: Record<string, string> = {
   SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden (SGU)",
   USA_USGS_NGDB: "USA (USGS)",
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",
+  AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
 };
 
 type Cell = Record<string, unknown>;

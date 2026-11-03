@@ -11,6 +11,7 @@ import { Check, Notice, btnRun, card, heading, input, label } from "./ui";
 const DATASET_NAMES: Record<string, string> = {
   ARGENTINA_SEGEMAR: "Argentina (SEGEMAR)",
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",
+  AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
   FINLAND_GTK_ROCK: "Finland (GTK)",
   GREENLAND_GEUS: "Greenland (GEUS)",
   SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden (SGU)",

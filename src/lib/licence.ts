@@ -61,6 +61,7 @@ const CREDITS: [RegExp, string][] = [
   [/sweden_sgu/i, "Geological Survey of Sweden (SGU), CC0"],
   [/usa_usgs_ngdb/i, "U.S. Geological Survey, National Geochemical Database"],
   [/australia_vic|victoria/i, "Geological Survey of Victoria, State of Victoria (DEECA), CC BY 4.0"],
+  [/australia_tas|tasmania|drilling\.(drillholes|surveys)/i, "Mineral Resources Tasmania, Department of State Growth (State of Tasmania), bulk data package BDR2023_01, CC BY 3.0 AU"],
   [/global_deposit_geochem_ga|sample_deposit_context/i, "Geoscience Australia / Critical Minerals Mapping Initiative with the Geological Survey of Canada and the USGS, Critical Minerals in Ores - geochemistry database (CC BY 4.0)"],
   [/global_zircon/i, "Wu, Fang and Ji (2023), zircon database (CC BY 4.0)"],
   [/washington/i, "Washington Geological Survey (Washington State Department of Natural Resources)"],

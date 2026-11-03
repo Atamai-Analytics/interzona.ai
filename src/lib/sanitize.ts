@@ -5,7 +5,7 @@
 const INTERNAL =
   "is_deposit|is_active|NEW_LEAD|NEAR_OTHER_OCCURRENCE|NEAR_KNOWN_COMMODITY|source_document_id|line_items|period_type|operating_income|occurrence_id|sample_id|document_id|company_id|" +
   "run_sql|search_documents|read_document|find_geochemical_anomalies|run_geochem_analysis|run_financial_model|company_financials|peer_comparison|price_history|price_sensitivity|deposit_fingerprint|assay_next|supply_concentration|price_outlook|rank_leads|investor_memo|operating_data|company_assets|get_reference_notes|" +
-  "sample_chemistry_wide|hybrid_search|rate_per_usd|(?:core|geochem|financials|markets|docs)\\.[a-z_]+";
+  "sample_chemistry_wide|hybrid_search|rate_per_usd|DRILLHOLE_INTERVAL|(?:core|geochem|financials|markets|docs|drilling)\\.[a-z_]+";
 
 // An aside in brackets that mentions an internal name, e.g. "(is_deposit = true)" or "(table core.occurrences)": remove it whole.
 const ASIDE = new RegExp(`\\s*\\((?:[^()]*?\\b(?:${INTERNAL})\\b[^()]*?)\\)`, "g");
@@ -25,6 +25,8 @@ const WORDS: [RegExp, string][] = [
   [/\bmarkets\.[a-z_]+\b/g, "the commodity price data"],
   [/\bgeochem\.[a-z_]+\b/g, "the sample geochemistry data"],
   [/\bdocs\.[a-z_]+\b/g, "the document library"],
+  [/\bdrilling\.[a-z_]+\b/g, "the drill-hole records"],
+  [/\bDRILLHOLE_INTERVAL\b/g, "drill-hole interval"],
   [/\b(?:run_sql|search_documents|read_document|find_geochemical_anomalies|run_geochem_analysis|run_financial_model|company_financials|peer_comparison|price_history|price_sensitivity|deposit_fingerprint|assay_next|supply_concentration|price_outlook|rank_leads|investor_memo|operating_data|company_assets|get_reference_notes)\b/g, "our analysis tools"],
   [/\b(?:source_document_id|line_items|period_type|operating_income|occurrence_id|sample_id|document_id|company_id|sample_chemistry_wide|hybrid_search|rate_per_usd)\b/g, "the underlying records"],
 ];

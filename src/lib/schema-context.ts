@@ -409,12 +409,19 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   (the anomaly screen leaves drill assays out unless include_drill_samples is true). Panned-concentrate analyses are typed
   'Heavy Mineral Concentrate' (where the same MRT sample also had bulk analyses, the concentrate results are a separate
   sample whose sample_number ends '(panned concentrate)'): never compare concentrate values with bulk sediment.
-  About 17% of results are below detection (MRT reports them as 0 or a negative detection limit). 1,087 published values
-  that are physically impossible (for example S, Mn or Na labelled % but clearly ppm, or an element at 100% of the sample)
-  are classified SUSPECT and kept out of statistics and the wide table. Methods: packages MRT-* (XRF, AAS, fire assay,
+  About 17% of results are below detection (MRT reports them as 0 or a negative detection limit). Result QC (values are never
+  changed): 1,087 physically impossible values (for example S, Mn or Na labelled % but clearly ppm, or an element at 100% of the sample) are SUSPECT; 24,952 'detected' values below their own reported detection limit (almost all exactly half the limit, the usual half-detection-limit substitution) are BELOW_DL_PROBABLE; 10,933 exact duplicate results (same sample, element, method, value, lab job and date) are is_active = false; 16 whole-rock oxide totals below 90% are SUSPECT (the oxides themselves are kept). None of these are used in statistics or the wide table. Methods: packages MRT-* (XRF, AAS, fire assay,
   ICP-MS, emission spectroscopy, INAA, LECO ...); 674,000 results have no recorded method (MRT-UNK, treated as PARTIAL),
   and AAS / ICP / emission results are PARTIAL (_p) because the digestion is usually an acid or aqua-regia digest
-  (often not stated); XRF, fire assay, INAA, LECO and wet chemistry are TOTAL (_t). Sample dates exist for only 83,339 samples.
+  (often not stated); XRF, fire assay, INAA, LECO and wet chemistry are TOTAL (_t). For each Tasmanian result,
+  analytical_results.method_name is MRT's analysis type (and processed medium), digest_name is MRT's treatment text as published
+  (e.g. 'Aqua regia', 'Acid digestion', 'XRF fused bead'; NULL when MRT recorded none), fraction is the size fraction or
+  medium analysed ('-80#', '-20+80#', 'Panned Concentrate' ...), result_comment holds MRT's element / analysis comments and repeat
+  numbers, and source_result_id is MRT's analysis id ('MRT:<id>'). Where a sample has several size fractions analysed by the same
+  method, the wide table averages them: check analytical_results.fraction when the fraction matters. Sample dates exist for only
+  83,339 samples. Lithology: MRT's text is kept verbatim in lithology_observations.lithology_local and mapped to the lithology
+  dictionary (exact name, curated synonym, base name or keyword; how it matched is in comments; about 0.5% stay 'Unknown
+  Lithology'); lithostratigraphy is in strat_formation as published (may be a group or suite), chronostratigraphy in comments.
   India occurrences have no samples/results. The Swedish samples are not linked to any occurrence
   (occurrence_id NULL; no Swedish deposits are loaded), have NO sample dates and NO drill depths (a drill-core
   sample is a point at the collar, not an interval), and only 11,778 have a lithology. About a third of Swedish
@@ -467,10 +474,17 @@ drilling.drillholes (Tasmania only so far, 34,871 holes, 10,976 of them with ana
   total_depth_m, azimuth_deg, dip_deg (negative = downward), collar_elevation_m, lat, lon, geom, geog, position_accuracy_m,
   parent_drillhole_id (wedges), core_status, core_store_location, occurrence_id (not linked yet). drilling.surveys: drillhole_id,
   depth_m, azimuth_deg, dip_deg, azimuth_reference (TRUE / MAGNETIC). Drill samples sit at the collar position (no desurveyed
-  coordinates at depth yet). Example, best copper intervals of a hole: SELECT s.depth_from_m, s.depth_to_m, w.cu_p FROM
-  geochem.sample_chemistry_wide w JOIN geochem.samples s USING (sample_id) WHERE w.drillhole_id = <id> ORDER BY w.cu_p DESC NULLS LAST.
+  coordinates at depth yet). Downhole LITHOLOGY LOGS are geochem.lithology_observations rows with drillhole_id, depth_from_m and
+  depth_to_m (Tasmania: 23,419 intervals on 34,871 holes, 18,183 of them log-only, i.e. not an analysed sample); sample_id is set only when the interval is an analysed sample. drilling.interval_qc flags interval
+  problems without deleting anything (drillhole_id, sample_id, lithology_observation_id, issue: OVERLAP, BEYOND_EOH, FROM_GT_TO,
+  ZERO_LENGTH = a point sample at one depth, MISSING_DEPTH; Tasmania: 13,101 overlapping sample intervals in 1,345 holes, 3,319 point samples, 1,120 intervals past the end of the hole, 380 missing a depth, 97 with from > to): mention a flag when it affects an interval you quote, and
+  never add up overlapping intervals as if they were separate metres. Example, best copper intervals of a hole: SELECT s.depth_from_m,
+  s.depth_to_m, w.cu_p FROM geochem.sample_chemistry_wide w JOIN geochem.samples s USING (sample_id) WHERE w.drillhole_id = <id>
+  ORDER BY w.cu_p DESC NULLS LAST.
 geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id, analyte_name, analyte_symbol,
-  unit_code, qualifier_code, value, laboratory, method_code, method_name, date_analysed, source_system (partition key).
+  unit_code, qualifier_code, value, laboratory, method_code, method_name, digest_name, fraction, result_comment, source_result_id,
+  date_analysed, source_system (partition key). digest_name / fraction / result_comment / source_result_id are filled for
+  Tasmania (MRT) and NULL for the older sources.
   For source_system 'FINLAND_GTK_ROCK' (6,544 Geological Survey of Finland rock samples, 568,882 results,
   only 33 samples linked to a Finnish deposit within 5 km) laboratory, method_name and digest_name
   are NULL by design: join package_id to geochem.analytical_packages (package_code, package_name) for the

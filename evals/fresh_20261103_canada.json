@@ -1,0 +1,29 @@
+{
+  "version": "2026-11-03",
+  "notes": "Fresh check for the Canada load of 2026-11-03 (Québec SIGÉOM and Saskatchewan SMDI occurrences, NRCan projects). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-ca-qc-lithium",
+      "cat": "fresh",
+      "q": "Which lithium projects in Québec are in development or under construction, and what capital costs are reported for them?",
+      "expect": {"tools_any": ["run_sql"], "contains_any": ["(?i)whabouchi", "(?i)rose", "(?i)moblan", "(?i)shaakichiuwaanaan"], "max_turns": 6},
+      "judge": "Uses the Natural Resources Canada project records: lists several Québec lithium projects in development (for example Whabouchi / Nemaska, Rose, Moblan, Shaakichiuwaanaan, Galaxy, Authier) with capital costs in Canadian dollars where reported, notes which are under construction versus planned, and credits Natural Resources Canada. Does not invent costs."
+    },
+    {
+      "id": "fresh-ca-sk-mines",
+      "cat": "fresh",
+      "q": "How many producing and past-producing mines are recorded in Saskatchewan, and which commodities dominate them?",
+      "truth": {"producing": "SELECT count(*) FROM core.occurrences WHERE is_active AND jurisdiction_path[2] = 'Saskatchewan' AND status = 'PRODUCER'", "past": "SELECT count(*) FROM core.occurrences WHERE is_active AND jurisdiction_path[2] = 'Saskatchewan' AND status = 'PAST_PRODUCER'"},
+      "expect": {"numbers": [{"truth": "producing"}, {"truth": "past"}], "max_turns": 6},
+      "judge": "Gives the counts of producing and past-producing sites in Saskatchewan from the Saskatchewan Mineral Deposit Index records, names the dominant commodities (for example uranium, potash, gold, coal, copper/zinc), and credits the Saskatchewan Geological Survey. Counts must agree with each other."
+    },
+    {
+      "id": "fresh-ca-bc-gap",
+      "cat": "fresh",
+      "q": "Do you have British Columbia's MINFILE mineral occurrences?",
+      "expect": {"max_turns": 4},
+      "judge": "Says honestly that BC MINFILE is not loaded (its catalogue licence is access-only, so reuse needs BC's permission) and that BC coverage relies on older, thinner USGS MRDS records; may offer what it does have for BC (for example NRCan projects in BC). Does not claim to have MINFILE."
+    }
+  ]
+}

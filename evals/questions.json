@@ -2108,7 +2108,7 @@
         "maps_min": 1,
         "max_turns": 6
       },
-      "judge": "Lists Rio Tinto's assets with its ownership shares (for example Escondida 30%, Oyu Tolgoi 66%, Simandou 45%, Richards Bay Minerals 74%) from the annual report as at 31 December 2025, says plainly that only some assets (about 18 of 37) could be placed on the map and that the rest, mostly smelters and refineries, have no catalogued position, and says a map is shown. Does not give coordinates for assets it could not place, and does not claim which asset is largest."
+      "judge": "Lists Rio Tinto's assets with its ownership shares (for example Escondida 30%, Oyu Tolgoi 66%, Simandou 45%, Richards Bay Minerals 74%) from the annual report as at 31 December 2025, says plainly how many of the assets could be placed on the map and how many could not (counts consistent with each other; the total grew from 37 to 48 on 2026-11-03 when NRCan's Canadian project list was loaded), and that the unplaced ones have no catalogued position, and says a map is shown. Does not give coordinates for assets it could not place, and does not claim which asset is largest."
     },
     {
       "id": "assets-glencore-copper",

@@ -66,6 +66,9 @@ const CREDITS: [RegExp, string][] = [
   [/global_zircon/i, "Wu, Fang and Ji (2023), zircon database (CC BY 4.0)"],
   [/washington/i, "Washington Geological Survey (Washington State Department of Natural Resources)"],
   [/mrds/i, "U.S. Geological Survey, Mineral Resources Data System"],
+  [/canada|qu[eé]bec|sigeom|migration_canada_occ/i, "Ministère des Ressources naturelles et des Forêts, Québec, Indices, gîtes, mines et carrières (SIGÉOM), CC BY 4.0"],
+  [/canada|saskatchewan|smdi|migration_canada_occ/i, "Saskatchewan Mineral Deposit Index, Saskatchewan Geological Survey (Government of Saskatchewan Standard Unrestricted Use Data Licence v2.0)"],
+  [/canada|nrcan|migration_nrcan/i, "Natural Resources Canada, critical minerals projects list and Major Projects Inventory (Open Government Licence - Canada)"],
 ];
 
 /** The publishers behind a query, worked out from the names in it. */

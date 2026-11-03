@@ -14,19 +14,21 @@ const STATUS_WORD: Record<string, string> = { PRODUCER: "Producing", PAST_PRODUC
 const ASSET_WORD: Record<string, string> = { MINE: "Mine", MILL: "Mill", PROCESSING: "Processing plant", REFINERY: "Refinery", PROJECT: "Project", MAGNET: "Magnet plant", RECYCLING: "Recycling plant", SUBSTITUTION: "Substitution project" };
 const word = (m: Record<string, string>, v: unknown) => (v === null || v === undefined || v === "" ? null : m[String(v)] ?? String(v));
 const ACC_WORD: Record<string, string> = { TOWN_CENTROID: "position is the nearest town", AREA_CENTROID: "position is the centre of an area", COUNTY_CENTROID: "position is the centre of a county", REGIONAL: "position is approximate (regional scale)" };
-// Where an asset record (and its stake) came from: the Austrade Prospectus, the EU CRMA strategic-project list, or the company's own reports.
+// Where an asset record (and its stake) came from: the Austrade Prospectus, the EU CRMA strategic-project list, NRCan's Canadian project lists, or the company's own reports.
 const RECORD_CREDITS = {
   prospectus: "Austrade, Australian Critical Minerals Prospectus (October 2026), CC BY 4.0; company-supplied, not verified by Austrade",
   crma: "European Commission, Critical Raw Materials Act strategic projects (selection decisions and factsheets)",
   company: "Company reports (annual reports, filings and presentations)",
+  nrcan: "Natural Resources Canada, critical minerals projects list and Major Projects Inventory (Open Government Licence - Canada)",
 } as const;
-const recordKind = (r: Record<string, unknown>): keyof typeof RECORD_CREDITS => (r.source_type === "Prospectus" ? "prospectus" : r.is_crma ? "crma" : "company");
+const recordKind = (r: Record<string, unknown>): keyof typeof RECORD_CREDITS => (r.source_type === "Prospectus" ? "prospectus" : r.is_crma ? "crma" : r.is_nrcan ? "nrcan" : "company");
 const PRECISION_WORD: Record<string, string> = { SITE: "site position", TOWN: "approximate: the town or suburb named for the site, not the plant itself", CITY: "approximate: only the city is published" };
 // Publisher credits for project positions, keyed on the start of core.projects.location_source.
 const POSITION_CREDITS: [string, string][] = [
   ["Geoscience Australia, Australian Critical Minerals Map", "Geoscience Australia, Australian Critical Minerals Map 2025 (CC BY 4.0)"],
   ["Geoscience Australia, Composite Gazetteer", "Geoscience Australia, Composite Gazetteer of Australia (CC BY 4.0)"],
   ["Australian Bureau of Statistics", "Australian Bureau of Statistics, ASGS 2021 Suburbs and Localities (CC BY 4.0)"],
+  ["NRCan", "Natural Resources Canada (Open Government Licence - Canada)"],
 ];
 
 export async function companyAssets(input: Record<string, unknown>): Promise<ToolOutput> {
@@ -61,7 +63,7 @@ export async function companyAssets(input: Record<string, unknown>): Promise<Too
       `SELECT COALESCE(c.short_name, c.name) AS company, p.project_id, p.name, p.asset_type, p.status, cm.commodity_name AS commodity, j.name AS country,
               po.share_pct::float8 AS share, po.as_of_year, o.name AS occ_name, o.lat, o.lon, o.position_accuracy,
               ST_Y(p.geom) AS p_lat, ST_X(p.geom) AS p_lon, p.location_precision, p.location_source,
-              d.title AS source_title, d.document_type AS source_type, p.source_page, (p.created_by LIKE 'migration_eu_crma%') AS is_crma
+              d.title AS source_title, d.document_type AS source_type, p.source_page, (p.created_by LIKE 'migration_eu_crma%') AS is_crma, (p.created_by LIKE 'migration_nrcan%') AS is_nrcan
        FROM core.projects p
        LEFT JOIN docs.documents d ON d.document_id = p.source_document_id
        JOIN core.companies c ON c.company_id = p.company_id
@@ -149,7 +151,7 @@ export async function companyAssets(input: Record<string, unknown>): Promise<Too
         }
       : null;
   const evidence: Evidence[] = [
-    ...(["company", "prospectus", "crma"] as const).filter((k) => recordKinds.has(k)).map((k) => ({ kind: "data", label: RECORD_CREDITS[k], detail: "asset and ownership records" }) as Evidence),
+    ...(["company", "prospectus", "crma", "nrcan"] as const).filter((k) => recordKinds.has(k)).map((k) => ({ kind: "data", label: RECORD_CREDITS[k], detail: "asset and ownership records" }) as Evidence),
     ...(fromCatalogue ? [{ kind: "data", label: "Mineral occurrence catalogue (positions)", detail: `${fromCatalogue} positions` } as Evidence] : []),
     ...[...credits].map((label) => ({ kind: "data", label, detail: "asset positions" }) as Evidence),
   ];

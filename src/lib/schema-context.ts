@@ -221,6 +221,28 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   (5) sites were de-duplicated against our other occurrences and within MRDS, but near-duplicates can remain, particularly in Argentina
   where positions differ from SIGAM; (6) the person names MRDS holds as record reporters were deliberately not loaded. Credit: U.S.
   Geological Survey, Mineral Resources Data System (MRDS), edition 20160315 (US public domain).
+- CANADA (loaded 2026-11-03): about 16,800 active occurrences. Québec and Saskatchewan come from the provincial surveys' own inventories and
+  are the authoritative records there: 10,314 Québec sites (MRNF Québec SIGÉOM 'Indices, gîtes, mines et carrières', CC BY 4.0, created_by
+  migration_canada_occ_20261103, external_ids source 'QUEBEC_SIGEOM', 'GITE:<n>' metallic / 'GISM:<n>' non-metallic) and 5,153 Saskatchewan
+  sites (Saskatchewan Mineral Deposit Index, Government of Saskatchewan Standard Unrestricted Use Data Licence v2.0, source 'SASK_SMDI'; the
+  917 SMDI geochemical/geophysical ANOMALY records were not loaded). Status: Québec MA / MF / G / showings -> PRODUCER / PAST_PRODUCER /
+  PROSPECT (gîte = a deposit with an estimate on record) / OCCURRENCE; Saskatchewan status ladder mapped to PRODUCER, PAST_PRODUCER,
+  DEVELOPMENT, FEASIBILITY, EXPLORATION (advanced-exploration deposits), PROSPECT, OCCURRENCE. The survey's own status text, deposit type
+  (French for Québec), host rocks, minerals, discovery year, company and project (Saskatchewan) and the survey record link are in comments;
+  occurrence_type_id is set where the type maps cleanly (Saskatchewan deposit classes; common Québec types such as mesozonal orogenic gold,
+  Superior-type BIF, magmatic Ni-Cu-PGE). Jurisdiction is the PROVINCE (jurisdiction_path {Canada, Quebec}); the 13 provinces and territories
+  now exist in core.jurisdictions, but the older Canadian records elsewhere (MRDS, SDSG) still sit at country level. 130 old USGS MRDS Canadian
+  records that duplicated a provincial record were merged into it (their links re-pointed, MRDS row inactive). Elsewhere in Canada (BC,
+  Ontario, Manitoba, Newfoundland and Labrador, the territories) only the thin old MRDS coverage exists: BC MINFILE ('Access Only') and the
+  Ontario Mineral Inventory (King's Printer copyright, commercial reuse needs a licence) are NOT loaded pending permission; say so when asked
+  about those provinces. PROJECTS: 354 Canadian projects in core.projects from Natural Resources Canada (Open Government Licence - Canada,
+  created_by migration_nrcan_projects_20261103, external_ids 'NRCAN_CRITICAL_MINERALS' / 'NRCAN_MAJOR_PROJECTS'): the 2025 critical-minerals
+  list of advanced projects, mines and processing facilities (asset_type MINE / PROJECT / REFINERY / PROCESSING / RECYCLING, status
+  PRODUCER / DEVELOPMENT / EXPLORATION / PAST_PRODUCER / CARE_AND_MAINTENANCE) plus planned and under-construction mines from the Major
+  Projects Inventory; the description holds NRCan's stage, activity, commodities, operator/owners, website and, where matched, the Major
+  Projects capital cost in C$ million and construction status (major-project-only entries are placed at municipality level, location_precision
+  TOWN). Operators are in core.project_ownership.owner_name (few have a company_id). Credit Québec MRNF / Saskatchewan Geological Survey /
+  Natural Resources Canada as applicable.
 - US MINES, SMELTERS, REFINERIES AND RECYCLING FACILITIES (USGS 2026 data release, CC0, source 'USGS_US_FACILITIES' in core.external_ids,
   id like USA0001; created_by migration_usgs_facilities_20261015): 849 facilities in the source, 840 loaded (168 attached to occurrences that
   already existed, mostly MRDS, and 672 new occurrences with is_deposit = false), 9 not loaded because their location could not be established
@@ -512,7 +534,8 @@ core.external_ids: external_id_id, entity_type ('OCCURRENCE' or 'SAMPLE'), entit
   sample_id column), source_system, source_id (the source's own id, e.g. the MRDS dep_id), match_confidence. To tell which source an occurrence came
   from use core.occurrences.created_by: 'AtamaiAdmin' = SEGEMAR/SIGAM Argentina, 'migration_mrds_20261014' = USGS MRDS, 'migration_wa_deposits_20261013' =
   Washington Geological Survey, 'migration_greenland_20260930' and 'claude_gl_mapadd_20261006' = Greenland, 'migration_fi_deposits_20261011' = Finland,
-  'claude_india_primary_20261002' = India, 'claude_sdsg_*' = SDSG rare earth projects, 'claude_mindat_20261002' = Mindat; join core.data_sources only for
+  'claude_india_primary_20261002' = India, 'claude_sdsg_*' = SDSG rare earth projects, 'claude_mindat_20261002' = Mindat,
+  'migration_canada_occ_20261103' = Québec SIGÉOM and Saskatchewan SMDI, 'migration_nrcan_projects_20261103' = NRCan project sites; join core.data_sources only for
   geochemical source_system values, not for occurrences.
 core.data_sources: source_system (PK), publisher, dataset_name, licence, licence_url, attribution_required,
   attribution_text, is_loaded, licence_status, caveats, evidence_location, evidence_date.

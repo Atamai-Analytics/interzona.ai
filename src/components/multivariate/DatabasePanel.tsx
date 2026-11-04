@@ -12,6 +12,8 @@ const DATASET_NAMES: Record<string, string> = {
   ARGENTINA_SEGEMAR: "Argentina (SEGEMAR)",
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",
   AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
+  CANADA_QC_SIGEOM: "Québec, Canada (SIGÉOM)",
+  CANADA_SK_SGS: "Saskatchewan, Canada (SGS)",
   FINLAND_GTK_ROCK: "Finland (GTK)",
   GREENLAND_GEUS: "Greenland (GEUS)",
   SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden (SGU)",

@@ -1,0 +1,30 @@
+{
+  "version": "2026-11-03",
+  "notes": "Fresh check for Canada phase 2 (Québec SIGÉOM rock geochemistry, drill holes, logs and intercepts; Saskatchewan till, lake sediment and drill collars). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-ca-qc-li-intercepts",
+      "cat": "fresh",
+      "q": "What are the best reported lithium intercepts in Québec drill holes?",
+      "truth": {"holes": "SELECT count(DISTINCT i.drillhole_id) FROM drilling.intercepts i JOIN geochem.analytes a USING (analyte_id) WHERE i.is_active AND a.analyte_code = 'Li2O' AND i.unit_code = '%'"},
+      "expect": {"tools_any": ["run_sql"], "contains_any": ["1331-10-19", "5\\.14"], "max_turns": 8},
+      "judge": "Uses drilling.intercepts (active rows only): leads with hole 1331-10-19 at 5.14% Li2O over 9.5 m (James Bay area, about 50.73 N, 74.91 W) and lists other high-grade Li2O intercepts with lengths. Must NOT present the inactive 24.9% Li2O over 51 m (hole 10-18) as real. Says the depths given are the bounds of the logged unit holding the intercept, not the intercept's own depths, or otherwise avoids presenting them as exact intercept depths. Credits SIGÉOM / the Québec Ministère (CC BY 4.0)."
+    },
+    {
+      "id": "fresh-ca-qc-li-rocks",
+      "cat": "fresh",
+      "q": "How many surface rock samples in Québec contain at least 1% lithium?",
+      "truth": {"n": "SELECT count(*) FROM geochem.sample_chemistry_wide WHERE source_system = 'CANADA_QC_SIGEOM' AND sample_context = 'SURFACE' AND greatest(coalesce(li_t, 0), coalesce(li_p, 0), coalesce(li2o_t, 0) * 4645) >= 10000"},
+      "expect": {"tools_any": ["run_sql"], "numbers": [{"truth": "n"}], "max_turns": 8},
+      "judge": "Counts Québec SIGÉOM surface rock samples (not drill core) with Li >= 10,000 ppm (or the Li2O equivalent, 1% Li = 2.153% Li2O), gives a number close to the truth, may say where they cluster (James Bay / Eeyou Istchee, Abitibi pegmatites), and credits SIGÉOM. Does not mix in drill-core samples without saying so."
+    },
+    {
+      "id": "fresh-ca-sk-till",
+      "cat": "fresh",
+      "q": "What till geochemistry do you have for Saskatchewan, and who analysed it?",
+      "expect": {"tools_any": ["run_sql"], "contains_any": ["(?i)saskatchewan research council", "(?i)\\bSRC\\b"], "max_turns": 6},
+      "judge": "Describes the Saskatchewan Geological Survey till samples (about 3,000 field samples, 3,543 sample rows because each size fraction such as -0.063 mm and clay -0.002 mm is its own sample), names the labs (mostly the Saskatchewan Research Council Geoanalytical Laboratories, also Chemex and the Manitoba Geological Survey) and the digestions (near-total HF-HNO3-HClO4 and partial HNO3-HCl with ICP), and credits the Saskatchewan GeoAtlas under the Saskatchewan open licence. May mention the GSC lake-sediment data. Does not claim Saskatchewan rock or drill-hole assays exist."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "version": "2026-11-05",
+  "notes": "Fresh check that the assistant uses the high-confidence drill-hole to occurrence links (drilling.drillholes.occurrence_id). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-links-malartic",
+      "cat": "fresh",
+      "q": "How many drill holes do you have at the Canadian Malartic mine, and what are the best gold intercepts in them?",
+      "truth": {"holes": "SELECT count(*) FROM drilling.drillholes h JOIN core.occurrences o USING (occurrence_id) WHERE o.name = 'Mine Canadian Malartic'"},
+      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "judge": "Uses the drill holes linked to the Canadian Malartic occurrence (about 82 linked holes; it may also mention that a distance search finds more unlinked holes nearby and say which is which), lists the best active gold intercepts with grade, unit and length, says intercept depths are the bounds of the logged unit, not the intercept itself, if it gives depths, and credits SIGÉOM. Must not present linked-hole counts as all drilling ever done there without that caveat."
+    },
+    {
+      "id": "fresh-links-cigar",
+      "cat": "fresh",
+      "q": "Which drill holes in our data were drilled at Cigar Lake?",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 6},
+      "judge": "Uses the Saskatchewan drill holes linked to the Cigar Lake occurrence(s) (more than 100 holes), says how the link was made (shared assessment file and / or name), gives a few hole names or a summary (company, years, depths), notes these are collars only with no assays published, and credits the Saskatchewan GeoAtlas."
+    }
+  ]
+}

@@ -561,7 +561,16 @@ drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed sample
   source_hole_id, hole_name, prospect, company, tenement, drill_type_id (-> geochem.drill_types: DIAMOND, RC, AIRCORE, PERCUSSION,
   ROTARY, AUGER, PERCUSSION_DIAMOND ...), drill_type_local (as published, may list several), purpose, date_drilled (1900-2022),
   total_depth_m, azimuth_deg, dip_deg (negative = downward), collar_elevation_m, lat, lon, geom, geog, position_accuracy_m,
-  parent_drillhole_id (wedges), core_status, core_store_location, occurrence_id (not linked yet). drilling.surveys: drillhole_id,
+  parent_drillhole_id (wedges), core_status, core_store_location, occurrence_id (-> core.occurrences, the deposit or prospect the hole was
+  drilled on; HIGH-CONFIDENCE links only, about 31,800 holes: Québec about 21,000, Saskatchewan about 9,200, Tasmania about 1,600; NULL means
+  'not linked', NOT 'unrelated'), occurrence_link_method ('A_ASSESSMENT_FILE' = the hole's Saskatchewan assessment file is listed for the
+  occurrence, within 1 km; 'B_NAME' = the hole's prospect / project name matches the occurrence or project, within 2 km; 'C_INTERCEPT_COMMODITY'
+  = the hole reports an intercept of the occurrence's commodity within 500 m and no other occurrence of that commodity is within 1 km;
+  combined with '+' when several agree) and occurrence_link_detail (the evidence and collar distance). Many holes at large deposits stay
+  unlinked where several occurrences sit close together (e.g. Whabouchi), so for 'all drilling at deposit X' combine linked holes with a
+  distance search around the deposit and say which is which. Example, drilling and best intercepts at an occurrence: SELECT h.hole_name,
+  h.total_depth_m, i.grade, i.unit_code, i.length_m FROM drilling.drillholes h LEFT JOIN drilling.intercepts i ON i.drillhole_id =
+  h.drillhole_id AND i.is_active WHERE h.occurrence_id = <id>. drilling.surveys: drillhole_id,
   depth_m, azimuth_deg, dip_deg, azimuth_reference (TRUE / MAGNETIC). Drill samples sit at the collar position (no desurveyed
   coordinates at depth yet). Downhole LITHOLOGY LOGS are geochem.lithology_observations rows with drillhole_id, depth_from_m and
   depth_to_m (Tasmania: 23,419 intervals on 34,871 holes, 18,183 of them log-only, i.e. not an analysed sample); sample_id is set only when the interval is an analysed sample. drilling.interval_qc flags interval

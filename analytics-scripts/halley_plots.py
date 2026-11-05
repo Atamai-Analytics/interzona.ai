@@ -115,6 +115,11 @@ def fetch(sample_ids, source_system, lithology_category, bbox, max_samples):
         params += [bbox[0], bbox[2], bbox[1], bbox[3]]
     if len(where) == 1:
         raise ValueError("Give sample_ids, a source_system, or a bounding box: this script will not run on the whole table.")
+    if sample_ids is None:
+        # selecting by dataset or box: rock and drill samples only (surveys such as Tasmania or CDoGS also hold stream / lake sediments,
+        # soils, till and concentrates, which do not belong on rock-composition charts); a hand-picked list of sample_ids is used as given
+        where.append("sample_type_name ~* '(rock|outcrop|core|float|grab|channel|composite|drill)' "
+                     "AND sample_type_name !~* '(sediment|soil|till|concentrate|tailings)'")
     env = load_env()
     conn = psycopg2.connect(host=env["PGHOST"], port=env["PGPORT"], dbname=env["PGDATABASE"],
                             user=env["PGUSER"], password=env["PGPASSWORD"])

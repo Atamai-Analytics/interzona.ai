@@ -26,7 +26,8 @@ for l in open(os.path.join(HERE, "..", ".env.local"), encoding="utf8"):
         k, v = l.rstrip("\r\n").split("=", 1); ENV[k] = v.strip('"')
 
 GRID, PCT, MIN_ANOM, NEAR_KM, MIN_CELL, BOOT, SEED = 0.25, 0.95, 3, 15.0, 3, 1000, 20261027
-SURVEYS = ["GREENLAND_GEUS", "ARGENTINA_SEGEMAR", "FINLAND_GTK_ROCK", "SWEDEN_SGU_LITHOGEOCHEMISTRY", "USA_USGS_NGDB", "AUSTRALIA_VIC_GSV_GEOCHEMISTRY"]
+SURVEYS = ["GREENLAND_GEUS", "ARGENTINA_SEGEMAR", "FINLAND_GTK_ROCK", "SWEDEN_SGU_LITHOGEOCHEMISTRY", "USA_USGS_NGDB", "AUSTRALIA_VIC_GSV_GEOCHEMISTRY",
+           "AUSTRALIA_TAS_MRT", "CANADA_QC_SIGEOM", "CANADA_QC_SIGEOM_SED", "CANADA_SK_SGS", "CANADA_NRCAN_CDOGS"]
 REE = ["la", "ce", "pr", "nd", "sm", "eu", "gd", "tb", "dy", "ho", "er", "tm", "yb", "lu", "y"]
 INDICATORS = {  # name: (elements, required key elements, occurrence commodity pattern)
     "REE": (REE, ["la", "ce", "nd"], "rare earth|^l?h?ree$|^y2o3$|^(la|ce|pr|nd|sm|eu|gd|tb|dy|ho|er|tm|yb|lu|y)$"),

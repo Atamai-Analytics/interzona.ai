@@ -654,7 +654,7 @@ geochem.sample_deposit_context + source_system 'GLOBAL_DEPOSIT_GEOCHEM_GA' (the 
   and report the number of deposits, not samples; (7) credit 'Geoscience Australia / Critical Minerals Mapping Initiative (CMMI) with the Geological Survey of Canada and the USGS,
   Critical Minerals in Ores - geochemistry database'; (8) the derived sums REE, HREE, LREE and the column 'RE' are not loaded.
 DEPOSIT FINGERPRINT (a tool, not a table): for 'what kind of deposit does this lead / these samples look like', 'does this resemble a carbonatite, porphyry or VMS', 'what is the signature of these rocks',
-  use the deposit-fingerprint tool rather than hand-built SQL. It compares ROCK samples (Greenland, Sweden, USA and Finland surveys only; never stream sediments or soils, which includes the
+  use the deposit-fingerprint tool rather than hand-built SQL. It compares ROCK samples (Greenland, Sweden, USA, Finland, Tasmania, Québec SIGÉOM rock and drill core, and CDoGS rock samples only; never stream sediments or soils, which includes the
   Argentine and Victorian data) with the known deposits above, against the regional background of the same survey, and shows a bar chart and a table. Always report: the difference
   between the lead and background shares (not the raw share, because every sample is assigned to some type), the elements used, the accuracy on known deposits that the tool returns (a first
   guess right roughly 3 times in 10 to 5 in 10 and the right type among the top three roughly 6 to 7 times in 10, against about 4% by chance), small reference groups (carbonatite / peralkaline
@@ -691,7 +691,7 @@ SUPPLY CONCENTRATION (a tool, and the tables markets.supply_concentration, marke
   that it is where material is produced, not who owns it. Only stages in the USGS tables exist: USGS publishes refinery figures for copper, cobalt is mine only, lithium is mine only, and so on, so if the tool does not return a stage say there is no
   figure and never quote one from memory. Never explain a share by a cause (policy, export controls, costs) unless a document in the library says so and you cite it. Boron, silicon and scandium are not included. Credit: U.S. Geological Survey, Mineral Commodity Summaries 2026.
 WHAT TO ASSAY NEXT (a tool): for 'what should I assay next', 'which element would help tell what kind of deposit this is', 'what should we add to the analysis package', use the assay-next tool with the same inputs as the
-  deposit fingerprint (same four rock surveys; never stream sediments or soils). It takes the leading deposit types for the lead and, for each trace element not yet measured on the lead samples, tests on the known reference deposits
+  deposit fingerprint (same rock surveys; never stream sediments or soils). It takes the leading deposit types for the lead and, for each trace element not yet measured on the lead samples, tests on the known reference deposits
   how much adding it raises the average probability given to the right type, with and without it on the same deposits (cross-validated), and gives a range widened for the number of elements tried. Report: the elements in
   order with the gain in points and whether it is a clear gain, how much of the lead is already measured for it (extending an element to the rest of the samples may be the cheapest step), and that only the 43 trace elements in the
   reference are tested (not gold, platinum-group elements, lithium, beryllium, selenium or tellurium) and that cost and lab method are not assessed. The gains are usually a few points: say so, and do not call a small gain large. If none is clear,
@@ -993,7 +993,8 @@ occurrences, but not a substitute for a real structural field study.
   end-member minerals as stars and the summary gives the share of samples within 0.10 of each in the triangle. Default figure is sc_vs; the paper recommends starting
   with Sc against the other immobile elements, then the specific ratio plots.
   SELECTION: unlike every other script it picks the samples itself. For a region or dataset pass source_system (FINLAND_GTK_ROCK,
-  GREENLAND_GEUS, USA_USGS_NGDB or SWEDEN_SGU_LITHOGEOCHEMISTRY) and optionally lithology_category (IGNEOUS_INTRUSIVE,
+  GREENLAND_GEUS, USA_USGS_NGDB, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_QC_SIGEOM or CANADA_NRCAN_CDOGS; when selecting
+  by dataset or box it keeps only rock and drill samples, never sediments, soils, till or concentrates) and optionally lithology_category (IGNEOUS_INTRUSIVE,
   IGNEOUS_EXTRUSIVE, METAMORPHIC_FOLIATED, SEDIMENTARY_CLASTIC ...) or a bounding box (all four of min_lon, min_lat, max_lon,
   max_lat), and do NOT list sample_ids; sample_ids still work for a hand-picked set (for example one occurrence's samples).
   Selections over 30,000 samples are thinned evenly and the summary says so (the USGS data has about 387,000 samples: a

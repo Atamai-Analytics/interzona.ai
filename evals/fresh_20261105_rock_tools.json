@@ -1,0 +1,28 @@
+{
+  "version": "2026-11-05",
+  "notes": "Fresh check that the rock-chemistry tools (deposit_fingerprint, assay_next, halley_plots) work on the newly added rock surveys (Tasmania MRT, Québec SIGÉOM, CDoGS rock). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-tools-qc-fingerprint",
+      "cat": "fresh",
+      "q": "What kind of deposit do the rare-earth-rich rocks of Québec resemble? Use rocks with at least 300 ppm La.",
+      "expect": {"tools_any": ["deposit_fingerprint"], "max_turns": 6},
+      "judge": "Runs the deposit fingerprint on Québec SIGÉOM rock samples (source CANADA_QC_SIGEOM) with a La filter around 300 ppm, reports the leading deposit types as lead-versus-background differences (not raw shares), states the accuracy on known deposits and the elements used, says it is a screening aid not proof, and credits SIGÉOM / the Québec Ministère."
+    },
+    {
+      "id": "fresh-tools-tas-halley",
+      "cat": "fresh",
+      "q": "Show me a V/Sc against Sc Halley plot for Tasmanian rocks.",
+      "expect": {"tools_any": ["run_geochem_analysis"], "max_turns": 6},
+      "judge": "Draws the halley_plots v_sc figure for Tasmania (source AUSTRALIA_TAS_MRT), says how many rock and drill samples were used (and that the selection was thinned if it was), explains V/Sc near 7 as the reduced-magma baseline and what rising or falling V/Sc means, notes that regional rocks mix rock types, and credits Mineral Resources Tasmania. Does not include stream sediments or soils."
+    },
+    {
+      "id": "fresh-tools-cdogs-assay-next",
+      "cat": "fresh",
+      "q": "For the copper-rich rocks in the federal Canadian survey data (CDoGS, at least 500 ppm Cu), what element should be assayed next to tell the likely deposit types apart?",
+      "expect": {"tools_any": ["assay_next", "deposit_fingerprint"], "max_turns": 6},
+      "judge": "Uses the CDoGS rock samples (CANADA_NRCAN_CDOGS) with a Cu filter around 500 ppm, runs assay_next (or the fingerprint first), names the leading types and the recommended element(s) with their gain ranges, and says plainly if no gain is clearly above zero. If too few samples qualify it says so honestly instead of inventing a result. Credits the Geological Survey of Canada."
+    }
+  ]
+}

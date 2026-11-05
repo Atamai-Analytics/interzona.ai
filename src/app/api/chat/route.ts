@@ -211,13 +211,13 @@ const tools: Anthropic.ToolUnion[] = [
     description:
       "Which kinds of mineral deposit do a set of ROCK samples resemble in trace-element chemistry? Compares the samples (for example the rare-earth-rich rocks of an area, or the anomalous leads from the anomaly screen) with the chemistry of about 1,250 known deposits in 23 deposit groups " +
       "(porphyry, VMS, orogenic, epithermal, IOCG, skarn, carbonatite / peralkaline, pegmatite and others; Geoscience Australia / CMMI database), relative to the regional background of the same survey. " +
-      "USE THIS for 'what kind of deposit does this lead look like', 'does this resemble a carbonatite / porphyry / VMS', 'what is the geochemical signature of these samples'. Works on rock samples of Greenland (GEUS), Sweden (SGU), the USA (USGS) and Finland (GTK) that have many elements analysed; " +
-      "not on stream sediments or soils (Argentina and Victoria data are sediments and soils). Choose the area with bbox [west, south, east, north] and, to pick out the enriched samples of a lead, lead_filter {element, min_ppm} (for example La at least 300 ppm). " +
+      "USE THIS for 'what kind of deposit does this lead look like', 'does this resemble a carbonatite / porphyry / VMS', 'what is the geochemical signature of these samples'. Works on rock and drill-core samples that have many elements analysed: Greenland (GEUS), Sweden (SGU), the USA (USGS), Finland (GTK), Tasmania (MRT), Québec (SIGÉOM) and Canada-wide federal surveys (GSC CDoGS, rock samples only); " +
+      "not on stream sediments, lake sediments, till or soils (Argentina, Victoria, Saskatchewan and the Québec / CDoGS sediment data). Choose the area with bbox [west, south, east, north] and, to pick out the enriched samples of a lead, lead_filter {element, min_ppm} (for example La at least 300 ppm). " +
       "It shows the user a bar chart and a table (lead versus background) and gives the accuracy on known deposits. It is a screening aid, never proof: say the accuracy, the elements used and that types needing unmeasured elements cannot be separated.",
     input_schema: {
       type: "object",
       properties: {
-        source_system: { type: "string", enum: ["GREENLAND_GEUS", "SWEDEN_SGU_LITHOGEOCHEMISTRY", "USA_USGS_NGDB", "FINLAND_GTK_ROCK"], description: "Which survey's rock samples to use." },
+        source_system: { type: "string", enum: ["GREENLAND_GEUS", "SWEDEN_SGU_LITHOGEOCHEMISTRY", "USA_USGS_NGDB", "FINLAND_GTK_ROCK", "AUSTRALIA_TAS_MRT", "CANADA_QC_SIGEOM", "CANADA_NRCAN_CDOGS"], description: "Which survey's rock samples to use." },
         bbox: { type: "array", items: { type: "number" }, description: "Optional area of the leads: [west, south, east, north] in decimal degrees." },
         lead_filter: {
           type: "object",
@@ -234,12 +234,12 @@ const tools: Anthropic.ToolUnion[] = [
     description:
       "Which extra element should be assayed next to tell apart the deposit types a lead could be? Starts from the deposit fingerprint of the lead (same inputs), takes the leading types (the three with the biggest difference from the regional background, or the types the user names), " +
       "and for each trace element NOT yet measured on the lead samples tests on the ~1,250 known reference deposits how much adding it would raise the confidence in the right type among those types, with and without it on the same deposits, with a range widened for the number of elements tried. " +
-      "USE THIS for 'what should I assay next', 'which element would settle what kind of deposit this is', 'what should we add to the analysis package for these samples', 'which extra element would help most'. Works for the same rock surveys as deposit_fingerprint (Greenland GEUS, Sweden SGU, USA USGS, Finland GTK). " +
+      "USE THIS for 'what should I assay next', 'which element would settle what kind of deposit this is', 'what should we add to the analysis package for these samples', 'which extra element would help most'. Works for the same rock surveys as deposit_fingerprint (Greenland GEUS, Sweden SGU, USA USGS, Finland GTK, Tasmania MRT, Québec SIGÉOM, CDoGS rock). " +
       "Shows a bar chart and table. A gain whose range includes zero is not a recommendation: if none is clear, say so plainly. These are single-element additions on reference deposits, not costs or lab methods, and not proof that the lead is any of the types.",
     input_schema: {
       type: "object",
       properties: {
-        source_system: { type: "string", enum: ["GREENLAND_GEUS", "SWEDEN_SGU_LITHOGEOCHEMISTRY", "USA_USGS_NGDB", "FINLAND_GTK_ROCK"], description: "Which survey's rock samples to use." },
+        source_system: { type: "string", enum: ["GREENLAND_GEUS", "SWEDEN_SGU_LITHOGEOCHEMISTRY", "USA_USGS_NGDB", "FINLAND_GTK_ROCK", "AUSTRALIA_TAS_MRT", "CANADA_QC_SIGEOM", "CANADA_NRCAN_CDOGS"], description: "Which survey's rock samples to use." },
         bbox: { type: "array", items: { type: "number" }, description: "Optional area of the leads: [west, south, east, north] in decimal degrees." },
         lead_filter: {
           type: "object",
@@ -423,7 +423,8 @@ const tools: Anthropic.ToolUnion[] = [
           type: "string",
           description:
             "halley_plots only: select the samples by dataset instead of listing sample_ids (FINLAND_GTK_ROCK, GREENLAND_GEUS, " +
-            "USA_USGS_NGDB, SWEDEN_SGU_LITHOGEOCHEMISTRY; ARGENTINA_SEGEMAR and AUSTRALIA_VIC_GSV_GEOCHEMISTRY have no total-basis data it can use).",
+            "USA_USGS_NGDB, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_QC_SIGEOM, CANADA_NRCAN_CDOGS; only their rock and drill samples are used. " +
+            "ARGENTINA_SEGEMAR, AUSTRALIA_VIC_GSV_GEOCHEMISTRY, CANADA_SK_SGS and CANADA_QC_SIGEOM_SED are sediments and soils with no rock data it can use).",
         },
         lithology_category: {
           type: "string",

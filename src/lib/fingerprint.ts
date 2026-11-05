@@ -33,6 +33,9 @@ export const SOURCES: Record<string, { label: string; types: string[] | null }> 
   SWEDEN_SGU_LITHOGEOCHEMISTRY: { label: "Sweden (SGU) rock and drill-core samples", types: ["Rock Sample (unspecified)", "Drill Core (unspecified)"] },
   USA_USGS_NGDB: { label: "USA (USGS) rock samples", types: ["Grab Rock Sample", "Composite Rock Sample", "Float Rock Sample", "Drill core grab sample", "Outcrop Sample"] },
   FINLAND_GTK_ROCK: { label: "Finland (GTK) rock samples", types: null },
+  AUSTRALIA_TAS_MRT: { label: "Tasmania (MRT) rock and drill-core samples", types: ["Rock Sample (unspecified)", "Outcrop Sample", "Float Rock Sample", "Drill Core (unspecified)"] },
+  CANADA_QC_SIGEOM: { label: "Québec (SIGÉOM) rock and drill-core samples", types: ["Outcrop Sample", "Rock Sample (unspecified)", "Float Rock Sample", "Drill Core (unspecified)"] },
+  CANADA_NRCAN_CDOGS: { label: "Canada (GSC CDoGS) rock samples", types: ["Rock Sample (unspecified)", "Select Rock Sample"] },
 };
 
 export type Reference = { uid: string; group: string; vals: Record<string, number> }[];

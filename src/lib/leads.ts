@@ -19,6 +19,7 @@ const SURVEYS: Record<string, string> = {
   AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
   CANADA_QC_SIGEOM: "Québec, Canada (SIGÉOM rock)",
   CANADA_QC_SIGEOM_SED: "Québec, Canada (SIGÉOM sediment, soil, till)",
+  CANADA_NRCAN_CDOGS: "Canada (NRCan CDoGS federal surveys)",
   CANADA_SK_SGS: "Saskatchewan, Canada (SGS)",
 };
 

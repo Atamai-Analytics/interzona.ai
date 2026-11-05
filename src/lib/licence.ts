@@ -69,7 +69,8 @@ const CREDITS: [RegExp, string][] = [
   // \bcanada\b catches country filters ('Canada'); source codes such as canada_qc_sigeom are matched by their own patterns
   [/\bcanada\b|qu[eé]bec|sigeom|canada_qc|migration_canada_occ|drilling\./i, "Ministère des Ressources naturelles et des Forêts, Québec, SIGÉOM (Indices, gîtes, mines et carrières; Géochimie; Sondages), CC BY 4.0"],
   [/\bcanada\b|saskatchewan|smdi|canada_sk|migration_canada_occ|drilling\./i, "Saskatchewan Mining and Petroleum GeoAtlas, Saskatchewan Geological Survey (Mineral Deposit Index; drill holes; till and lake-sediment geochemistry, incl. Geological Survey of Canada lake-sediment data), retrieved 3 November 2026; Government of Saskatchewan Standard Unrestricted Use Data Licence v2.0"],
-  [/\bcanada\b|nrcan|migration_nrcan/i, "Natural Resources Canada, critical minerals projects list and Major Projects Inventory (Open Government Licence - Canada)"],
+  [/\bcanada\b|\bnrcan\b|migration_nrcan/i, "Natural Resources Canada, critical minerals projects list and Major Projects Inventory (Open Government Licence - Canada)"],
+  [/\bcanada\b|cdogs|canada_nrcan/i, "Natural Resources Canada, Geological Survey of Canada, Canadian Database of Geochemical Surveys (CDoGS) (Open Government Licence - Canada)"],
 ];
 
 /** The publishers behind a query, worked out from the names in it. */

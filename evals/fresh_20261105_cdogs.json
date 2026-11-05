@@ -1,0 +1,28 @@
+{
+  "version": "2026-11-05",
+  "notes": "Fresh check for the CDoGS load (CANADA_NRCAN_CDOGS, federal NRCan / GSC geochemical surveys). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-cdogs-bc-coverage",
+      "cat": "fresh",
+      "q": "Do you have any geochemistry for British Columbia? What kind and from whom?",
+      "expect": {"contains_any": ["(?i)geological survey of canada", "(?i)cdogs", "(?i)natural resources canada"], "max_turns": 6},
+      "judge": "Says yes: federal Geological Survey of Canada survey data from CDoGS (mostly stream sediment from the National Geochemical Reconnaissance, plus some till and lake sediment), gives an approximate sample count for BC, credits Natural Resources Canada / GSC under the Open Government Licence - Canada, and does not claim to have the BC Geological Survey's own databases (MINFILE or the BC RGS provincial data, which are not loaded)."
+    },
+    {
+      "id": "fresh-cdogs-yukon-stream-cu",
+      "cat": "fresh",
+      "q": "Where are the highest copper values in Yukon stream sediments?",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "judge": "Uses Yukon stream-sediment samples (CANADA_NRCAN_CDOGS, sample type Stream Sediment, located in Yukon), ranks detected copper values only, gives locations (coordinates or areas), notes that most values are partial aqua regia digestions so they are relative, does not mix in till, lake sediment or heavy-mineral concentrates, and credits the Geological Survey of Canada (CDoGS)."
+    },
+    {
+      "id": "fresh-cdogs-nunavut",
+      "cat": "fresh",
+      "q": "How many geochemical samples do you have in Nunavut, and what types are they?",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 6},
+      "judge": "Counts Nunavut samples (by location or jurisdiction; almost all from CDoGS) with a breakdown by sample type (till, lake sediment, stream sediment, rock ...), and credits the Geological Survey of Canada. Counts must be internally consistent."
+    }
+  ]
+}

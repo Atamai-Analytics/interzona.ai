@@ -14,6 +14,7 @@ const DATASET_NAMES: Record<string, string> = {
   AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
   CANADA_QC_SIGEOM: "Québec, Canada (SIGÉOM rock)",
   CANADA_QC_SIGEOM_SED: "Québec, Canada (SIGÉOM sediment, soil, till)",
+  CANADA_NRCAN_CDOGS: "Canada (NRCan CDoGS federal surveys)",
   CANADA_SK_SGS: "Saskatchewan, Canada (SGS)",
   FINLAND_GTK_ROCK: "Finland (GTK)",
   GREENLAND_GEUS: "Greenland (GEUS)",

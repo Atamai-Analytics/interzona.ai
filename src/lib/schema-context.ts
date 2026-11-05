@@ -401,7 +401,8 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   holes in the drilling schema) and Québec, Canada (SIGÉOM rock geochemistry, 'CANADA_QC_SIGEOM', 587,000 rock samples, 18.13M results,
   plus 190,035 diamond drill holes with 1.15M log intervals and 337,966 reported mineralised intercepts) and Saskatchewan, Canada
   ('CANADA_SK_SGS', 19,739 till and lake-sediment samples, 567,594 results, plus 33,490 drill-hole collars) and Québec sediment, soil and till
-  (SIGÉOM, 'CANADA_QC_SIGEOM_SED', 522,453 samples, 20.52M results) ONLY (geochem.samples also holds 2,519 age-only points, source_system
+  (SIGÉOM, 'CANADA_QC_SIGEOM_SED', 522,453 samples, 20.52M results) and federal Canadian surveys across all provinces and territories
+  (Natural Resources Canada CDoGS, 'CANADA_NRCAN_CDOGS', 233,875 samples, 8.42M results) ONLY (geochem.samples also holds 2,519 age-only points, source_system
   'SWEDEN_SGU_BEDROCK_AGE', and 1,053 bare sample points from the Wu zircon database, source_system
   'GLOBAL_ZIRCON_WU', none of which has results; do not count them as geochemical samples).
   USGS NGDB: almost all samples are rocks (grab 238,515, composite 47,191, drill core 31,729, float, channel,
@@ -486,6 +487,24 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   results are PARTIAL or of unrecorded dissolution (SIGEOM-ICP, SIGEOM-PLASMA, SIGEOM-AAS, aqua regia; INAA and fusion are TOTAL), labs
   are not recorded, about 11% of results are below detection. Use these for regional stream/lake/till anomaly work in Québec, comparing
   like with like (one sample type, ideally one survey or method).
+  CANADA-WIDE FEDERAL SURVEYS ('CANADA_NRCAN_CDOGS', Open Government Licence - Canada, credit Natural Resources Canada, Geological Survey of
+  Canada, Canadian Database of Geochemical Surveys (CDoGS)): 233,875 samples, 8.42M results from 1970s-2010s Geological Survey of Canada surveys,
+  mostly the National Geochemical Reconnaissance (NGR): stream sediment 87,212, lake sediment 85,455, till 44,734, rock 7,529, soil 6,103,
+  other Quaternary sediment 2,008, heavy-mineral concentrates 523. By survey province (approximate): Yukon about 38,000 (almost all stream
+  sediment), British Columbia about 35,000 (stream sediment, some till), Manitoba about 27,000 (lake sediment, till), Newfoundland and
+  Labrador about 24,000 (lake sediment), Ontario about 22,000 (lake sediment), New Brunswick about 22,000 (stream sediment, till), Nunavut
+  about 21,000 (till, lake sediment), Northwest Territories, Alberta and border surveys the rest. This is the ONLY geochemistry for BC, Yukon,
+  Ontario, Newfoundland and Labrador, Manitoba, New Brunswick, Nunavut and the NWT: the provincial databases (BC RGS / MINFILE, Ontario OGS,
+  NL, Nunavut) are NOT loaded. Only federal surveys are loaded (CDoGS surveys run by provincial agencies, companies or the USGS are left
+  out), and samples already loaded through Saskatchewan's GeoAtlas or Québec SIGÉOM were skipped. Left out: water, soil gas, vegetation, lab
+  control samples and duplicates, microprobe grain analyses and mineral-grain counts. Each prepared fraction is its own sample
+  (sample_number '<field id> (<preparation>)'; analytical_results.fraction = the preparation, e.g. '<177 micron (NGR)', '<63 micron',
+  '<2 micron'); sample_type_local is 'CDoGS: <CDoGS sample type>' and comments name the CDoGS survey, its description and year (no
+  sample dates). Methods: CDOGS-<technique>-<digestion> packages; NGR stream and lake sediments are mostly AQUA REGIA AAS / ICP (PARTIAL,
+  _p) plus INAA (TOTAL, _t), U by delayed neutron counting or fluorimetry, Hg by cold-vapour AAS, F by ion electrode; older rocks and
+  sediments include DC-arc emission spectrography (CDOGS-DCARC-*, semi-quantitative, lowest priority) and portable XRF (CDOGS-PXRF-*).
+  analytical_results.method_name is the CDoGS technique and digestion, result_comment the CDoGS method id. Result QC: 27,089 exact
+  duplicates inactive; 773 impossible values (mostly Al reported at 55-91 %, i.e. mislabelled Al2O3) and 39 low oxide totals SUSPECT.
   India occurrences have no samples/results. The Swedish samples are not linked to any occurrence
   (occurrence_id NULL; no Swedish deposits are loaded), have NO sample dates and NO drill depths (a drill-core
   sample is a point at the collar, not an interval), and only 11,778 have a lithology. About a third of Swedish
@@ -500,6 +519,8 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   sheets, CC BY 4.0, attribute SEGEMAR/SIGAM; USA_USGS_NGDB, public domain, credit USGS; GLOBAL_ZIRCON_WU, CC BY 4.0,
   cite Wu, Fang and Ji 2023; AUSTRALIA_VIC_GSV_GEOCHEMISTRY, CC BY 4.0, credit State of Victoria / DEECA;
   AUSTRALIA_TAS_MRT (samples, results and the drill holes), CC BY 3.0 AU, credit Mineral Resources Tasmania / State of Tasmania;
+  CANADA_NRCAN_CDOGS (federal geochemical surveys), Open Government Licence - Canada, credit Natural Resources Canada, Geological Survey of
+  Canada (CDoGS);
   CANADA_QC_SIGEOM (rock samples, results, drill holes, logs, intercepts) and CANADA_QC_SIGEOM_SED (sediment, soil, till), CC BY 4.0, credit Ministère des Ressources naturelles et des Forêts,
   Québec (SIGÉOM); CANADA_SK_SGS (till and lake-sediment samples and the Saskatchewan drill holes), Government of Saskatchewan Standard
   Unrestricted Use Data Licence v2.0, credit Saskatchewan Mining and Petroleum GeoAtlas with the layer and retrieval date (3 November 2026);
@@ -531,7 +552,7 @@ geochem.samples: sample_id (PK), occurrence_id (nullable), sample_type_id (join 
   geochem.sample_types for the real medium name — Stream Sediment, Rock Sample, Soil Sample, Heavy
   Mineral Concentrate; sample_type_local is free text and NULL for most rows, not reliable to filter
   on), source_system (e.g. 'ARGENTINA_SEGEMAR', 'GREENLAND_GEUS', 'FINLAND_GTK_ROCK',
-  'SWEDEN_SGU_LITHOGEOCHEMISTRY', 'AUSTRALIA_TAS_MRT', 'CANADA_QC_SIGEOM', 'CANADA_QC_SIGEOM_SED', 'CANADA_SK_SGS' — the simplest
+  'SWEDEN_SGU_LITHOGEOCHEMISTRY', 'AUSTRALIA_TAS_MRT', 'CANADA_QC_SIGEOM', 'CANADA_QC_SIGEOM_SED', 'CANADA_SK_SGS', 'CANADA_NRCAN_CDOGS' — the simplest
   way to filter by region when occurrence_id isn't populated), lat, lon, geom, geog, sample_context ('SURFACE',
   'DRILLHOLE_INTERVAL' for drill samples with depths, 'DRILLHOLE_POINT' for drill samples without), drillhole_id
   (-> drilling.drillholes), depth_from_m, depth_to_m.
@@ -575,7 +596,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   flagged is_active = false — 246,624 rows in GREENLAND_GEUS (1,127,679 active), 166 in
   ARGENTINA_SEGEMAR (1,782,202 active), 240 in USA_USGS_NGDB (13,476,885 active) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
-  CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
+  CANADA_NRCAN_CDOGS 27,089 (exact duplicates); CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
   FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT and CANADA_SK_SGS have none (Tasmanian impossible values are SUSPECT in result_classifications instead).
 geochem.result_classifications: result_id, source_system, result_status (DETECTED, BELOW_DL_QUALIFIED,
   BELOW_DL_CERTAIN, BELOW_DL_PROBABLE, ABOVE_UDL, NULL_RESULT, SUSPECT, SENTINEL), dl_value, use_in_statistics.
@@ -682,9 +703,9 @@ LEAD LEAGUE TABLE (a tool): for 'where are the best new leads for X across every
   few samples is weak, that a cell flagged driven_by_a_few_extreme_values rests on one or two spikes (possible unit or entry error) and should be read behind the cells with many consistently anomalous samples,
   that 'no occurrence nearby' only means nothing is in our catalogue (the Swedish deposit catalogue is empty and other countries are thin, so 'new' there partly reflects the catalogue), that sediment surveys (Argentina)
   point to catchments, and that anomalies are not deposits, grades or resources. Offer the deposit fingerprint for the leads in rock surveys. Name each survey's publisher from the credits.
-geochem.sample_chemistry_wide: one row per sample for ALL ten geochemical datasets (ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL eleven geochemical datasets (ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, USA_USGS_NGDB 387,527,
-  AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739; 219 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
+  AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 219 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/
   lithology_local, sample_date, lat, lon, geog, n_values, bdl_codes (text[] of analytes below detection)
   plus one column per analyte AND basis: <analyte_code>_t = total or no-digestion method (XRF, fusion

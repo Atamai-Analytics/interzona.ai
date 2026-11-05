@@ -1,0 +1,30 @@
+{
+  "version": "2026-11-05",
+  "notes": "Fresh check for the Québec SIGÉOM sediment, soil and till load (CANADA_QC_SIGEOM_SED). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-qc-sed-types",
+      "cat": "fresh",
+      "q": "What kinds of surface geochemical samples do you have for Québec apart from rocks, and how many of each?",
+      "truth": {"stream": "SELECT count(*) FROM geochem.samples s JOIN geochem.sample_types t USING (sample_type_id) WHERE s.source_system = 'CANADA_QC_SIGEOM_SED' AND t.sample_type_code = 'SED_STREAM'",
+                "lake": "SELECT count(*) FROM geochem.samples s JOIN geochem.sample_types t USING (sample_type_id) WHERE s.source_system = 'CANADA_QC_SIGEOM_SED' AND t.sample_type_code = 'SED_LAKE'"},
+      "expect": {"tools_any": ["run_sql"], "numbers": [{"truth": "stream"}, {"truth": "lake"}], "max_turns": 6},
+      "judge": "Breaks down the Québec SIGÉOM sediment, soil and till samples by type with counts (stream sediment about 217,000, lake sediment about 170,000, soil, till, heavy-mineral concentrates), notes that heavy-mineral concentrates are not comparable with bulk sediment, that water samples are not loaded, and credits SIGÉOM / the Québec Ministère (CC BY 4.0)."
+    },
+    {
+      "id": "fresh-qc-sed-lake-li",
+      "cat": "fresh",
+      "q": "Which Québec lake-sediment samples have the highest lithium, and where are they?",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "judge": "Queries Québec lake sediment only (sample type Lake Sediment, source CANADA_QC_SIGEOM_SED), lists the top lithium values with coordinates or areas, uses detected values only (no below-detection values ranked as highs), does not mix in rock, till or heavy-mineral samples, says the values are mostly partial or unrecorded-dissolution analyses so they are relative, and credits SIGÉOM."
+    },
+    {
+      "id": "fresh-qc-sed-till-hmc",
+      "cat": "fresh",
+      "q": "Can I compare gold in Québec till heavy-mineral concentrates with gold in normal till samples?",
+      "expect": {"max_turns": 6},
+      "judge": "Says no, not directly: heavy-mineral concentrates are a gravity-concentrated fraction, so their gold values are far higher and not comparable with bulk or fine-fraction till; each should be ranked within its own sample type (and ideally within one survey). May show typical values for each to illustrate. Credits SIGÉOM if data are shown."
+    }
+  ]
+}

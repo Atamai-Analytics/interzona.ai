@@ -570,7 +570,11 @@ drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed sample
   unlinked where several occurrences sit close together (e.g. Whabouchi), so for 'all drilling at deposit X' combine linked holes with a
   distance search around the deposit and say which is which. Example, drilling and best intercepts at an occurrence: SELECT h.hole_name,
   h.total_depth_m, i.grade, i.unit_code, i.length_m FROM drilling.drillholes h LEFT JOIN drilling.intercepts i ON i.drillhole_id =
-  h.drillhole_id AND i.is_active WHERE h.occurrence_id = <id>. drilling.surveys: drillhole_id,
+  h.drillhole_id AND i.is_active WHERE h.occurrence_id = <id>. WHAT EACH SOURCE'S HOLES HAVE: CANADA_SK_SGS holes are COLLARS ONLY (no assays,
+  no intercepts, no logs are published: never offer to pull assays or intercepts for Saskatchewan holes); drilling.intercepts holds Québec
+  (CANADA_QC_SIGEOM) only; analysed downhole samples exist for Tasmania (AUSTRALIA_TAS_MRT) and Québec. When presenting drill holes name the
+  publisher: Saskatchewan Mining and Petroleum GeoAtlas (Saskatchewan Geological Survey), SIGÉOM (Québec Ministère des Ressources naturelles
+  et des Forêts) or Mineral Resources Tasmania. drilling.surveys: drillhole_id,
   depth_m, azimuth_deg, dip_deg, azimuth_reference (TRUE / MAGNETIC). Drill samples sit at the collar position (no desurveyed
   coordinates at depth yet). Downhole LITHOLOGY LOGS are geochem.lithology_observations rows with drillhole_id, depth_from_m and
   depth_to_m (Tasmania: 23,419 intervals on 34,871 holes, 18,183 of them log-only, i.e. not an analysed sample); sample_id is set only when the interval is an analysed sample. drilling.interval_qc flags interval

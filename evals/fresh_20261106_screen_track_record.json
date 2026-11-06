@@ -22,7 +22,7 @@
       "cat": "fresh",
       "q": "Do the copper anomalies in the Saskatchewan till and lake sediment data point to copper deposits?",
       "expect": {"max_turns": 8},
-      "judge": "Uses the back-test: in Saskatchewan only uranium was clearly better than chance; copper came out about 1.1x (not clearly better), and explains that this is because the samples cluster around known deposits so most comparison cells already sit near one, i.e. the test cannot show an edge rather than proving the anomalies are worthless. May run the screen as well. Says anomalies are not deposits and does not invent figures."
+      "judge": "Uses the back-test: in Saskatchewan copper came out not clearly better than chance (about 1.1x, or the base metals as 1.0-1.3x; mentioning that uranium was the one clear case is a plus, not required), and explains that this is because the samples cluster around known deposits so most comparison cells already sit near one, i.e. the test cannot show an edge rather than proving the anomalies are worthless. May run the screen as well. Says anomalies are not deposits and does not invent figures."
     }
   ]
 }

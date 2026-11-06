@@ -590,10 +590,15 @@ function excerptFor(content: string, query: string): string {
   const lower = content.toLowerCase();
   let best = 0;
   let bestScore = -1;
+  // Score = distinct query terms in the window, ties broken by how often they occur, so the window settles where the terms cluster
+  // (with distinct terms alone, the first of many tying windows won - e.g. a reference list full of 'porphyry' ahead of the passage itself).
   for (let start = 0; start + EXCERPT_CHARS <= content.length + 400; start += 300) {
     const win = lower.slice(start, start + EXCERPT_CHARS);
     let score = 0;
-    for (const t of terms) if (win.includes(t)) score++;
+    for (const t of terms) {
+      const n = win.split(t).length - 1;
+      if (n > 0) score += 1000 + Math.min(n, 50);
+    }
     if (score > bestScore) {
       bestScore = score;
       best = start;

@@ -267,7 +267,10 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   and they are deliberately excluded from geochem.sample_occurrence_links; (4) join with core.occurrences for names, status and
   commodities and filter on facility_capacity.commodity_name (as published: 'Lithium', 'Rare earths', 'Gold', ...), for example the refineries
   of a metal: facility_stage = 'Refinery' AND commodity_name = 'Lithium'; (5) owners are company names as published, use the
-  share_pct only where present. Credit: U.S. Geological Survey (O'Brien and others, 2026), Mines, smelters, refineries, and recycling facilities
+  share_pct only where present; (6) when the user asks WHICH facilities there are, list each one (name, state, stage, status, capacity or
+  "unknown") in a compact table per stage, up to about 40 rows - the run_sql rows are not shown to the user as a table, so stage or status
+  totals alone do not answer the question; give the totals as well (within one stage only), and for more than about 40 list the largest and say
+  how many more there are. Credit: U.S. Geological Survey (O'Brien and others, 2026), Mines, smelters, refineries, and recycling facilities
   in the United States, https://doi.org/10.5066/P1BUPUAM.
 
 - Finland: 16 deposits from Table 1 of the Nordic journal article (doc 74) are in core.occurrences

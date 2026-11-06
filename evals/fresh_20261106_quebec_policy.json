@@ -1,0 +1,21 @@
+{
+  "version": "2026-11-06",
+  "notes": "Fresh check that the assistant finds the Québec critical-minerals policy summary (document 435, own-words summary, official text not stored). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-qcpol-budget",
+      "cat": "fresh",
+      "q": "How much money has Québec committed to its new critical minerals strategy, and what are its main priorities?",
+      "expect": {"tools_any": ["search_documents"], "max_turns": 8},
+      "judge": "Names the Québec Strategy for the Development of Critical and Strategic Minerals 2025-2031 (MRNF, March 2026): a dedicated C$88.1M (C$117.8M counting the C$15M Labrador Trough rail study and other programmes), plus larger non-dedicated envelopes such as the C$1.5B NREC Fund; the four orientations (faster permitting / business environment, the whole value chain including local processing, logistics infrastructure, partners and communities). Presents these as the Québec government's figures and points to the official document; must not invent a different budget."
+    },
+    {
+      "id": "fresh-qcpol-list",
+      "cat": "fresh",
+      "q": "Which minerals are on Québec's critical and strategic minerals list, and how has it changed since 2020?",
+      "expect": {"tools_any": ["search_documents"], "max_turns": 8},
+      "judge": "Says the 2025-2031 strategy lists 28 critical and strategic minerals (lists them or most of them, e.g. lithium, graphite, nickel, cobalt, niobium, rare earths, scandium, high-purity iron, high-purity silica, apatite/phosphate) and that the 2020 plan's preliminary list had 22, the additions being aluminum, germanium, high-purity iron, high-purity silica, apatite and manganese. Cites the Québec government documents."
+    }
+  ]
+}

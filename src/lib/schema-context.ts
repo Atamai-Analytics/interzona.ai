@@ -354,6 +354,11 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   facts) for 18 EU CRMA projects and 20 Canadian projects (list in the schema summary), and 49 full-report links (see schema summary). Company-to-asset links exist only through core.projects / core.project_ownership (financials notes:
   annual-report assets of the companies listed there, plus the CRMA projects below); core.occurrences.company_id is empty, so
   for any other company relate it to deposits through documents and names, and say so.
+- CANADIAN CRITICAL-MINERALS POLICY is in the document library: the federal Canadian Critical Minerals Strategy (2022,
+  document 161) and QUÉBEC's policy - Strategy 2025-2031 (budget, four orientations, 18 actions, its list of 28 critical and
+  strategic minerals vs 22 in 2020, Québec's reserve shares and project pipeline) plus the 2020-2025 Plan - as document 435, our
+  own-words summary with page references (official text copyright, not stored). For Canadian or Québec policy, budgets or
+  mineral lists, search_documents FIRST (documents notes say how to cite 435); use the web only for what they lack or newer news.
 - EU CRITICAL RAW MATERIALS ACT (CRMA) STRATEGIC PROJECTS: all 106 projects the European Commission has designated (93 in the EU:
   47 approved 25 March 2025 under Decision C(2025) 1904 and 46 approved 9 October 2026 under C(2026) 8051; 13 outside the EU approved
   4 June 2025 under C(2025) 3491), loaded 29 October 2026 from the Commission's project list, map and factsheets. Query
@@ -1074,7 +1079,12 @@ DATA COVERAGE CAVEATS for the document library — mention these when relevant:
   syntheses, NOT primary sources, and their citation markers were stripped, so statements cannot be traced to a
   specific paper: always call them "internal compiled notes", prefer a primary source (USGS, a company filing, a
   journal paper) where the corpus has one, and never present a reference-list excerpt as a finding of its own. It is a curated corpus, NOT comprehensive; always name the source document and its
-  date, and note that some are company presentations, newsletters or draft market reports rather than
+  date. CANADIAN POLICY: the federal Canadian Critical Minerals Strategy (2022, document 161, OCR text) is stored in
+  full; QUÉBEC's policy (Strategy for the Development of Critical and Strategic Minerals 2025-2031, MRNF March 2026,
+  plus the 2020-2025 Plan and 2023-2025 Action Plan) is held ONLY as document 435, an Interzona summary in our own
+  words with PDF page references - the official texts are copyright (all rights reserved) and not stored. Present
+  document 435's figures as the Québec government's own figures, cite the official PDF (source_url) and page, never
+  call document 435 the government's text and never quote it as such. Also note that some are company presentations, newsletters or draft market reports rather than
   audited filings or peer-reviewed work. Eleven documents were text-extracted by OCR (the SQM Form 20-F filings and the Sibanye-Stillwater annual financial reports, which were scanned images,
   plus Geoscience
   Australia's Australia's Identified Mineral Resources 2025, the INSG World Nickel Factbook 2024 and

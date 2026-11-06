@@ -24,6 +24,8 @@ const SURVEYS: Record<string, string> = {
 };
 
 type Cell = Record<string, unknown>;
+// A cell with fewer samples than this can look strong on a handful of anomalous samples; the tool flags it so the answer says so.
+const FEW_SAMPLES = 30;
 const num = (v: unknown): number | null => (v === null || v === undefined || v === "" || !Number.isFinite(Number(v)) ? null : Number(v));
 const spike = (l: { max: number | null; median: number | null }) => (l.max !== null && l.median !== null && l.median > 0 ? Math.round((l.max / l.median) * 10) / 10 : null);
 const round = (v: number | null, dp = 1) => (v === null ? null : Math.round(v * 10 ** dp) / 10 ** dp);
@@ -139,7 +141,7 @@ export async function rankLeads(input: Record<string, unknown>): Promise<Out> {
     surveys: screened.map((s) => ({ survey: SURVEYS[s.source], status: s.status, samples_with_the_elements: s.analysed, new_leads_found: s.cells.filter((c) => c.group === "NEW_LEAD").length, ...(s.detail ? { note: s.detail } : {}) })),
     leads: top.map((l) => ({
       rank: l.rank, survey: l.survey, area: coord(l.lat, l.lon), sample_types: l.types, samples_anomalous: l.nAnom, samples_analysed: l.nAn, times_chance_rate: round(l.fold, 1), z_score: round(l.z, 1),
-      median_anomalous_ppm: l.median, highest_ppm: l.max, highest_over_median: spike(l), driven_by_a_few_extreme_values: (spike(l) ?? 0) > 20, intensity_vs_threshold: round(l.intensity, 1), group: l.group,
+      median_anomalous_ppm: l.median, highest_ppm: l.max, highest_over_median: spike(l), driven_by_a_few_extreme_values: (spike(l) ?? 0) > 20, rests_on_few_samples: l.nAn < FEW_SAMPLES, intensity_vs_threshold: round(l.intensity, 1), group: l.group,
       nearest_occurrence_of_commodity: l.kcName ? { name: l.kcName, km: l.kcKm } : null, nearest_occurrence_any: l.kaName ? { name: l.kaName, km: l.kaKm } : null,
     })),
     reading_notes: [
@@ -147,6 +149,7 @@ export async function rankLeads(input: Record<string, unknown>): Promise<Out> {
       "How many samples a survey holds, its sample types and methods differ, so the surveys are not equally good at finding leads; say which surveys had data and which had none for these elements.",
       "A cell with 'no occurrence nearby' is only as good as the occurrence catalogue there; catalogues are thinner in some countries than others.",
       "Cells flagged driven_by_a_few_extreme_values (the highest value is more than 20 times the median of the anomalous samples) rest on one or two spikes, which are often unit or data-entry problems: say so and put cells with many consistently anomalous samples ahead of them in your reading.",
+      `Cells flagged rests_on_few_samples have fewer than ${FEW_SAMPLES} samples analysed, so a handful of anomalous samples makes them look strong: name them as resting on few samples and weigh them below cells with many samples.`,
       "For a closer look at one lead pass its area to the deposit fingerprint or the anomaly screen for that survey.",
     ],
     credit: credits,

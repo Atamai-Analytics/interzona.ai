@@ -444,7 +444,7 @@
       "expect": {
         "max_turns": 5
       },
-      "judge": "Songwe Hill is a rare-earth project that is not loaded as an occurrence. A pass says it is not in the occurrence catalogue and answers from the document library or the web, clearly labelling the source, rather than inventing catalogue data."
+      "judge": "Songwe Hill (Mkango, Malawi) is in the occurrence catalogue (added with the EU CRMA strategic projects; position approximate, from the Commission's map) and has a technical-report summary in the library with resource and reserve rows. A pass says it is catalogued, notes the approximate position, and labels which facts come from the catalogue, the resource rows or the documents, without inventing data."
     },
     {
       "id": "geo-ree-greenland",
@@ -971,7 +971,7 @@
         ],
         "max_turns": 4
       },
-      "judge": "Compares Albemarle and SQM on net margin and says that other lithium companies in the group (such as Pilbara Minerals, Liontown or Elevra) have no annual statements loaded, rather than inventing figures for them."
+      "judge": "Compares the lithium group on net margin from stored figures: SQM and Albemarle (FY2025) and Elevra (FY2026 to June, net margin about 22%, from its investor presentation, with a different year-end). Says that Pilbara Minerals (PLS) and Liontown are left out because no comparable annual statements are loaded for them (saying they have no comparable statements is enough), rather than inventing figures for them."
     },
     {
       "id": "own-inkai",
@@ -2214,7 +2214,7 @@
         "maps_min": 1,
         "max_turns": 6
       },
-      "judge": "Uses the cross-survey lead ranking for lithium, ranks leads from more than one survey on a map, and is honest that lithium coverage is uneven (some surveys have few or no lithium values, some are partial leaches or sediments), that very high maxima may be unit or data-entry problems, and that anomalies are not deposits. Does not present any lead as a lithium deposit."
+      "judge": "Uses the cross-survey lead ranking for lithium, ranks leads from more than one survey on a map, and is honest that lithium coverage is uneven (some surveys have few or no lithium values, some are partial leaches or sediments), that very high maxima may be unit or data-entry problems (flagging the specific suspicious maxima in the list is enough), and that anomalies are not deposits. Does not present any lead as a lithium deposit."
     },
     {
       "id": "memo-greenland-link",

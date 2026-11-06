@@ -1,0 +1,96 @@
+20:02:00 ours: C-shaakichiuwaanaan-fs
+20:02:15 plain: C-shaakichiuwaanaan-fs
+20:02:23 web: C-shaakichiuwaanaan-fs
+20:02:32 judge: C-shaakichiuwaanaan-fs
+20:02:45 ours: C-rose-fs
+20:03:00 plain: C-rose-fs
+20:03:14 web: C-rose-fs
+20:03:28 judge: C-rose-fs
+20:03:45 ours: C-crawford-fs
+20:04:05 plain: C-crawford-fs
+20:04:21 web: C-crawford-fs
+20:04:30 judge: C-crawford-fs
+20:04:53 ours: C-arrow-fs
+20:05:07 plain: C-arrow-fs
+20:05:21 web: C-arrow-fs
+20:05:30 judge: C-arrow-fs
+20:05:48 ours: C-wheeler-phoenix
+20:06:01 plain: C-wheeler-phoenix
+20:06:20 web: C-wheeler-phoenix
+20:06:31 judge: C-wheeler-phoenix
+20:06:50 ours: C-matawinie-fs
+20:07:04 plain: C-matawinie-fs
+20:07:17 web: C-matawinie-fs
+20:07:24 judge: C-matawinie-fs
+20:07:41 ours: C-casino-fs
+20:07:54 plain: C-casino-fs
+20:08:10 web: C-casino-fs
+20:08:17 judge: C-casino-fs
+20:08:33 ours: C-sisson-fs
+20:08:49 plain: C-sisson-fs
+20:09:00 web: C-sisson-fs
+20:09:09 judge: C-sisson-fs
+20:09:17 ours: C-moblan-dfs
+20:09:28 plain: C-moblan-dfs
+20:09:37 web: C-moblan-dfs
+20:09:45 judge: C-moblan-dfs
+20:10:01 ours: C-wicheeda-pfs
+20:10:14 plain: C-wicheeda-pfs
+20:10:23 web: C-wicheeda-pfs
+20:10:31 judge: C-wicheeda-pfs
+20:10:43 ours: C-marathon-fs
+20:10:56 plain: C-marathon-fs
+20:11:13 web: C-marathon-fs
+20:11:24 judge: C-marathon-fs
+20:11:39 ours: C-nal-expansion
+20:11:52 plain: C-nal-expansion
+20:11:58 web: C-nal-expansion
+20:12:05 judge: C-nal-expansion
+# Report-summary Canada set (before): assistant vs general models (2026-11-05)
+
+12 questions, frozen 2026-11-05T20:01:51 (SHA-256 c1321b5db618…); the truth was written before any system was asked. OURS = the deployed app answering live. Baselines: `claude-sonnet-5-5` with no tools (PLAIN) and with web search (WEB). Judge: `claude-opus-5-5`, blind, random order.
+
+## By category
+
+| Category | System | Facts correct | Incorrect | Absent | Invented specifics | Behaviour pass | Mean quality | Best |
+|---|---|---|---|---|---|---|---|---|
+| B. Document questions (random passages) (12) | OURS | 27/48 | 0 | 21 | 0 | – | 3.5 | 5 |
+| B. Document questions (random passages) (12) | PLAIN | 7/48 | 18 | 23 | 6 | – | 1.83 | 0 |
+| B. Document questions (random passages) (12) | WEB | 40/48 | 2 | 6 | 1 | – | 4.0 | 7 |
+
+## Fact accuracy overall (categories A, B, C and E)
+
+| System | Correct | Incorrect | Absent | Invented specifics |
+|---|---|---|---|---|
+| OURS | 27/48 (56%) | 0 | 21 | 0 |
+| PLAIN | 7/48 (15%) | 18 | 23 | 6 |
+| WEB | 40/48 (83%) | 2 | 6 | 1 |
+
+OURS minus PLAIN, share of facts correct: 95% interval over questions +15 to +67 points.
+
+OURS minus WEB, share of facts correct: 95% interval over questions -52 to -2 points.
+
+## Where OURS was wrong or missed something
+
+- **C-shaakichiuwaanaan-fs** missed: Total development capital ~C$1,978M (~C$1,510M net) Gives only the net figure of ~C$1.5B. The total development capital is missing.
+- **C-shaakichiuwaanaan-fs** missed: ~20-year mine life, ~800,000 tpa concentrate Gives 800 ktpa, but says the study's mine life was not available.
+- **C-rose-fs** missed: Life of mine of about 19 years at 1.61 Mtpa ore processing Gives only the 2022 figure of 17 years, with a caveat that the 2023 study may differ
+- **C-arrow-fs** missed: Probable Mineral Reserve of about 4.58 Mt at 2.37% U3O8 (239.6 Mlb U3O8) 
+- **C-arrow-fs** missed: Post-tax NPV8 of C$3,465 million and post-tax IRR of 52.4% at US$50/lb U3O8 
+- **C-arrow-fs** missed: Pre-production capital of about C$1.3 billion (C$1,299.9M including pre-commitment costs) Gives C$2,209M from the Major Projects Inventory, which matches the 2024 update, not the feasibility study figure.
+- **C-arrow-fs** missed: 11-year mine life producing 233.6 Mlb of recovered U3O8 
+- **C-matawinie-fs** missed: Proven and Probable reserves of about 61.7 Mt at 4.23% graphitic carbon Gives 17.3 Mt proven plus 44.3 Mt probable (about 61.6 Mt) but no combined total or 4.23% grade
+- **C-matawinie-fs** missed: After-tax NPV8 of about C$238 million and after-tax IRR of 15.8% 
+- **C-matawinie-fs** missed: Initial capital cost of about C$421 million for the mine and concentrator 
+- **C-matawinie-fs** missed: 25-year life of mine 
+- **C-casino-fs** missed: Mill P&P ~1,217 Mt at ~0.19% Cu, 0.22 g/t Au, 0.021% Mo (+~210 Mt heap leach) Gives only the 1.43 Bt combined total and a ~140 Mt proven fragment; no mill P&P tonnage or grades
+- **C-moblan-dfs** missed: Probable Mineral Reserve of 34.5 Mt at 1.36% Li2O Gives 34.5 Mt but no grade.
+- **C-moblan-dfs** missed: About 300,000 tpa of 6% spodumene concentrate over a 21-year life of mine Production rate is right, but it says the mine life is not given.
+- **C-moblan-dfs** missed: Total capex about C$962.5 million Says capex is not given.
+- **C-wicheeda-pfs** missed: 15-year open-pit mine life feeding a 5,000 tpd flotation plant Mine life and plant throughput are not mentioned
+- **C-marathon-fs** missed: Proven and Probable reserves of about 128.3 Mt at 0.64 g/t Pd and 0.21% Cu 
+- **C-marathon-fs** missed: After-tax NPV6 of about C$1.07 billion and IRR of 28% at 3-year trailing prices 
+- **C-marathon-fs** missed: Initial capital of about C$992 million gives C$809M from the Major Projects Inventory, clearly attributed to that source
+- **C-marathon-fs** missed: Mine life of about 12.5 to 13 years (2025 feasibility study update) 
+- **C-nal-expansion** missed: Life of mine of about 20 years 
+20:12:18 saved results_rsca_before

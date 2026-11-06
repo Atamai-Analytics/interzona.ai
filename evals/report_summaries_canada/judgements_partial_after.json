@@ -1,0 +1,1071 @@
+[
+ {
+  "id": "C-shaakichiuwaanaan-fs",
+  "category": "B",
+  "question": "What did PMET Resources' feasibility study for the CV5 pegmatite at Shaakichiuwaanaan in Quebec find?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "Maiden Probable Mineral Reserve of 84.3 Mt at 1.26% Li2O",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "After-tax NPV8 ~US$1.19B (~C$1.59B), IRR ~18.1% at US$1,221/t SC5.5",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Development capital ~C$1,978M (~C$1,510M net)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "~20-year mine life, ~800 ktpa concentrate",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Honest decline. Gives only general project context and points the user to sources."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Maiden Probable Mineral Reserve of 84.3 Mt at 1.26% Li2O",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV8 ~US$1.19B (~C$1.59B), IRR ~18.1% at US$1,221/t SC5.5",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Development capital ~C$1,978M (~C$1,510M net)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "~20-year mine life, ~800 ktpa concentrate",
+     "label": "CORRECT",
+     "note": "Gives a 19-year life and up to 800 ktpa nominal, which falls within 'about 20 years'."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Detailed and accurate on all core facts. However, it attributes the 108.0 Mt at 1.40% resource to CV13 alone, when that figure looks like the consolidated resource for the whole property. It also cites a questionable 'September 2026 Kalkine' source."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Maiden Probable Mineral Reserve of 84.3 Mt at 1.26% Li2O",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV8 ~US$1.19B (~C$1.59B), IRR ~18.1% at US$1,221/t SC5.5",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Development capital ~C$1,978M (~C$1,510M net)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "~20-year mine life, ~800 ktpa concentrate",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "States all facts correctly, is well organised and contains no evident errors."
+  },
+  "best": "web",
+  "reason": "Y and Z both state all four facts correctly. Y misattributes the resource figure to CV13 and cites a dubious source, while Z gets everything right with no evident errors. X declined to answer."
+ },
+ {
+  "id": "C-rose-fs",
+  "category": "B",
+  "question": "What are the reserves and economics of Critical Elements' Rose lithium-tantalum project?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Probable Mineral Reserve of 26.3 Mt at 0.87% Li2O and 138 ppm Ta2O5",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV8 of about C$2,851 million (about US$2.2 billion) and after-tax IRR of 65.7%",
+     "label": "CORRECT",
+     "note": "Gives C$2.85B and US$2,195M, with 65.7% IRR"
+    },
+    {
+     "fact": "Life of mine of about 19 years at 1.61 Mtpa ore processing",
+     "label": "CORRECT",
+     "note": "Gives 1.61 Mt/yr; says 17-year mine life and 19-year project life"
+    },
+    {
+     "fact": "From the 2023 NI 43-101 feasibility study (WSP / InnovExplo)",
+     "label": "CORRECT",
+     "note": "Names WSP, InnovExplo and Bumigeme, August 2023"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate and detailed throughout. Some of the caveats about currency are confusing and add redundancy."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Probable Mineral Reserve of 26.3 Mt at 0.87% Li2O and 138 ppm Ta2O5",
+     "label": "INCORRECT",
+     "note": "Gives about 26-27 Mt at about 0.85%, P&P, attributed to 2017"
+    },
+    {
+     "fact": "After-tax NPV8 of about C$2,851 million (about US$2.2 billion) and after-tax IRR of 65.7%",
+     "label": "INCORRECT",
+     "note": "Says the update NPV was around C$1B"
+    },
+    {
+     "fact": "Life of mine of about 19 years at 1.61 Mtpa ore processing",
+     "label": "INCORRECT",
+     "note": "Gives 17-18 years and no throughput"
+    },
+    {
+     "fact": "From the 2023 NI 43-101 feasibility study (WSP / InnovExplo)",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Approximate figures from memory, flagged as uncertain, but the key numbers are wrong."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Probable Mineral Reserve of 26.3 Mt at 0.87% Li2O and 138 ppm Ta2O5",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV8 of about C$2,851 million (about US$2.2 billion) and after-tax IRR of 65.7%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Life of mine of about 19 years at 1.61 Mtpa ore processing",
+     "label": "ABSENT",
+     "note": "Mentions only a 17-year operation and gives no throughput"
+    },
+    {
+     "fact": "From the 2023 NI 43-101 feasibility study (WSP / InnovExplo)",
+     "label": "ABSENT",
+     "note": "Cites the 2023 NI 43-101 study but does not name its authors"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Core numbers are correct and the status context is useful. The tantalum recovery (64%) may be wrong, and the throughput and authors are missing."
+  },
+  "best": "ours",
+  "reason": "X covers all four facts correctly. Z gets the reserves and NPV/IRR right but misses the throughput and the study's authors. Y's figures are wrong."
+ },
+ {
+  "id": "C-crawford-fs",
+  "category": "B",
+  "question": "How big is Canada Nickel's Crawford nickel project and what does the feasibility study say about its economics?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of about 1,715 Mt at 0.22% Ni (994 Mt Proven at 0.24% Ni and 721 Mt Probable at 0.20% Ni)",
+     "label": "CORRECT",
+     "note": "Gives 1,715 Mt at 0.22% Ni but not the Proven/Probable split."
+    },
+    {
+     "fact": "After-tax NPV8 of US$2,475 million and after-tax IRR of 17.1%",
+     "label": "INCORRECT",
+     "note": "The 17.1% IRR is right, but the opening summary gives the NPV as C$2.5B. The true figure is in US$."
+    },
+    {
+     "fact": "Initial capital cost of about C$2,556 million (60 kt/d start, expanding to 120 kt/d)",
+     "label": "CORRECT",
+     "note": "Cites an analyst's initial capex of US$1.95B, which is about C$2.56B at 0.76. It also gives a confusing C$3.54B for two stages and does not mention the 60 to 120 kt/d throughput ramp."
+    },
+    {
+     "fact": "Feasibility-study life of mine of 41 years",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Gets most headline figures right, but labels the NPV with the wrong currency and mixes in second-hand analyst numbers. Some by-product figures look doubtful."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of about 1,715 Mt at 0.22% Ni (994 Mt Proven at 0.24% Ni and 721 Mt Probable at 0.20% Ni)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV8 of US$2,475 million and after-tax IRR of 17.1%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital cost of about C$2,556 million (60 kt/d start, expanding to 120 kt/d)",
+     "label": "ABSENT",
+     "note": "Says outright that it did not retrieve the capex figure. It does give the 60 to 120 kt/d ramp."
+    },
+    {
+     "fact": "Feasibility-study life of mine of 41 years",
+     "label": "CORRECT",
+     "note": "Gives 30 years of mining plus 11 years on stockpiles, which totals 41 years."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Precise and well sourced, and open about the missing capex figure."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of about 1,715 Mt at 0.22% Ni (994 Mt Proven at 0.24% Ni and 721 Mt Probable at 0.20% Ni)",
+     "label": "ABSENT",
+     "note": "Only says the grade is roughly 0.2–0.3% across billions of tonnes."
+    },
+    {
+     "fact": "After-tax NPV8 of US$2,475 million and after-tax IRR of 17.1%",
+     "label": "INCORRECT",
+     "note": "Gives an IRR of 19–20%, a vague NPV, and the wrong currency."
+    },
+    {
+     "fact": "Initial capital cost of about C$2,556 million (60 kt/d start, expanding to 120 kt/d)",
+     "label": "INCORRECT",
+     "note": "Gives C$1.8–2B."
+    },
+    {
+     "fact": "Feasibility-study life of mine of 41 years",
+     "label": "ABSENT",
+     "note": "Only says 'around 40 years'."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Vague, with wrong IRR and capex, though it is honest about its uncertainty."
+  },
+  "best": "ours",
+  "reason": "Y matches the reserves, NPV/IRR and mine life exactly, and says openly that it could not find the capex figure. X gives the NPV in the wrong currency and leans on mixed second-hand sources. Z is vague and gets the IRR and capex wrong."
+ },
+ {
+  "id": "C-arrow-fs",
+  "category": "B",
+  "question": "What are the reserve and economic figures for NexGen's Arrow uranium deposit (Rook I project)?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Probable Mineral Reserve of about 4.58 Mt at 2.37% U3O8 (239.6 Mlb U3O8)",
+     "label": "CORRECT",
+     "note": "4.575 Mt at 2.37%, 239.6 Mlb"
+    },
+    {
+     "fact": "Post-tax NPV8 of C$3,465 million and post-tax IRR of 52.4% at US$50/lb U3O8",
+     "label": "INCORRECT",
+     "note": "IRR is right, but the table labels the NPV as US$3,465M. The truth is C$. The answer also says the study's figures are in C$, which contradicts its own table."
+    },
+    {
+     "fact": "Pre-production capital of about C$1.3 billion (C$1,299.9M including pre-commitment costs)",
+     "label": "CORRECT",
+     "note": "Gives C$1,142.0M pre-production plus about C$158M of pre-commitment costs, which sums to about C$1.3B. The total itself is not stated."
+    },
+    {
+     "fact": "11-year mine life producing 233.6 Mlb of recovered U3O8",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Detailed and mostly accurate. The NPV table carries the wrong currency (US$ instead of C$), which is a material error."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Probable Mineral Reserve of about 4.58 Mt at 2.37% U3O8 (239.6 Mlb U3O8)",
+     "label": "INCORRECT",
+     "note": "States 256.7 Mlb at about 2.4%. That is the M&I resource figure, not the reserve."
+    },
+    {
+     "fact": "Post-tax NPV8 of C$3,465 million and post-tax IRR of 52.4% at US$50/lb U3O8",
+     "label": "CORRECT",
+     "note": "About C$3.5B and about 52%"
+    },
+    {
+     "fact": "Pre-production capital of about C$1.3 billion (C$1,299.9M including pre-commitment costs)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "11-year mine life producing 233.6 Mlb of recovered U3O8",
+     "label": "INCORRECT",
+     "note": "About 10 years and 228–230 Mlb"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Openly hedged, from memory. The reserve figure is wrong and so is the mine life/production."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Probable Mineral Reserve of about 4.58 Mt at 2.37% U3O8 (239.6 Mlb U3O8)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Post-tax NPV8 of C$3,465 million and post-tax IRR of 52.4% at US$50/lb U3O8",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Pre-production capital of about C$1.3 billion (C$1,299.9M including pre-commitment costs)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "11-year mine life producing 233.6 Mlb of recovered U3O8",
+     "label": "ABSENT",
+     "note": "Gives a 10.7-year mine life at 21.7 Mlb/yr, but never states the 233.6 Mlb total recovered."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate core figures plus useful context from the 2024 cost update. The 2026 construction date comes from a secondary source and is flagged for checking."
+  },
+  "best": "web",
+  "reason": "Z gets the reserve, NPV/IRR and capex right in the correct currencies. X is detailed but labels the NPV in US$ when it is C$. Y gives the M&I resource figure as the reserve and gets the mine life wrong."
+ },
+ {
+  "id": "C-wheeler-phoenix",
+  "category": "B",
+  "question": "What did Denison's feasibility study find for the Phoenix in-situ recovery uranium operation at Wheeler River?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Phoenix Proven and Probable reserves of about 219 kt at 11.7% U3O8 (about 56.7 Mlb recoverable U3O8)",
+     "label": "ABSENT",
+     "note": "Gives the M&I resource (70.5 Mlb at 11.4%) and LOM sales of 56.1 Mlb, but not the reserve tonnage, grade or 56.7 Mlb"
+    },
+    {
+     "fact": "After-tax NPV8 of about C$1.43 billion and IRR of 82.3%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital cost of about C$419.4 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "From the 2023 NI 43-101 technical report (effective 23 June 2023)",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate and detailed, and the source is cited. Does not give the reserve figures."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Phoenix Proven and Probable reserves of about 219 kt at 11.7% U3O8 (about 56.7 Mlb recoverable U3O8)",
+     "label": "ABSENT",
+     "note": "Only says 'well over 10%'"
+    },
+    {
+     "fact": "After-tax NPV8 of about C$1.43 billion and IRR of 82.3%",
+     "label": "INCORRECT",
+     "note": "Gives the IRR as 'in the 40% range'"
+    },
+    {
+     "fact": "Initial capital cost of about C$419.4 million",
+     "label": "ABSENT",
+     "note": "Only a vague 'around C$400 million'"
+    },
+    {
+     "fact": "From the 2023 NI 43-101 technical report (effective 23 June 2023)",
+     "label": "ABSENT",
+     "note": "Says 'early 2023'"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "comment": "Works from memory and admits it. The IRR and production profile are wrong.",
+   "declined_or_could_not_answer": false,
+   "quality": 2
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Phoenix Proven and Probable reserves of about 219 kt at 11.7% U3O8 (about 56.7 Mlb recoverable U3O8)",
+     "label": "CORRECT",
+     "note": "Gives 56.7 Mlb recovered from reserves but not the tonnage or grade"
+    },
+    {
+     "fact": "After-tax NPV8 of about C$1.43 billion and IRR of 82.3%",
+     "label": "INCORRECT",
+     "note": "States after-tax NPV $1.56B and IRR 90.0%"
+    },
+    {
+     "fact": "Initial capital cost of about C$419.4 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "From the 2023 NI 43-101 technical report (effective 23 June 2023)",
+     "label": "ABSENT",
+     "note": "Mentions the June 2023 release and the NI 43-101 report, but not the effective date"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "The headline after-tax economics contradict the truth. The January 2026 update cannot be verified."
+  },
+  "best": "ours",
+  "reason": "X gets the after-tax NPV, IRR, capex and source right. Z gets the economics wrong. Y is vague and wrong in places."
+ },
+ {
+  "id": "C-matawinie-fs",
+  "category": "B",
+  "question": "What are the reserves and returns for Nouveau Monde Graphite's Matawinie mine in Quebec?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of about 61.7 Mt at 4.23% graphitic carbon",
+     "label": "CORRECT",
+     "note": "Gives 61.7 Mt at 4.23% Cg but calls it all probable."
+    },
+    {
+     "fact": "After-tax NPV8 of about C$238 million and after-tax IRR of 15.8%",
+     "label": "INCORRECT",
+     "note": "Main figures are US$252M and 16.0%. US$238M appears only as a secondary figure, in the wrong currency, and with no 15.8% IRR."
+    },
+    {
+     "fact": "Initial capital cost of about C$421 million for the mine and concentrator",
+     "label": "INCORRECT",
+     "note": "States US$421M as Phase-2 capex, which is the wrong currency."
+    },
+    {
+     "fact": "25-year life of mine",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Reserves are right, but the economics are given in the wrong currency and versions. It also includes questionable claims about a 2026 final investment decision and Phase 1 operations."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of about 61.7 Mt at 4.23% graphitic carbon",
+     "label": "INCORRECT",
+     "note": "Says about 107 Mt at 4.3%."
+    },
+    {
+     "fact": "After-tax NPV8 of about C$238 million and after-tax IRR of 15.8%",
+     "label": "INCORRECT",
+     "note": "Vague high-teens or mid-20s IRR and an NPV above US$1B."
+    },
+    {
+     "fact": "Initial capital cost of about C$421 million for the mine and concentrator",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "25-year life of mine",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Hedged and from memory, and the reserve figure is wrong."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of about 61.7 Mt at 4.23% graphitic carbon",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV8 of about C$238 million and after-tax IRR of 15.8%",
+     "label": "CORRECT",
+     "note": "Currency symbol is unspecified ($), but the figures match."
+    },
+    {
+     "fact": "Initial capital cost of about C$421 million for the mine and concentrator",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "25-year life of mine",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Matches every fact, with useful detail and caveats."
+  },
+  "best": "ours",
+  "reason": "Z states all four facts correctly. X gets the reserves and mine life right but gives the economics in the wrong currency and from a different study version. Y gets the reserves wrong and is vague on returns."
+ },
+ {
+  "id": "C-casino-fs",
+  "category": "B",
+  "question": "What reserves and economics does Western Copper and Gold report for the Casino project in Yukon?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Mill P&P ~1,217 Mt at 0.19% Cu, 0.22 g/t Au, 0.021% Mo (+~210 Mt heap leach)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV8 ~C$2,334M and IRR 18.1%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital ~C$3.62B",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "2022 NI 43-101 FS (M3)",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Complete, accurate, and specific, with sensible caveats."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Mill P&P ~1,217 Mt at 0.19% Cu, 0.22 g/t Au, 0.021% Mo (+~210 Mt heap leach)",
+     "label": "ABSENT",
+     "note": "Gives only the 1.43 Bt combined total and says it did not retrieve grades."
+    },
+    {
+     "fact": "After-tax NPV8 ~C$2,334M and IRR 18.1%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital ~C$3.62B",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "2022 NI 43-101 FS (M3)",
+     "label": "CORRECT",
+     "note": "Does not name M3."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Economics are accurate, but it leaves out the reserve breakdown and grades, and says so openly."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Mill P&P ~1,217 Mt at 0.19% Cu, 0.22 g/t Au, 0.021% Mo (+~210 Mt heap leach)",
+     "label": "INCORRECT",
+     "note": "Vague: says on the order of 1 Bt and mid-0.1% Cu."
+    },
+    {
+     "fact": "After-tax NPV8 ~C$2,334M and IRR 18.1%",
+     "label": "INCORRECT",
+     "note": "Says about US$1B or more, with IRR in the high teens."
+    },
+    {
+     "fact": "Initial capital ~C$3.62B",
+     "label": "ABSENT",
+     "note": "Says only on the order of US$3B or more."
+    },
+    {
+     "fact": "2022 NI 43-101 FS (M3)",
+     "label": "CORRECT",
+     "note": "Gives the 2022 FS but a wrong publication timing."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "Vague guesses. The 4–5 year payback contradicts the actual 3.3 years, and it understates NPV."
+  },
+  "best": "ours",
+  "reason": "X gets every pre-registered fact right and adds detail. Y is accurate on the economics but gives no mill reserve figures. Z is vague and partly wrong."
+ },
+ {
+  "id": "C-sisson-fs",
+  "category": "B",
+  "question": "What did Northcliff's updated feasibility study for the Sisson tungsten-molybdenum project show?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of 276.8 Mt at 0.075% WO3 and 0.023% Mo",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Post-tax NPV8 of about C$6,915 million and IRR of 49.8%",
+     "label": "INCORRECT",
+     "note": "Says IRR in mid-teens"
+    },
+    {
+     "fact": "Initial capital of about C$1,528 million",
+     "label": "INCORRECT",
+     "note": "Says high hundreds of millions to about C$1B"
+    },
+    {
+     "fact": "Feasibility study update filed in 2026",
+     "label": "INCORRECT",
+     "note": "Says the update was from 2017"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Describes a 2017 update that appears not to exist, and gives outdated economics. It does hedge."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of 276.8 Mt at 0.075% WO3 and 0.023% Mo",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Post-tax NPV8 of about C$6,915 million and IRR of 49.8%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital of about C$1,528 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Feasibility study update filed in 2026",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All four facts are correct and the answer gives rich context."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Proven and Probable reserves of 276.8 Mt at 0.075% WO3 and 0.023% Mo",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Post-tax NPV8 of about C$6,915 million and IRR of 49.8%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital of about C$1,528 million",
+     "label": "ABSENT",
+     "note": "Says the release does not give capex"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "Accurate and detailed, but it misses capex."
+  },
+  "best": "web",
+  "reason": "Y is best: it is the only answer that gets all four pre-registered facts right, including initial capital. Z gets three facts right but misses initial capital, saying the release doesn't give it. X describes a 2017 study instead of the 2026 update. Its figures contradict the truth: it puts the IRR in the mid-teens and capex at high hundreds of millions to about C$1B."
+ },
+ {
+  "id": "C-moblan-dfs",
+  "category": "B",
+  "question": "What are the key outcomes of the definitive feasibility study for the Moblan lithium project?",
+  "ours_saved": false,
+  "ours_error": null,
+  "plain": {
+   "facts": [
+    {
+     "fact": "Probable Mineral Reserve of 34.5 Mt at 1.36% Li2O",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Post-tax NPV8 of about C$2.2 billion and post-tax IRR of 34.4%",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "About 300,000 tpa of 6% spodumene concentrate over a 21-year life of mine",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Total capex about C$962.5 million",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "Says plainly that it can't give figures and points to where to look. Offers only general background on the project."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Probable Mineral Reserve of 34.5 Mt at 1.36% Li2O",
+     "label": "CORRECT",
+     "note": "Gives 34.5Mt at 1.36% Li2O but calls it 'Ore Reserves' rather than Probable."
+    },
+    {
+     "fact": "Post-tax NPV8 of about C$2.2 billion and post-tax IRR of 34.4%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "About 300,000 tpa of 6% spodumene concentrate over a 21-year life of mine",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Total capex about C$962.5 million",
+     "label": "INCORRECT",
+     "note": "States total project cost of C$4,375M, which contradicts the C$962.5M capex."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 3,
+   "comment": "Most of the key metrics are right, but the capex figure is badly wrong. It does flag that figure as uncertain."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "Probable Mineral Reserve of 34.5 Mt at 1.36% Li2O",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Post-tax NPV8 of about C$2.2 billion and post-tax IRR of 34.4%",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "About 300,000 tpa of 6% spodumene concentrate over a 21-year life of mine",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Total capex about C$962.5 million",
+     "label": "CORRECT",
+     "note": "Gives initial capex of C$962M."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All four facts are correct and it adds plenty of useful detail. The later-development claims (2025/2026) can't be checked against the truth but don't contradict it."
+  },
+  "best": "ours",
+  "reason": "Z gets all four pre-registered facts right, including capex. Y misstates capex as C$4,375M. X declines to answer."
+ },
+ {
+  "id": "C-wicheeda-pfs",
+  "category": "B",
+  "question": "What did Defense Metals' pre-feasibility study for the Wicheeda rare earth project find?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "After-tax NPV8 of about $1.0 billion (pre-tax about $1.8 billion)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax IRR of about 18.9% (pre-tax 24.6%)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital of about $1.4 billion",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "15-year open-pit mine life feeding a 5,000 tpd flotation plant",
+     "label": "ABSENT",
+     "note": "Mine life and plant size are not given."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "The core economics are right. Mine life and plant size are missing. The operating cost (CAD $38.42/kg) contradicts the $37.42 operating cash breakeven given in the same answer, and the reserve and resource figures are unverified."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "After-tax NPV8 of about $1.0 billion (pre-tax about $1.8 billion)",
+     "label": "INCORRECT",
+     "note": "Says the after-tax NPV was in the hundreds of millions."
+    },
+    {
+     "fact": "After-tax IRR of about 18.9% (pre-tax 24.6%)",
+     "label": "INCORRECT",
+     "note": "Gives only a vague '20% range' and attributes it to a 2022 study."
+    },
+    {
+     "fact": "Initial capital of about $1.4 billion",
+     "label": "INCORRECT",
+     "note": "Says roughly half a billion."
+    },
+    {
+     "fact": "15-year open-pit mine life feeding a 5,000 tpd flotation plant",
+     "label": "INCORRECT",
+     "note": "Says about 16 years, with no plant size given."
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 1,
+   "comment": "Wrong study year and wrong magnitudes. It does hedge, but the figures are still misleading."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "After-tax NPV8 of about $1.0 billion (pre-tax about $1.8 billion)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax IRR of about 18.9% (pre-tax 24.6%)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital of about $1.4 billion",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "15-year open-pit mine life feeding a 5,000 tpd flotation plant",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "Complete, accurate and well sourced, with caveats."
+  },
+  "best": "ours",
+  "reason": "Z has all four facts right and is open about its limits. X gets the economics right but leaves out mine life and plant size. Y is wrong throughout."
+ },
+ {
+  "id": "C-marathon-fs",
+  "category": "B",
+  "question": "What are the reserves and economics of Generation Mining's Marathon copper-palladium project?",
+  "ours_saved": false,
+  "ours_error": null,
+  "web": {
+   "facts": [
+    {
+     "fact": "P&P reserves 128.3 Mt at 0.64 g/t Pd and 0.21% Cu",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV6 ~C$1.07B and IRR 28% at 3-year trailing prices",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital ~C$992M",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Mine life ~12.5-13 years",
+     "label": "CORRECT",
+     "note": "about 13 years"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "All four core facts are correct. The status section includes claims that can't be verified: a ground-breaking date of October 1, 2026 and an Ontario term sheet figure. It also says the Wheaton stream is in C$, which may be the wrong currency."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "P&P reserves 128.3 Mt at 0.64 g/t Pd and 0.21% Cu",
+     "label": "ABSENT",
+     "note": "only vague: 100+ Mt, 0.5-0.7 g/t Pd, ~0.2% Cu"
+    },
+    {
+     "fact": "After-tax NPV6 ~C$1.07B and IRR 28% at 3-year trailing prices",
+     "label": "INCORRECT",
+     "note": "Says NPV is in the hundreds of millions at 5% and IRR is mid-teens to low 20s"
+    },
+    {
+     "fact": "Initial capital ~C$992M",
+     "label": "ABSENT",
+     "note": "gives a vague range of C$0.6-1.0B"
+    },
+    {
+     "fact": "Mine life ~12.5-13 years",
+     "label": "CORRECT",
+     "note": "12-14 years"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": true,
+   "declined_or_could_not_answer": false,
+   "quality": 2,
+   "comment": "The answer is vague and out of date. Its economics contradict the truth. It also makes doubtful claims: Sprott streaming rather than Wheaton, and a renaming to 'Generation PGM'. It does hedge and admits it is unsure of exact figures."
+  },
+  "ours": {
+   "facts": [
+    {
+     "fact": "P&P reserves 128.3 Mt at 0.64 g/t Pd and 0.21% Cu",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "After-tax NPV6 ~C$1.07B and IRR 28% at 3-year trailing prices",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Initial capital ~C$992M",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Mine life ~12.5-13 years",
+     "label": "CORRECT",
+     "note": "roughly 13 years"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All facts are correct and the answer gives detailed, consistent tables. It is clear about its source and its limits. There is a minor Ag grade inconsistency in the table (1.8 g/t for P&P when both components are 1.6-1.7) and an odd reference to 'occurrence records'."
+  },
+  "best": "ours",
+  "reason": "X and Z both get every fact right. Z is the best answer because it adds well-sourced detail and is open about its limits, while X adds status claims that can't be verified. Y is vague and gets the economics wrong."
+ },
+ {
+  "id": "C-nal-expansion",
+  "category": "B",
+  "question": "What did Elevra's pre-feasibility study for the North American Lithium expansion in Quebec find?",
+  "ours_saved": false,
+  "ours_error": null,
+  "ours": {
+   "facts": [
+    {
+     "fact": "Ore reserves of 47.2 Mt at 1.12% Li2O (0.2 Mt Proven and 47.0 Mt Probable)",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Post-tax NPV8 of about C$3,218 million for the expansion case, an incremental C$943 million over the base case",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Expansion-only post-tax IRR of about 49.9% and initial capex of C$366 million",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Life of mine of about 20 years",
+     "label": "CORRECT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 5,
+   "comment": "All four facts are present and correct. It gives full detail, includes caveats and names its sources."
+  },
+  "plain": {
+   "facts": [
+    {
+     "fact": "Ore reserves of 47.2 Mt at 1.12% Li2O (0.2 Mt Proven and 47.0 Mt Probable)",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Post-tax NPV8 of about C$3,218 million for the expansion case, an incremental C$943 million over the base case",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Expansion-only post-tax IRR of about 49.9% and initial capex of C$366 million",
+     "label": "ABSENT"
+    },
+    {
+     "fact": "Life of mine of about 20 years",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": true,
+   "quality": 2,
+   "comment": "It honestly declined to answer and gave accurate background, but it provides none of the study's findings."
+  },
+  "web": {
+   "facts": [
+    {
+     "fact": "Ore reserves of 47.2 Mt at 1.12% Li2O (0.2 Mt Proven and 47.0 Mt Probable)",
+     "label": "CORRECT",
+     "note": "Gives 47.2 Mt P&P at 1.12% but omits the Proven/Probable split."
+    },
+    {
+     "fact": "Post-tax NPV8 of about C$3,218 million for the expansion case, an incremental C$943 million over the base case",
+     "label": "CORRECT"
+    },
+    {
+     "fact": "Expansion-only post-tax IRR of about 49.9% and initial capex of C$366 million",
+     "label": "ABSENT",
+     "note": "Capex of C$366M is correct, but the IRR is missing."
+    },
+    {
+     "fact": "Life of mine of about 20 years",
+     "label": "ABSENT"
+    }
+   ],
+   "behaviour": "NOT_APPLICABLE",
+   "invented_specifics": false,
+   "declined_or_could_not_answer": false,
+   "quality": 4,
+   "comment": "The figures it gives are accurate, but it is missing the IRR and the mine life."
+  },
+  "best": "ours",
+  "reason": "X covers all four pre-registered facts correctly. Z misses the IRR and the mine life, and Y declined to answer."
+ }
+]

@@ -57,8 +57,9 @@ the complete answer once, after the last tool call; if no position exists, say p
 and some are only accurate to tens of kilometres: say so when precision matters. Leave out rows whose position_accuracy is UNRELIABLE (their source position is
 wrong). A project has a position through its link to a catalogued occurrence (47 of 141 older projects are linked; smelters, refineries and many in-situ
 uranium operations are not in the catalogue) or through its own core.projects.geom, set so far only for 86 of the 89 Austrade Prospectus projects (see the
-Prospectus notes; location_precision SITE, TOWN or CITY says how exact it is). For a company's assets and where they are, use company_assets, which
-plots the placed ones and reports how many could not be placed; never guess a position.
+Prospectus notes; location_precision SITE, TOWN or CITY says how exact it is). For a company's assets and where they are, call company_assets FIRST
+(not run_sql): it plots the placed ones, reports how many could not be placed, and carries each asset's source and owner as recorded; never
+guess a position.
 When you summarise a map result by status, count the rows of each status in the result itself and state those counts once. Put each place in exactly one
 status group and do not repeat names in the summary when a table lists them (a place with one status in the table cannot also be listed under another).
 Before you finish, check that every count you wrote equals the number of rows in the table.
@@ -270,7 +271,10 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   share_pct only where present; (6) when the user asks WHICH facilities there are, list each one (name, state, stage, status, capacity or
   "unknown") in a compact table per stage, up to about 40 rows - the run_sql rows are not shown to the user as a table, so stage or status
   totals alone do not answer the question; give the totals as well (within one stage only), and for more than about 40 list the largest and say
-  how many more there are. Credit: U.S. Geological Survey (O'Brien and others, 2026), Mines, smelters, refineries, and recycling facilities
+  how many more there are; (7) a facility has ONE ROW PER METAL in facility_capacity (a platinum-group refinery has separate platinum,
+  palladium, rhodium... rows: 32 rows for 16 US PGM refineries), so count facilities with COUNT(DISTINCT occurrence_id), get the status
+  breakdown with COUNT(DISTINCT occurrence_id) ... GROUP BY status, and list one line per facility with its metals combined (string_agg) -
+  never count or list the per-metal rows as facilities. Credit: U.S. Geological Survey (O'Brien and others, 2026), Mines, smelters, refineries, and recycling facilities
   in the United States, https://doi.org/10.5066/P1BUPUAM.
 
 - Finland: 16 deposits from Table 1 of the Nordic journal article (doc 74) are in core.occurrences

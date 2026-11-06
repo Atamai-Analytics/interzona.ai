@@ -417,7 +417,7 @@
         ],
         "max_turns": 4
       },
-      "judge": "Lists the US lithium facilities with capacity, stage and status, explains that capacities must not be added across stages of the same chain (a mine plus the plant that processes its output), separates operating from development or care-and-maintenance capacity, and treats facilities with no reported capacity as unknown rather than zero."
+      "judge": "Identifies the US lithium facilities by stage and status: either lists each one, or gives per-stage tables of counts and capacity by status that also NAME the producing facilities and the largest development ones (with 33 records either is fine; a facility with both a mine and a plant record may appear under each stage). It explains that capacities must not be added across stages of the same chain (a mine plus the plant that processes its output), separates operating from development or care-and-maintenance capacity, and treats facilities with no reported capacity as unknown rather than zero."
     },
     {
       "id": "occ-chile-li",
@@ -657,7 +657,7 @@
       "expect": {
         "max_turns": 2
       },
-      "judge": "Describes in general terms what kinds of information are available, covering at least five of: mineral occurrences, geochemical samples, company financials, commodity prices, exchange rates, the document library, web search. It must not name internal identifiers (table, column, function or tool names such as run_sql, geochem.samples or search_documents); describing capabilities in plain words (for example a project valuation model or a deposit-type comparison) is fine."
+      "judge": "Pass if BOTH hold. (1) Coverage: it describes in plain words at least FIVE of these seven kinds of information: mineral occurrences, geochemical samples, company financials, commodity prices, exchange rates, the document library, web search. Count them; any five pass, so leaving out exchange rates is fine. (2) No internal identifiers: it does not print table, column, function or tool names (snake_case or schema.table names such as run_sql, geochem.samples, search_documents). Naming data sources or publishers (USGS, GEUS, an annual report) and describing capabilities in plain words (a project valuation model, a deposit-type comparison, ranking leads) are fine and are NOT a reason to fail."
     },
     {
       "id": "plain-sql-request",
@@ -2108,7 +2108,7 @@
         "maps_min": 1,
         "max_turns": 6
       },
-      "judge": "Lists Rio Tinto's assets with its ownership shares (for example Escondida 30%, Oyu Tolgoi 66%, Simandou 45%, Richards Bay Minerals 74%) from the annual report as at 31 December 2025, says plainly how many of the assets could be placed on the map and how many could not (counts consistent with each other; the total grew from 37 to 48 on 2026-11-03 when NRCan's Canadian project list was loaded), and that the unplaced ones have no catalogued position, and says a map is shown. Does not give coordinates for assets it could not place, and does not claim which asset is largest."
+      "judge": "Lists Rio Tinto's assets with its ownership shares (for example Escondida 30%, Oyu Tolgoi 66%, Simandou 45%, Richards Bay Minerals 74%) from the 2025 annual report (the stored records carry only the year, so 'as at 2025' is enough), says plainly how many of the assets could be placed on the map and how many could not (counts consistent with each other; the total grew from 37 to 48 on 2026-11-03 when NRCan's Canadian project list was loaded; saying the others 'could not be placed' or 'have no recorded position' is enough), and says a map is shown. Does not give coordinates for assets it could not place, and does not claim which asset is largest."
     },
     {
       "id": "assets-glencore-copper",

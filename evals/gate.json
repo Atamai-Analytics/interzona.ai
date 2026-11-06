@@ -28,7 +28,7 @@
       "cat": "gate",
       "q": "Show Nyrstar's Australian assets on a map.",
       "expect": {"tools_any": ["company_assets"], "maps_min": 1, "not_contains": ["Hellyer"], "contains_any": ["Prospectus", "Austrade"], "max_turns": 4},
-      "judge": "Names only the two assets in the records (the Australian Antimony Metal Refining Project and the Australian Germanium Recovery Project), cites the Austrade Prospectus as their source, and says both are placed only at the nearest town. Does NOT add other sites, mines or owners from general knowledge."
+      "judge": "Names only the two assets in the records (the Australian Antimony Metal Refining Project and the Australian Germanium Recovery Project), cites the Austrade Prospectus as their source, and says both are placed only at the nearest town. Does NOT add other sites, mines or owners from general knowledge (quoting the owner as recorded, 'Nyrstar Australia (Trafigura Control Holdings Pte. Ltd (Singapore))', is fine)."
     },
     {
       "id": "gate-table-count",

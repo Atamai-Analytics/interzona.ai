@@ -122,7 +122,7 @@ async function searchLiterature(query: string, seen: Set<string>, must: RegExp, 
     if (need && !need.test(shown)) continue;
     // scanned-PDF debris (download banners, run-together words and numbers) makes a poor quotation
     const letters = (shown.match(/[A-Za-z\s,.;:'"()\-]/g) ?? []).length / Math.max(1, shown.length);
-    if (/downloadedfrom|pubs\.geoscienceworld/i.test(shown) || letters < 0.82) continue;
+    if (/downloadedfrom|pubs\.geoscienceworld|={4,}|\.html?\b/i.test(shown) || letters < 0.82) continue;
     // running prose has many small function words; map labels and table debris do not
     const words = shown.toLowerCase().match(/[a-z']+/g) ?? [];
     const small = words.filter((w) => ["the", "of", "and", "is", "are", "in", "to", "a", "for", "with", "by", "at", "on", "that", "has", "was", "its", "from"].includes(w)).length;
@@ -172,7 +172,8 @@ export async function buildMemo(caseId: string): Promise<Memo> {
   // 2. fingerprint
   const fpP = (async () => {
     if (!c.fingerprint) return { fp: null as Memo["fingerprint"], note: "A deposit-type signature compares rock samples with known deposits. The survey behind this memo is sediments or soils, so it is not applicable here." };
-    const out = await depositFingerprint({ ...c.fingerprint });
+    const { area, ...fpArgs } = c.fingerprint;
+    const out = await depositFingerprint({ ...fpArgs });
     if (!out.content.startsWith("{")) return { fp: null as Memo["fingerprint"], note: out.content };
     const j = JSON.parse(out.content) as {
       survey: string; lead: { samples_used: number; filter: string }; background: { samples_used: number }; elements_used: string[];
@@ -186,7 +187,7 @@ export async function buildMemo(caseId: string): Promise<Memo> {
     return {
       fp: {
         survey: j.survey,
-        filter: j.lead.filter,
+        filter: area ? `${j.lead.filter}, ${area}` : j.lead.filter,
         nLead: j.lead.samples_used,
         nBackground: j.background.samples_used,
         elements: j.elements_used,
@@ -202,7 +203,8 @@ export async function buildMemo(caseId: string): Promise<Memo> {
   // 3. catalogued occurrences
   const occP = (async (): Promise<Memo["occurrences"]> => {
     const lit = (s: string) => `'${s.replace(/'/g, "''")}'`;
-    const where = `o.is_active AND o.country_name = ${lit(c.occurrences.country)} AND EXISTS (SELECT 1 FROM unnest(o.commodities) k WHERE k ~* ${lit(c.occurrences.pattern)})`;
+    const jur = c.occurrences.jurisdiction ? ` AND o.jurisdiction_id IN (SELECT jurisdiction_id FROM core.jurisdictions WHERE name = ${lit(c.occurrences.jurisdiction)})` : "";
+    const where = `o.is_active AND o.country_name = ${lit(c.occurrences.country)}${jur} AND EXISTS (SELECT 1 FROM unnest(o.commodities) k WHERE k ~* ${lit(c.occurrences.pattern)})`;
     const by = await runReadOnlyQuery(`SELECT coalesce(o.status, 'UNKNOWN') AS status, count(*) AS n FROM core.occurrences o WHERE ${where} GROUP BY 1 ORDER BY 2 DESC`, 20);
     const named = await runReadOnlyQuery(
       `SELECT o.name, coalesce(o.status, 'UNKNOWN') AS status, o.country_name FROM core.occurrences o WHERE ${where} AND o.name !~* '^(mrds|unnamed)'
@@ -210,7 +212,7 @@ export async function buildMemo(caseId: string): Promise<Memo> {
       10
     );
     const total = by.rows.reduce((s, r) => s + Number(r.n), 0);
-    creditsFromText(c.occurrences.country).forEach((x) => dataCredits.add(x));
+    creditsFromText(c.occurrences.jurisdiction ?? c.occurrences.country).forEach((x) => dataCredits.add(x));
     dataCredits.add("Mineral occurrence catalogue (USGS and national surveys)");
     return { label: c.occurrences.label, total, byStatus: by.rows.map((r) => ({ status: String(r.status), n: Number(r.n) })), named: named.rows.map((r) => ({ name: String(r.name), status: String(r.status), country: r.country_name ? String(r.country_name) : null })) };
   })();
@@ -219,6 +221,7 @@ export async function buildMemo(caseId: string): Promise<Memo> {
   const holdP = (async (): Promise<Memo["holders"]> => {
     const out = await companyAssets({ companies: c.companies, ...(c.companyCommodity ? { commodity: c.companyCommodity } : {}) });
     const j = JSON.parse(out.content) as { found?: boolean; assets?: Record<string, unknown>[]; assets_without_position?: string[]; not_found?: string[] };
+    if (j.assets && c.companyRegion) { const re = new RegExp(c.companyRegion, "i"); j.assets = j.assets.filter((a) => re.test(String(a.country ?? ""))); }
     if (j.found === false || !j.assets?.length) return null;
     dataCredits.add("Company asset and ownership records (annual reports)");
     return {
@@ -279,7 +282,7 @@ export async function buildMemo(caseId: string): Promise<Memo> {
   if (leads) {
     keyPoints.push(
       leads.rows.length
-        ? `${leads.rows.length} areas with anomalous ${c.commodity} chemistry and no catalogued occurrence close by, found by screening ${leads.samplesWithData.toLocaleString("en-US")} samples; the strongest is near ${leads.rows[0].area} (${leads.rows[0].anomalous} of ${leads.rows[0].analysed} samples anomalous).`
+        ? `${leads.rows.length} areas with anomalous ${c.commodity} chemistry${leads.rows.some((r) => r.group === "NEW_LEAD") ? " and no catalogued occurrence close by" : " (every one has a catalogued occurrence within 15 km, so none is a new lead)"}, found by screening ${leads.samplesWithData.toLocaleString("en-US")} samples; the strongest is near ${leads.rows[0].area} (${leads.rows[0].anomalous} of ${leads.rows[0].analysed} samples anomalous).`
         : `No new-lead areas were found for ${c.commodity} in this survey with the screen's settings.`
     );
   }

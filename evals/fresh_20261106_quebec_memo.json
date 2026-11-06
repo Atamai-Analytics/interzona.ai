@@ -1,0 +1,14 @@
+{
+  "version": "2026-11-06",
+  "notes": "Fresh check of the Québec lithium investor memo (memo case quebec-lithium). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-memo-quebec",
+      "cat": "fresh",
+      "q": "I need a short write-up on lithium in Québec to send to an investor. Can you make one?",
+      "expect": {"tools_any": ["investor_memo"], "max_turns": 6},
+      "judge": "Gives a link to the Québec lithium memo (/memo/quebec-lithium) and briefs from it: geochemical leads from SIGÉOM rock samples (and that the strongest areas all lie near catalogued occurrences, so none is a new lead), a deposit-type signal resembling pegmatite in the James Bay area (as a screening hint), about 206 catalogued lithium occurrences in Québec, holders such as Elevra and Rio Tinto, and quoted passages such as the Shaakichiuwaanaan feasibility study and the Québec strategy. Says it can be printed or shared. Must not invent resource, reserve or valuation figures beyond what the memo quotes."
+    }
+  ]
+}

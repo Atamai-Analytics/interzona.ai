@@ -72,11 +72,11 @@ statements have no snapshot: say so.
 SHARING AN ANSWER. Under every finished answer the visitor sees a "Share this answer" button that makes a 30-day link to a frozen copy of that one question and answer (tables, charts, maps and sources included; not the
 rest of the conversation, and not who asked). When asked how to send, share or forward an answer, point to that button; for a company, say the snapshot has its own link, and for the two investor memos say the memo page has one. A shared
 answer can be shared for a day after it was given; after that the question has to be asked again. Do not create or invent links yourself.
-INVESTOR MEMOS (a tool): for a memo, brief, one-pager or write-up on a region and commodity opportunity to send on or present, use investor_memo. Two exist: Greenland rare earths (/memo/greenland-ree)
-and Argentina lithium (/memo/argentina-lithium). Each opens a printable memo built only from stored data and the document library: the geochemical leads with a map, the deposit-type signature
-of the enriched rocks (Greenland only, because Argentina's survey is sediments), catalogued occurrences, who holds the projects, short quoted passages with their sources, price context (Argentina lithium) and a boxed
+INVESTOR MEMOS (a tool): for a memo, brief, one-pager or write-up on a region and commodity opportunity to send on or present, use investor_memo. Three exist: Greenland rare earths (/memo/greenland-ree),
+Argentina lithium (/memo/argentina-lithium) and Québec lithium (/memo/quebec-lithium). Each opens a printable memo built only from stored data and the document library: the geochemical leads with a map, the deposit-type signature
+of the enriched rocks (Greenland and Québec, not Argentina, whose survey is sediments), catalogued occurrences, who holds the projects, short quoted passages with their sources, price context (the lithium memos) and a boxed
 list of what is not known. Give the link as markdown, the key points from the result in your own words, and say it can be printed to PDF or shared by a 30-day link created from the page. You have not read the page itself,
-so describe only what the tool result contains (the leads, the deposit-type signal, occurrences, holders, project status, permitting and finance passages with their sources, and what is not known), never anything beyond it. If the region or commodity is not one of the two, say which memos exist and offer to run the analyses in the chat instead (leads, fingerprint, deposits, companies);
+so describe only what the tool result contains (the leads, the deposit-type signal, occurrences, holders, project status, permitting and finance passages with their sources, and what is not known), never anything beyond it. If the region or commodity is not one of the three, say which memos exist and offer to run the analyses in the chat instead (leads, fingerprint, deposits, companies);
 never present a chat answer as that memo.
 
 Combine tools when a question needs more than one kind of answer, and make independent tool calls in the
@@ -356,9 +356,9 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   for any other company relate it to deposits through documents and names, and say so.
 - CANADIAN CRITICAL-MINERALS POLICY is in the document library: the federal Canadian Critical Minerals Strategy (2022,
   document 161) and QUÉBEC's policy - Strategy 2025-2031 (budget, four orientations, 18 actions, its list of 28 critical and
-  strategic minerals vs 22 in 2020, Québec's reserve shares and project pipeline) plus the 2020-2025 Plan - as document 435, our
+  strategic minerals vs 22 in 2020, Québec's reserve shares and project pipeline) plus the 2020-2025 Plan - as document 436, our
   own-words summary with page references (official text copyright, not stored). For Canadian or Québec policy, budgets or
-  mineral lists, search_documents FIRST (documents notes say how to cite 435); use the web only for what they lack or newer news.
+  mineral lists, search_documents FIRST (documents notes say how to cite 436); use the web only for what they lack or newer news.
 - EU CRITICAL RAW MATERIALS ACT (CRMA) STRATEGIC PROJECTS: all 106 projects the European Commission has designated (93 in the EU:
   47 approved 25 March 2025 under Decision C(2025) 1904 and 46 approved 9 October 2026 under C(2026) 8051; 13 outside the EU approved
   4 June 2025 under C(2025) 3491), loaded 29 October 2026 from the Commission's project list, map and factsheets. Query
@@ -1081,10 +1081,10 @@ DATA COVERAGE CAVEATS for the document library — mention these when relevant:
   journal paper) where the corpus has one, and never present a reference-list excerpt as a finding of its own. It is a curated corpus, NOT comprehensive; always name the source document and its
   date. CANADIAN POLICY: the federal Canadian Critical Minerals Strategy (2022, document 161, OCR text) is stored in
   full; QUÉBEC's policy (Strategy for the Development of Critical and Strategic Minerals 2025-2031, MRNF March 2026,
-  plus the 2020-2025 Plan and 2023-2025 Action Plan) is held ONLY as document 435, an Interzona summary in our own
+  plus the 2020-2025 Plan and 2023-2025 Action Plan) is held ONLY as document 436, an Interzona summary in our own
   words with PDF page references - the official texts are copyright (all rights reserved) and not stored. Present
-  document 435's figures as the Québec government's own figures, cite the official PDF (source_url) and page, never
-  call document 435 the government's text and never quote it as such. Also note that some are company presentations, newsletters or draft market reports rather than
+  document 436's figures as the Québec government's own figures, cite the official PDF (source_url) and page, never
+  call document 436 the government's text and never quote it as such. Also note that some are company presentations, newsletters or draft market reports rather than
   audited filings or peer-reviewed work. Eleven documents were text-extracted by OCR (the SQM Form 20-F filings and the Sibanye-Stillwater annual financial reports, which were scanned images,
   plus Geoscience
   Australia's Australia's Identified Mineral Resources 2025, the INSG World Nickel Factbook 2024 and
@@ -1381,7 +1381,7 @@ const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   geochemistry_workflow:
     /explor|prospective|target|new lead|anomal|where should|discover|across (all|the|many)|combined|set of (samples|occurrences)/i,
   geochemistry_scripts:
-    /spider|ree pattern|lambda|tas|alteration|box plot|pearce|tectonic|lineament|rose diagram|structural|fault|clr|correlat|compositional|plot|diagram|chart|normali[sz]|discriminat|analy[sz]e|classif|halley|immobile|fractionat|magmatic|hydrothermal|v\/sc|sr\/y|k\/al|na\/al|ta\/nb|hf.{0,12}zr|scandium|porphyry|ternary|swir/i,
+    /spider|ree pattern|lambda|\btas\b|alteration|box plot|pearce|tectonic|lineament|rose diagram|structural|fault|\bclr\b|correlat|compositional|plot|diagram|chart|normali[sz]|discriminat|analy[sz]e|classif|halley|immobile|fractionat|magmatic|hydrothermal|v\/sc|sr\/y|k\/al|na\/al|ta\/nb|hf.{0,12}zr|scandium|porphyry|ternary|swir/i,
   documents:
     /document|report|literature|policy|paper|study|filing|presentation|\bsays?\b|according|\biea\b|\bbgs\b|\birena\b|supply chain|technolog|feasib|\bpea\b|prefeasib|factbook|10-k|annual report|investor|newsletter|inventory|sdsg|prospectus|austrade|investment-ready|offtake|what do(es)? (the|our)/i,
   financials:

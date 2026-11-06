@@ -7,10 +7,14 @@ export type MemoCase = {
   subtitle: string;
   commodity: string;
   leads: { source_system: string; bbox: number[]; commodity?: string; elements?: string[]; basis?: string };
-  fingerprint?: { source_system: string; bbox?: number[]; lead_filter?: { element: string; min_ppm: number } };
-  occurrences: { country: string; pattern: string; label: string };
+  /** area: when bbox is narrower than the memo's region, a short name for it, shown with the filter. */
+  fingerprint?: { source_system: string; bbox?: number[]; area?: string; lead_filter?: { element: string; min_ppm: number } };
+  /** jurisdiction: optional province / state name (core.jurisdictions.name) to keep only that part of the country. */
+  occurrences: { country: string; jurisdiction?: string; pattern: string; label: string };
   companies: string[];
   companyCommodity?: string;
+  /** Keep only assets whose jurisdiction matches this regular expression (so a global company's assets elsewhere are not listed). */
+  companyRegion?: string;
   literature: string[];
   /** A passage is quoted only if it mentions one of these (so a quote about another country is not shown). */
   literatureMust: string;
@@ -62,6 +66,30 @@ export const MEMO_CASES: Record<string, MemoCase> = {
     ],
     sedimentSurvey: true,
     literature: ["lithium brine deposits of the Argentine Puna salars", "lithium extraction and processing from brine and pegmatite"],
+    priceCommodity: "lithium",
+  },
+  "quebec-lithium": {
+    id: "quebec-lithium",
+    title: "Québec lithium",
+    subtitle: "Geochemical leads, deposit-type signature, catalogued lithium sites, project holders, study economics, policy and the literature",
+    commodity: "lithium",
+    leads: { source_system: "CANADA_QC_SIGEOM", bbox: [-80, 45, -57, 63], elements: ["li"], basis: "any" },
+    // The reference deposit database has no Li, so the lead rocks are picked on rubidium, a lithium-pegmatite (LCT) pathfinder, within the
+    // James Bay lithium district (Cs >= 100 ppm, or Rb over all of Québec, mixed in Carlin-type / iron-oxide signals - tried 2026-11-06)
+    fingerprint: { source_system: "CANADA_QC_SIGEOM", bbox: [-80, 49, -70, 55], area: "Eeyou Istchee James Bay, 49-55°N, 70-80°W", lead_filter: { element: "Rb", min_ppm: 500 } },
+    occurrences: { country: "Canada", jurisdiction: "Quebec", pattern: "^li$|lithium", label: "lithium occurrences in Québec" },
+    companies: ["Elevra Lithium", "Rio Tinto"],
+    companyCommodity: "lithium",
+    companyRegion: "qu[eé]bec|canada",
+    literatureMust: "qu[eé]bec|james bay|baie-james|eeyou|nemaska|whabouchi|shaakichiuwaanaan|corvette|moblan|authier|north american lithium|b[eé]cancour",
+    context: [
+      { topic: "Shaakichiuwaanaan (PMET Resources): feasibility study", query: "Shaakichiuwaanaan CV5 PMET Resources feasibility study after-tax NPV mineral reserve capex", require: ["after-tax NPV", "mineral reserve", "shaakichiuwaanaan"] },
+      { topic: "Québec government policy and support", query: "Québec Strategy for the Development of Critical and Strategic Minerals 2025-2031 budget orientations lithium", require: ["four orientations", "C\\$88\\.1 million", "nrec fund"] },
+    ],
+    literature: [
+      "lithium pegmatite (LCT spodumene) deposits of the Superior Province, James Bay and Abitibi",
+      "spodumene concentrate and lithium hydroxide processing in Québec",
+    ],
     priceCommodity: "lithium",
   },
 };

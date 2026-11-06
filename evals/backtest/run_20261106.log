@@ -1,0 +1,115 @@
+12:39:18 GREENLAND_GEUS                   REE  tested lift 5.21 [1.26, 19.25] flagged 76 hit rate 0.09 vs expected 0.02
+12:39:19 GREENLAND_GEUS                   Li   not tested: fewer than 8 flagged cells 
+12:41:33 GREENLAND_GEUS                   Cu   tested lift 0.99 [0.00, 6.16] flagged 151 hit rate 0.01 vs expected 0.01
+12:43:07 GREENLAND_GEUS                   Zn   tested lift 14.48 [2.31, 360.58] flagged 132 hit rate 0.05 vs expected 0.00
+12:43:23 GREENLAND_GEUS                   Ni   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:43:33 GREENLAND_GEUS                   W    not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:43:37 GREENLAND_GEUS                   Sn   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:43:45 GREENLAND_GEUS                   Mo   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:44:32 GREENLAND_GEUS                   U    not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:44:39 ARGENTINA_SEGEMAR                REE  tested lift 4.63 [0.00, 109.73] flagged 154 hit rate 0.03 vs expected 0.01
+12:44:41 ARGENTINA_SEGEMAR                Li   tested lift 0.00 [0.00, 0.00] flagged 17 hit rate 0.00 vs expected 0.04
+12:46:25 ARGENTINA_SEGEMAR                Cu   tested lift 1.53 [1.20, 1.95] flagged 164 hit rate 0.57 vs expected 0.37
+12:47:26 ARGENTINA_SEGEMAR                Zn   tested lift 1.79 [1.34, 2.46] flagged 186 hit rate 0.44 vs expected 0.24
+12:47:37 ARGENTINA_SEGEMAR                Ni   tested lift 2.10 [0.24, 25.97] flagged 195 hit rate 0.04 vs expected 0.02
+12:47:55 ARGENTINA_SEGEMAR                W    tested lift 2.56 [1.19, 5.58] flagged 176 hit rate 0.18 vs expected 0.07
+12:48:03 ARGENTINA_SEGEMAR                Sn   tested lift 2.66 [0.00, 9.62] flagged 138 hit rate 0.06 vs expected 0.02
+12:48:15 ARGENTINA_SEGEMAR                Mo   tested lift 1.39 [0.69, 2.51] flagged 185 hit rate 0.11 vs expected 0.08
+12:48:52 ARGENTINA_SEGEMAR                U    tested lift 0.62 [0.28, 1.40] flagged 178 hit rate 0.06 vs expected 0.09
+12:48:59 FINLAND_GTK_ROCK                 REE  not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:49:03 FINLAND_GTK_ROCK                 Li   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:50:49 FINLAND_GTK_ROCK                 Cu   tested lift 0.83 [0.00, 3.17] flagged 14 hit rate 0.07 vs expected 0.09
+12:51:52 FINLAND_GTK_ROCK                 Zn   tested lift 2.76 [0.00, 12.73] flagged 11 hit rate 0.09 vs expected 0.03
+12:52:04 FINLAND_GTK_ROCK                 Ni   tested lift 2.09 [0.00, 4.97] flagged 21 hit rate 0.14 vs expected 0.07
+12:52:04 FINLAND_GTK_ROCK                 W    no cells with enough qualifying samples 
+12:52:04 FINLAND_GTK_ROCK                 Sn   no cells with enough qualifying samples 
+12:52:18 FINLAND_GTK_ROCK                 Mo   tested lift 0.00 [0.00, 0.00] flagged 14 hit rate 0.00 vs expected 0.01
+12:52:56 FINLAND_GTK_ROCK                 U    not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:53:02 SWEDEN_SGU_LITHOGEOCHEMISTRY     REE  not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:53:05 SWEDEN_SGU_LITHOGEOCHEMISTRY     Li   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:54:35 SWEDEN_SGU_LITHOGEOCHEMISTRY     Cu   tested lift 2.97 [1.53, 6.92] flagged 118 hit rate 0.23 vs expected 0.08
+12:55:29 SWEDEN_SGU_LITHOGEOCHEMISTRY     Zn   tested lift 8.82 [4.18, 41.17] flagged 73 hit rate 0.33 vs expected 0.04
+12:55:40 SWEDEN_SGU_LITHOGEOCHEMISTRY     Ni   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:55:56 SWEDEN_SGU_LITHOGEOCHEMISTRY     W    tested lift 22.38 [6.04, 51.50] flagged 96 hit rate 0.03 vs expected 0.00
+12:56:03 SWEDEN_SGU_LITHOGEOCHEMISTRY     Sn   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:56:14 SWEDEN_SGU_LITHOGEOCHEMISTRY     Mo   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:56:45 SWEDEN_SGU_LITHOGEOCHEMISTRY     U    not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+12:57:10 USA_USGS_NGDB                    REE  tested lift 3.43 [2.34, 4.75] flagged 354 hit rate 0.20 vs expected 0.06
+12:57:22 USA_USGS_NGDB                    Li   tested lift 7.12 [3.98, 13.30] flagged 279 hit rate 0.10 vs expected 0.01
+13:09:25 USA_USGS_NGDB                    Cu   tested lift 1.74 [1.62, 1.88] flagged 1059 hit rate 0.88 vs expected 0.51
+13:16:04 USA_USGS_NGDB                    Zn   tested lift 1.85 [1.70, 2.03] flagged 1002 hit rate 0.68 vs expected 0.37
+13:17:16 USA_USGS_NGDB                    Ni   tested lift 2.37 [1.87, 2.97] flagged 1187 hit rate 0.20 vs expected 0.08
+13:18:52 USA_USGS_NGDB                    W    tested lift 2.11 [1.82, 2.41] flagged 707 hit rate 0.47 vs expected 0.22
+13:19:36 USA_USGS_NGDB                    Sn   tested lift 2.78 [2.20, 3.54] flagged 1063 hit rate 0.20 vs expected 0.07
+13:20:52 USA_USGS_NGDB                    Mo   tested lift 2.16 [1.88, 2.50] flagged 1047 hit rate 0.44 vs expected 0.20
+13:23:48 USA_USGS_NGDB                    U    tested lift 2.83 [2.49, 3.21] flagged 378 hit rate 0.70 vs expected 0.25
+13:23:51 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   REE  not tested: fewer than 8 flagged cells 
+13:23:53 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Li   not tested: fewer than 8 flagged cells 
+13:24:07 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Cu   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+13:24:16 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Zn   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+13:24:18 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Ni   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+13:24:20 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   W    not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+13:24:23 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Sn   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+13:24:25 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   Mo   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+13:24:29 AUSTRALIA_VIC_GSV_GEOCHEMISTRY   U    not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+13:24:32 AUSTRALIA_TAS_MRT                REE  not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+13:24:35 AUSTRALIA_TAS_MRT                Li   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+13:24:53 AUSTRALIA_TAS_MRT                Cu   tested lift 0.94 [0.00, 29.16] flagged 57 hit rate 0.14 vs expected 0.15
+13:25:05 AUSTRALIA_TAS_MRT                Zn   tested lift 24.86 [1.19, 80.16] flagged 38 hit rate 0.16 vs expected 0.01
+13:25:09 AUSTRALIA_TAS_MRT                Ni   tested lift 41.25 [0.00, 219.85] flagged 36 hit rate 0.14 vs expected 0.00
+13:25:13 AUSTRALIA_TAS_MRT                W    tested lift 15.62 [0.73, 39.02] flagged 34 hit rate 0.15 vs expected 0.01
+13:25:17 AUSTRALIA_TAS_MRT                Sn   tested lift 11.33 [0.00, 131.10] flagged 35 hit rate 0.17 vs expected 0.02
+13:25:21 AUSTRALIA_TAS_MRT                Mo   tested lift 0.91 [0.00, 8.36] flagged 49 hit rate 0.02 vs expected 0.02
+13:25:28 AUSTRALIA_TAS_MRT                U    not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+13:25:43 CANADA_QC_SIGEOM                 REE  tested lift 4.95 [3.62, 6.79] flagged 230 hit rate 0.47 vs expected 0.09
+13:25:48 CANADA_QC_SIGEOM                 Li   tested lift 10.06 [5.03, 24.33] flagged 156 hit rate 0.26 vs expected 0.03
+13:30:06 CANADA_QC_SIGEOM                 Cu   tested lift 1.75 [1.58, 1.96] flagged 528 hit rate 0.90 vs expected 0.51
+13:32:39 CANADA_QC_SIGEOM                 Zn   tested lift 1.86 [1.57, 2.22] flagged 480 hit rate 0.71 vs expected 0.38
+13:33:11 CANADA_QC_SIGEOM                 Ni   tested lift 2.61 [2.15, 3.27] flagged 378 hit rate 0.68 vs expected 0.26
+13:34:01 CANADA_QC_SIGEOM                 W    tested lift 5.34 [3.24, 10.67] flagged 325 hit rate 0.27 vs expected 0.05
+13:34:18 CANADA_QC_SIGEOM                 Sn   tested lift 1.81 [0.69, 6.96] flagged 480 hit rate 0.04 vs expected 0.02
+13:34:48 CANADA_QC_SIGEOM                 Mo   tested lift 2.59 [1.94, 3.54] flagged 402 hit rate 0.36 vs expected 0.14
+13:36:18 CANADA_QC_SIGEOM                 U    tested lift 4.36 [2.94, 6.92] flagged 291 hit rate 0.35 vs expected 0.08
+13:36:24 CANADA_QC_SIGEOM_SED             REE  tested lift 2.63 [0.74, 8.15] flagged 131 hit rate 0.21 vs expected 0.08
+13:36:35 CANADA_QC_SIGEOM_SED             Li   tested lift 0.66 [0.28, 1.22] flagged 734 hit rate 0.02 vs expected 0.03
+13:42:47 CANADA_QC_SIGEOM_SED             Cu   tested lift 1.64 [1.42, 1.90] flagged 975 hit rate 0.47 vs expected 0.29
+13:46:28 CANADA_QC_SIGEOM_SED             Zn   tested lift 1.42 [1.16, 1.77] flagged 1090 hit rate 0.28 vs expected 0.20
+13:47:06 CANADA_QC_SIGEOM_SED             Ni   tested lift 1.67 [1.25, 2.17] flagged 786 hit rate 0.25 vs expected 0.15
+13:48:09 CANADA_QC_SIGEOM_SED             W    tested lift 1.52 [0.81, 3.58] flagged 1215 hit rate 0.06 vs expected 0.04
+13:48:34 CANADA_QC_SIGEOM_SED             Sn   tested lift 1.33 [0.44, 4.84] flagged 846 hit rate 0.01 vs expected 0.01
+13:49:20 CANADA_QC_SIGEOM_SED             Mo   tested lift 1.98 [1.49, 2.64] flagged 1280 hit rate 0.14 vs expected 0.07
+13:51:35 CANADA_QC_SIGEOM_SED             U    tested lift 2.61 [1.78, 4.17] flagged 1020 hit rate 0.19 vs expected 0.07
+13:51:40 CANADA_SK_SGS                    REE  tested lift 2.44 [0.77, 5.95] flagged 11 hit rate 0.64 vs expected 0.26
+13:51:48 CANADA_SK_SGS                    Li   tested lift 3.16 [0.00, 17.29] flagged 12 hit rate 0.17 vs expected 0.05
+13:52:47 CANADA_SK_SGS                    Cu   tested lift 1.12 [0.96, 1.30] flagged 100 hit rate 0.80 vs expected 0.71
+13:53:23 CANADA_SK_SGS                    Zn   tested lift 1.02 [0.81, 1.22] flagged 118 hit rate 0.53 vs expected 0.53
+13:53:33 CANADA_SK_SGS                    Ni   tested lift 1.31 [0.95, 1.73] flagged 102 hit rate 0.64 vs expected 0.49
+13:53:42 CANADA_SK_SGS                    W    tested lift 2.23 [0.00, 10.74] flagged 129 hit rate 0.03 vs expected 0.01
+13:53:45 CANADA_SK_SGS                    Sn   tested lift 1.85 [0.00, 5.98] flagged 15 hit rate 0.07 vs expected 0.04
+13:53:52 CANADA_SK_SGS                    Mo   tested lift 1.20 [0.88, 1.65] flagged 116 hit rate 0.46 vs expected 0.38
+13:54:14 CANADA_SK_SGS                    U    tested lift 1.60 [1.30, 2.00] flagged 95 hit rate 0.77 vs expected 0.48
+13:54:26 CANADA_NRCAN_CDOGS               REE  tested lift 3.86 [0.00, 19.11] flagged 133 hit rate 0.05 vs expected 0.01
+13:54:32 CANADA_NRCAN_CDOGS               Li   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+14:07:22 CANADA_NRCAN_CDOGS               Cu   tested lift 2.63 [1.89, 3.59] flagged 1044 hit rate 0.12 vs expected 0.05
+14:15:07 CANADA_NRCAN_CDOGS               Zn   tested lift 2.39 [1.57, 3.42] flagged 962 hit rate 0.07 vs expected 0.03
+14:16:26 CANADA_NRCAN_CDOGS               Ni   tested lift 3.22 [1.80, 5.32] flagged 918 hit rate 0.06 vs expected 0.02
+14:18:20 CANADA_NRCAN_CDOGS               W    tested lift 3.37 [1.75, 6.80] flagged 1358 hit rate 0.02 vs expected 0.01
+14:18:55 CANADA_NRCAN_CDOGS               Sn   tested lift 2.93 [0.70, 22.40] flagged 466 hit rate 0.01 vs expected 0.00
+14:20:25 CANADA_NRCAN_CDOGS               Mo   tested lift 1.78 [0.89, 3.00] flagged 1207 hit rate 0.02 vs expected 0.01
+14:25:02 CANADA_NRCAN_CDOGS               U    tested lift 2.91 [1.22, 5.49] flagged 1086 hit rate 0.02 vs expected 0.01
+{
+  "run_date": "2026-11-06",
+  "grid_deg": 0.25,
+  "percentile": 0.95,
+  "min_anomalous": 3,
+  "near_km": 15.0,
+  "bootstrap": 1000,
+  "combinations": 99,
+  "tested": 69,
+  "better_than_chance": 37,
+  "no_clear_difference": 30,
+  "worse_than_chance": 2,
+  "median_lift": 2.370404585459505,
+  "seconds": 6353
+}
+saved C:\Users\dean\critical-minerals-ai\evals\backtest\screen_backtest_2026-11-06.json

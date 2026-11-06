@@ -1,0 +1,21 @@
+{
+  "version": "2026-11-06",
+  "notes": "Test set for the Canada capability card (Québec lithium study economics). The first question is the card's exact prompt.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "card-quebec-lithium-economics",
+      "cat": "fresh",
+      "q": "Compare the study economics of Québec's lithium projects (after-tax NPV, initial capex, IRR and mine life) and show them on a map.",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 10, "maps_min": 1},
+      "judge": "Builds a comparison from the stored study figures for the Québec lithium projects (Shaakichiuwaanaan, Whabouchi, Rose, Moblan, James Bay/Galaxy, North American Lithium; PAK and Georgia Lake are in Ontario and must not be counted as Québec), with each figure's currency (C$), discount rate and study name/date, noting where a figure is missing (e.g. Rose and Moblan have no initial-capex fact; Moblan gives total capex) and that the studies differ in date and type (PFS vs FS), so they are not directly comparable. Shows a map of the projects. Must not invent figures."
+    },
+    {
+      "id": "card-canada-uranium-economics",
+      "cat": "fresh",
+      "q": "How do the Athabasca uranium development projects compare on study economics?",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 10},
+      "judge": "Compares Wheeler River (Phoenix ISR, Denison), Arrow / Rook I (NexGen) and PLS (Paladin, formerly Fission) from stored facts: post-tax NPV8, IRR, initial capex in C$ with study dates, noting the different studies and dates. Must not invent figures or present US$ for C$ values."
+    }
+  ]
+}

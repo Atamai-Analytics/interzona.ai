@@ -184,9 +184,13 @@ def judge(model, q, r, truths):
         "Use the GROUND TRUTH values (from the database) when given. Be literal: a pass requires every element of the rubric. "
         "Reply with ONLY a JSON object: {\"pass\": true|false, \"reason\": \"one short sentence\"}.\n\n"
         f"QUESTION(S): {json.dumps(turns)}\n\nRUBRIC: {q['judge']}\n\nGROUND TRUTH: {json.dumps(truths, default=str)[:1500]}\n\n"
-        f"TOOLS USED: {r['tools']}\n\nANSWER:\n{r['reply'][:9000]}"
+        f"TOOLS USED: {r['tools']}\n\n"
+        f"MAPS THE APP SHOWED UNDER THE ANSWER: {len(r.get('maps', []))} (maps are drawn by the app from query results; the answer text cannot contain them)\n\n"
+        f"ANSWER:\n{r['reply'][:9000]}"
     )
-    body = json.dumps({"model": model, "max_tokens": 300, "messages": [{"role": "user", "content": prompt}]}).encode()
+    # Thinking is turned off ("between_tools" on this model). With thinking on, the 300-token limit was spent on thinking and no JSON came
+    # back, which was reported as "grader error (not counted)" - so many runs were never graded.
+    body = json.dumps({"model": model, "max_tokens": 1000, "thinking": {"type": "between_tools"}, "messages": [{"role": "user", "content": prompt}]}).encode()
     req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body, headers={"x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
     for attempt in range(3):
         try:

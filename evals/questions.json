@@ -2241,7 +2241,7 @@
       "expect": {
         "max_turns": 6
       },
-      "judge": "Says there is no memo for Finland cobalt and names the memos that do exist (Greenland rare earths and Argentina lithium), and offers to run analyses in the chat instead (such as leads, deposits or companies). Does not fabricate a memo link for Finland cobalt and does not link /memo/greenland-ree or /memo/argentina-lithium as if they were about Finland cobalt."
+      "judge": "Says there is no memo for Finland cobalt and names the memos that do exist (Greenland rare earths, Argentina lithium and Québec lithium), and offers to run analyses in the chat instead (such as leads, deposits or companies). Does not fabricate a memo link for Finland cobalt and does not link /memo/greenland-ree or /memo/argentina-lithium as if they were about Finland cobalt."
     },
     {
       "id": "assay-greenland-none",

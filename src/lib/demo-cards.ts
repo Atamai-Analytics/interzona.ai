@@ -88,6 +88,12 @@ export const DEMO_CARDS: DemoCard[] = [
     prompt: "Prepare an investor memo on Greenland rare earths.",
   },
   {
+    icon: "🍁",
+    title: "Québec lithium, study by study",
+    description: "Lines up the after-tax NPV, capex, IRR and mine life from each Québec lithium project's own technical report, in Canadian dollars with study dates, on a map, and says why they are not directly comparable.",
+    prompt: "Compare the study economics of Québec's lithium projects (after-tax NPV, initial capex, IRR and mine life) and show them on a map.",
+  },
+  {
     icon: "📄",
     title: "A company snapshot to send on",
     description: "Builds a printable one-to-two page profile with a shareable link, and summarises what stands out.",

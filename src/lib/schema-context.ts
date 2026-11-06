@@ -739,6 +739,24 @@ LEAD LEAGUE TABLE (a tool): for 'where are the best new leads for X across every
   few samples is weak, that a cell flagged driven_by_a_few_extreme_values rests on one or two spikes (possible unit or entry error) and should be read behind the cells with many consistently anomalous samples,
   that 'no occurrence nearby' only means nothing is in our catalogue (the Swedish deposit catalogue is empty and other countries are thin, so 'new' there partly reflects the catalogue), that sediment surveys (Argentina)
   point to catchments, and that anomalies are not deposits, grades or resources. Offer the deposit fingerprint for the leads in rock surveys. Name each survey's publisher from the credits.
+SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when asked how reliable the screen or a lead is, and add the relevant line
+  when presenting leads in a survey or metal where it is weak). Method: the screen's own rules (top 5% per sample type, >= 3 flagged samples in a
+  0.25-degree cell); a cell is a hit when a precisely located catalogued occurrence of the same metal lies within 15 km; flagged cells are compared
+  with unflagged cells of similar sample density; lift = hit rate / expected, with a 95% interval from a block bootstrap. It measures how well the
+  screen RECOVERS KNOWN deposits (which may themselves have been found with the same data), not that it finds new ones; say so. Overall: 99 survey x
+  metal combinations, 69 testable, 37 clearly better than chance (interval above 1), 30 no clear difference, median lift 2.4. By survey:
+  Québec rock (SIGÉOM) is the strongest - Li 10.1x (5.0-24.3), W 5.3x, REE 5.0x, U 4.4x, Ni 2.6x, Mo 2.6x, Zn 1.9x, Cu 1.75x, Sn unclear.
+  USGS NGDB: all 9 metals better than chance (Li 7.1x, REE 3.4x, U 2.8x, Sn 2.8x, Ni 2.4x, Mo 2.2x, W 2.1x, Zn 1.85x, Cu 1.7x).
+  Federal Canadian surveys (CDoGS): W 3.4x, Ni 3.2x, U 2.9x, Cu 2.6x, Zn 2.4x; REE, Sn, Mo unclear; Li not testable.
+  Sweden: W 22x (but only 3% of flagged cells hit), Zn 8.8x, Cu 3.0x. Greenland: REE 5.2x (1.3-19), Zn 14x (wide interval); Cu no better.
+  Québec sediment/soil/till: modest - U 2.6x, Mo 2.0x, Ni 1.7x, Cu 1.6x, Zn 1.4x; Li 0.66x (0.28-1.22): sediment lithium anomalies do NOT
+  sit near known lithium deposits better than chance, so warn that Québec sediment lithium leads are weak and point to the rock survey (Li 10x).
+  Saskatchewan: only U better than chance (1.6x); Cu, Zn, Mo, Ni 1.0-1.3x (not clearly better) because its samples cluster around known deposits (half or more of
+  comparison cells already hit), so the screen cannot show an edge there - say that, not that the anomalies are worthless.
+  Tasmania: few flagged cells (34-57 per metal), so intervals are very wide; only Zn is clearly better (25x, 1.2-80); W, Sn, Ni look high but
+  are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
+  not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
+  Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
 geochem.sample_chemistry_wide: one row per sample for ALL eleven geochemical datasets (ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, USA_USGS_NGDB 387,527,
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 219 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,

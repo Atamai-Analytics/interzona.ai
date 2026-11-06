@@ -1,0 +1,28 @@
+{
+  "version": "2026-11-06",
+  "notes": "Fresh check that the assistant uses the screen back-test track record (6 Nov 2026) honestly. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-track-reliability",
+      "cat": "fresh",
+      "q": "How reliable is your geochemical anomaly screen? Has it been tested?",
+      "expect": {"max_turns": 4},
+      "judge": "Says it has been back-tested (November 2026) against catalogued deposits: flagged cells sit near known deposits of the same metal more often than comparable unflagged cells in 37 of 69 testable survey and metal combinations, median about 2.4 times, with examples (e.g. Québec rock lithium about 10x, USGS all metals better than chance). Says plainly this measures recovery of KNOWN deposits, not discovery of new ones, and names at least one weak case (e.g. Québec sediment lithium, Saskatchewan base metals or the thin Tasmanian results). Does not overclaim."
+    },
+    {
+      "id": "fresh-track-qc-sed-li",
+      "cat": "fresh",
+      "q": "Should I chase lithium anomalies in Québec stream sediments and lake sediments?",
+      "expect": {"max_turns": 8},
+      "judge": "Warns that in the back-test Québec sediment lithium anomalies did not sit near known lithium deposits better than chance (about 0.66x, interval including 1), so sediment lithium leads there are weak, and points to the Québec rock survey (lithium about 10x better than chance) or other follow-up. Does not claim the sediment anomalies are proven worthless, and does not invent figures."
+    },
+    {
+      "id": "fresh-track-saskatchewan",
+      "cat": "fresh",
+      "q": "Do the copper anomalies in the Saskatchewan till and lake sediment data point to copper deposits?",
+      "expect": {"max_turns": 8},
+      "judge": "Uses the back-test: in Saskatchewan only uranium was clearly better than chance; copper came out about 1.1x (not clearly better), and explains that this is because the samples cluster around known deposits so most comparison cells already sit near one, i.e. the test cannot show an edge rather than proving the anomalies are worthless. May run the screen as well. Says anomalies are not deposits and does not invent figures."
+    }
+  ]
+}

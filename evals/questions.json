@@ -657,7 +657,7 @@
       "expect": {
         "max_turns": 2
       },
-      "judge": "Describes in general terms what kinds of information are available, covering at least five of: mineral occurrences, geochemical samples, company financials, commodity prices, exchange rates, the document library, web search. It must not name tables, columns, functions or tools."
+      "judge": "Describes in general terms what kinds of information are available, covering at least five of: mineral occurrences, geochemical samples, company financials, commodity prices, exchange rates, the document library, web search. It must not name internal identifiers (table, column, function or tool names such as run_sql, geochem.samples or search_documents); describing capabilities in plain words (for example a project valuation model or a deposit-type comparison) is fine."
     },
     {
       "id": "plain-sql-request",

@@ -1,0 +1,35 @@
+{
+  "version": "2026-11-06",
+  "notes": "Fresh check of the Canadian report-summary notes on projects NOT in the frozen report_summaries_canada set. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-rsca-whabouchi",
+      "cat": "fresh",
+      "q": "What does the latest technical report say about the economics of Nemaska Lithium's Whabouchi mine?",
+      "expect": {"tools_any": ["run_sql", "search_documents"], "max_turns": 8},
+      "judge": "Gives the 2023 Whabouchi pre-feasibility study (effective 30 Sep 2023) figures in Canadian dollars: after-tax NPV8 about C$2,080M, after-tax IRR about 36.9%, remaining capex about C$473M, 34-year mine life. Must label the figures C$, not US$, and must not say the economics are unavailable."
+    },
+    {
+      "id": "fresh-rsca-georgia-lake",
+      "cat": "fresh",
+      "q": "Compare the NPVs of the Georgia Lake and PAK lithium projects in Ontario.",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "judge": "Georgia Lake (Rock Tech 2022 PFS): pre-tax NPV8 US$223M (after-tax US$146M); PAK (Frontier 2023 PFS): after-tax NPV8 C$2,261M, an integrated mine-to-chemical project. Must state the different currencies (US$ vs C$) and basis, and must not compare them as if like-for-like without that caveat."
+    },
+    {
+      "id": "fresh-rsca-nico",
+      "cat": "fresh",
+      "q": "Is Fortune Minerals' NICO project economic according to its feasibility study?",
+      "expect": {"tools_any": ["run_sql", "search_documents"], "max_turns": 8},
+      "judge": "Cites the 2014 NICO feasibility study (Micon): post-tax NPV at a 7% discount rate about C$224M, post-tax IRR about 15.1%, about 20-year mine life; says the study is dated (2014) and states the 7% rate. Must not call it an 8% NPV."
+    },
+    {
+      "id": "fresh-rsca-pls",
+      "cat": "fresh",
+      "q": "What capex and returns did the Patterson Lake South uranium feasibility study report?",
+      "expect": {"tools_any": ["run_sql", "search_documents"], "max_turns": 8},
+      "judge": "PLS 2023 feasibility study (Fission, now Paladin): initial capital about C$1,155M, post-tax NPV8 about C$1,204M, post-tax IRR about 27.2%, 10-year mine life (~90.9 Mlb U3O8). Figures labelled C$."
+    }
+  ]
+}

@@ -282,7 +282,7 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   the location method and caveats — read it before quoting figures or coordinates for a specific
   occurrence, and say when a location is approximate.
 
-- core.resource_estimates has 245 active rows for 77 occurrences (filter is_active). 37 of them (created_by
+- core.resource_estimates has 284 active rows for 94 occurrences (filter is_active). 37 of them (created_by
   'claude_report_summaries_20261029') come from company technical-report summaries in the library (source_document_id
   372-383), one row per classification, Measured/Indicated/Inferred AND Proven/Probable reserves: Cinovec (occurrence
   325354; JORC, Sep 2025 resource at 0.08% Li, Dec 2025 reserve, grades in % Li), Barroso (578889; all-deposit resource,
@@ -305,7 +305,14 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   source_document_id 396-400): Touro / Cobre San Rafael (578942; 2018 PFS, reserve 1 Sep 2017), Cobre Las Cruces PMR
   (578897; Cu AND Zn rows of the SAME tonnage, never add; reserve rows are underground + 5.0 Mt stockpile combined),
   Hautalampi (578904; Ni rows, Co and Cu grades in competent_person notes; resource 29 Sep 2022, reserve 1 Mar 2023) and
-  Emili (578867; PERC resource only, no reserve). The competent_person field of batch rows also carries notes (cut-off
+  Emili (578867; PERC resource only, no reserve). CANADA (created_by 'claude_report_summaries_canada_20261105', source_document_id
+  415-434, 39 rows, NI 43-101 / S-K 1300 summaries): Shaakichiuwaanaan (occurrence 611475), Whabouchi (601723), Rose (611612),
+  Moblan (594753), James Bay / Galaxy (611477), Georgia Lake (611520), PAK (611524), Matawinie (604741), Lac Knife (602039),
+  Crawford (611515), North American Lithium (599716), Wheeler River (609444; Phoenix AND Gryphon deposits - read the
+  competent_person note for which deposit a row is; never add uranium reserves across deposits without saying so), Arrow /
+  Rook I (611558), Sisson (611471; one WO3 reserve row, Mo grade in the note), NICO (611604), Marathon (611518), Casino (487254;
+  Cu rows = MILL reserve with Au/Mo grades in the note; the Au row is the separate HEAP LEACH reserve - different ore, never add). McIlvenna Bay, Wicheeda and PLS have economics/summaries but no resource rows - search
+  their summary documents for the resource. The competent_person field of batch rows also carries notes (cut-off
   detail, basis, contained metal); read it. For these projects (pilot and batches) query the rows (reserves are classification Proven/Probable) and quote
   classification, effective_date and competent_person; reserves are part of (not additional to) the resources unless
   stated. The rows are one per class: when the user asks how big a reserve or resource is, ALSO give the total the
@@ -343,8 +350,8 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   before saying a figure is not available. Never add resource rows across classifications or
   across commodities with different grade units (exception: for the technical-report projects above, quote or form the
   same-commodity Proven + Probable and Measured + Indicated (+ Inferred) totals as described there).
-- docs.extracted_facts holds 175 structured facts: 39 for the Sarfartoq Initial Assessment, 107 study-economics ('fs_'
-  facts) for 18 EU CRMA projects (list in the schema summary), and 29 full-report links (see schema summary). Company-to-asset links exist only through core.projects / core.project_ownership (financials notes:
+- docs.extracted_facts holds 273 structured facts: 39 for the Sarfartoq Initial Assessment, 185 study-economics ('fs_'
+  facts) for 18 EU CRMA projects and 20 Canadian projects (list in the schema summary), and 49 full-report links (see schema summary). Company-to-asset links exist only through core.projects / core.project_ownership (financials notes:
   annual-report assets of the companies listed there, plus the CRMA projects below); core.occurrences.company_id is empty, so
   for any other company relate it to deposits through documents and names, and say so.
 - EU CRITICAL RAW MATERIALS ACT (CRMA) STRATEGIC PROJECTS: all 106 projects the European Commission has designated (93 in the EU:
@@ -1119,17 +1126,23 @@ docs.extracted_facts: extracted_fact_id, document_id, occurrence_id, project_id,
   Rovina (283, 2022 DFS), Skouries (319, 2022 FS - Eldorado has since revised capex), Aguablanca (289, 2024 PFS), Maniry
   (346, 2022 DFS), Sarytogan (350, Oct 2026 upstream DFS), Viscaria (340, May 2025 FS, MSEK), Touro / Cobre San Rafael
   (339, 2018 PFS), Cobre Las Cruces PMR (290, PRE-TAX figures only) and Hautalampi (300, 2023 PFS, EUR, NPV at 5%).
-  fact_types: fs_npv_posttax_8pct, fs_npv_posttax_10pct, fs_npv_posttax_7_5pct, fs_npv_posttax_5pct, fs_npv_posttax
+  CANADA (documents 415-434, project_id): Shaakichiuwaanaan (3304), Whabouchi / Nemaska (3316), Rose (3554), Moblan (3313),
+  James Bay / Galaxy (3318), Georgia Lake (3381, PRE-TAX, US$), PAK / Pakeagama Lake (3386), Matawinie (3303), Lac Knife (3294),
+  Crawford (3372; NPV in US$M but capex in C$M - mixed currencies), North American Lithium (3333), McIlvenna Bay (3431, mine
+  life only - economics in the summary document), Wicheeda (3489, US$), Wheeler River (3443), Arrow / Rook I (3446), Patterson
+  Lake South (3448), Sisson (3285), NICO (3542, NPV at 7%), Marathon (3379, NPV at 6%) and Casino (3536). Canadian figures are
+  mostly C$M: state the currency from fact_value_unit for EVERY figure (never write US$ for a C$ value, including in tables).
+  fact_types: fs_npv_posttax_8pct, fs_npv_posttax_6pct, fs_npv_posttax_7pct, fs_npv_posttax_10pct, fs_npv_posttax_7_5pct, fs_npv_posttax_5pct, fs_npv_posttax
   (rate not stated), fs_npv_posttax_real, fs_npv_pretax_8pct, fs_npv_pretax, fs_npv_5pct, fs_npv_7pct, fs_npv (Keliber,
   EUR), fs_irr_posttax, fs_irr_pretax, fs_irr, fs_payback, fs_initial_capex, fs_total_capex, fs_sustaining_capex,
   fs_peak_funding, fs_c1_cost, fs_aisc, fs_lom_opex, fs_price_assumption, fs_mine_life. ALWAYS read fact_value_unit
-  (US$M, EUR M, MSEK, US$/t, US$/mtu, US$/lb, EUR/t LHM),
+  (US$M, C$M, EUR M, MSEK, US$/t, US$/mtu, US$/lb, C$/t, EUR/t LHM),
   fact_value_text (case notes, e.g. Cinovec ex-grant vs incl. grant) and fact_data->>'study' (study name and date)
   and quote them; never compare NPVs at different discount rates or currencies as if equal. For any question about
   these projects' NPV, IRR, capex, costs, price assumptions or mine life, query these facts first:
   SELECT fact_type, fact_value_numeric, fact_value_unit, fact_value_text, fact_data->>'study' FROM docs.extracted_facts
   WHERE project_id = <id> AND fact_type LIKE 'fs_%', then search the project's summary documents for context the facts
-  lack (production rate, throughput, staging, sensitivities). fact_type 'full_report_reference' (one per summary document, 29
+  lack (production rate, throughput, staging, sensitivities). fact_type 'full_report_reference' (one per summary document, 49
   rows) gives where the full report is (fact_value_text); cite it when the user wants the full report.
   SARFARTOQ (39 facts, fact_type starting 'ia_'): occurrence 3738, from the Greenland Mines (GRML) 26 Aug 2026
   presentation: the 2026 Initial Assessment (a PEA-level study by Agricola Mining Consultants, not a

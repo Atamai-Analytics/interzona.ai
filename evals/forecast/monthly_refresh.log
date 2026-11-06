@@ -38,3 +38,10 @@ latest common month: 2026-08
 published month: 2026-08
 nothing new: 2026-08 is already published
 exit code 0 
+===== Thu 11/05/2026  8:00:00.56 user=dean appdata=C:\Users\dean\AppData\Roaming 
+sys.path ['', 'C:\\Users\\dean\\AppData\\Roaming\\Python\\Python314\\site-packages', 'C:\\Python314\\python314.zip', 'C:\\Python314\\DLLs', 'C:\\Python314\\Lib', 'C:\\Python314', 'C:\\Python314\\Lib\\site-packages']
+True
+latest common month: 2026-08
+published month: 2026-08
+nothing new: 2026-08 is already published
+exit code 0 

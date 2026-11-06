@@ -2268,7 +2268,7 @@
       "expect": {
         "max_turns": 6
       },
-      "judge": "Says plainly that the deposit-type comparison and the next-assay suggestion are not available for stream sediments or soils (the reference is rock chemistry), and does not invent an assay recommendation from the tool. It may offer what is possible instead, such as the anomaly screen, the catalogued lithium occurrences, or the rock-survey tools in other countries."
+      "judge": "Says plainly that the deposit-type comparison and the next-assay suggestion are not available for stream sediments or soils (the reference is rock chemistry), and does not present any assay recommendation as a result from the tool or our data. It may offer what is possible instead (the anomaly screen, the catalogued lithium occurrences, the rock-survey tools in other countries) and may list usual pathfinder elements for lithium pegmatites, but only under a clear label that they are general geochemical knowledge not tested on these samples. Explaining in general terms how such elements usually separate pegmatite, brine and clay sources is fine; it must not claim that our data or a test on these samples shows which type the anomalies are."
     },
     {
       "id": "demo-assay-sweden",

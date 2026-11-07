@@ -1,0 +1,37 @@
+{
+  "version": "2026-11-07",
+  "notes": "Fresh check for the 7 Nov 2026 Sweden SGU loads (occurrences, drill holes, till/sediment/soil, stream plants). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-se-occ-status",
+      "cat": "fresh",
+      "q": "How many mineral occurrences do you have for Sweden, and how many are active mines?",
+      "truth": {"producers": "SELECT count(*) FROM core.occurrences WHERE country_name = 'Sweden' AND is_active AND status = 'PRODUCER'"},
+      "expect": {"tools_any": ["run_sql"], "numbers": [{"truth": "producers"}], "max_turns": 6},
+      "judge": "Gives about 23,000-23,400 Swedish occurrences from SGU's Mineralresurser inventory and about 1,094 active mines or quarries in SGU's inventory (about 1,154 if the 60 old USGS MRDS producer points are included; either is correct), with a status breakdown or at least past producers about 15,000. Should mention that many are small historical iron workings and/or that about 3,500 are dimension-stone or aggregate sites, and should NOT give tonnages or grades from this inventory (SGU's tonnage/grade fields are empty). Credits SGU (CC0)."
+    },
+    {
+      "id": "fresh-se-drill-malå",
+      "cat": "fresh",
+      "q": "How many drill holes do you have in Sweden, who drilled most of them, and do they have assays?",
+      "truth": {"holes": "SELECT count(*) FROM drilling.drillholes WHERE source_system = 'SWEDEN_SGU_BORRHAL'"},
+      "expect": {"tools_any": ["run_sql"], "numbers": [{"truth": "holes"}], "max_turns": 6},
+      "judge": "Says about 27,343 Swedish drill holes from SGU, names the main previous owners (Boliden first, then NSG, SGU, Viscaria/Outokumpu, LKAB or similar), says they have NO assays, logs or intercepts in our database (collars only), and may mention core kept at SGU's archive in Malå. Credits SGU."
+    },
+    {
+      "id": "fresh-se-till-cu",
+      "cat": "fresh",
+      "q": "Where are the highest copper values in Swedish till?",
+      "expect": {"tools_any": ["run_sql", "find_geochemical_anomalies"], "max_turns": 8},
+      "judge": "Uses Swedish till samples only (SWEDEN_SGU_MARKGEOKEMI, till sample type), not rock or plant samples, lists the top copper values with locations, compares within one method or says that methods differ (nitric acid ICP-MS partial vs XRF total), and credits SGU. Values are in ppm."
+    },
+    {
+      "id": "fresh-se-plants",
+      "cat": "fresh",
+      "q": "Can I compare zinc in Swedish stream plants with zinc in Swedish till?",
+      "expect": {"max_turns": 6},
+      "judge": "Says not directly: the stream-plant samples (SGU biogeochemistry, sedge/meadowsweet roots or aquatic moss) are biological concentrations on a dry-weight basis, so their values are not comparable with till; each should be ranked within its own sample type. May show typical values for each. Credits SGU if data are shown."
+    }
+  ]
+}

@@ -248,6 +248,17 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   Projects capital cost in C$ million and construction status (major-project-only entries are placed at municipality level, location_precision
   TOWN). Operators are in core.project_ownership.owner_name (few have a company_id). Credit Québec MRNF / Saskatchewan Geological Survey /
   Natural Resources Canada as applicable.
+- SWEDEN (loaded 2026-11-07): 23,349 occurrences from the Geological Survey of Sweden's own inventory (SGU Mineralresurser, CC0, created_by
+  migration_sgu_occ_20261107, external_ids source 'SWEDEN_SGU_MINERALRESURSER' with SGU's id such as 'OREC00386'); they are the
+  authoritative Swedish records and replace the old USGS MRDS coverage (16 MRDS duplicates merged into them, MRDS row inactive; 90 other
+  MRDS Swedish points remain active). Status: mine/quarry -> PRODUCER (1,094), closed or historical mine/quarry -> PAST_PRODUCER (15,014),
+  significant prospect and prospect -> PROSPECT (5,807), mineralised outcrop and anomaly -> OCCURRENCE (1,414), uncertain mine -> UNKNOWN (20);
+  is_deposit = true for mines, past mines, uncertain mines and significant prospects (16,290). Commodities: Fe 12,293 (mostly small historical
+  iron workings in Bergslagen and Norrbotten), Cu 3,501, Zn 1,461, Pb 1,420, Mn 1,277, Ag 975, Au 588, plus about 3,500 dimension-stone,
+  aggregate, marble and limestone sites (industrial; leave them out of metal questions). SGU's ore type, status text, geology and references
+  are in comments; occurrence_type_id is set only where it is unambiguous (about 9,000, mostly skarn iron). NO tonnage or grade: SGU's
+  tonnage and grade fields are empty in the download, so Swedish resource figures come only from projects or documents. Jurisdiction is the
+  country (jurisdiction_path {Sweden}). Positions are SGU's (about half within 10 m; within 500 m marked position_accuracy AREA_CENTROID).
 - US MINES, SMELTERS, REFINERIES AND RECYCLING FACILITIES (USGS 2026 data release, CC0, source 'USGS_US_FACILITIES' in core.external_ids,
   id like USA0001; created_by migration_usgs_facilities_20261015): 849 facilities in the source, 840 loaded (168 attached to occurrences that
   already existed, mostly MRDS, and 672 new occurrences with is_deposit = false), 9 not loaded because their location could not be established
@@ -432,7 +443,9 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   ('CANADA_SK_SGS', 19,739 till and lake-sediment samples, 567,594 results, plus 33,490 drill-hole collars) and Québec sediment, soil and till
   (SIGÉOM, 'CANADA_QC_SIGEOM_SED', 522,453 samples, 20.52M results) and federal Canadian surveys across all provinces and territories
   (Natural Resources Canada CDoGS, 'CANADA_NRCAN_CDOGS', 233,875 samples, 8.42M results) and Athabasca Basin uranium drill core (GSC Open
-  File 7792, 'CANADA_ATHABASCA_OF7792', 40,373 samples, 1.84M results) ONLY (geochem.samples also holds 2,519 age-only points, source_system
+  File 7792, 'CANADA_ATHABASCA_OF7792', 40,373 samples, 1.84M results) and Swedish till, sediment and soil (SGU regional sampling,
+  'SWEDEN_SGU_MARKGEOKEMI', 61,290 samples, 2.98M active results) and Swedish stream plants (SGU biogeochemistry, 'SWEDEN_SGU_BIOGEOKEMI',
+  37,423 samples, 1.05M results) ONLY (geochem.samples also holds 2,519 age-only points, source_system
   'SWEDEN_SGU_BEDROCK_AGE', and 1,053 bare sample points from the Wu zircon database, source_system
   'GLOBAL_ZIRCON_WU', none of which has results; do not count them as geochemical samples).
   USGS NGDB: almost all samples are rocks (grab 238,515, composite 47,191, drill core 31,729, float, channel,
@@ -590,8 +603,22 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   sediments include DC-arc emission spectrography (CDOGS-DCARC-*, semi-quantitative, lowest priority) and portable XRF (CDOGS-PXRF-*).
   analytical_results.method_name is the CDoGS technique and digestion, result_comment the CDoGS method id. Result QC: 27,089 exact
   duplicates inactive; 773 impossible values (mostly Al reported at 55-91 %, i.e. mislabelled Al2O3) and 39 low oxide totals SUSPECT.
-  India occurrences have no samples/results. The Swedish samples are not linked to any occurrence
-  (occurrence_id NULL; no Swedish deposits are loaded), have NO sample dates and NO drill depths (a drill-core
+  SWEDISH TILL, SEDIMENT AND SOIL ('SWEDEN_SGU_MARKGEOKEMI', CC0, credit Geological Survey of Sweden (SGU)): 61,290 samples from SGU's regional
+  sampling 1983-2024 and the older NSG/SGAB state exploration surveys: till 58,208 (TILL_SAMPLE, mostly the <0.063 mm fine fraction), sediment
+  2,549, surface soil 533 (<2 mm); all sample_context 'SURFACE'. One sample per SGU site id with results from several methods: packages
+  SGU-HNO3-ICPMS (nitric acid ICP-MS, up to 62 analytes, about 33,000 samples, PARTIAL), SGU-XRF (total, 25 analytes incl. major oxides,
+  31,180), SGU-AR-ICPMS (aqua regia, Au, Te, Sb, Bi and others, 22,620), SGU-AR-ICPAES (15,844), SGU-AR-GFAAS (gold, 36,508) and
+  SGU-NSG-SGAB-AR (1983-91 state surveys, about 12,000); gold in ppb, other elements in ppm, oxides in %. Result QC: 18,254 duplicated gold
+  rows inactive (SGU's gold table lists every sample twice); one Li 96,522 ppm SUSPECT. Left out: about 1,000 Cu and Li values in the 2024
+  nitric-acid batch that are sample numbers typed into value columns (an error in SGU's file) and 4 samples with mistyped coordinates.
+  Use for regional till anomaly work in Sweden (comparable to Québec and Canadian till, one method at a time).
+  SWEDISH STREAM PLANTS ('SWEDEN_SGU_BIOGEOKEMI', CC0, credit SGU): 37,423 samples 1982-2005, sample type VEGETATION_SAMPLE (roots of Carex
+  sedges or Filipendula, or Fontinalis aquatic moss, from streams), values on DRY WEIGHT (ash % in comments): packages SGU-BIO-XRF (total),
+  SGU-BIO-AR-ICPMS and SGU-BIO-HNO3 (partial). These are biogeochemical concentrations: never compare them with rock, till or soil values,
+  and screen them only against other plant samples; SGU used them like stream sediments to find metal-rich catchments.
+  India occurrences have no samples/results. The Swedish ROCK samples ('SWEDEN_SGU_LITHOGEOCHEMISTRY') have occurrence_id NULL and
+  sample_occurrence_links only to the 84 Swedish occurrences that existed before 7 Nov 2026 (the new SGU occurrences are not linked to samples
+  yet: use a distance search to find rock samples near them), have NO sample dates and NO drill depths (a drill-core
   sample is a point at the collar, not an interval), and only 11,778 have a lithology. About a third of Swedish
   results (512,892) have an unknown method (package 'UNK-UNK-UNK' and similar '-UNK' codes), and the wide table
   treats those as PARTIAL (_p). Most Swedish samples (118,735 of 139,163, 85%) are flagged third_party_likely
@@ -610,6 +637,9 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   CANADA_QC_SIGEOM (rock samples, results, drill holes, logs, intercepts) and CANADA_QC_SIGEOM_SED (sediment, soil, till), CC BY 4.0, credit Ministère des Ressources naturelles et des Forêts,
   Québec (SIGÉOM); CANADA_SK_SGS (till and lake-sediment samples and the Saskatchewan drill holes), Government of Saskatchewan Standard
   Unrestricted Use Data Licence v2.0, credit Saskatchewan Mining and Petroleum GeoAtlas with the layer and retrieval date (3 November 2026);
+  SWEDEN_SGU_LITHOGEOCHEMISTRY, SWEDEN_SGU_BEDROCK_AGE, SWEDEN_SGU_MARKGEOKEMI (till, sediment, soil), SWEDEN_SGU_BIOGEOKEMI (stream plants),
+  SWEDEN_SGU_MINERALRESURSER (occurrences) and SWEDEN_SGU_BORRHAL (drill holes), all CC0 1.0, credit Geological Survey of Sweden (SGU) as a
+  courtesy (not required); much of SGU's data was submitted by exploration companies and SGU's written confirmation that CC0 covers it is still pending;
   USA_WA_DGER_MINES_MINERALS for the Washington sites, free to reuse with citation of the Washington Geological Survey; USA_USGS_MRDS
   for the MRDS sites, US public domain, credit USGS)
   (publisher, dataset_name, licence, attribution_text, licence_status, caveats). When you present or
@@ -638,12 +668,15 @@ geochem.samples: sample_id (PK), occurrence_id (nullable), sample_type_id (join 
   geochem.sample_types for the real medium name — Stream Sediment, Rock Sample, Soil Sample, Heavy
   Mineral Concentrate; sample_type_local is free text and NULL for most rows, not reliable to filter
   on), source_system (e.g. 'ARGENTINA_SEGEMAR', 'GREENLAND_GEUS', 'FINLAND_GTK_ROCK',
-  'SWEDEN_SGU_LITHOGEOCHEMISTRY', 'AUSTRALIA_TAS_MRT', 'CANADA_QC_SIGEOM', 'CANADA_QC_SIGEOM_SED', 'CANADA_SK_SGS', 'CANADA_NRCAN_CDOGS', 'CANADA_ATHABASCA_OF7792' — the simplest
+  'SWEDEN_SGU_LITHOGEOCHEMISTRY', 'SWEDEN_SGU_MARKGEOKEMI', 'SWEDEN_SGU_BIOGEOKEMI', 'AUSTRALIA_TAS_MRT', 'CANADA_QC_SIGEOM', 'CANADA_QC_SIGEOM_SED', 'CANADA_SK_SGS', 'CANADA_NRCAN_CDOGS', 'CANADA_ATHABASCA_OF7792' — the simplest
   way to filter by region when occurrence_id isn't populated), lat, lon, geom, geog, sample_context ('SURFACE',
   'DRILLHOLE_INTERVAL' for drill samples with depths, 'DRILLHOLE_POINT' for drill samples without), drillhole_id
   (-> drilling.drillholes), depth_from_m, depth_to_m.
 drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed samples; CANADA_QC_SIGEOM 190,035 diamond holes; CANADA_SK_SGS
-  33,490 collars, about 1,040 of them with Athabasca core assays; CANADA_ATHABASCA_OF7792 245 further Athabasca holes): drillhole_id (PK), source_system,
+  33,490 collars, about 1,040 of them with Athabasca core assays; CANADA_ATHABASCA_OF7792 245 further Athabasca holes; SWEDEN_SGU_BORRHAL 27,343
+  Swedish collars 1899-2022, about 3.3 million m, CC0, credit SGU, with NO assays, logs or intercepts and no occurrence links; company = previous owner
+  (Boliden, NSG, SGU, Viscaria/Outokumpu, LKAB ...), 15,396 with core kept at SGU's National Drill Core Archive in Malå (core_status / core_store_location),
+  1,618 drilled underground (purpose / comments); 9,328 SGU holes without coordinates are not loaded): drillhole_id (PK), source_system,
   source_hole_id, hole_name, prospect, company, tenement, drill_type_id (-> geochem.drill_types: DIAMOND, RC, AIRCORE, PERCUSSION,
   ROTARY, AUGER, PERCUSSION_DIAMOND ...), drill_type_local (as published, may list several), purpose, date_drilled (1900-2022),
   total_depth_m, azimuth_deg, dip_deg (negative = downward), collar_elevation_m, lat, lon, geom, geog, position_accuracy_m,
@@ -717,12 +750,14 @@ core.external_ids: external_id_id, entity_type ('OCCURRENCE' or 'SAMPLE'), entit
   from use core.occurrences.created_by: 'AtamaiAdmin' = SEGEMAR/SIGAM Argentina, 'migration_mrds_20261014' = USGS MRDS, 'migration_wa_deposits_20261013' =
   Washington Geological Survey, 'migration_greenland_20260930' and 'claude_gl_mapadd_20261006' = Greenland, 'migration_fi_deposits_20261011' = Finland,
   'claude_india_primary_20261002' = India, 'claude_sdsg_*' = SDSG rare earth projects, 'claude_mindat_20261002' = Mindat,
-  'migration_canada_occ_20261103' = Québec SIGÉOM and Saskatchewan SMDI, 'migration_nrcan_projects_20261103' = NRCan project sites; join core.data_sources only for
+  'migration_canada_occ_20261103' = Québec SIGÉOM and Saskatchewan SMDI, 'migration_nrcan_projects_20261103' = NRCan project sites,
+  'migration_sgu_occ_20261107' = Sweden (SGU Mineralresurser); join core.data_sources only for
   geochemical source_system values, not for occurrences.
 core.data_sources: source_system (PK), publisher, dataset_name, licence, licence_url, attribution_required,
   attribution_text, is_loaded, licence_status, caveats, evidence_location, evidence_date.
 geochem.sample_occurrence_links: sample_id, occurrence_id, distance_m (integer metres), is_nearest (boolean). One row for every pair of a
-  geochemistry sample and an occurrence within 2,000 m (1,271,425 links): USGS 159,634 samples linked (60,076 within 500 m), Sweden 14,314,
+  geochemistry sample and an occurrence within 2,000 m (1,271,425 links): USGS 159,634 samples linked (60,076 within 500 m), Sweden 14,314 (to 84
+  occurrences only; the 23,349 SGU occurrences loaded 7 Nov 2026 are not in this table yet),
   the deposit-geochemistry compilation GLOBAL_DEPOSIT_GEOCHEM_GA 19,763 (6,715 within 500 m), Argentina 4,188, Greenland 284, Finland 29, Victoria 25 (Victoria and Greenland have almost no known occurrences nearby). It is the way to
   answer 'samples near deposits': distance_m <= 500 means AT the site, <= 2000 means NEAR; is_nearest marks each sample's closest
   occurrence (exactly one row per linked sample); samples with no occurrence within 2 km have no row, and the Swedish age points and Wu zircon
@@ -831,9 +866,9 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
-geochem.sample_chemistry_wide: one row per sample for ALL twelve geochemical datasets (CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
-  GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, USA_USGS_NGDB 387,527,
-  AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 219 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
+geochem.sample_chemistry_wide: one row per sample for ALL fourteen geochemical datasets (CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
+  GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 387,527,
+  AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 224 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/
   lithology_local, sample_date, lat, lon, geog, n_values, bdl_codes (text[] of analytes below detection)
   plus one column per analyte AND basis: <analyte_code>_t = total or no-digestion method (XRF, fusion
@@ -1493,7 +1528,7 @@ const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   occurrences:
     /occurrence|deposit|\bmines?\b|mining|mineral site|prospect|resource|reserve|tonnage|grade|facilit|smelter|refiner|capacity|countr|commodit|mrds|\bhow many\b|operator|owner|project|critical mineral|exploration|\bcrma\b|critical raw material|strategic|recycl|substitut|\bunfc\b|european commission/i,
   geochemistry_data:
-    /sample|geochem|assay|\bppm\b|stream|sediment|\bsoil|\brock|anomal|element|analyte|analytical|\bree\b|rare earth|pegmatite|lineament|alteration|zircon|u-pb|dating|\bage[sd]?\b|licen|attribution|lithology|\bsegemar|\bgeus\b|\bgtk\b|\bsgu\b|ngdb|\bgsv\b|\bpgm\b|drill|\bholes?\b|collar|downhole|interval|core sample|\bmrt\b|tasmania|intercept|sig[eé]om|\btill\b|lake sediment|athabasca|boron|isotop|radiogenic|sandstone|\bhalo\b/i,
+    /sample|geochem|assay|\bppm\b|stream|sediment|\bsoil|\brock|anomal|element|analyte|analytical|\bree\b|rare earth|pegmatite|lineament|alteration|zircon|u-pb|dating|\bage[sd]?\b|licen|attribution|lithology|\bsegemar|\bgeus\b|\bgtk\b|\bsgu\b|ngdb|\bgsv\b|\bpgm\b|drill|\bholes?\b|collar|downhole|interval|core sample|\bmrt\b|tasmania|intercept|sig[eé]om|\btill\b|lake sediment|athabasca|boron|isotop|radiogenic|sandstone|\bhalo\b|swed|biogeochem|\bplants?\b|\bmoss\b|vegetation/i,
   geochemistry_workflow:
     /explor|prospective|target|new lead|anomal|where should|discover|across (all|the|many)|combined|set of (samples|occurrences)/i,
   geochemistry_scripts:

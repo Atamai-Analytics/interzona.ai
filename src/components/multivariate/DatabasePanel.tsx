@@ -19,7 +19,9 @@ const DATASET_NAMES: Record<string, string> = {
   CANADA_SK_SGS: "Saskatchewan, Canada (SGS)",
   FINLAND_GTK_ROCK: "Finland (GTK)",
   GREENLAND_GEUS: "Greenland (GEUS)",
-  SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden (SGU)",
+  SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden (SGU rock)",
+  SWEDEN_SGU_MARKGEOKEMI: "Sweden (SGU till, sediment, soil)",
+  SWEDEN_SGU_BIOGEOKEMI: "Sweden (SGU stream plants, dry weight)",
   USA_USGS_NGDB: "USA (USGS NGDB)",
 };
 const datasetName = (s: string) => DATASET_NAMES[s] ?? s;

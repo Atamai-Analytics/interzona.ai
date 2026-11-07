@@ -1,0 +1,14 @@
+{
+  "version": "2026-11-07",
+  "notes": "Checks the re-baseline gap 'US lithium facilities summarised instead of listed' with a direct listing request. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-us-li-list-all",
+      "cat": "fresh",
+      "q": "List every US lithium facility in your data, with its stage, status and capacity.",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 6},
+      "judge": "Lists all 33 USGS US lithium facility records individually (one row each, name, stage such as mine / plant / refinery / recycling, status, capacity or 'not reported'), not only per-stage totals. May note that a site with both a mine and a plant appears twice. Must not add capacities across stages. Must not invent facilities or capacities."
+    }
+  ]
+}

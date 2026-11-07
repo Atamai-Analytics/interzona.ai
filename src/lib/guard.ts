@@ -198,7 +198,13 @@ export async function admit(req: NextRequest, opts: { session?: Session | null; 
   let invite: import("@/lib/invites").Invite | null = null;
   if (opts.session?.r === "guest" && opts.session.i && !bypass) {
     const { getInvite, inviteStatus } = await import("@/lib/invites");
-    invite = await getInvite(opts.session.i);
+    try {
+      invite = await getInvite(opts.session.i);
+    } catch (e) {
+      // The invitation could not be read (Redis timeout): refuse for now with a retry, rather than crash or let an unchecked guest through.
+      console.error("[guard] invite lookup failed:", String(e).slice(0, 120));
+      return reject(503, "invite_check_failed", "We couldn't check your invitation just now. Please try again in a moment.", 10);
+    }
     const status = invite ? inviteStatus(invite) : "revoked";
     if (!invite || status !== "active")
       return reject(403, "invite_ended", status === "expired" ? "Your invitation has expired. Please ask for a new link." : "This invitation is no longer active. Please contact the person who invited you.");

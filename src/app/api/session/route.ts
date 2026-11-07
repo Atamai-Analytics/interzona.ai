@@ -10,7 +10,15 @@ export async function GET(req: NextRequest) {
   const s = await getSession(req);
   if (!s) return NextResponse.json({ role: "none" }, { status: 401 });
   if (s.r === "owner") return NextResponse.json({ role: "owner" });
-  const invite = s.i ? await getInvite(s.i).catch(() => null) : null;
+  // A Redis timeout is not a revoked invitation: report the guest as signed in with an unknown allowance (the chat itself checks the
+  // invitation again and asks them to retry if it still cannot be read), instead of telling them their invitation has ended.
+  let invite: Awaited<ReturnType<typeof getInvite>> = null;
+  try {
+    invite = s.i ? await getInvite(s.i) : null;
+  } catch (e) {
+    console.error("[session] invite lookup failed:", String(e).slice(0, 120));
+    return NextResponse.json({ role: "guest", name: s.n ?? "" });
+  }
   if (!invite) return NextResponse.json({ role: "guest", name: s.n ?? "", ended: "revoked" });
   const status = inviteStatus(invite);
   if (status !== "active") return NextResponse.json({ role: "guest", name: invite.name, ended: status });

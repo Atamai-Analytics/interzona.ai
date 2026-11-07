@@ -832,9 +832,11 @@ export default function Home() {
               ) : (
                 <>
                   <p className="text-gray-200">Welcome, {who.name}</p>
-                  <p>
-                    {who.left} of {who.limit} questions left today
-                  </p>
+                  {typeof who.left === "number" && typeof who.limit === "number" && (
+                    <p>
+                      {who.left} of {who.limit} questions left today
+                    </p>
+                  )}
                   <p className="text-[11px] text-gray-500 w-full md:w-auto order-last md:order-none">Questions you ask are logged for the host.</p>
                 </>
               )

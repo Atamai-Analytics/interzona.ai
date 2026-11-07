@@ -17,17 +17,17 @@ export const redisIsStandIn = () => creds() === null;
 export async function redis(commands: Cmd[]): Promise<unknown[]> {
   const c = creds();
   if (!c) return standIn(commands);
-  const send = () =>
+  const send = (ms: number) =>
     fetch(`${c.url}/pipeline`, {
       method: "POST",
       headers: { Authorization: `Bearer ${c.token}`, "Content-Type": "application/json" },
       body: JSON.stringify(commands),
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(ms),
       cache: "no-store",
     });
   // The first request on a connection that sat idle during a long answer can time out; one retry opens a fresh connection (commands here are
-  // idempotent or counters where one extra count is harmless).
-  const r = await send().catch(() => send());
+  // idempotent or counters where one extra count is harmless). The retry gets a longer timeout, since it pays for the new connection.
+  const r = await send(3000).catch(() => send(5000));
   if (!r.ok) throw new Error(`redis ${r.status}`);
   const out = (await r.json()) as { result?: unknown; error?: string }[];
   const bad = out.find((x) => x.error);

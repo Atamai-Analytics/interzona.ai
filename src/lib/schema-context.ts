@@ -370,6 +370,12 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   strategic minerals vs 22 in 2020, Québec's reserve shares and project pipeline) plus the 2020-2025 Plan - as document 436, our
   own-words summary with page references (official text copyright, not stored). For Canadian or Québec policy, budgets or
   mineral lists, search_documents FIRST (documents notes say how to cite 436); use the web only for what they lack or newer news.
+- MORE POLICY IN THE LIBRARY (added 7 November 2026; search_documents FIRST, documents notes say how to cite each): the UK
+  Commons Business and Trade Committee report "Critical minerals" (published 5 November 2026, document 437); Australia's Critical
+  Minerals Strategy 2026 Update (document 438); BOLIVIA's draft Mining and Metallurgy Code 2026 (a CONSULTATION DRAFT, not law;
+  Spanish original document 439, English summary document 443); tungsten supply-security policy in China, the EU, UK and Japan
+  (document 441); deep-sea minerals regulation - ISA Mining Code, US seabed leasing, national moratoria (document 442); and
+  financing artisanal and small-scale mining in Africa (document 440).
 - EU CRITICAL RAW MATERIALS ACT (CRMA) STRATEGIC PROJECTS: all 106 projects the European Commission has designated (93 in the EU:
   47 approved 25 March 2025 under Decision C(2025) 1904 and 46 approved 9 October 2026 under C(2026) 8051; 13 outside the EU approved
   4 June 2025 under C(2025) 3491), loaded 29 October 2026 from the Commission's project list, map and factsheets. Query
@@ -1177,7 +1183,20 @@ DATA COVERAGE CAVEATS for the document library — mention these when relevant:
   plus the 2020-2025 Plan and 2023-2025 Action Plan) is held ONLY as document 436, an Interzona summary in our own
   words with PDF page references - the official texts are copyright (all rights reserved) and not stored. Present
   document 436's figures as the Québec government's own figures, cite the official PDF (source_url) and page, never
-  call document 436 the government's text and never quote it as such. Also note that some are company presentations, newsletters or draft market reports rather than
+  call document 436 the government's text and never quote it as such. DOCUMENTS ADDED 7 NOVEMBER 2026: document 437 (UK House of
+  Commons Business and Trade Committee, "Critical minerals", 5 November 2026, Open Parliament Licence) and document 438 (Australian
+  Government, Critical Minerals Strategy 2023-2030: 2026 Update, CC BY 4.0) are stored in full. BOLIVIA: document 439 is the
+  Spanish original of the Ministry of Mining's PROPUESTA Código de Minería y Metalurgia, Libro Primero (2026), and document 443 is
+  our English summary of it with article numbers. Always say it is a 2026 consultation draft, NOT the final law (Law 535 of
+  2014 still applies until a new code is passed), that article numbers and figures may change, and that some articles show
+  alternative wordings. Answer in the user's language; when you rely on a passage from document 439, give the article number
+  and, where helpful, a short Spanish quote with your translation, and mark translations as yours. Three documents are
+  Interzona own-words summaries of sources with no reuse licence (never call them the original or quote them as the source's
+  words; cite the source and its link): document 440 (Levin Sources, "Incubating New Mining Fund Concepts", October 2026, an
+  advocacy paper for African ASM and mining-economy funds), document 441 (Strategic Materials Policy Tracker, Benjamin Yang,
+  "Tungsten Supply Security" dossier, cutoff 3 November 2026 - an individually authored informal source: say so and suggest
+  checking its primary sources) and document 442 (Esri StoryMap "The State of Deep-Sea Minerals: A World View", current to 26
+  October 2026 - say events after that date, such as the 19 November 2026 PACM-1 auction, are not covered). Also note that some are company presentations, newsletters or draft market reports rather than
   audited filings or peer-reviewed work. Eleven documents were text-extracted by OCR (the SQM Form 20-F filings and the Sibanye-Stillwater annual financial reports, which were scanned images,
   plus Geoscience
   Australia's Australia's Identified Mineral Resources 2025, the INSG World Nickel Factbook 2024 and
@@ -1476,7 +1495,7 @@ const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   geochemistry_scripts:
     /spider|ree pattern|lambda|\btas\b|alteration|box plot|pearce|tectonic|lineament|rose diagram|structural|fault|\bclr\b|correlat|compositional|plot|diagram|chart|normali[sz]|discriminat|analy[sz]e|classif|halley|immobile|fractionat|magmatic|hydrothermal|v\/sc|sr\/y|k\/al|na\/al|ta\/nb|hf.{0,12}zr|scandium|porphyry|ternary|swir/i,
   documents:
-    /document|report|literature|policy|paper|study|filing|presentation|\bsays?\b|according|\biea\b|\bbgs\b|\birena\b|supply chain|technolog|feasib|\bpea\b|prefeasib|factbook|10-k|annual report|investor|newsletter|inventory|sdsg|prospectus|austrade|investment-ready|offtake|what do(es)? (the|our)/i,
+    /document|report|literature|policy|paper|study|filing|presentation|\bsays?\b|according|\biea\b|\bbgs\b|\birena\b|supply chain|technolog|feasib|\bpea\b|prefeasib|factbook|10-k|annual report|investor|newsletter|inventory|sdsg|prospectus|austrade|investment-ready|offtake|bolivia|tungsten|wolfram|deep[- ]sea|seabed|nodule|\bisa\b|moratori|artisanal|\basm\b|parliament|committee|mining code|mining law|legislat|royalt|what do(es)? (the|our)/i,
   financials:
     /financ|revenue|income|profit|margin|who owns|owner(?:ship)?|stake|interest in|joint venture|\bjv\b|which (?:projects|assets|mines)|primary commodity|peer group|sector|produc(?:tion|ed)|sales volume|volumes?|realis|realiz|unit cost|cash cost|aisc|output|\bdebt\b|cash ?flow|balance sheet|ebitda|\beps\b|capex|equity|assets|liabilit|compan|earnings|dividend|\bpeers?\b|\broe\b|\broa\b|turnover|sales|loss|impairment|albemarle|lynas|iluka|sqm|glencore|umicore|cameco|syrah|neo perf|mp materials|energy fuels|south32|rio tinto|sibanye|impala|kazatomprom|northern rare earth|pilbara|\bpls\b|liontown|arafura|paladin|amaroq/i,
   markets:

@@ -1,0 +1,80 @@
+{
+  "version": "2026-11-07",
+  "notes": "Fresh check that the assistant finds the documents added 7 November 2026: UK Commons critical minerals report (437), Australia CM Strategy 2026 update (438), Bolivia draft mining code (Spanish 439 + English summary 443), and own-words summaries 440 (Levin Sources ASM fund concepts), 441 (tungsten dossier) and 442 (Esri deep-sea StoryMap). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-bol-royalty",
+      "cat": "fresh",
+      "q": "Under Bolivia's proposed new mining code, what royalty would lithium carbonate pay, and who gets to develop the salt flats?",
+      "expect": {
+        "tools_any": [
+          "search_documents"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Says the code is a 2026 consultation draft (PROPUESTA), not the final law, so figures may change. Gives a royalty of 3% for lithium carbonate (also 3% potassium chloride, 2.5% sodium chloride) from the draft's royalty article (Art. 190), and says the named salt flats (Uyuni, Coipasa, Pastos Grandes and others) are reserved for the State, with lithium and potassium in brines a strategic national priority and YLB continuing to develop evaporite projects (Art. 94). Must not present the draft as enacted law."
+    },
+    {
+      "id": "fresh-bol-consult",
+      "cat": "fresh",
+      "q": "Does Bolivia's draft mining code give indigenous communities a veto through prior consultation?",
+      "expect": {
+        "tools_any": [
+          "search_documents"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Says no: the draft defines prior consultation as a one-time good-faith dialogue for a new mining contract that is not a negotiation of mining rights and not a veto (Art. 144); exploration licences, adapted contracts and pre-existing rights are exempt (Art. 143); if no agreement, the mining authority decides, and the process is capped at three months (Art. 148). Says it is a consultation draft, not final law."
+    },
+    {
+      "id": "fresh-tungsten-hemerdon",
+      "cat": "fresh",
+      "q": "How has the UK government financed the Hemerdon tungsten mine, and how does that compare with Japan's support for tungsten processing?",
+      "expect": {
+        "tools_any": [
+          "search_documents"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Hemerdon (Tungsten West): National Wealth Fund package of GBP 36M equity, GBP 25M core loan (fully drawn by 2 September 2026) and up to GBP 10M contingent lending; Elmet offtake announced 23 September 2026. Japan: JOGMEC grants of about JPY 7.5B to Allied Material (powder/carbide, about 1.5x capacity, first half FY2028) and about JPY 2B to Japan New Metals (recycled feedstock to 2,400 t/yr APT, April 2029). Should note the source is an independent policy-tracker dossier (Benjamin Yang, Nov 2026)."
+    },
+    {
+      "id": "fresh-deepsea-isa",
+      "cat": "fresh",
+      "q": "Where do things stand on deep-sea mining regulation - the ISA Mining Code and the US seabed lease sales?",
+      "expect": {
+        "tools_any": [
+          "search_documents",
+          "web_search"
+        ],
+        "max_turns": 8
+      },
+      "judge": "ISA has not adopted exploitation regulations; draft Revision 3 (June 2026) not adopted in July 2026; roadmap due 31 October 2026, comments to 31 December 2026, Council resumes 8 March 2027; 31 exploration contracts (19 nodule, 8 sulphide, 4 crust). Pass if it gets most of these facts right and contradicts none. US: NOAA licensing under DSHMRA (TMC USA-A application; USA-B certified May 2026) and OCSLA leasing via the new Marine Minerals Administration, with PACM-1 off American Samoa auctioned 19 November 2026 (US$3M minimum bid per area) and PACM-2 proposed for 16 December 2026. Should say the library source is current to late October 2026, and anything later needs checking."
+    },
+    {
+      "id": "fresh-asm-fund",
+      "cat": "fresh",
+      "q": "What is the financing gap for artisanal and small-scale gold miners in Africa, and what fund structures have been proposed to fill it?",
+      "expect": {
+        "tools_any": [
+          "search_documents"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses the Levin Sources paper (October 2026): enterprise needs cluster at USD 2-5M, too small for institutional investors and too big for microfinance, currently filled by informal and often exploitative pre-finance; recommends a revolving ASM fund with a technical-assistance facility, starting with gold; may mention other concepts such as bridging the donor cliff with first-loss tranches of USD 0.5-5M. Should note it is an advocacy/consultancy paper."
+    },
+    {
+      "id": "fresh-uk-commons",
+      "cat": "fresh",
+      "q": "What did the UK House of Commons committee report on critical minerals in November 2026 recommend?",
+      "expect": {
+        "tools_any": [
+          "search_documents"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Identifies the Business and Trade Committee report 'Critical minerals' (published 5 November 2026) from the library and summarises several of its conclusions or recommendations (page references are welcome but not required). Must not invent a different committee or date."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "version": "2026-11-07",
+  "notes": "Capability card 'Tasmanian tin: the best drill intercepts' (exact card prompt). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "card-tas-tin-intercepts",
+      "cat": "fresh",
+      "q": "What are the best tin drill intercepts in Tasmania at a 0.5% Sn cut-off? Show them on a map.",
+      "expect": {"tools_any": ["drill_intercepts"], "max_turns": 8, "maps_min": 1},
+      "judge": "Calculates tin intercepts from Mineral Resources Tasmania downhole assays at a 0.5 % Sn cut-off and states the minimum width and maximum internal dilution used. Lists the top holes as length at % Sn from depth with grade x length in percent-metres (not gram-metres), e.g. Renison Bell, Mt Bischoff, Queen Hill or Mt Lindsay holes, and shows a map. Says lengths are downhole, not true widths, and that these are calculated from government-compiled assays, not company-reported or resource figures. Mentions the Drill intercepts page for trying other settings. Credits Mineral Resources Tasmania. Must not invent values."
+    }
+  ]
+}

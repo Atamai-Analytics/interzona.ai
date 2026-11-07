@@ -100,6 +100,12 @@ export const DEMO_CARDS: DemoCard[] = [
     prompt: "Which Athabasca drill holes show the most radiogenic lead in their sandstone, and how close are they to known uranium deposits?",
   },
   {
+    icon: "🪨",
+    title: "Tasmanian tin: the best drill intercepts",
+    description: "Calculates significant tin intercepts from Mineral Resources Tasmania's downhole assays at a set cut-off, ranks them on a map, and says how to read them.",
+    prompt: "What are the best tin drill intercepts in Tasmania at a 0.5% Sn cut-off? Show them on a map.",
+  },
+  {
     icon: "📄",
     title: "A company snapshot to send on",
     description: "Builds a printable one-to-two page profile with a shareable link, and summarises what stands out.",

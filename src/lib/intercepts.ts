@@ -282,17 +282,18 @@ async function composite(input: Record<string, unknown>, el: string, d: ElDef, a
   }
   const cutPpm = toPpm(d, cutoff);
   const eqSql = g2 ? `coalesce(${g1.value}, 0) + coalesce(${g2.value}, 0) * ${eq!.ratio}` : g1.value;
-  const holeLimit = 250;
-  const holes = `SELECT h.drillhole_id FROM drilling.drillholes h LEFT JOIN core.occurrences o ON o.occurrence_id = h.occurrence_id
+  const holeLimit = 1000;
+  const reaching = `SELECT h.drillhole_id FROM drilling.drillholes h LEFT JOIN core.occurrences o ON o.occurrence_id = h.occurrence_id
      JOIN geochem.sample_chemistry_wide w ON w.drillhole_id = h.drillhole_id
      WHERE ${area.where.join(" AND ")} AND w.source_system IN (${sources.map(q).join(", ")}) AND w.depth_to_m > w.depth_from_m
-     GROUP BY h.drillhole_id HAVING max(${eqSql}) >= ${cutPpm} ORDER BY max(${eqSql}) DESC LIMIT ${holeLimit}`;
-  const [samples, holeInfo, cand] = await Promise.all([
+     GROUP BY h.drillhole_id HAVING max(${eqSql}) >= ${cutPpm}`;
+  const holes = `${reaching} ORDER BY max(${eqSql}) DESC LIMIT ${holeLimit}`;
+  const [samples, holeInfo, cand, reach] = await Promise.all([
     runReadOnlyQuery(
       `SELECT w.drillhole_id, w.source_system AS ssrc, w.sample_id, w.depth_from_m::float AS f, w.depth_to_m::float AS t, ${g1.value} AS g, ${g1.basis} AS basis, ${g1.bdl} AS bdl
          ${g2 ? `, ${g2.value} AS g2, ${g2.bdl} AS bdl2` : ""}
        FROM geochem.sample_chemistry_wide w WHERE w.drillhole_id IN (${holes}) AND w.source_system IN (${sources.map(q).join(", ")})`,
-      80000,
+      200000,
     ),
     runReadOnlyQuery(
       `SELECT h.drillhole_id, h.hole_name, h.source_hole_id, h.source_system, h.company, h.prospect, o.name AS occurrence, h.lat, h.lon, h.total_depth_m,
@@ -306,6 +307,7 @@ async function composite(input: Record<string, unknown>, el: string, d: ElDef, a
        AND w.depth_to_m > w.depth_from_m AND (${g1.value} IS NOT NULL OR ${g1.bdl})`,
       1,
     ),
+    runReadOnlyQuery(`SELECT count(*) AS n FROM (${reaching}) x`, 1),
   ]);
   const info = new Map(holeInfo.rows.map((h) => [Number(h.drillhole_id), h]));
   const byHole = new Map<number, Record<string, unknown>[]>();
@@ -384,8 +386,9 @@ async function composite(input: Record<string, unknown>, el: string, d: ElDef, a
     parameters: { cutoff: `${cutoff} ${u}${eq ? " equivalent" : ""}`, min_width_m: minWidth, max_internal_dilution_m: maxDil, including_cutoff: incl ?? null, equivalent: eq?.text ?? null },
     area: area.note.length ? area.note : ["all holes with assays in these sources"],
     holes_with_assays_in_area: Number(cand.rows[0]?.n ?? 0),
-    holes_with_an_assay_at_or_above_cutoff: byHole.size,
-    holes_note: byHole.size >= holeLimit ? `Only the ${holeLimit} holes with the highest single assays were composited; narrow the area to see all.` : undefined,
+    holes_with_an_assay_at_or_above_cutoff: Number(reach.rows[0]?.n ?? 0),
+    holes_composited: byHole.size,
+    holes_note: Number(reach.rows[0]?.n ?? 0) > byHole.size ? `Only the ${byHole.size} holes with the highest single assays were composited (of ${reach.rows[0]?.n} reaching the cut-off); narrow the area to see all.` : "Every hole reaching the cut-off was composited.",
     holes_with_an_intercept: holesWithHits,
     intercepts_found: hits.length,
     overlapping_sample_intervals_skipped: overlapsDropped,
@@ -428,6 +431,7 @@ async function composite(input: Record<string, unknown>, el: string, d: ElDef, a
       `A high 'highest sample' in a short intercept can mean one nugget or vein drives the grade. By default composites containing a single assay above ${d.exceptional} ${unitLabel(d)}${eq ? ` (or above ${eq.d.exceptional} ${unitLabel(eq.d)} for the second metal)` : ""} are left out of the ranking (usually source errors, occasionally real); say how many, and set include_exceptional to rank them.`,
       "These are calculated from government-compiled assays, not company-reported or resource figures; do not present them as either, or imply economic grades. They must not be used in public reporting without independent verification.",
       "Only Tasmania (MRT) and Athabasca (GSC Open File 7792) hold downhole assay intervals; Québec assays have no from-to depths, so for Québec use mode 'reported'.",
+      "To try other cut-offs, widths, dilution or a metal equivalent and see each hole's strip log, the user can open the Drill intercepts page (the orange 'Drill intercepts' button at the top of the app); it uses the same calculation and also takes their own CSV. Mention it in one sentence at the end.",
       maps.length ? "A map of the ranked holes is shown to the user automatically; the full table is downloadable." : "",
     ].filter(Boolean),
     credit: credits,

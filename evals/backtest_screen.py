@@ -12,7 +12,7 @@ How it works (read-only; the screen's own rules are copied from src/lib/anomalie
 Every pre-listed survey x indicator combination is reported, including the ones that cannot be tested and the ones where the screen does worse than chance.
 
 What it does NOT show: that the screen finds deposits nobody knows about. It tests recovery of known systems (known deposits may have been found partly with the same survey data), and the
-catalogue's own gaps count against the screen. Usage: python evals/backtest_screen.py [--quick]
+catalogue's own gaps count against the screen. Usage: python evals/backtest_screen.py [--quick] [--surveys A,B]
 """
 import json, os, sys, time, datetime
 import numpy as np
@@ -40,6 +40,8 @@ INDICATORS = {  # name: (elements, required key elements, occurrence commodity p
     "Mo": (["mo"], [], "^mo$"),
     "U": (["u"], [], "^u$"),
 }
+if "--surveys" in sys.argv:  # re-test only these surveys (comma separated), e.g. after a data fix in one source
+    SURVEYS = [x for x in sys.argv[sys.argv.index("--surveys") + 1].split(",") if x]
 QUICK = "--quick" in sys.argv
 if QUICK:
     SURVEYS = ["GREENLAND_GEUS", "ARGENTINA_SEGEMAR"]
@@ -170,7 +172,7 @@ def run_case(survey, name, spec):
 
 results = []
 t0 = time.time()
-PARTIAL = os.path.join(HERE, "backtest", "partial_quick.json" if QUICK else "partial.json")
+PARTIAL = os.path.join(HERE, "backtest", "partial_quick.json" if QUICK else "partial_surveys.json" if "--surveys" in sys.argv else "partial.json")
 os.makedirs(os.path.dirname(PARTIAL), exist_ok=True)
 if os.path.exists(PARTIAL):  # resume after an interruption: finished combinations are kept
     results = [r for r in json.load(open(PARTIAL, encoding="utf8")) if not str(r.get("status", "")).startswith("error")]  # errored combinations are tried again
@@ -197,6 +199,7 @@ summary = dict(
     better_than_chance=sum(1 for r in tested if r["lift_ci95"][0] > 1), no_clear_difference=sum(1 for r in tested if r["lift_ci95"][0] <= 1 <= r["lift_ci95"][1]), worse_than_chance=sum(1 for r in tested if r["lift_ci95"][1] < 1),
     median_lift=float(np.median([r["lift"] for r in tested])) if tested else None, seconds=round(time.time() - t0))
 out = os.path.join(HERE, "backtest"); os.makedirs(out, exist_ok=True)
-fn = os.path.join(out, f"screen_backtest_{summary['run_date']}{'_quick' if QUICK else ''}.json")
+SUFFIX = ("_quick" if QUICK else "") + ("_" + "-".join(x.lower() for x in SURVEYS) if "--surveys" in sys.argv else "")
+fn = os.path.join(out, f"screen_backtest_{summary['run_date']}{SUFFIX}.json")
 json.dump(dict(summary=summary, results=results), open(fn, "w", encoding="utf8"), indent=2)
 print(json.dumps(summary, indent=2)); print("saved", fn)

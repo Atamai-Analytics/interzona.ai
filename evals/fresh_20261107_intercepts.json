@@ -29,14 +29,14 @@
       "cat": "fresh",
       "q": "What uranium intercepts did the drill holes at the Tamarack deposit in Saskatchewan hit?",
       "expect": {"tools_any": ["drill_intercepts"], "max_turns": 10},
-      "judge": "Calculates uranium intercepts (as % U3O8) from the Athabasca drill-core assays (GSC Open File 7792) for Q8- holes at or near Tamarack (Cameco, near McClean Lake / Dawn Lake), states the cut-off and other parameters, and quotes e.g. Q8-181 about 16 m at about 10 % U3O8 from about 158 m or similar from the tool. Mentions any very high-grade intercepts left out for checking. Must not confuse it with the Tamarack nickel-copper project in Minnesota. Must not invent values."
+      "judge": "Calculates uranium intercepts (as % U3O8) from the Athabasca drill-core assays (GSC Open File 7792) for Q8- holes at or near Tamarack (Cameco, near McClean Lake / Dawn Lake), states the cut-off and other parameters, and quotes e.g. Q8-181 about 16 m at about 10 % U3O8 from about 158 m or similar from the tool. If the tool reports intercepts left out for checking (above 85 % U3O8), mentions them; if none were left out it need not mention it, and calling the high grades real Athabasca ore is fine. Must not confuse it with the Tamarack nickel-copper project in Minnesota. Must not invent values."
     },
     {
       "id": "fresh-int-suspicious-gold",
       "cat": "fresh",
       "q": "What are the highest-grade gold intercepts in Québec, and should I trust the top ones?",
       "expect": {"tools_any": ["drill_intercepts"], "max_turns": 8},
-      "judge": "Ranks reported Québec gold intercepts by grade and explains that the very highest values (e.g. 50,000 g/t over 8 m in CB-17-01W3, or a run of exactly 1,000 g/t values in CB-17-01) are almost certainly unit, cap or typing errors in the source and were left out or flagged, while very high but possible bonanza grades should be checked against the original assessment report. Must not present the 50,000 g/t value as real. Must not invent values."
+      "judge": "Ranks reported Québec gold intercepts by grade and explains that the very highest values (e.g. 50,000 g/t in CB-17-01 and its wedge holes such as CB-17-01W3, or 1,000 g/t over tens of metres in CB-17-01; lengths depend on the filters used) are almost certainly unit, cap or typing errors in the source and were held back from the main ranking or flagged, while very high but possible bonanza grades should be checked against the original assessment report. Must not present the 50,000 g/t value as real. Must not invent values."
     }
   ]
 }

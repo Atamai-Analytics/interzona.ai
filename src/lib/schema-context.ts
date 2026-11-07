@@ -530,7 +530,19 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   Sandstone%'; basement samples hold the ore itself), using sample_chemistry_wide: 206Pb/204Pb = pb206_p / pb204_p (else the _t pair; skip
   pb204 <= 0 or listed in bdl_codes), 207Pb/206Pb = pb207_p / pb206_p, boron = coalesce(b_t, b_p), uranium = u_p. Per hole take max(206/204),
   min(207/206), max(B), max(U) and the count of samples behind each (needs >= 3); join drilling.drillholes for the collar and occurrence_id,
-  and give the distance to the nearest uranium occurrence in SQL (ST_Distance on geog). Return hole_name, lat and lon in the same query so
+  and give the distance to the nearest uranium DEPOSIT in SQL (ST_Distance on geog), defined exactly as in the back-test: core.occurrences with
+  a uranium commodity, status IN ('PROSPECT','EXPLORATION','FEASIBILITY','DEVELOPMENT','PRODUCER','PAST_PRODUCER') - prospects included -
+  and name !~* '^drill ?holes? ' (showings named after drill holes are not deposits). ALSO, in the same query, return the nearest uranium
+  occurrence of ANY status within 200 m of the collar (e.g. a showing such as 'C1 Trend - Holes WL-22, WL-24', whose name often lists the
+  hole): (SELECT o.name FROM core.occurrences o WHERE o.is_active AND EXISTS (SELECT 1 FROM unnest(o.commodities) k WHERE k ~* '^u$|uranium')
+  AND (ST_DWithin(o.geom::geography, h.geog, 200) OR (o.name ILIKE '%' || h.hole_name || '%' AND ST_DWithin(o.geom::geography, h.geog, 2000)))
+  ORDER BY ST_Distance(o.geom::geography, h.geog) LIMIT 1) AS u_showing_at_hole (the name test matters: a showing listing several holes is
+  plotted at one of them, e.g. C1 Trend sits on WL-24 but names WL-22 too, 791 m away) - and when
+  it is set, say the hole is itself a catalogued uranium showing, so a hole is never described as away from known uranium when it is not.
+  SPEED (the query has a 15 s limit): rank first, measure distances last - (1) a CTE of per-hole ratios, (2) ORDER BY and LIMIT to the top
+  N holes, (3) a MATERIALIZED CTE of Athabasca uranium occurrences only: WHERE o.is_active AND o.geom && ST_MakeEnvelope(-112, 56.5,
+  -101.5, 60.5, 4326) AND a uranium commodity, selecting o.geom::geography AS g, (4) the deposit and showing look-ups against that small
+  CTE for the top N holes only. Distances over all holes or the whole occurrence table time out. Return hole_name, lat and lon in the same query so
   the holes appear on a map, and describe where the top holes sit only from that result (name each hole's nearest deposit and distance).
   Any count of how many top holes sit at a deposit or within a distance must come from the query (e.g. a GROUP BY nearest deposit over the
   same top-N holes), never from counting rows in your table by eye. Reference values in sandstone: ordinary crustal lead

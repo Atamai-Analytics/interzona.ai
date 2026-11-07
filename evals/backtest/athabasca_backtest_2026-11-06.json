@@ -1,0 +1,234 @@
+{
+  "run_date": "2026-11-06",
+  "rules": {
+    "top": 0.1,
+    "min_samples": 3,
+    "block_deg": 0.25,
+    "bootstrap": 2000,
+    "dists_m": [
+      500,
+      1000,
+      2000
+    ]
+  },
+  "holes": 694,
+  "targets": 215,
+  "results": [
+    {
+      "indicator": "rpb",
+      "dist_m": 500,
+      "status": "tested",
+      "holes": 230,
+      "flagged": 23,
+      "threshold": 316.2,
+      "flagged_hits": 16,
+      "hit_rate_flagged": 0.696,
+      "hit_rate_expected": 0.31,
+      "lift": 2.24,
+      "lift_ci95": [
+        1.63,
+        19.0
+      ],
+      "verdict": "better than chance",
+      "blocks": 57
+    },
+    {
+      "indicator": "rpb",
+      "dist_m": 1000,
+      "status": "tested",
+      "holes": 230,
+      "flagged": 23,
+      "threshold": 316.2,
+      "flagged_hits": 17,
+      "hit_rate_flagged": 0.739,
+      "hit_rate_expected": 0.458,
+      "lift": 1.61,
+      "lift_ci95": [
+        0.0,
+        4.49
+      ],
+      "verdict": "no clear difference",
+      "blocks": 57
+    },
+    {
+      "indicator": "rpb",
+      "dist_m": 2000,
+      "status": "tested",
+      "holes": 230,
+      "flagged": 23,
+      "threshold": 316.2,
+      "flagged_hits": 18,
+      "hit_rate_flagged": 0.783,
+      "hit_rate_expected": 0.545,
+      "lift": 1.44,
+      "lift_ci95": [
+        0.0,
+        2.14
+      ],
+      "verdict": "no clear difference",
+      "blocks": 57
+    },
+    {
+      "indicator": "lpb",
+      "dist_m": 500,
+      "status": "tested",
+      "holes": 230,
+      "flagged": 23,
+      "threshold": 0.127,
+      "flagged_hits": 18,
+      "hit_rate_flagged": 0.783,
+      "hit_rate_expected": 0.273,
+      "lift": 2.87,
+      "lift_ci95": [
+        1.99,
+        3.59
+      ],
+      "verdict": "better than chance",
+      "blocks": 57
+    },
+    {
+      "indicator": "lpb",
+      "dist_m": 1000,
+      "status": "tested",
+      "holes": 230,
+      "flagged": 23,
+      "threshold": 0.127,
+      "flagged_hits": 19,
+      "hit_rate_flagged": 0.826,
+      "hit_rate_expected": 0.431,
+      "lift": 1.92,
+      "lift_ci95": [
+        0.0,
+        13.0
+      ],
+      "verdict": "no clear difference",
+      "blocks": 57
+    },
+    {
+      "indicator": "lpb",
+      "dist_m": 2000,
+      "status": "tested",
+      "holes": 230,
+      "flagged": 23,
+      "threshold": 0.127,
+      "flagged_hits": 20,
+      "hit_rate_flagged": 0.87,
+      "hit_rate_expected": 0.524,
+      "lift": 1.66,
+      "lift_ci95": [
+        0.0,
+        3.86
+      ],
+      "verdict": "no clear difference",
+      "blocks": 57
+    },
+    {
+      "indicator": "b",
+      "dist_m": 500,
+      "status": "tested",
+      "holes": 482,
+      "flagged": 49,
+      "threshold": 1295.6,
+      "flagged_hits": 19,
+      "hit_rate_flagged": 0.388,
+      "hit_rate_expected": 0.285,
+      "lift": 1.36,
+      "lift_ci95": [
+        0.88,
+        3.16
+      ],
+      "verdict": "no clear difference",
+      "blocks": 72
+    },
+    {
+      "indicator": "b",
+      "dist_m": 1000,
+      "status": "tested",
+      "holes": 482,
+      "flagged": 49,
+      "threshold": 1295.6,
+      "flagged_hits": 32,
+      "hit_rate_flagged": 0.653,
+      "hit_rate_expected": 0.347,
+      "lift": 1.88,
+      "lift_ci95": [
+        1.22,
+        4.22
+      ],
+      "verdict": "better than chance",
+      "blocks": 72
+    },
+    {
+      "indicator": "b",
+      "dist_m": 2000,
+      "status": "tested",
+      "holes": 482,
+      "flagged": 49,
+      "threshold": 1295.6,
+      "flagged_hits": 33,
+      "hit_rate_flagged": 0.673,
+      "hit_rate_expected": 0.409,
+      "lift": 1.65,
+      "lift_ci95": [
+        1.1,
+        3.28
+      ],
+      "verdict": "better than chance",
+      "blocks": 72
+    },
+    {
+      "indicator": "u",
+      "dist_m": 500,
+      "status": "tested",
+      "holes": 631,
+      "flagged": 64,
+      "threshold": 266.0,
+      "flagged_hits": 54,
+      "hit_rate_flagged": 0.844,
+      "hit_rate_expected": 0.228,
+      "lift": 3.7,
+      "lift_ci95": [
+        2.32,
+        8.74
+      ],
+      "verdict": "better than chance",
+      "blocks": 79
+    },
+    {
+      "indicator": "u",
+      "dist_m": 1000,
+      "status": "tested",
+      "holes": 631,
+      "flagged": 64,
+      "threshold": 266.0,
+      "flagged_hits": 58,
+      "hit_rate_flagged": 0.906,
+      "hit_rate_expected": 0.342,
+      "lift": 2.65,
+      "lift_ci95": [
+        1.84,
+        4.93
+      ],
+      "verdict": "better than chance",
+      "blocks": 79
+    },
+    {
+      "indicator": "u",
+      "dist_m": 2000,
+      "status": "tested",
+      "holes": 631,
+      "flagged": 64,
+      "threshold": 266.0,
+      "flagged_hits": 59,
+      "hit_rate_flagged": 0.922,
+      "hit_rate_expected": 0.404,
+      "lift": 2.28,
+      "lift_ci95": [
+        1.61,
+        3.84
+      ],
+      "verdict": "better than chance",
+      "blocks": 79
+    }
+  ]
+}

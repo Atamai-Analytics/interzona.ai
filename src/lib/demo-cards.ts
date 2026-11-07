@@ -94,6 +94,12 @@ export const DEMO_CARDS: DemoCard[] = [
     prompt: "Compare the study economics of Québec's lithium projects (after-tax NPV, initial capex, IRR and mine life) and show them on a map.",
   },
   {
+    icon: "⚛️",
+    title: "Radiogenic lead around Athabasca uranium",
+    description: "Ranks Athabasca drill holes by uranium-derived lead in their sandstone core, maps them against the known deposits, and says how far a back-test lets you trust the signal.",
+    prompt: "Which Athabasca drill holes show the most radiogenic lead in their sandstone, and how close are they to known uranium deposits?",
+  },
+  {
     icon: "📄",
     title: "A company snapshot to send on",
     description: "Builds a printable one-to-two page profile with a shareable link, and summarises what stands out.",

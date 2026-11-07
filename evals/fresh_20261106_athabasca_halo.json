@@ -1,0 +1,28 @@
+{
+  "version": "2026-11-06",
+  "notes": "Athabasca halo screen (lead isotopes, boron, uranium in sandstone core) and its back-test track record. The first question is the capability card's exact prompt. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "card-athabasca-radiogenic-lead",
+      "cat": "fresh",
+      "q": "Which Athabasca drill holes show the most radiogenic lead in their sandstone, and how close are they to known uranium deposits?",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 10, "maps_min": 1},
+      "judge": "Ranks holes by sandstone lead-isotope ratios computed per hole in SQL (max 206Pb/204Pb and/or min 207Pb/206Pb, with the number of samples behind each), gives each hole's distance to the nearest uranium deposit or its linked deposit, shows a map, and explains what radiogenic lead means against ordinary crustal lead (about 18-19 for 206/204). States the back-test honestly: lead isotopes flag holes near deposits within 500 m but not clearly at 1-2 km (few holes with isotopes), so they are a screening hint, not proof, and the test shows recovery of known systems, not discovery. Credits the Geological Survey of Canada Open File 7792. Must not invent values. Reference facts (correct, from the app's stored back-test of 6 November 2026; quoting them without a tool call is fine): holes with >= 3 sandstone samples: about 230 with lead isotopes, about 480 with boron, about 630 with uranium; uranium lift 3.7x within 500 m, 2.7x within 1 km, 2.3x within 2 km; boron 1.9x within 1 km, 1.7x within 2 km, not clear within 500 m; 207/206 2.9x and 206/204 2.2x within 500 m, not clear at 1-2 km; top-10 % thresholds about 316 (206/204), 0.13 (207/206), 1,300 ppm boron."
+    },
+    {
+      "id": "fresh-halo-boron",
+      "cat": "fresh",
+      "q": "Does boron in the Athabasca sandstone point to uranium deposits?",
+      "expect": {"max_turns": 8},
+      "judge": "Explains boron as an alteration halo around the deposits (naming dravite / tourmaline clay alteration is a plus, not required) and uses the back-test: holes with the highest sandstone boron (top 10 %, above about 1,300 ppm) sit near known uranium deposits about 1.9 times more often than comparable holes within 1 km (about 1.7x within 2 km), but not clearly within 500 m, consistent with a broad halo. Says this measures recovery of known deposits, not discovery. Must not invent numbers. Reference facts (correct, from the app's stored back-test of 6 November 2026; quoting them without a tool call is fine): holes with >= 3 sandstone samples: about 230 with lead isotopes, about 480 with boron, about 630 with uranium; uranium lift 3.7x within 500 m, 2.7x within 1 km, 2.3x within 2 km; boron 1.9x within 1 km, 1.7x within 2 km, not clear within 500 m; 207/206 2.9x and 206/204 2.2x within 500 m, not clear at 1-2 km; top-10 % thresholds about 316 (206/204), 0.13 (207/206), 1,300 ppm boron."
+    },
+    {
+      "id": "fresh-halo-reliability",
+      "cat": "fresh",
+      "q": "How reliable are lead isotopes compared with uranium and boron for finding Athabasca uranium deposits in your data?",
+      "expect": {"max_turns": 6},
+      "judge": "Compares the three indicators from the back-test: sandstone uranium is clearest (about 3.7x within 500 m, 2.7x within 1 km), boron works at 1-2 km (about 1.9x at 1 km), lead isotopes are strong within 500 m (about 2-3x) but not clearly better than chance at the pre-set 1 km because few holes have isotope data. Mentions that drilling clusters around known deposits and the sandstone can hold ore, so these are recovery figures, not discovery. Must not invent numbers or overstate the lead-isotope result. Reference facts (correct, from the app's stored back-test of 6 November 2026; quoting them without a tool call is fine): holes with >= 3 sandstone samples: about 230 with lead isotopes, about 480 with boron, about 630 with uranium; uranium lift 3.7x within 500 m, 2.7x within 1 km, 2.3x within 2 km; boron 1.9x within 1 km, 1.7x within 2 km, not clear within 500 m; 207/206 2.9x and 206/204 2.2x within 500 m, not clear at 1-2 km; top-10 % thresholds about 316 (206/204), 0.13 (207/206), 1,300 ppm boron."
+    }
+  ]
+}

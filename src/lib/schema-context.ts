@@ -525,6 +525,25 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   holes first, distance-search holes labelled separately.) Caveats: below
   detection stored as '<' at the limit, zeros not loaded; major elements may mix oxide and element reporting between labs; samples sit at
   the collar position with depths (no downhole coordinates). It covers 2000-2011 only and only reports that went off confidential.
+  ATHABASCA HALO SCREEN (lead isotopes, boron, uranium in SANDSTONE core) - for 'radiogenic lead', 'where is the alteration halo', 'which holes
+  look most like a uranium system', 'lead isotopes': work per HOLE over its sandstone samples (sample_type_local LIKE 'OF7792: drill core -
+  Sandstone%'; basement samples hold the ore itself), using sample_chemistry_wide: 206Pb/204Pb = pb206_p / pb204_p (else the _t pair; skip
+  pb204 <= 0 or listed in bdl_codes), 207Pb/206Pb = pb207_p / pb206_p, boron = coalesce(b_t, b_p), uranium = u_p. Per hole take max(206/204),
+  min(207/206), max(B), max(U) and the count of samples behind each (needs >= 3); join drilling.drillholes for the collar and occurrence_id,
+  and give the distance to the nearest uranium occurrence in SQL (ST_Distance on geog). Return hole_name, lat and lon in the same query so
+  the holes appear on a map, and describe where the top holes sit only from that result (name each hole's nearest deposit and distance).
+  Any count of how many top holes sit at a deposit or within a distance must come from the query (e.g. a GROUP BY nearest deposit over the
+  same top-N holes), never from counting rows in your table by eye. Reference values in sandstone: ordinary crustal lead
+  is about 18-19 for 206/204 and about 0.85 for 207/206; the median sandstone sample is 27 and 0.67; the most radiogenic 10 % of holes exceed
+  about 316 (206/204) or go below about 0.13 (207/206), which points to uranium-derived lead (a 1.5-billion-year-old uraninite gives about 0.1).
+  Boron above about 1,300 ppm is the top 10 % of holes (dravite / tourmaline clay alteration). Only about 230 holes have isotopes on >= 3
+  sandstone samples, about 480 boron and about 630 uranium. TRACK RECORD (back-test 6 Nov 2026, rules fixed in advance: top 10 % of holes vs
+  holes with similar sample counts, hit = a uranium deposit of prospect status or better, not one named after drill holes, block bootstrap;
+  file evals/backtest/athabasca_backtest_2026-11-06.json): sandstone uranium flags holes near deposits at every distance (3.7x within 500 m,
+  2.7x within 1 km, 2.3x within 2 km); boron at 1-2 km (1.9x within 1 km, 1.7x within 2 km) but not clearly within 500 m - a broad halo;
+  radiogenic lead clearly within 500 m (207/206 2.9x, 206/204 2.2x) but NOT clearly at the pre-set 1 km or 2 km (few holes, so the test is
+  weak) - call lead isotopes a promising near-deposit signal, not a proven one. Exploration drilling clusters around known deposits and the
+  sandstone can hold ore, so these show recovery of known systems, not discovery; say so, and present a hole's signal as a screening hint.
   Québec SEDIMENT, SOIL AND TILL ('CANADA_QC_SIGEOM_SED', CC BY 4.0, same credit as SIGÉOM rock): 522,453 samples, 20.52M results, the province's
   secondary-environment geochemistry (many 1970s-1980s government lake and stream sediment surveys plus assessment-report soil and till):
   stream sediment 216,768, lake sediment 169,516, soil 75,452 (by horizon: SOIL_A, SOIL_B, SOIL_C or unstated), till 28,573 (TILL_SAMPLE
@@ -1439,7 +1458,7 @@ const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   occurrences:
     /occurrence|deposit|\bmines?\b|mining|mineral site|prospect|resource|reserve|tonnage|grade|facilit|smelter|refiner|capacity|countr|commodit|mrds|\bhow many\b|operator|owner|project|critical mineral|exploration|\bcrma\b|critical raw material|strategic|recycl|substitut|\bunfc\b|european commission/i,
   geochemistry_data:
-    /sample|geochem|assay|\bppm\b|stream|sediment|\bsoil|\brock|anomal|element|analyte|analytical|\bree\b|rare earth|pegmatite|lineament|alteration|zircon|u-pb|dating|\bage[sd]?\b|licen|attribution|lithology|\bsegemar|\bgeus\b|\bgtk\b|\bsgu\b|ngdb|\bgsv\b|\bpgm\b|drill|\bholes?\b|collar|downhole|interval|core sample|\bmrt\b|tasmania|intercept|sig[eé]om|\btill\b|lake sediment/i,
+    /sample|geochem|assay|\bppm\b|stream|sediment|\bsoil|\brock|anomal|element|analyte|analytical|\bree\b|rare earth|pegmatite|lineament|alteration|zircon|u-pb|dating|\bage[sd]?\b|licen|attribution|lithology|\bsegemar|\bgeus\b|\bgtk\b|\bsgu\b|ngdb|\bgsv\b|\bpgm\b|drill|\bholes?\b|collar|downhole|interval|core sample|\bmrt\b|tasmania|intercept|sig[eé]om|\btill\b|lake sediment|athabasca|boron|isotop|radiogenic|sandstone|\bhalo\b/i,
   geochemistry_workflow:
     /explor|prospective|target|new lead|anomal|where should|discover|across (all|the|many)|combined|set of (samples|occurrences)/i,
   geochemistry_scripts:

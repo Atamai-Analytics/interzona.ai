@@ -16,7 +16,7 @@
       "cat": "fresh",
       "q": "Which drill holes in our data were drilled at Cigar Lake?",
       "expect": {"tools_any": ["run_sql"], "max_turns": 6},
-      "judge": "Uses the Saskatchewan drill holes linked to the Cigar Lake occurrence(s) (more than 100 holes), says how the link was made (shared assessment file and / or name), gives a few hole names or a summary (company, years, depths), notes these are collars only with no assays published, and credits the Saskatchewan GeoAtlas."
+      "judge": "Uses the Saskatchewan drill holes linked to the Cigar Lake occurrence(s) (more than 100 holes), says how the link was made (shared assessment file and / or name), gives a few hole names or a summary (company, years, depths), notes these are collars with no assays published by the province (one of them has core samples from the GSC Athabasca compilation, Open File 7792, which may be mentioned), and credits the Saskatchewan GeoAtlas."
     }
   ]
 }

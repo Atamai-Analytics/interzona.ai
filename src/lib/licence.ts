@@ -71,6 +71,8 @@ const CREDITS: [RegExp, string][] = [
   [/\bcanada\b|saskatchewan|smdi|canada_sk|migration_canada_occ|drilling\./i, "Saskatchewan Mining and Petroleum GeoAtlas, Saskatchewan Geological Survey (Mineral Deposit Index; drill holes; till and lake-sediment geochemistry, incl. Geological Survey of Canada lake-sediment data), retrieved 3 November 2026; Government of Saskatchewan Standard Unrestricted Use Data Licence v2.0"],
   [/\bcanada\b|\bnrcan\b|migration_nrcan/i, "Natural Resources Canada, critical minerals projects list and Major Projects Inventory (Open Government Licence - Canada)"],
   [/\bcanada\b|cdogs|canada_nrcan/i, "Natural Resources Canada, Geological Survey of Canada, Canadian Database of Geochemical Surveys (CDoGS) (Open Government Licence - Canada)"],
+  // the Athabasca core samples hang off Saskatchewan drill holes, so any drilling query may use them
+  [/\bcanada\b|athabasca|of_?7792|canada_athabasca|saskatchewan|drilling\./i, "Wright, Potter and Comeau (2015), Athabasca Basin Uranium Geochemistry Database v.2, Geological Survey of Canada, Open File 7792 (Open Government Licence - Canada)"],
 ];
 
 /** The publishers behind a query, worked out from the names in it. */

@@ -425,7 +425,8 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   plus 190,035 diamond drill holes with 1.15M log intervals and 337,966 reported mineralised intercepts) and Saskatchewan, Canada
   ('CANADA_SK_SGS', 19,739 till and lake-sediment samples, 567,594 results, plus 33,490 drill-hole collars) and Québec sediment, soil and till
   (SIGÉOM, 'CANADA_QC_SIGEOM_SED', 522,453 samples, 20.52M results) and federal Canadian surveys across all provinces and territories
-  (Natural Resources Canada CDoGS, 'CANADA_NRCAN_CDOGS', 233,875 samples, 8.42M results) ONLY (geochem.samples also holds 2,519 age-only points, source_system
+  (Natural Resources Canada CDoGS, 'CANADA_NRCAN_CDOGS', 233,875 samples, 8.42M results) and Athabasca Basin uranium drill core (GSC Open
+  File 7792, 'CANADA_ATHABASCA_OF7792', 40,373 samples, 1.84M results) ONLY (geochem.samples also holds 2,519 age-only points, source_system
   'SWEDEN_SGU_BEDROCK_AGE', and 1,053 bare sample points from the Wu zircon database, source_system
   'GLOBAL_ZIRCON_WU', none of which has results; do not count them as geochemical samples).
   USGS NGDB: almost all samples are rocks (grab 238,515, composite 47,191, drill core 31,729, float, channel,
@@ -497,9 +498,33 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   for the NGR lake sediment): 3,543 till samples (each size fraction, e.g. '-0.063 mm' or clay '-0.002 mm', is its own sample, sample_number
   '<id> (<fraction>)'; lab, digestion and method recorded; near-total HF-HNO3-HClO4 and partial HNO3-HCl ICP), 13,195 GSC National Geochemical
   Reconnaissance lake-sediment samples (SKGS-NGR-AAS: mostly aqua regia AAS; SKGS-NGR-INAA: neutron activation) and 3,001 1970s uranium-era
-  lake-sediment samples (SKGS-LAKE-1970S). No Saskatchewan rock geochemistry or drill-hole assays are published; the 33,490 Saskatchewan drill
-  holes are collars only (company, project, depth, drill type, core storage; depths to the base of the Quaternary / Athabasca Group and to
-  basement are in comments), useful for where drilling has happened and for core-library availability.
+  lake-sediment samples (SKGS-LAKE-1970S). The province itself publishes no rock geochemistry or drill-hole assays: its 33,490 drill holes are
+  collars (company, project, depth, drill type, core storage; depths to the base of the Quaternary / Athabasca Group and to basement are in
+  comments), useful for where drilling has happened and for core-library availability - BUT about 1,040 of them now carry core assays from the
+  Athabasca compilation below.
+  ATHABASCA BASIN URANIUM DRILL CORE ('CANADA_ATHABASCA_OF7792', Open Government Licence - Canada, credit Wright, Potter and Comeau 2015,
+  Athabasca Basin Uranium Geochemistry Database v.2, Geological Survey of Canada Open File 7792): 40,373 samples (38,805 drill-core intervals
+  with depth_from_m / depth_to_m and elevation_m, 1,568 outcrops), 1.84M results, compiled from 2000-2011 uranium-exploration assessment
+  reports (Cameco, Denison, AREVA, UEX, CanAlaska and others) and Saskatchewan Geological Survey data files; lab QAQC was removed by the
+  compilers. 1,285 holes: 1,040 are EXISTING Saskatchewan GeoAtlas holes (source_system 'CANADA_SK_SGS'; matched on the same hole name within
+  1 km AND the same assessment file or within 200 m), 245 are new holes with source_system 'CANADA_ATHABASCA_OF7792'. So to get core
+  chemistry for Saskatchewan holes, join geochem.samples s ON s.drillhole_id = h.drillhole_id AND s.source_system = 'CANADA_ATHABASCA_OF7792'
+  (e.g. Tamarack 86 holes / 2,693 samples, Centennial 20 / 1,952, Phoenix at Wheeler River 59 / 1,580, McClean Lake 15). Packages by lab
+  and digest: ATH-SRC-SRCP (Saskatchewan Research Council partial, 9:1 HNO3:HCl), ATH-SRC-TOT (3-acid total), ATH-SRC-BFUS (boron by Na2O2
+  fusion), ATH-SRC-UFLUOR (uranium by fluorimetry after the partial digest), NTEL weak acid / total, ACME and Loring aqua regia; u_p
+  (partial) and u_t (total) uranium, u3o8_p (%), lead isotopes pb204..pb208 (ppm of each isotope; 207Pb/206Pb needs a ratio in SQL),
+  boron. sample_type_local carries the lithology ('Sandstone' with Manitou Falls / Read / Fair Point formation, 'Basement' with rock code
+  such as PELT pelite, or not stated). Uranium reaches ore grade (up to 58% U) - genuine Athabasca ore, not an error: whenever you show
+  values of a percent or more, say in one line that they are real high-grade ore intervals (Athabasca unconformity deposits are the richest
+  known), not data errors. To rank or compare
+  uranium, do it in SQL on one column: greatest(u_p, u_t) in ppm, and where a sample has only u3o8_p (%) use u3o8_p * 8480 (ppm U, since
+  U3O8 is 84.8% U) inside the query - never convert units or order the values by hand. When summarising Athabasca core chemistry for a
+  deposit, compute the statistics in one query over the holes you chose (count of holes and samples, median / percentiles / max per element,
+  by lithology if useful) rather than reading a capped list of rows, and say these are individual exploration samples, not a resource or a
+  grade of the deposit. (This is about Athabasca core samples only; for drill holes and intercepts elsewhere follow the drilling notes: linked
+  holes first, distance-search holes labelled separately.) Caveats: below
+  detection stored as '<' at the limit, zeros not loaded; major elements may mix oxide and element reporting between labs; samples sit at
+  the collar position with depths (no downhole coordinates). It covers 2000-2011 only and only reports that went off confidential.
   Québec SEDIMENT, SOIL AND TILL ('CANADA_QC_SIGEOM_SED', CC BY 4.0, same credit as SIGÉOM rock): 522,453 samples, 20.52M results, the province's
   secondary-environment geochemistry (many 1970s-1980s government lake and stream sediment surveys plus assessment-report soil and till):
   stream sediment 216,768, lake sediment 169,516, soil 75,452 (by horizon: SOIL_A, SOIL_B, SOIL_C or unstated), till 28,573 (TILL_SAMPLE
@@ -543,7 +568,8 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   cite Wu, Fang and Ji 2023; AUSTRALIA_VIC_GSV_GEOCHEMISTRY, CC BY 4.0, credit State of Victoria / DEECA;
   AUSTRALIA_TAS_MRT (samples, results and the drill holes), CC BY 3.0 AU, credit Mineral Resources Tasmania / State of Tasmania;
   CANADA_NRCAN_CDOGS (federal geochemical surveys), Open Government Licence - Canada, credit Natural Resources Canada, Geological Survey of
-  Canada (CDoGS);
+  Canada (CDoGS); CANADA_ATHABASCA_OF7792 (Athabasca uranium drill core), Open Government Licence - Canada, credit Wright, Potter and Comeau
+  (2015), Geological Survey of Canada Open File 7792;
   CANADA_QC_SIGEOM (rock samples, results, drill holes, logs, intercepts) and CANADA_QC_SIGEOM_SED (sediment, soil, till), CC BY 4.0, credit Ministère des Ressources naturelles et des Forêts,
   Québec (SIGÉOM); CANADA_SK_SGS (till and lake-sediment samples and the Saskatchewan drill holes), Government of Saskatchewan Standard
   Unrestricted Use Data Licence v2.0, credit Saskatchewan Mining and Petroleum GeoAtlas with the layer and retrieval date (3 November 2026);
@@ -575,12 +601,12 @@ geochem.samples: sample_id (PK), occurrence_id (nullable), sample_type_id (join 
   geochem.sample_types for the real medium name — Stream Sediment, Rock Sample, Soil Sample, Heavy
   Mineral Concentrate; sample_type_local is free text and NULL for most rows, not reliable to filter
   on), source_system (e.g. 'ARGENTINA_SEGEMAR', 'GREENLAND_GEUS', 'FINLAND_GTK_ROCK',
-  'SWEDEN_SGU_LITHOGEOCHEMISTRY', 'AUSTRALIA_TAS_MRT', 'CANADA_QC_SIGEOM', 'CANADA_QC_SIGEOM_SED', 'CANADA_SK_SGS', 'CANADA_NRCAN_CDOGS' — the simplest
+  'SWEDEN_SGU_LITHOGEOCHEMISTRY', 'AUSTRALIA_TAS_MRT', 'CANADA_QC_SIGEOM', 'CANADA_QC_SIGEOM_SED', 'CANADA_SK_SGS', 'CANADA_NRCAN_CDOGS', 'CANADA_ATHABASCA_OF7792' — the simplest
   way to filter by region when occurrence_id isn't populated), lat, lon, geom, geog, sample_context ('SURFACE',
   'DRILLHOLE_INTERVAL' for drill samples with depths, 'DRILLHOLE_POINT' for drill samples without), drillhole_id
   (-> drilling.drillholes), depth_from_m, depth_to_m.
 drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed samples; CANADA_QC_SIGEOM 190,035 diamond holes; CANADA_SK_SGS
-  33,490 collars only): drillhole_id (PK), source_system,
+  33,490 collars, about 1,040 of them with Athabasca core assays; CANADA_ATHABASCA_OF7792 245 further Athabasca holes): drillhole_id (PK), source_system,
   source_hole_id, hole_name, prospect, company, tenement, drill_type_id (-> geochem.drill_types: DIAMOND, RC, AIRCORE, PERCUSSION,
   ROTARY, AUGER, PERCUSSION_DIAMOND ...), drill_type_local (as published, may list several), purpose, date_drilled (1900-2022),
   total_depth_m, azimuth_deg, dip_deg (negative = downward), collar_elevation_m, lat, lon, geom, geog, position_accuracy_m,
@@ -593,11 +619,14 @@ drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed sample
   unlinked where several occurrences sit close together (e.g. Whabouchi), so for 'all drilling at deposit X' combine linked holes with a
   distance search around the deposit and say which is which. Example, drilling and best intercepts at an occurrence: SELECT h.hole_name,
   h.total_depth_m, i.grade, i.unit_code, i.length_m FROM drilling.drillholes h LEFT JOIN drilling.intercepts i ON i.drillhole_id =
-  h.drillhole_id AND i.is_active WHERE h.occurrence_id = <id>. WHAT EACH SOURCE'S HOLES HAVE: CANADA_SK_SGS holes are COLLARS ONLY (no assays,
-  no intercepts, no logs are published: never offer to pull assays or intercepts for Saskatchewan holes); drilling.intercepts holds Québec
-  (CANADA_QC_SIGEOM) only; analysed downhole samples exist for Tasmania (AUSTRALIA_TAS_MRT) and Québec. When presenting drill holes name the
-  publisher: Saskatchewan Mining and Petroleum GeoAtlas (Saskatchewan Geological Survey), SIGÉOM (Québec Ministère des Ressources naturelles
-  et des Forêts) or Mineral Resources Tasmania. drilling.surveys: drillhole_id,
+  h.drillhole_id AND i.is_active WHERE h.occurrence_id = <id>. WHAT EACH SOURCE'S HOLES HAVE: CANADA_SK_SGS holes are collars with NO
+  intercepts and NO logs, and assays ONLY where the Athabasca compilation sampled them (about 1,040 holes, 2000-2011 assessment work: check
+  for geochem.samples with that drillhole_id and source_system 'CANADA_ATHABASCA_OF7792' before offering assays, and never offer assays for
+  a hole that has none); CANADA_ATHABASCA_OF7792 holes have core assays but no logs or intercepts; drilling.intercepts holds Québec
+  (CANADA_QC_SIGEOM) only; analysed downhole samples exist for Tasmania (AUSTRALIA_TAS_MRT), Québec and the Athabasca holes. When presenting
+  drill holes name the publisher: Saskatchewan Mining and Petroleum GeoAtlas (Saskatchewan Geological Survey) for the collars and the
+  Geological Survey of Canada (Open File 7792) for Athabasca core assays, SIGÉOM (Québec Ministère des Ressources naturelles et des Forêts)
+  or Mineral Resources Tasmania. drilling.surveys: drillhole_id,
   depth_m, azimuth_deg, dip_deg, azimuth_reference (TRUE / MAGNETIC). Drill samples sit at the collar position (no desurveyed
   coordinates at depth yet). Downhole LITHOLOGY LOGS are geochem.lithology_observations rows with drillhole_id, depth_from_m and
   depth_to_m (Tasmania: 23,419 intervals on 34,871 holes, 18,183 of them log-only, i.e. not an analysed sample); sample_id is set only when the interval is an analysed sample. drilling.interval_qc flags interval
@@ -633,7 +662,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   ARGENTINA_SEGEMAR (1,782,202 active), 240 in USA_USGS_NGDB (13,476,885 active) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
   CANADA_NRCAN_CDOGS 27,089 (exact duplicates); CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
-  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT and CANADA_SK_SGS have none (Tasmanian impossible values are SUSPECT in result_classifications instead).
+  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS and CANADA_ATHABASCA_OF7792 have none (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
 geochem.result_classifications: result_id, source_system, result_status (DETECTED, BELOW_DL_QUALIFIED,
   BELOW_DL_CERTAIN, BELOW_DL_PROBABLE, ABOVE_UDL, NULL_RESULT, SUSPECT, SENTINEL), dl_value, use_in_statistics.
   Complete for every source (join on result_id AND source_system). For statistics use
@@ -761,7 +790,7 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
-geochem.sample_chemistry_wide: one row per sample for ALL eleven geochemical datasets (ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL twelve geochemical datasets (CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, USA_USGS_NGDB 387,527,
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 219 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/

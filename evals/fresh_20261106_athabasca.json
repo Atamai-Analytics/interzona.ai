@@ -1,0 +1,28 @@
+{
+  "version": "2026-11-06",
+  "notes": "Fresh check of the Athabasca uranium drill-core geochemistry (GSC Open File 7792, source CANADA_ATHABASCA_OF7792) loaded 2026-11-06. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-ath-phoenix-core",
+      "cat": "fresh",
+      "q": "What does the drill core geochemistry show around the Phoenix uranium deposit at Wheeler River?",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "judge": "Uses the Athabasca core samples (GSC Open File 7792) on the Saskatchewan drill holes linked to the Phoenix deposit (about 59 holes, about 1,580 samples) or on holes within a stated distance of it (saying which it used) and reports their uranium values (typical and highest) and at least one other pathfinder or alteration signal, or a depth or lithology breakdown. Credits the Geological Survey of Canada Open File 7792 (crediting the Saskatchewan GeoAtlas for the collars is a plus, not required). Says the data are 2000-2011 assessment-report samples, not a resource estimate. Must not invent grades."
+    },
+    {
+      "id": "fresh-ath-sk-assays",
+      "cat": "fresh",
+      "q": "Do you have assay data for Saskatchewan drill holes, or only the collar locations?",
+      "expect": {"max_turns": 6},
+      "judge": "Says that the Saskatchewan GeoAtlas publishes collars only, but that about 1,040 of those holes (plus about 245 more Athabasca holes) have drill-core geochemistry from the Geological Survey of Canada's Athabasca compilation (Open File 7792, 2000-2011 assessment reports), so assays exist for a subset of holes in the Athabasca Basin, not for all Saskatchewan holes. Does not claim all holes have assays, and does not say there are none."
+    },
+    {
+      "id": "fresh-ath-top-u",
+      "cat": "fresh",
+      "q": "Which Athabasca drill holes in your data have the highest uranium values, and which deposits are they on?",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "judge": "Lists the holes with the highest uranium from the Athabasca core samples (GSC Open File 7792), with values and units and the linked deposit where there is one (e.g. Tamarack, Centennial, McClean Lake), and says ore-grade values (tens of percent U) are genuine high-grade ore intervals rather than errors, and that single sample values are not grades of a deposit. Credits the Geological Survey of Canada. Must not invent values."
+    }
+  ]
+}

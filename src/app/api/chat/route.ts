@@ -1261,7 +1261,8 @@ export async function POST(req: NextRequest) {
               if (id) emit({ type: "answer", id });
             }
             emit({ type: "done" });
-            close();
+            // Do not close here: the finally block closes the stream after the usage accounting, activity log and demo-draft save. On Vercel the
+            // function is frozen once the response ends, so work after close() ran late or not at all (drafts saved only sometimes).
             return;
           }
 

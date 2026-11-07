@@ -100,3 +100,48 @@ export async function loadIntervals(body: { holes?: unknown; element?: unknown; 
     ]),
   };
 }
+
+// Latest monthly metal prices for the Drill intercepts page's metal equivalent ('use latest prices'). Only series quoted per unit of METAL are used
+// (World Bank Pink Sheet monthly averages, IMF where the Pink Sheet has none); uranium is quoted per pound of U3O8 and is converted to uranium metal.
+// Elements with only annual USGS compound prices (lithium carbonate, WO3, V2O5, rare earth oxides ...) are not offered.
+const PRICE_SERIES: Record<string, { series: number; unit: "$/oz" | "$/t" | "$/lb"; perMetal: number; note?: string }> = {
+  Au: { series: 49, unit: "$/oz", perMetal: 1 },
+  Ag: { series: 51, unit: "$/oz", perMetal: 1 },
+  Pt: { series: 50, unit: "$/oz", perMetal: 1 },
+  Pd: { series: 54, unit: "$/oz", perMetal: 1 },
+  Cu: { series: 44, unit: "$/t", perMetal: 1 },
+  Ni: { series: 47, unit: "$/t", perMetal: 1 },
+  Zn: { series: 48, unit: "$/t", perMetal: 1 },
+  Pb: { series: 45, unit: "$/t", perMetal: 1 },
+  Sn: { series: 46, unit: "$/t", perMetal: 1 },
+  Co: { series: 53, unit: "$/t", perMetal: 1 },
+  U: { series: 52, unit: "$/lb", perMetal: 1 / 0.848, note: "converted from US$ per lb U3O8 to per lb of uranium" },
+};
+export const PRICED_ELEMENTS = Object.keys(PRICE_SERIES);
+
+export type LatestPrice = { element: string; price: number; unit: string; period: string; series: string; source: string; note?: string };
+
+export async function latestPrices(elements: string[]): Promise<Record<string, LatestPrice | null>> {
+  const want = [...new Set(elements.map((e) => resolveElement(e)).filter((e): e is string => !!e))];
+  const ids = want.map((e) => PRICE_SERIES[e]?.series).filter((x): x is number => !!x);
+  const out: Record<string, LatestPrice | null> = Object.fromEntries(want.map((e) => [e, null]));
+  if (!ids.length) return out;
+  const res = await runReadOnlyQuery(
+    `SELECT DISTINCT ON (p.series_id) p.series_id, p.value::float AS value, to_char(p.period_start, 'Mon YYYY') AS period, s.series_name, s.source
+     FROM markets.prices p JOIN markets.price_series s USING (series_id)
+     WHERE p.series_id IN (${ids.join(", ")}) AND p.value IS NOT NULL ORDER BY p.series_id, p.period_start DESC`,
+    50,
+  );
+  const bySeries = new Map(res.rows.map((r) => [Number(r.series_id), r]));
+  for (const e of want) {
+    const d = PRICE_SERIES[e];
+    const r = d ? bySeries.get(d.series) : undefined;
+    if (!d || !r) continue;
+    out[e] = {
+      element: e, price: Math.round(Number(r.value) * d.perMetal * 100) / 100, unit: d.unit, period: String(r.period),
+      series: String(r.series_name), source: String(r.source) === "WORLD_BANK_PINK_SHEET" ? "World Bank Pink Sheet (monthly average)" : "IMF Primary Commodity Prices (monthly average)",
+      ...(d.note ? { note: d.note } : {}),
+    };
+  }
+  return out;
+}

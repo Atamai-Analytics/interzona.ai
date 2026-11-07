@@ -73,6 +73,11 @@ export function InterceptsApp() {
   const [p2u, setP2u] = useState("$/oz");
   const [rec1, setRec1] = useState(100);
   const [rec2, setRec2] = useState(100);
+  // 'Use the latest prices': monthly averages from the database (World Bank Pink Sheet, IMF), per unit of metal.
+  type Latest = { price: number; unit: string; period: string; series: string; source: string; note?: string };
+  const [useLatest, setUseLatest] = useState(false);
+  const [latest, setLatest] = useState<{ p1: Latest; p2: Latest } | null>(null);
+  const [priceMsg, setPriceMsg] = useState("");
   const [rankBy, setRankBy] = useState<(typeof RANKS)[number]>("grade_x_length");
   const [perHole, setPerHole] = useState(true);
   const [withExceptional, setWithExceptional] = useState(false);
@@ -88,7 +93,35 @@ export function InterceptsApp() {
     setP1u(defaultPriceUnit(d));
     if (l.el2) setP2u(defaultPriceUnit(ELEMENTS[l.el2]));
     setEqOn(false);
+    setUseLatest(false);
+    setLatest(null);
+    setPriceMsg("");
     setSelected(null);
+  }
+
+  async function applyLatestPrices(on: boolean) {
+    setUseLatest(on);
+    setPriceMsg("");
+    if (!on || !loaded?.el2) { setLatest(null); return; }
+    try {
+      const res = await fetch(`/api/drill/prices?elements=${encodeURIComponent(loaded.el)},${encodeURIComponent(loaded.el2)}`);
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.error ?? `Prices could not be loaded (${res.status}).`);
+      const a = j.prices?.[loaded.el] as Latest | null, b = j.prices?.[loaded.el2] as Latest | null;
+      const missing = [!a ? ELEMENTS[loaded.el].name : "", !b ? ELEMENTS[loaded.el2].name : ""].filter(Boolean);
+      if (missing.length) {
+        setUseLatest(false);
+        setLatest(null);
+        setPriceMsg(`No monthly metal price is held for ${missing.join(" or ")} (only annual compound prices, which do not fit a metal equivalent). Enter the prices by hand.`);
+        return;
+      }
+      setP1(a!.price); setP1u(a!.unit); setP2(b!.price); setP2u(b!.unit);
+      setLatest({ p1: a!, p2: b! });
+    } catch (e) {
+      setUseLatest(false);
+      setLatest(null);
+      setPriceMsg(e instanceof Error ? e.message : String(e));
+    }
   }
 
   async function findHoles() {
@@ -399,7 +432,24 @@ export function InterceptsApp() {
                 {d2 && (
                   <div className="space-y-2 rounded border border-gray-800 p-2">
                     <Check name={`${d.reportAs} equivalent with ${d2.name}`} value={eqOn} set={setEqOn} />
-                    {eqOn && (
+                    {eqOn && <Check name="Use the latest monthly prices for both metals" value={useLatest} set={applyLatestPrices} />}
+                    {eqOn && priceMsg && <p className="text-[11px] text-amber-300">{priceMsg}</p>}
+                    {eqOn && useLatest && latest && (
+                      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                        <p className="col-span-2 text-xs text-gray-300">
+                          {d.reportAs}: US{latest.p1.unit} {latest.p1.price.toLocaleString()} ({latest.p1.period}){latest.p1.note ? `, ${latest.p1.note}` : ""}
+                          <br />
+                          {d2.reportAs}: US{latest.p2.unit} {latest.p2.price.toLocaleString()} ({latest.p2.period}){latest.p2.note ? `, ${latest.p2.note}` : ""}
+                          <br />
+                          <span className="text-[11px] text-gray-500">{[...new Set([latest.p1.source, latest.p2.source])].join("; ")}. Untick to type your own prices.</span>
+                        </p>
+                        <div className="space-y-2">
+                          <Num name={`${d.reportAs} recovery (%)`} value={rec1} set={setRec1} min={1} max={100} />
+                          <Num name={`${d2.reportAs} recovery (%)`} value={rec2} set={setRec2} min={0} max={100} />
+                        </div>
+                      </div>
+                    )}
+                    {eqOn && !useLatest && (
                       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                         <Num name={`${d.reportAs} price`} value={p1} set={setP1} min={0} />
                         <Select name="per" value={p1u} set={setP1u} options={PRICE_U} />

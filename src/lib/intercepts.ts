@@ -1,6 +1,7 @@
 import { runReadOnlyQuery } from "@/lib/db";
 import { creditsForSource } from "@/lib/licence";
 import type { Dataset, Evidence, MapData, MapPoint } from "@/lib/types";
+import { ELEMENTS, PRICE_UNITS, buildSegments, compositeHole, fromPpm, gxlLabel, r, resolveElement, toPpm, unitLabel, type Comp, type ElDef } from "@/lib/composite";
 
 // Drill intercepts: find and rank them.
 //  - REPORTED: the mineralised intercepts the source itself reported (drilling.intercepts; Québec SIGÉOM only so far), converted to one reporting form per element
@@ -13,95 +14,20 @@ import type { Dataset, Evidence, MapData, MapPoint } from "@/lib/types";
 
 type Out = { content: string; evidence?: Evidence[]; datasets?: Dataset[]; maps?: MapData[] };
 
-type Unit = "g/t" | "%" | "ppm";
-type Oxide = { code: string; elFrac: number };
-type ElDef = {
-  name: string;
-  reportAs: string; // the form grades are reported in, e.g. Li2O
-  unit: Unit;
-  toReport: number; // element mass -> reporting form (oxide factor)
-  oxides: Oxide[]; // oxide (or compound) forms that can stand in for the element; elFrac = element mass fraction
-  extraLocals?: Record<string, number>; // other local intercept codes -> element fraction
-  cutoff?: number; // default cut-off in reporting units (composite mode)
-  exceptional: number; // above this (reporting units) a grade is flagged for checking
-};
-
-const OX = (code: string, elFrac: number): Oxide => ({ code, elFrac });
-const ELEMENTS: Record<string, ElDef> = {
-  Au: { name: "gold", reportAs: "Au", unit: "g/t", toReport: 1, oxides: [], cutoff: 0.5, exceptional: 500 },
-  Ag: { name: "silver", reportAs: "Ag", unit: "g/t", toReport: 1, oxides: [], cutoff: 30, exceptional: 10000 },
-  Pt: { name: "platinum", reportAs: "Pt", unit: "g/t", toReport: 1, oxides: [], cutoff: 0.5, exceptional: 300 },
-  Pd: { name: "palladium", reportAs: "Pd", unit: "g/t", toReport: 1, oxides: [], cutoff: 0.5, exceptional: 300 },
-  Cu: { name: "copper", reportAs: "Cu", unit: "%", toReport: 1, oxides: [], cutoff: 0.3, exceptional: 40 },
-  Ni: { name: "nickel", reportAs: "Ni", unit: "%", toReport: 1, oxides: [OX("nio", 0.7858)], cutoff: 0.3, exceptional: 30 },
-  Co: { name: "cobalt", reportAs: "Co", unit: "%", toReport: 1, oxides: [], cutoff: 0.05, exceptional: 20 },
-  Zn: { name: "zinc", reportAs: "Zn", unit: "%", toReport: 1, oxides: [OX("zno", 0.8034)], cutoff: 1, exceptional: 60 },
-  Pb: { name: "lead", reportAs: "Pb", unit: "%", toReport: 1, oxides: [], cutoff: 1, exceptional: 80 },
-  Sn: { name: "tin", reportAs: "Sn", unit: "%", toReport: 1, oxides: [], cutoff: 0.2, exceptional: 50 },
-  W: { name: "tungsten", reportAs: "WO3", unit: "%", toReport: 1.2611, oxides: [OX("wo3", 0.793)], cutoff: 0.1, exceptional: 50 },
-  Mo: { name: "molybdenum", reportAs: "Mo", unit: "%", toReport: 1, oxides: [], extraLocals: { MoS2: 0.5994 }, cutoff: 0.05, exceptional: 40 },
-  Li: { name: "lithium", reportAs: "Li2O", unit: "%", toReport: 2.1527, oxides: [OX("li2o", 0.4645)], cutoff: 0.5, exceptional: 7.5 },
-  Nb: { name: "niobium", reportAs: "Nb2O5", unit: "%", toReport: 1.4305, oxides: [OX("nb2o5", 0.699)], cutoff: 0.2, exceptional: 30 },
-  Ta: { name: "tantalum", reportAs: "Ta2O5", unit: "ppm", toReport: 1.2211, oxides: [OX("ta2o5", 0.819)], cutoff: 100, exceptional: 50000 },
-  U: { name: "uranium", reportAs: "U3O8", unit: "%", toReport: 1.1792, oxides: [OX("u3o8", 0.848)], cutoff: 0.05, exceptional: 85 },
-  V: { name: "vanadium", reportAs: "V2O5", unit: "%", toReport: 1.7852, oxides: [OX("v2o5", 0.5602), OX("v2o3", 0.6798)], cutoff: 0.2, exceptional: 20 },
-  Ti: { name: "titanium", reportAs: "TiO2", unit: "%", toReport: 1.6681, oxides: [OX("tio2", 0.5995)], cutoff: 5, exceptional: 80 },
-  Zr: { name: "zirconium", reportAs: "ZrO2", unit: "%", toReport: 1.3508, oxides: [OX("zro2", 0.7403)], cutoff: 0.5, exceptional: 60 },
-  Cr: { name: "chromium", reportAs: "Cr2O3", unit: "%", toReport: 1.4616, oxides: [OX("cr2o3", 0.6842)], cutoff: 5, exceptional: 65 },
-  Fe: { name: "iron", reportAs: "Fe", unit: "%", toReport: 1, oxides: [OX("fe2o3", 0.6994), OX("feto3", 0.6994)], extraLocals: { Fe2O3t: 0.6994, Fe2O3v: 0.6994 }, cutoff: 20, exceptional: 72 },
-  Mn: { name: "manganese", reportAs: "Mn", unit: "%", toReport: 1, oxides: [OX("mno", 0.7745), OX("mno2", 0.6319)], cutoff: 5, exceptional: 70 },
-  P: { name: "phosphate", reportAs: "P2O5", unit: "%", toReport: 2.2914, oxides: [OX("p2o5", 0.4364)], cutoff: 3, exceptional: 45 },
-  Th: { name: "thorium", reportAs: "Th", unit: "ppm", toReport: 1, oxides: [OX("tho2", 0.8788)], exceptional: 300000 },
-  Y: { name: "yttrium", reportAs: "Y", unit: "ppm", toReport: 1, oxides: [OX("y2o3", 0.7874)], exceptional: 200000 },
-  La: { name: "lanthanum", reportAs: "La", unit: "ppm", toReport: 1, oxides: [], exceptional: 300000 },
-  Ce: { name: "cerium", reportAs: "Ce", unit: "ppm", toReport: 1, oxides: [], exceptional: 300000 },
-  Nd: { name: "neodymium", reportAs: "Nd", unit: "ppm", toReport: 1, oxides: [], exceptional: 200000 },
-  Pr: { name: "praseodymium", reportAs: "Pr", unit: "ppm", toReport: 1, oxides: [], exceptional: 100000 },
-  Dy: { name: "dysprosium", reportAs: "Dy", unit: "ppm", toReport: 1, oxides: [], exceptional: 50000 },
-  Be: { name: "beryllium", reportAs: "Be", unit: "ppm", toReport: 1, oxides: [], exceptional: 50000 },
-  Bi: { name: "bismuth", reportAs: "Bi", unit: "ppm", toReport: 1, oxides: [], exceptional: 300000 },
-  Sb: { name: "antimony", reportAs: "Sb", unit: "ppm", toReport: 1, oxides: [], exceptional: 500000 },
-  As: { name: "arsenic", reportAs: "As", unit: "ppm", toReport: 1, oxides: [], exceptional: 500000 },
-  C: { name: "graphite", reportAs: "C (graphitic)", unit: "%", toReport: 1, oxides: [], extraLocals: { Cgraph: 1 }, cutoff: 2, exceptional: 60 },
-};
-const ALIASES: Record<string, string> = {
-  gold: "Au", silver: "Ag", platinum: "Pt", palladium: "Pd", copper: "Cu", nickel: "Ni", cobalt: "Co", zinc: "Zn", lead: "Pb", tin: "Sn", tungsten: "W",
-  molybdenum: "Mo", lithium: "Li", niobium: "Nb", tantalum: "Ta", uranium: "U", vanadium: "V", titanium: "Ti", zirconium: "Zr", chromium: "Cr", chromite: "Cr",
-  iron: "Fe", manganese: "Mn", phosphate: "P", phosphorus: "P", thorium: "Th", yttrium: "Y", lanthanum: "La", cerium: "Ce", neodymium: "Nd",
-  praseodymium: "Pr", dysprosium: "Dy", beryllium: "Be", bismuth: "Bi", antimony: "Sb", arsenic: "As", graphite: "C", carbon: "C",
-  li2o: "Li", wo3: "W", u3o8: "U", v2o5: "V", nb2o5: "Nb", ta2o5: "Ta", tio2: "Ti", zro2: "Zr", cr2o3: "Cr", p2o5: "P", cgraph: "C",
-};
 
 export const INTERCEPT_SOURCES = { reported: ["CANADA_QC_SIGEOM"], composite: ["AUSTRALIA_TAS_MRT", "CANADA_ATHABASCA_OF7792"] };
-const SOURCE_LABEL: Record<string, string> = {
+export const SOURCE_LABEL: Record<string, string> = {
   CANADA_QC_SIGEOM: "SIGÉOM (Québec Ministère des Ressources naturelles et des Forêts)",
   AUSTRALIA_TAS_MRT: "Mineral Resources Tasmania",
   CANADA_ATHABASCA_OF7792: "Geological Survey of Canada Open File 7792 (Athabasca)",
 };
 
-function resolveElement(raw: unknown): string | null {
-  const s = String(raw ?? "").trim();
-  if (!s) return null;
-  const k = ALIASES[s.toLowerCase()] ?? (s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
-  return ELEMENTS[k] ? k : null;
-}
 
 const num = (v: unknown): number | undefined => {
   const n = typeof v === "string" && v.trim() === "" ? NaN : Number(v);
   return Number.isFinite(n) ? n : undefined;
 };
 const q = (s: string) => "'" + s.replace(/'/g, "''") + "'";
-const r = (x: number, d = 2) => {
-  if (!Number.isFinite(x)) return x;
-  const a = Math.abs(x);
-  const dd = a >= 100 ? 0 : a >= 10 ? 1 : a >= 1 ? d : a >= 0.1 ? 3 : 4;
-  return Math.round(x * 10 ** dd) / 10 ** dd;
-};
-const unitLabel = (d: ElDef) => (d.unit === "g/t" ? `g/t ${d.reportAs}` : d.unit === "%" ? `% ${d.reportAs}` : `ppm ${d.reportAs}`);
-const gxlLabel = (d: ElDef) => (d.unit === "g/t" ? `gram-metres (g/t ${d.reportAs} x m)` : `${d.unit === "%" ? "percent-metres" : "ppm-metres"} (${unitLabel(d)} x m)`);
-// element ppm -> reporting units
-const fromPpm = (d: ElDef, ppm: number) => (ppm * d.toReport) / (d.unit === "%" ? 10000 : 1);
-const toPpm = (d: ElDef, rep: number) => (rep * (d.unit === "%" ? 10000 : 1)) / d.toReport;
 
 type Area = { where: string[]; distSql: string | null; note: string[]; occ?: { id: number; name: string; radiusKm: number } };
 
@@ -283,63 +209,6 @@ function mapOf(pts: { lat: number; lon: number; hole: string; rank: number; gxl:
 
 // ---------- composite mode ----------
 
-type Seg = { from: number; to: number; g: number; g2: number; sampled: boolean; assayed: boolean };
-type Comp = { from: number; to: number; len: number; grade: number; grade2: number; eq: number; nSamples: number; dilutionM: number; unassayedM: number; maxSample: number };
-
-/** OGWI compositing on one hole. `segs` are sorted, non-overlapping, with unsampled gaps already inserted as zero-grade segments. Grades in `eq` units. */
-export function composites(segs: Seg[], gradeOf: (s: Seg) => number, cutoff: number, minWidth: number, maxDil: number): Comp[] {
-  const out: Comp[] = [];
-  const n = segs.length;
-  const L = (s: Seg) => s.to - s.from;
-  let i = 0;
-  while (i < n) {
-    if (!(segs[i].sampled && gradeOf(segs[i]) >= cutoff)) {
-      i++;
-      continue;
-    }
-    let end = i;
-    let sum = gradeOf(segs[i]) * L(segs[i]);
-    let len = L(segs[i]);
-    for (;;) {
-      let k = end + 1;
-      let dil = 0;
-      while (k < n && !(segs[k].sampled && gradeOf(segs[k]) >= cutoff)) {
-        dil += L(segs[k]);
-        k++;
-      }
-      if (k >= n || dil > maxDil + 1e-9) break;
-      let s2 = sum, l2 = len;
-      for (let j = end + 1; j <= k; j++) {
-        s2 += gradeOf(segs[j]) * L(segs[j]);
-        l2 += L(segs[j]);
-      }
-      if (s2 / l2 < cutoff) break;
-      sum = s2;
-      len = l2;
-      end = k;
-    }
-    if (len >= minWidth - 1e-9) {
-      const part = segs.slice(i, end + 1);
-      const wsum = (f: (s: Seg) => number) => part.reduce((a, s) => a + f(s) * L(s), 0);
-      out.push({
-        from: segs[i].from,
-        to: segs[end].to,
-        len,
-        grade: wsum((s) => s.g) / len,
-        grade2: wsum((s) => s.g2) / len,
-        eq: sum / len,
-        nSamples: part.filter((s) => s.sampled).length,
-        dilutionM: part.filter((s) => gradeOf(s) < cutoff).reduce((a, s) => a + L(s), 0),
-        unassayedM: part.filter((s) => !s.assayed).reduce((a, s) => a + L(s), 0),
-        maxSample: Math.max(...part.filter((s) => s.sampled).map((s) => s.g)),
-      });
-    }
-    i = end + 1;
-  }
-  return out;
-}
-
-const PRICE_UNITS: Record<string, number> = { "$/g": 1, "$/oz": 31.1035, "$/kg": 1000, "$/lb": 453.592, "$/t": 1e6 }; // grams per unit
 
 let wideCols: Set<string> | null = null;
 async function wideColumns(): Promise<Set<string>> {
@@ -350,7 +219,7 @@ async function wideColumns(): Promise<Set<string>> {
 }
 
 /** SQL giving the element's grade in ppm (total digestion first, then partial), its basis, and whether it was assayed but below detection. */
-async function gradeSql(el: string, d: ElDef, alias: string) {
+export async function gradeSql(el: string, d: ElDef, alias: string) {
   const cols = await wideColumns();
   const parts: { sql: string; basis: string }[] = [];
   const bdl: string[] = [];
@@ -453,36 +322,18 @@ async function composite(input: Record<string, unknown>, el: string, d: ElDef, a
   const hits: Hit[] = [];
   const excluded: string[] = [];
   for (const [hole, rows] of byHole) {
-    rows.sort((a, b) => Number(a.f) - Number(b.f) || Number(a.t) - Number(b.t));
-    const segs: Seg[] = [];
-    let lastTo = -Infinity;
-    for (const s of rows) {
-      const f = Number(s.f), t = Number(s.t);
-      if (f < lastTo - 1e-6) {
-        overlapsDropped++;
-        continue;
-      }
-      let g = s.g == null ? 0 : Number(s.g);
-      if (g * Math.max(d.toReport, 1) > 1e6) {
-        impossible++;
-        g = 0;
-      }
-      if (s.basis) basisCount[String(s.basis)] = (basisCount[String(s.basis)] ?? 0) + 1;
-      if (Number.isFinite(lastTo) && f > lastTo + 1e-6) segs.push({ from: lastTo, to: f, g: 0, g2: 0, sampled: false, assayed: false });
-      segs.push({ from: f, to: t, g, g2: s.g2 == null ? 0 : Number(s.g2), sampled: true, assayed: s.g != null || Boolean(s.bdl) || (g2 ? s.g2 != null || Boolean(s.bdl2) : false) });
-      lastTo = t;
-    }
-    const gradeOf = (s: Seg) => s.g + (eq ? s.g2 * eq.ratio : 0);
-    for (const c of composites(segs, gradeOf, cutPpm, minWidth, maxDil)) {
-      let including: string | null = null;
-      if (incl !== undefined && incl > cutoff) {
-        const inner = composites(segs.filter((s) => s.from >= c.from - 1e-9 && s.to <= c.to + 1e-9), gradeOf, toPpm(d, incl), 0, Math.min(maxDil, 1));
-        const best = inner.sort((a, b) => b.eq * b.len - a.eq * a.len)[0];
-        if (best && best.len < c.len - 1e-9) including = `${r(best.len, 1)} m at ${r(fromPpm(d, best.eq))} ${unitLabel(d)}${eq ? " eq." : ""} from ${r(best.from, 1)} m`;
-      }
-      const exc = fromPpm(d, c.maxSample) > d.exceptional;
+    for (const s of rows) if (s.basis) basisCount[String(s.basis)] = (basisCount[String(s.basis)] ?? 0) + 1;
+    const built = buildSegments(
+      rows.map((s) => ({ from: Number(s.f), to: Number(s.t), g: s.g == null ? null : Number(s.g), g2: s.g2 == null ? null : Number(s.g2), bdl: Boolean(s.bdl), bdl2: Boolean(s.bdl2) })),
+      1e6 / Math.max(d.toReport, 1),
+    );
+    overlapsDropped += built.overlaps;
+    impossible += built.impossible;
+    for (const c of compositeHole(built.segs, { cutPpm, minWidth, maxDil, inclPpm: incl !== undefined ? toPpm(d, incl) : undefined, ratio: eq?.ratio })) {
+      const including = c.incl ? `${r(c.incl.len, 1)} m at ${r(fromPpm(d, c.incl.eq))} ${unitLabel(d)}${eq ? " eq." : ""} from ${r(c.incl.from, 1)} m` : null;
+      const exc = fromPpm(d, c.maxSample) > d.exceptional || (eq ? fromPpm(eq.d, c.maxSample2) > eq.d.exceptional : false);
       if (exc && input.include_exceptional !== true) {
-        excluded.push(`${info.get(hole)?.hole_name ?? hole}: ${r(c.len, 1)} m at ${r(fromPpm(d, c.eq))} ${unitLabel(d)} from ${r(c.from, 1)} m (highest sample ${r(fromPpm(d, c.maxSample))})`);
+        excluded.push(`${info.get(hole)?.hole_name ?? hole}: ${r(c.len, 1)} m at ${r(fromPpm(d, c.eq))} ${unitLabel(d)} from ${r(c.from, 1)} m (highest sample ${r(fromPpm(d, c.maxSample))} ${unitLabel(d)}${eq ? `, ${r(fromPpm(eq.d, c.maxSample2))} ${unitLabel(eq.d)}` : ""})`);
         continue;
       }
       hits.push({ ...c, hole, including, flag: exc ? "exceptional sample grade inside - check the source" : "" });
@@ -574,7 +425,7 @@ async function composite(input: Record<string, unknown>, el: string, d: ElDef, a
       "Downhole lengths, not true widths: the orientation of the mineralisation is not known.",
       "Below-detection results and unsampled core inside a composite count as zero grade (conservative); 'unassayed core inside' says how much of an intercept had no assay for this element. Overlapping sample intervals (re-assays, composites) were skipped so no metre is counted twice.",
       "Total-digestion values are used where present, otherwise partial (e.g. aqua regia) values, which can under-report resistant minerals; see digestion_basis_of_samples_used.",
-      `A high 'highest sample' in a short intercept can mean one nugget or vein drives the grade. By default composites containing a single assay above ${d.exceptional} ${unitLabel(d)} are left out of the ranking (usually source errors, occasionally real); say how many, and set include_exceptional to rank them.`,
+      `A high 'highest sample' in a short intercept can mean one nugget or vein drives the grade. By default composites containing a single assay above ${d.exceptional} ${unitLabel(d)}${eq ? ` (or above ${eq.d.exceptional} ${unitLabel(eq.d)} for the second metal)` : ""} are left out of the ranking (usually source errors, occasionally real); say how many, and set include_exceptional to rank them.`,
       "These are calculated from government-compiled assays, not company-reported or resource figures; do not present them as either, or imply economic grades. They must not be used in public reporting without independent verification.",
       "Only Tasmania (MRT) and Athabasca (GSC Open File 7792) hold downhole assay intervals; Québec assays have no from-to depths, so for Québec use mode 'reported'.",
       maps.length ? "A map of the ranked holes is shown to the user automatically; the full table is downloadable." : "",

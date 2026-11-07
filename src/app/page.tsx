@@ -824,6 +824,16 @@ export default function Home() {
             Multivariate tools
           </Link>
         )}
+        {who && !(who.role === "guest" && who.ended) && (
+          <Link
+            href="/tools/intercepts"
+            className="shrink-0 md:self-center flex items-center gap-1.5 rounded-lg border border-orange-600 bg-orange-900/30 px-2.5 py-1.5 text-xs md:text-sm font-medium text-orange-100 hover:bg-orange-800/50"
+            title="Significant drill intercepts from downhole assays: cut-off, width, dilution, including and metal equivalent, on database holes or your own CSV"
+          >
+            <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4" fill="currentColor"><rect x="7" y="1" width="2" height="14" rx="0.5" /><rect x="5" y="6" width="6" height="3" rx="0.5" /></svg>
+            Drill intercepts
+          </Link>
+        )}
         {who && (
           <div className="order-last md:order-none w-full md:w-auto md:ml-auto shrink-0 md:self-start text-left md:text-right text-xs text-gray-400 flex flex-wrap items-baseline gap-x-3 gap-y-0 md:block">
             {who.role === "guest" ? (

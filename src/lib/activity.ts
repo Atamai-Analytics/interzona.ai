@@ -5,7 +5,7 @@ import { redis } from "@/lib/redis";
 // for 100 days. Only what is needed to see how the app is used is kept: the question text (shortened), who asked, tools and cost units; for
 // Multivariate tools loads only the datasets and counts, never the sample data.
 
-export type ActivityKind = "question" | "refused" | "multivariate_load";
+export type ActivityKind = "question" | "refused" | "multivariate_load" | "intercepts_load";
 export type ActivityWho = { role: "owner" | "guest" | "test"; name?: string; inviteId?: string };
 export type ActivityEvent = {
   t: number; // unix seconds

@@ -654,7 +654,7 @@ drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed sample
   = the hole reports an intercept of the occurrence's commodity within 500 m and no other occurrence of that commodity is within 1 km;
   combined with '+' when several agree) and occurrence_link_detail (the evidence and collar distance). Many holes at large deposits stay
   unlinked where several occurrences sit close together (e.g. Whabouchi), so for 'all drilling at deposit X' combine linked holes with a
-  distance search around the deposit and say which is which. Example, drilling and best intercepts at an occurrence: SELECT h.hole_name,
+  distance search around the deposit and say which is which (drill_intercepts with occurrence_id does both for ranked intercepts). Example, drilling at an occurrence: SELECT h.hole_name,
   h.total_depth_m, i.grade, i.unit_code, i.length_m FROM drilling.drillholes h LEFT JOIN drilling.intercepts i ON i.drillhole_id =
   h.drillhole_id AND i.is_active WHERE h.occurrence_id = <id>. WHAT EACH SOURCE'S HOLES HAVE: CANADA_SK_SGS holes are collars with NO
   intercepts and NO logs, and assays ONLY where the Athabasca compilation sampled them (about 1,040 holes, 2000-2011 assessment work: check
@@ -674,9 +674,13 @@ drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed sample
   element code, grade, unit_code 'ppb' / 'ppm' / '%' (SIGÉOM 'g/t' stored as ppm; NULL for a trace), length_m, mineral_local = SIGÉOM mineral
   code, lithology_observation_id = the log unit holding it). position_basis 'LITHOLOGY_UNIT' means depth_from_m / depth_to_m are the bounds
   of that log unit, NOT of the intercept: say 'within the unit from X to Y m' and never present them as the intercept's own depths. About half
-  are gold; Au grades are mostly ppb. Example, best lithium intercepts in Québec: SELECT h.hole_name, h.lat, h.lon, i.grade, i.unit_code,
-  i.length_m, i.depth_from_m, i.depth_to_m FROM drilling.intercepts i JOIN drilling.drillholes h USING (drillhole_id) JOIN geochem.analytes a
-  USING (analyte_id) WHERE i.is_active AND a.analyte_code IN ('Li', 'Li2O') ORDER BY ... (compare grades only within one unit_code). ALWAYS filter
+  are gold; Au grades are mostly ppb. To FIND OR RANK intercepts (best X intercepts in Québec / near a place / at a deposit, intercepts above a grade or a
+  grade x length, 'what did drilling at X hit') call drill_intercepts, not SQL: it converts element and oxide forms and ppb / ppm / % to one unit (Li as % Li2O,
+  Au as g/t ...), drops impossible rows (over 100 %, longer than the hole), leaves exceptional grades (usually source errors, e.g. 50,000 g/t Au) out of the
+  ranking and lists them, and gives a map and a download. For Tasmania and Athabasca holes it CALCULATES intercepts from the downhole assays (mode 'composite':
+  cut-off, minimum width, maximum internal dilution, optional 'including' and metal equivalent); Québec assays have no from-to depths, so Québec has reported
+  intercepts only. State the mode and the parameters used. Use SQL on drilling.intercepts only for what the tool does not do (counts by year or area, etc.;
+  compare grades only within one unit_code). ALWAYS filter
   i.is_active = true: 224 physically impossible grades (unit or element errors in the source, e.g. 24.9% Li2O over 51 m) are inactive. Example, best copper intervals of a hole: SELECT s.depth_from_m,
   s.depth_to_m, w.cu_p FROM geochem.sample_chemistry_wide w JOIN geochem.samples s USING (sample_id) WHERE w.drillhole_id = <id>
   ORDER BY w.cu_p DESC NULLS LAST.

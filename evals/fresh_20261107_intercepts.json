@@ -1,0 +1,42 @@
+{
+  "version": "2026-11-07",
+  "notes": "Drill-intercepts tool (reported Québec intercepts + OGWI-style composites for Tasmania and Athabasca). Fresh questions written before any prompt tuning. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-int-quebec-lithium",
+      "cat": "fresh",
+      "q": "What are the best lithium drill intercepts in Québec?",
+      "expect": {"tools_any": ["drill_intercepts"], "max_turns": 8, "maps_min": 1},
+      "judge": "Ranks reported Québec (SIGÉOM) lithium intercepts, best per hole, by grade x length with grades in % Li2O (converting Li ppm where reported that way), giving hole, grade, length and grade x length; the top holes are Whabouchi-area WHA- holes (about 1.6-1.8 % Li2O over 75-100 m) plus JR-10-13 and Authier R-93-25. Must not present the log-unit depths as the intercept's own depths. Says these are source-reported intercepts, not resource estimates. Credits SIGÉOM / the Québec ministry. Must not invent values."
+    },
+    {
+      "id": "fresh-int-tas-tin",
+      "cat": "fresh",
+      "q": "Which Tasmanian drill holes have the best tin intercepts at a 0.5% Sn cut-off?",
+      "expect": {"tools_any": ["drill_intercepts"], "max_turns": 8, "maps_min": 1},
+      "judge": "Calculates intercepts from Mineral Resources Tasmania downhole assays at 0.5 % Sn and states the parameters used (cut-off, minimum width, maximum internal dilution). Quotes intercepts as length at grade from depth, e.g. at Mt Bischoff, Renison Bell or Queen Hill holes. Says lengths are downhole, not true widths, and that these are calculated from government-compiled assays, not company-reported or resource figures. Must not invent values."
+    },
+    {
+      "id": "fresh-int-malartic-gold",
+      "cat": "fresh",
+      "q": "Find gold intercepts of more than 20 gram-metres within 10 km of Malartic, Québec.",
+      "expect": {"tools_any": ["drill_intercepts"], "max_turns": 8, "maps_min": 1},
+      "judge": "Uses reported Québec gold intercepts within about 10 km of Malartic (about 48.13 N, 78.13 W) with a grade x length of at least 20 g/t x m, lists holes with grade (g/t), length, gram-metres and distance, and says how many intercepts / holes qualify. Notes that exceptional grades were left out (if any) and that log-unit depths are not intercept depths. Must not invent values."
+    },
+    {
+      "id": "fresh-int-tamarack-uranium",
+      "cat": "fresh",
+      "q": "What uranium intercepts did the drill holes at the Tamarack deposit in Saskatchewan hit?",
+      "expect": {"tools_any": ["drill_intercepts"], "max_turns": 10},
+      "judge": "Calculates uranium intercepts (as % U3O8) from the Athabasca drill-core assays (GSC Open File 7792) for Q8- holes at or near Tamarack (Cameco, near McClean Lake / Dawn Lake), states the cut-off and other parameters, and quotes e.g. Q8-181 about 16 m at about 10 % U3O8 from about 158 m or similar from the tool. Mentions any very high-grade intercepts left out for checking. Must not confuse it with the Tamarack nickel-copper project in Minnesota. Must not invent values."
+    },
+    {
+      "id": "fresh-int-suspicious-gold",
+      "cat": "fresh",
+      "q": "What are the highest-grade gold intercepts in Québec, and should I trust the top ones?",
+      "expect": {"tools_any": ["drill_intercepts"], "max_turns": 8},
+      "judge": "Ranks reported Québec gold intercepts by grade and explains that the very highest values (e.g. 50,000 g/t over 8 m in CB-17-01W3, or a run of exactly 1,000 g/t values in CB-17-01) are almost certainly unit, cap or typing errors in the source and were left out or flagged, while very high but possible bonanza grades should be checked against the original assessment report. Must not present the 50,000 g/t value as real. Must not invent values."
+    }
+  ]
+}

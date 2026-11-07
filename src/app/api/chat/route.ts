@@ -4,6 +4,7 @@ import { admit, checkMessages, LIMITS } from "@/lib/guard";
 import { getSession } from "@/lib/auth";
 import { depositFingerprint } from "@/lib/fingerprint";
 import { assayNext } from "@/lib/assay-next";
+import { drillIntercepts } from "@/lib/intercepts";
 import { supplyConcentration } from "@/lib/supply";
 import { priceOutlook } from "@/lib/outlook";
 import { futureOrVerdictNote } from "@/lib/intent";
@@ -284,6 +285,53 @@ const tools: Anthropic.ToolUnion[] = [
         top_n: { type: "number", description: "League table rows, default 12, max 20." },
       },
       required: [],
+    },
+  },
+  {
+    name: "drill_intercepts",
+    description:
+      "Find and rank DRILL INTERCEPTS (a grade over a downhole length) for one element, with a ranked table, a map of the holes and a downloadable list. Two modes. " +
+      "'reported' (default for Québec): the mineralised intercepts the source itself reported (Québec SIGÉOM, about 338,000), converted to one form per element (lithium as % Li2O, gold as g/t, niobium as % Nb2O5, uranium as % U3O8 ...) so they rank together. " +
+      "'composite': intercepts CALCULATED from the downhole sample assays with a cut-off grade, a minimum width and a maximum internal dilution (length-weighted, optional 'including' higher-grade part and optional metal equivalent from prices and recoveries) - only for Tasmania (Mineral Resources Tasmania) and Athabasca (GSC Open File 7792) holes, because Québec assays have no from-to depths. " +
+      "USE THIS for 'best lithium intercepts in Québec', 'top gold intercepts near X', 'which holes hit more than 20 gram-metres', 'significant intercepts at deposit Y', 'tin intercepts above 0.5 % in Tasmania', 'what did drilling at X intersect'. " +
+      "Ranks by grade x length (metal- or gram-metres) unless asked for grade or length; the best per hole by default. Limit the area with bbox, near (lat, lon, radius_km) or occurrence_id (linked holes plus holes within radius_km). " +
+      "Always state the mode, the area and (for composites) the cut-off, minimum width and dilution used. Not resource estimates; not for public reporting without verification.",
+    input_schema: {
+      type: "object",
+      properties: {
+        element: { type: "string", description: "Element symbol or name: Au, Ag, Pt, Pd, Cu, Ni, Co, Zn, Pb, Sn, W, Mo, Li, Nb, Ta, U, V, Ti, Zr, Cr, Fe, Mn, P, Th, Y, La, Ce, Nd, Pr, Dy, Be, Bi, Sb, As, or graphite (C)." },
+        mode: { type: "string", enum: ["reported", "composite"], description: "reported = source-reported intercepts (Québec); composite = calculated from downhole assays (Tasmania, Athabasca). Default: reported, or composite when source_system is Tasmania/Athabasca or a cutoff is given." },
+        source_system: { type: "string", enum: ["CANADA_QC_SIGEOM", "AUSTRALIA_TAS_MRT", "CANADA_ATHABASCA_OF7792"], description: "Optional: which source's holes." },
+        bbox: { type: "array", items: { type: "number" }, description: "Optional area: [west, south, east, north] in decimal degrees." },
+        near: { type: "object", properties: { lat: { type: "number" }, lon: { type: "number" }, radius_km: { type: "number", description: "Default 10, max 100." } }, description: "Optional: holes within a radius of a point; adds distance to the table." },
+        occurrence_id: { type: "integer", description: "Optional: a deposit/occurrence; uses holes linked to it plus holes within radius_km of it." },
+        radius_km: { type: "number", description: "With occurrence_id: also include unlinked holes within this distance (default 1 km; 0 = linked holes only)." },
+        hole_name: { type: "string", description: "Optional: part of a hole name." },
+        prospect: { type: "string", description: "Optional: part of the prospect or linked deposit name." },
+        company: { type: "string", description: "Optional: part of the drilling company's name as recorded on the hole." },
+        rank_by: { type: "string", enum: ["grade_x_length", "grade", "length"], description: "Default grade_x_length." },
+        best_per_hole: { type: "boolean", description: "Default true: one row per hole (its best intercept)." },
+        min_grade: { type: "number", description: "Reported mode: minimum grade in the reporting unit (g/t for precious metals, % for most others, ppm for Ta2O5 and rare earths)." },
+        min_length_m: { type: "number", description: "Reported mode: minimum intercept length." },
+        min_grade_x_length: { type: "number", description: "Reported mode: minimum grade x length (e.g. 20 gram-metres)." },
+        cutoff: { type: "number", description: "Composite mode: cut-off grade in the reporting unit (defaults exist for common metals, e.g. Au 0.5 g/t, Cu 0.3 %, Sn 0.2 %, Li2O 0.5 %, U3O8 0.05 %)." },
+        min_width_m: { type: "number", description: "Composite mode: minimum composite length (default 1 m)." },
+        max_internal_dilution_m: { type: "number", description: "Composite mode: longest run of below-cut-off or unsampled core allowed inside a composite (default 3 m)." },
+        including_cutoff: { type: "number", description: "Composite mode: optional higher cut-off for an 'including' sub-interval." },
+        equivalent: {
+          type: "object",
+          description: "Composite mode, optional metal equivalent (only if the user gives or asks for prices). Grades and cut-off then refer to the equivalent.",
+          properties: {
+            element: { type: "string", description: "Secondary element, e.g. Ag with Au, or Au with Cu." },
+            price_primary: { type: "number" }, price_unit_primary: { type: "string", enum: ["$/oz", "$/lb", "$/t", "$/kg", "$/g"] },
+            price_secondary: { type: "number" }, price_unit_secondary: { type: "string", enum: ["$/oz", "$/lb", "$/t", "$/kg", "$/g"] },
+            recovery_primary: { type: "number", description: "Percent, default 100." }, recovery_secondary: { type: "number", description: "Percent, default 100." },
+          },
+        },
+        include_exceptional: { type: "boolean", description: "Default false: grades above a per-element ceiling (e.g. 500 g/t gold), usually source errors, are left out of the ranking and listed separately. True ranks them too." },
+        limit: { type: "integer", description: "Rows in the table (default 25, max 200)." },
+      },
+      required: ["element"],
     },
   },
   {
@@ -662,6 +710,13 @@ async function executeTool(
     extras.datasets.push(...(out.datasets ?? []));
     return out.content;
   }
+  if (name === "drill_intercepts") {
+    const out = await drillIntercepts(input);
+    extras.evidence.push(...(out.evidence ?? []));
+    extras.datasets.push(...(out.datasets ?? []));
+    extras.maps.push(...(out.maps ?? []));
+    return out.content;
+  }
   if (name === "assay_next") {
     const out = await assayNext(input);
     extras.evidence.push(...(out.evidence ?? []));
@@ -976,6 +1031,10 @@ function stepLabel(name: string, input: Record<string, unknown>): string {
       return "Ranking geochemical leads across all surveys";
     case "deposit_fingerprint":
       return "Comparing the chemistry with known deposit types";
+    case "drill_intercepts": {
+      const e = String(input.element ?? "").trim();
+      return input.mode === "composite" || input.cutoff !== undefined ? `Calculating ${e} intercepts from the drill assays` : `Ranking ${e} drill intercepts`;
+    }
     case "assay_next":
       return "Testing which extra element would separate the deposit types";
     case "supply_concentration":

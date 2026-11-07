@@ -1,0 +1,28 @@
+{
+  "version": "2026-11-07",
+  "notes": "Drill-intercepts tool, second fresh set written after the first set's wording fixes (unseen by any tuning). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-int-tas-gold-equivalent",
+      "cat": "fresh",
+      "q": "Using gold at US$2,600/oz and silver at US$30/oz, what are the best gold-equivalent drill intercepts in Tasmania?",
+      "expect": {"tools_any": ["drill_intercepts"], "max_turns": 8, "maps_min": 1},
+      "judge": "Calculates gold-equivalent intercepts from Mineral Resources Tasmania downhole assays using the given prices, states the equivalent formula basis (prices and the recovery assumption, 100 % if not given), the cut-off, minimum width and maximum internal dilution, and quotes intercepts as length at g/t AuEq from depth with the gold and silver grades. Says lengths are downhole and these are calculated from government-compiled assays, not company or resource figures. Must not invent values."
+    },
+    {
+      "id": "fresh-int-quebec-graphite-length",
+      "cat": "fresh",
+      "q": "Which Québec drill holes reported the longest graphite intercepts?",
+      "expect": {"tools_any": ["drill_intercepts"], "max_turns": 8},
+      "judge": "Ranks reported Québec (SIGÉOM) graphite intercepts by LENGTH (not grade x length), with grade as % graphitic carbon and length in metres, and notes that log-unit depths are not the intercept's own depths and that these are source-reported intercepts, not resources. Mentions anything left out for checking if the tool reported it. Must not invent values."
+    },
+    {
+      "id": "fresh-int-quebec-niobium",
+      "cat": "fresh",
+      "q": "Show me the best niobium intercepts in Québec on a map.",
+      "expect": {"tools_any": ["drill_intercepts"], "max_turns": 8, "maps_min": 1},
+      "judge": "Ranks reported Québec niobium intercepts with grades as % Nb2O5 (converting Nb ppm where reported that way), shows a map, and says that physically impossible values were left out (and any exceptional grades left out for checking, if the tool reported them). Credits SIGÉOM / the Québec ministry. Must not invent values."
+    }
+  ]
+}

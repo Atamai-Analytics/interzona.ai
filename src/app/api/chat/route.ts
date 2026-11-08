@@ -292,7 +292,7 @@ const tools: Anthropic.ToolUnion[] = [
     description:
       "Find and rank DRILL INTERCEPTS (a grade over a downhole length) for one element, with a ranked table, a map of the holes and a downloadable list. Two modes. " +
       "'reported' (default for Québec): the mineralised intercepts the source itself reported (Québec SIGÉOM, about 338,000), converted to one form per element (lithium as % Li2O, gold as g/t, niobium as % Nb2O5, uranium as % U3O8 ...) so they rank together. " +
-      "'composite': intercepts CALCULATED from the downhole sample assays with a cut-off grade, a minimum width and a maximum internal dilution (length-weighted, optional 'including' higher-grade part and optional metal equivalent from prices and recoveries) - only for Tasmania (Mineral Resources Tasmania) and Athabasca (GSC Open File 7792) holes, because Québec assays have no from-to depths. " +
+      "'composite': intercepts CALCULATED from the downhole sample assays with a cut-off grade, a minimum width and a maximum internal dilution (length-weighted, optional 'including' higher-grade part and optional metal equivalent from prices and recoveries) - for Tasmania (Mineral Resources Tasmania), Athabasca (GSC Open File 7792) and about 1,500 Swedish holes (SGU drill-core assays), because Québec assays have no from-to depths. " +
       "USE THIS for 'best lithium intercepts in Québec', 'top gold intercepts near X', 'which holes hit more than 20 gram-metres', 'significant intercepts at deposit Y', 'tin intercepts above 0.5 % in Tasmania', 'what did drilling at X intersect'. " +
       "Ranks by grade x length (metal- or gram-metres) unless asked for grade or length; the best per hole by default. Limit the area with bbox, near (lat, lon, radius_km) or occurrence_id (linked holes plus holes within radius_km). " +
       "Always state the mode, the area and (for composites) the cut-off, minimum width and dilution used. Not resource estimates; not for public reporting without verification.",
@@ -300,8 +300,8 @@ const tools: Anthropic.ToolUnion[] = [
       type: "object",
       properties: {
         element: { type: "string", description: "Element symbol or name: Au, Ag, Pt, Pd, Cu, Ni, Co, Zn, Pb, Sn, W, Mo, Li, Nb, Ta, U, V, Ti, Zr, Cr, Fe, Mn, P, Th, Y, La, Ce, Nd, Pr, Dy, Be, Bi, Sb, As, or graphite (C)." },
-        mode: { type: "string", enum: ["reported", "composite"], description: "reported = source-reported intercepts (Québec); composite = calculated from downhole assays (Tasmania, Athabasca). Default: reported, or composite when source_system is Tasmania/Athabasca or a cutoff is given." },
-        source_system: { type: "string", enum: ["CANADA_QC_SIGEOM", "AUSTRALIA_TAS_MRT", "CANADA_ATHABASCA_OF7792"], description: "Optional: which source's holes." },
+        mode: { type: "string", enum: ["reported", "composite"], description: "reported = source-reported intercepts (Québec); composite = calculated from downhole assays (Tasmania, Athabasca, Sweden). Default: reported, or composite when source_system is Tasmania/Athabasca/Sweden or a cutoff is given." },
+        source_system: { type: "string", enum: ["CANADA_QC_SIGEOM", "AUSTRALIA_TAS_MRT", "CANADA_ATHABASCA_OF7792", "SWEDEN_SGU_LITHOGEOCHEMISTRY"], description: "Optional: which source's holes (SWEDEN_SGU_LITHOGEOCHEMISTRY = SGU drill-core assays on Swedish holes)." },
         bbox: { type: "array", items: { type: "number" }, description: "Optional area: [west, south, east, north] in decimal degrees." },
         near: { type: "object", properties: { lat: { type: "number" }, lon: { type: "number" }, radius_km: { type: "number", description: "Default 10, max 100." } }, description: "Optional: holes within a radius of a point; adds distance to the table." },
         occurrence_id: { type: "integer", description: "Optional: a deposit/occurrence; uses holes linked to it plus holes within radius_km of it." },

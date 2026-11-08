@@ -653,8 +653,10 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   and screen them only against other plant samples; SGU used them like stream sediments to find metal-rich catchments.
   India occurrences have no samples/results. The Swedish ROCK samples ('SWEDEN_SGU_LITHOGEOCHEMISTRY') have occurrence_id NULL but are in
   geochem.sample_occurrence_links (re-linked 7 Nov 2026 to the SGU occurrences: 113,129 samples within 2 km of one, 82,081 within 500 m;
-  most-sampled sites Olserum, Malmberget, Storliden, Nautanen, Salmivaara), have NO sample dates and NO drill depths (a drill-core
-  sample is a point at the collar, not an interval), and only 11,778 have a lithology. About a third of Swedish
+  most-sampled sites Olserum, Malmberget, Storliden, Nautanen, Salmivaara), have NO sample dates, and only 11,778 have a lithology. Drill-core samples: 58,273 are
+  linked to their SGU hole (SWEDEN_SGU_BORRHAL, 1,521 holes) WITH downhole sections parsed from SGU's sampling remark (sample_context
+  'DRILLHOLE_INTERVAL', depth_from_m / depth_to_m; linked 7 Nov 2026, hole within 5 km); 2,223 more are linked without depths and ~41,500
+  ('malm core' with no hole named, or a hole not in the register) are points at the collar position (DRILLHOLE_POINT, no drillhole_id). About a third of Swedish
   results (512,892) have an unknown method (package 'UNK-UNK-UNK' and similar '-UNK' codes), and the wide table
   treats those as PARTIAL (_p). Most Swedish samples (118,735 of 139,163, 85%) are flagged third_party_likely
   in geochem.sample_provenance: they are exploration-company or externally supplied data that SGU publishes
@@ -709,7 +711,8 @@ geochem.samples: sample_id (PK), occurrence_id (nullable), sample_type_id (join 
   (-> drilling.drillholes), depth_from_m, depth_to_m.
 drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed samples; CANADA_QC_SIGEOM 190,035 diamond holes; CANADA_SK_SGS
   33,490 collars, about 1,040 of them with Athabasca core assays; CANADA_ATHABASCA_OF7792 245 further Athabasca holes; SWEDEN_SGU_BORRHAL 27,343
-  Swedish collars 1899-2022, about 3.3 million m, CC0, credit SGU, with NO assays, logs or intercepts and no occurrence links; company = previous owner
+  Swedish collars 1899-2022, about 3.3 million m, CC0, credit SGU, with no logs or reported intercepts and no occurrence links; about 1,576 of
+  them carry assayed core from SGU's lithogeochemistry (SWEDEN_SGU_LITHOGEOCHEMISTRY samples with this drillhole_id, 1,521 with from-to sections); company = previous owner
   (Boliden, NSG, SGU, Viscaria/Outokumpu, LKAB ...), 15,396 with core kept at SGU's National Drill Core Archive in Malå (core_status / core_store_location),
   1,618 drilled underground (purpose / comments); 9,328 SGU holes without coordinates are not loaded): drillhole_id (PK), source_system,
   source_hole_id, hole_name, prospect, company, tenement, drill_type_id (-> geochem.drill_types: DIAMOND, RC, AIRCORE, PERCUSSION,
@@ -728,7 +731,9 @@ drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed sample
   intercepts and NO logs, and assays ONLY where the Athabasca compilation sampled them (about 1,040 holes, 2000-2011 assessment work: check
   for geochem.samples with that drillhole_id and source_system 'CANADA_ATHABASCA_OF7792' before offering assays, and never offer assays for
   a hole that has none); CANADA_ATHABASCA_OF7792 holes have core assays but no logs or intercepts; drilling.intercepts holds Québec
-  (CANADA_QC_SIGEOM) only; analysed downhole samples exist for Tasmania (AUSTRALIA_TAS_MRT), Québec and the Athabasca holes. When presenting
+  (CANADA_QC_SIGEOM) only; analysed downhole samples exist for Tasmania (AUSTRALIA_TAS_MRT), Québec, the Athabasca holes and about 1,500 Swedish SGU holes
+  (SWEDEN_SGU_LITHOGEOCHEMISTRY samples; drill_intercepts composites them - mostly exploration-company mineralisation sampling, so sections
+  are selective, not continuous). When presenting
   drill holes name the publisher: Saskatchewan Mining and Petroleum GeoAtlas (Saskatchewan Geological Survey) for the collars and the
   Geological Survey of Canada (Open File 7792) for Athabasca core assays, SIGÉOM (Québec Ministère des Ressources naturelles et des Forêts)
   or Mineral Resources Tasmania. drilling.surveys: drillhole_id,

@@ -15,11 +15,12 @@ import { ELEMENTS, PRICE_UNITS, buildSegments, compositeHole, fromPpm, gxlLabel,
 type Out = { content: string; evidence?: Evidence[]; datasets?: Dataset[]; maps?: MapData[] };
 
 
-export const INTERCEPT_SOURCES = { reported: ["CANADA_QC_SIGEOM"], composite: ["AUSTRALIA_TAS_MRT", "CANADA_ATHABASCA_OF7792"] };
+export const INTERCEPT_SOURCES = { reported: ["CANADA_QC_SIGEOM"], composite: ["AUSTRALIA_TAS_MRT", "CANADA_ATHABASCA_OF7792", "SWEDEN_SGU_LITHOGEOCHEMISTRY"] };
 export const SOURCE_LABEL: Record<string, string> = {
   CANADA_QC_SIGEOM: "SIGÉOM (Québec Ministère des Ressources naturelles et des Forêts)",
   AUSTRALIA_TAS_MRT: "Mineral Resources Tasmania",
   CANADA_ATHABASCA_OF7792: "Geological Survey of Canada Open File 7792 (Athabasca)",
+  SWEDEN_SGU_LITHOGEOCHEMISTRY: "Geological Survey of Sweden (SGU) lithogeochemistry, drill core",
 };
 
 
@@ -430,7 +431,7 @@ async function composite(input: Record<string, unknown>, el: string, d: ElDef, a
       "Total-digestion values are used where present, otherwise partial (e.g. aqua regia) values, which can under-report resistant minerals; see digestion_basis_of_samples_used.",
       `A high 'highest sample' in a short intercept can mean one nugget or vein drives the grade. By default composites containing a single assay above ${d.exceptional} ${unitLabel(d)}${eq ? ` (or above ${eq.d.exceptional} ${unitLabel(eq.d)} for the second metal)` : ""} are left out of the ranking (usually source errors, occasionally real); say how many, and set include_exceptional to rank them.`,
       "These are calculated from government-compiled assays, not company-reported or resource figures; do not present them as either, or imply economic grades. They must not be used in public reporting without independent verification.",
-      "Only Tasmania (MRT) and Athabasca (GSC Open File 7792) hold downhole assay intervals; Québec assays have no from-to depths, so for Québec use mode 'reported'.",
+      "Downhole assay intervals are held for Tasmania (MRT), Athabasca (GSC Open File 7792) and about 1,500 Swedish holes (SGU; sections parsed from SGU's sampling remarks, mostly selective sampling of mineralised core by exploration companies, so unsampled core between sections counts as zero grade); Québec assays have no from-to depths, so for Québec use mode 'reported'.",
       "To try other cut-offs, widths, dilution or a metal equivalent and see each hole's strip log, the user can open the Drill intercepts page (the orange 'Drill intercepts' button at the top of the app); it uses the same calculation and also takes their own CSV. Mention it in one sentence at the end.",
       maps.length ? "A map of the ranked holes is shown to the user automatically; the full table is downloadable." : "",
     ].filter(Boolean),

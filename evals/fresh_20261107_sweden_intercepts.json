@@ -1,0 +1,14 @@
+{
+  "version": "2026-11-07",
+  "notes": "Swedish SGU drill core in the drill-intercepts tool (58,273 samples linked to 1,521 holes with sections on 7 Nov 2026). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-int-sweden-zinc",
+      "cat": "fresh",
+      "q": "What are the best zinc drill intercepts in Sweden?",
+      "expect": {"tools_any": ["drill_intercepts"], "max_turns": 8, "maps_min": 1},
+      "judge": "Calculates zinc intercepts from SGU drill-core assays on Swedish holes (states cut-off, minimum width, internal dilution), lists top holes as length at % Zn from depth - Storliden holes (North Atlantic Natural Resources, e.g. STOB99112 about 22 m at about 23 % Zn) lead - and notes that SGU's sections are mostly selective sampling of mineralised core so unsampled core counts as zero, lengths are downhole, and these are not resource figures. Credits the Geological Survey of Sweden (SGU). Must not invent values."
+    }
+  ]
+}

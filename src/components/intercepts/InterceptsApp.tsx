@@ -25,9 +25,9 @@ type DbHole = { id: number; name: string; source: string; prospect: string | nul
 
 const EL_KEYS = Object.keys(ELEMENTS);
 const EL_LABELS: Record<string, string> = Object.fromEntries(EL_KEYS.map((k) => [k, `${ELEMENTS[k].name} (${unitLabel(ELEMENTS[k])})`]));
-const SOURCES = ["", "AUSTRALIA_TAS_MRT", "CANADA_ATHABASCA_OF7792"] as const;
-const SOURCE_LABELS: Record<string, string> = { "": "Tasmania and Athabasca", AUSTRALIA_TAS_MRT: "Tasmania (Mineral Resources Tasmania)", CANADA_ATHABASCA_OF7792: "Athabasca (GSC Open File 7792)" };
-const SHORT_SOURCE: Record<string, string> = { AUSTRALIA_TAS_MRT: "Tasmania", CANADA_ATHABASCA_OF7792: "Athabasca" };
+const SOURCES = ["", "AUSTRALIA_TAS_MRT", "CANADA_ATHABASCA_OF7792", "SWEDEN_SGU_LITHOGEOCHEMISTRY"] as const;
+const SOURCE_LABELS: Record<string, string> = { "": "Tasmania, Athabasca and Sweden", AUSTRALIA_TAS_MRT: "Tasmania (Mineral Resources Tasmania)", CANADA_ATHABASCA_OF7792: "Athabasca (GSC Open File 7792)", SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden (SGU drill core)" };
+const SHORT_SOURCE: Record<string, string> = { AUSTRALIA_TAS_MRT: "Tasmania", CANADA_ATHABASCA_OF7792: "Athabasca", SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden" };
 const IN_UNITS = ["ppm", "g/t", "ppb", "%"] as const;
 const PRICE_U = Object.keys(PRICE_UNITS);
 const RANKS = ["grade_x_length", "grade", "length"] as const;
@@ -332,7 +332,7 @@ export function InterceptsApp() {
                   <button className={btnGreen} disabled={busy} onClick={findHoles}>Find holes</button>
                 </div>
                 <p className="text-[11px] text-gray-500">
-                  Only Tasmania and Athabasca holes have assays with from-to depths. Québec holes have reported intercepts only; ask the assistant for those.
+                  Tasmania, Athabasca and about 1,500 Swedish holes have assays with from-to depths (Swedish sections are mostly selective sampling of mineralised core). Québec holes have reported intercepts only; ask the assistant for those.
                 </p>
                 {found && (
                   <div className="space-y-2">

@@ -1,0 +1,25 @@
+17:01:42 AUSTRALIA_TAS_MRT                REE  not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+17:01:45 AUSTRALIA_TAS_MRT                Li   not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+17:02:06 AUSTRALIA_TAS_MRT                Cu   tested lift 0.94 [0.00, 29.16] flagged 57 hit rate 0.14 vs expected 0.15
+17:02:19 AUSTRALIA_TAS_MRT                Zn   tested lift 24.86 [1.19, 80.16] flagged 38 hit rate 0.16 vs expected 0.01
+17:02:24 AUSTRALIA_TAS_MRT                Ni   tested lift 41.25 [0.00, 219.85] flagged 35 hit rate 0.14 vs expected 0.00
+17:02:29 AUSTRALIA_TAS_MRT                W    tested lift 15.62 [0.73, 39.02] flagged 34 hit rate 0.15 vs expected 0.01
+17:02:33 AUSTRALIA_TAS_MRT                Sn   tested lift 11.33 [0.00, 131.10] flagged 35 hit rate 0.17 vs expected 0.02
+17:02:38 AUSTRALIA_TAS_MRT                Mo   tested lift 0.91 [0.00, 8.36] flagged 49 hit rate 0.02 vs expected 0.02
+17:02:46 AUSTRALIA_TAS_MRT                U    not tested: fewer than 5 sampled cells near a catalogued occurrence of 
+{
+  "run_date": "2026-11-07",
+  "grid_deg": 0.25,
+  "percentile": 0.95,
+  "min_anomalous": 3,
+  "near_km": 15.0,
+  "bootstrap": 1000,
+  "combinations": 9,
+  "tested": 6,
+  "better_than_chance": 1,
+  "no_clear_difference": 5,
+  "worse_than_chance": 0,
+  "median_lift": 13.479166666666666,
+  "seconds": 70
+}
+saved C:\Users\dean\critical-minerals-ai\evals\backtest\screen_backtest_2026-11-07_australia_tas_mrt.json

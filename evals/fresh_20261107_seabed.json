@@ -16,7 +16,7 @@
       "cat": "fresh",
       "q": "When does Nauru Ocean Resources' ISA contract expire?",
       "expect": {"tools_any": ["run_sql"], "max_turns": 6},
-      "judge": "Says the ISA page lists the Nauru Ocean Resources Inc. (NORI) nodule contract (Clarion-Clipperton Zone, signed 22 July 2011) with an expiry of 21 July 2026, and that the page was last updated before that date, so any extension is not shown; it must NOT state flatly that the contract has expired or lapsed. May suggest checking the ISA directly."
+      "judge": "Says the ISA page lists the Nauru Ocean Resources Inc. (NORI) nodule contract with an expiry of 21 July 2026 (location and signing date optional), and that the page was last updated before that date, so any extension is not shown; it must NOT state flatly that the contract has expired or lapsed. May suggest checking the ISA directly."
     },
     {
       "id": "fresh-seabed-crusts",

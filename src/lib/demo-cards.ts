@@ -106,6 +106,12 @@ export const DEMO_CARDS: DemoCard[] = [
     prompt: "What are the best tin drill intercepts in Tasmania at a 0.5% Sn cut-off? Show them on a map.",
   },
   {
+    icon: "🌊",
+    title: "Seabed minerals: deposits, contracts and rules",
+    description: "Maps the known seabed mineral sites in European waters, lists who holds the International Seabed Authority's deep-sea exploration contracts, and says where deep-sea mining regulation stands.",
+    prompt: "Where are the known seabed mineral deposits in European waters, who holds the International Seabed Authority's deep-sea exploration contracts, and where does deep-sea mining regulation stand? Show the European sites on a map.",
+  },
+  {
     icon: "📄",
     title: "A company snapshot to send on",
     description: "Builds a printable one-to-two page profile with a shareable link, and summarises what stands out.",

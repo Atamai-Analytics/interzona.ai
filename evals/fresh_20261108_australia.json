@@ -1,6 +1,6 @@
 {
   "version": "2026-11-08",
-  "notes": "Fresh check for the 8 Nov 2026 Australian occurrence loads (WA MINEDEX, Geoscience Australia OZMIN + state/territory occurrences). Not part of the gate.",
+  "notes": "Fresh check for the 8 Nov 2026 Australian occurrence loads (WA MINEDEX, Geoscience Australia OZMIN + state/territory occurrences). Not part of the gate. Plus the curated lithium deposits (8 Nov).",
   "ids": [],
   "questions": [
     {
@@ -68,6 +68,27 @@
         "max_turns": 8
       },
       "judge": "If it uses the Geoscience Australia row, it must give the statement's date (2011; the month is optional) with the Central Lode figures (about 70 Mt Indicated at 2.6% Li2O, 31 Mt Probable at 3.1%), say it is far out of date, and must not present it as Greenbushes' current resource. Pointing to newer operator reporting is good but naming the companies is optional. Credits Geoscience Australia if it uses the GA row. Fails only if it presents the 2011 figure as current or gives no date."
+    },
+    {
+      "id": "fresh-li-zimbabwe",
+      "cat": "fresh",
+      "q": "Which lithium mines are there in Zimbabwe and who operates them? Show them on a map.",
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Lists Zimbabwean lithium deposits from our occurrences: Bikita, Arcadia (Huayou), Sabi Star (Chengxin / Max Mind), Zulu (Premier African Minerals, commissioning) and Kamativi described as a lithium mine (reopened/plant commissioned 2024, not just a tin producer). Shows a map AND says the curated positions (Arcadia, Sabi Star, Zulu) are approximate town-level points. Gives a source with date for each curated row (Arcadia, Sabi Star, Zulu) and for Kamativi's lithium note; Bikita (an MRDS record) needs no source. Does not invent figures."
+    },
+    {
+      "id": "fresh-li-brazil-coverage",
+      "cat": "fresh",
+      "q": "How good is your coverage of lithium deposits in Brazil?",
+      "expect": {
+        "max_turns": 6
+      },
+      "judge": "Says the Brazilian geological survey's (SGB) occurrence inventory is NOT loaded (licence unconfirmed, permission requested), so Brazil is covered by old USGS MRDS records plus a few curated company-reported mines (Sigma Lithium's Xuxa/Barreiro/Nezinho do Chicao, CBL's Cachoeira, Lithium Ionic's Bandeira) with approximate positions. Must not claim comprehensive Brazilian coverage."
     }
   ]
 }

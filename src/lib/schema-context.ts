@@ -302,6 +302,23 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   name the source by name (not just 'government surveys'): 'MINEDEX, Department of Energy, Mines, Industry Regulation and Safety, State of
   Western Australia (CC BY 4.0)' for Western Australia and 'Geoscience Australia (OZMIN and state and territory mineral occurrence data,
   CC BY 4.0)' for the other states.
+- CURATED LITHIUM DEPOSITS (loaded 2026-11-08, created_by claude_li_curated_20261108, external_ids 'INTERZONA_CURATED_LITHIUM'): 21 lithium
+  deposits no government inventory we hold covers, compiled by Interzona from cited public sources (company releases, government notices,
+  news): Zimbabwe (Arcadia - Huayou, producing; Sabi Star - Chengxin, producing; Zulu - Premier African Minerals, commissioning), Mali
+  (Goulamina - Ganfeng, producing since Dec 2024), Ghana (Ewoyaa - Atlantic Lithium, lease ratified Mar 2026), Rwanda (Musha-Ntunga -
+  Trinity Metals, exploration), Namibia (Helikon / Karibib, care and maintenance), Ukraine (Polokhivske, Dobra - tender 2025, Shevchenkivske -
+  under Russian occupation since 2024), USA (Angel Island / Clayton Valley - Century Lithium; South West Arkansas Smackover brine - Standard
+  Lithium/Equinor; Big Sandy and Basin claystones, Arizona), Mexico (Sonora / Bacadehuachi - Ganfeng, concessions cancelled 2024, arbitration),
+  UK (Weardale Lithium, Eastgate/Cambokeels brine) and Brazil (Sigma Lithium's Xuxa, Barreiro, Nezinho do Chicao; CBL's Cachoeira; Lithium
+  Ionic's Bandeira). Each row's comments hold the operator, a status note, the SOURCE URL and its date - cite it, and give the status as
+  'as of <source date>'. POSITIONS ARE APPROXIMATE (town or locality geocoded with OpenStreetMap, position_accuracy AREA_CENTROID; several
+  share one town point, e.g. the three Sigma pits at Itinga): say so on any map and never measure distances from these points. When an answer lists several
+  curated rows, give each one's own source and date (one line each), not just one source for the group. Lithium was also added (with a
+  cited source in comments, 'Lithium added 2026-11-08 ...') to old MRDS records Uis (2), Kamativi, Zhabuye, Qaidam Basin and Willcox Playa:
+  that note is NEWER than the MRDS status and commodity order, so describe Kamativi as a lithium mine reopened in 2024 (not a tin
+  producer), Uis as tin plus petalite lithium, Zhabuye and Qarhan/Qaidam as lithium-producing salt lakes, citing the note's source. BRAZIL: the
+  Brazilian survey's (SGB) own occurrence inventory (about 36,500 sites) is NOT loaded - its licence is unconfirmed and permission has been
+  requested; Brazilian coverage is otherwise the old MRDS records plus the curated mines above, so say so when asked about Brazil.
 - SEABED (offshore) OCCURRENCES (loaded 2026-11-07): 535 points from EMODnet Geology's Marine Minerals layers (CC BY 4.0; credit 'EMODnet
   Geology, Marine Minerals (European Commission)' plus the data provider named in comments; created_by migration_emodnet_marine_20261107,
   external_ids source 'EMODNET_GEOLOGY_MARINE_MINERALS', id '<layer>:<n>'): polymetallic nodules 241 (Baltic and Gulf of Finland
@@ -836,7 +853,8 @@ core.external_ids: external_id_id, entity_type ('OCCURRENCE' or 'SAMPLE'), entit
   'claude_india_primary_20261002' = India, 'claude_sdsg_*' = SDSG rare earth projects, 'claude_mindat_20261002' = Mindat,
   'migration_canada_occ_20261103' = Québec SIGÉOM and Saskatchewan SMDI, 'migration_nrcan_projects_20261103' = NRCan project sites,
   'migration_sgu_occ_20261107' = Sweden (SGU Mineralresurser), 'migration_emodnet_marine_20261107' = seabed points (EMODnet Geology),
-  'migration_minedex_occ_20261108' = Western Australia (MINEDEX), 'migration_ga_aus_occ_20261108' = rest of Australia (GA OZMIN + state surveys); join core.data_sources only for
+  'migration_minedex_occ_20261108' = Western Australia (MINEDEX), 'migration_ga_aus_occ_20261108' = rest of Australia (GA OZMIN + state surveys),
+  'claude_li_curated_20261108' = curated lithium deposits (approximate positions); join core.data_sources only for
   geochemical source_system values, not for occurrences.
 core.data_sources: source_system (PK), publisher, dataset_name, licence, licence_url, attribution_required,
   attribution_text, is_loaded, licence_status, caveats, evidence_location, evidence_date.

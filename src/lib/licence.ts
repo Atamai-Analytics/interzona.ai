@@ -59,6 +59,7 @@ const CREDITS: [RegExp, string][] = [
   [/argentina_segemar|argentin|sigam|segemar/i, "SEGEMAR / SIGAM, Argentina (CC BY 4.0)"],
   [/finland_gtk/i, "Geological Survey of Finland (GTK), CC BY 4.0"],
   [/sweden_sgu/i, "Geological Survey of Sweden (SGU), CC0"],
+  [/spain_igme|igme/i, "Source: © NC Geological Survey of Spain (IGME); FOREGS campaigns via IGME"],
   [/usa_usgs_ngdb/i, "U.S. Geological Survey, National Geochemical Database"],
   [/australia_vic|victoria/i, "Geological Survey of Victoria, State of Victoria (DEECA), CC BY 4.0"],
   [/australia_tas|tasmania|drilling\./i, "Mineral Resources Tasmania, Department of State Growth (State of Tasmania), bulk data package BDR2023_01, CC BY 3.0 AU"],

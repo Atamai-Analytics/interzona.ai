@@ -545,7 +545,16 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   (Natural Resources Canada CDoGS, 'CANADA_NRCAN_CDOGS', 233,875 samples, 8.42M results) and Athabasca Basin uranium drill core (GSC Open
   File 7792, 'CANADA_ATHABASCA_OF7792', 40,373 samples, 1.84M results) and Swedish till, sediment and soil (SGU regional sampling,
   'SWEDEN_SGU_MARKGEOKEMI', 61,290 samples, 2.98M active results) and Swedish stream plants (SGU biogeochemistry, 'SWEDEN_SGU_BIOGEOKEMI',
-  37,423 samples, 1.05M results) ONLY (geochem.samples also holds 2,519 age-only points, source_system
+  37,423 samples, 1.05M results) and Spain (IGME Geoquímica, 'SPAIN_IGME_GEOCHEMISTRY', LITHIUM ONLY so far: 43,702 samples, one Li
+  value each, loaded 8 Nov 2026 from IGME's public geochemistry site - Mapa Geoquímico de España 36,005 (14,818 stream sediments, 13,505 soils,
+  7,682 C-horizon soils; TD-MS total digestion, DL 0.5 ppm), Badajoz Sur 7,508 (stream sediment, soil, 100 rocks; ICP total, DL 1 ppm),
+  España-FOREGS stream sediments 103 (ICP-MS total, DL 0.05 ppm) and FOREGS stream water 86 (dissolved Li in µg/L, ICP-MS - in
+  analytical_results only, NOT in the wide table, never compare with solids). The campaign is in geochem.samples.comments ('IGME campaign
+  <name> (programme ...)'): for Spain-wide questions use ALL campaigns and name them - stream sediments are 21,183 in all (national map
+  14,818, Badajoz Sur 6,262, FOREGS 103), and say the methods/detection limits differ by campaign. The method per campaign comes from IGME's sample detail records
+  (25 checked per campaign, all identical). IGME's other elements are NOT loaded yet - say so if asked about any other element in Spain; IGME
+  withholds As, Au, Hg and U (restricted). Credit 'Source: © NC Geological Survey of Spain (IGME)' and never imply IGME endorses the
+  answer) ONLY (geochem.samples also holds 2,519 age-only points, source_system
   'SWEDEN_SGU_BEDROCK_AGE', and 1,053 bare sample points from the Wu zircon database, source_system
   'GLOBAL_ZIRCON_WU', none of which has results; do not count them as geochemical samples).
   USGS NGDB: almost all samples are rocks (grab 238,515, composite 47,191, drill core 31,729, float, channel,
@@ -595,8 +604,8 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   31 Oct 2026, rock samples (SIGÉOM's sediment, soil and till samples are a separate source_system, CANADA_QC_SIGEOM_SED, below). 337,053 samples are diamond-drill
   core (sample_type Core Sample, sample_context 'DRILLHOLE_INTERVAL'; 296,930 of them linked to their hole by hole name + assessment report,
   the rest have drillhole_id NULL); SIGÉOM gives a core sample only one projected vertical depth (in comments, 'SIGÉOM projected vertical
-  depth'), NOT a from/to interval, so depth_from_m / depth_to_m are NULL for Québec samples. 249,947 are surface samples (outcrop 217,509,
-  erratic boulder 5,369, unspecified 26,216 ...). Like Tasmania, the drill core comes mostly from exploration of mineralised zones: use the
+  depth'), NOT a from/to interval, so depth_from_m / depth_to_m are NULL for Québec samples. 249,324 are surface samples (outcrop 217,509,
+  unspecified rock 26,216, erratic boulder 5,369, select rock 230) and 337,676 drill samples (337,053 core + 623 other drill samples). Like Tasmania, the drill core comes mostly from exploration of mineralised zones: use the
   surface samples for regional statistics (the anomaly screen leaves drill samples out by default). sample_type_local says where each sample
   came from: 'government data' (Ministère surveys), 'manual compilation' (company / assessment-report data compiled by the Ministère),
   'numeric assessment data', 'AI compilation from reports' (about 21,000 samples whose values SIGÉOM extracted from PDF reports with AI:
@@ -688,7 +697,7 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   CANADA-WIDE FEDERAL SURVEYS ('CANADA_NRCAN_CDOGS', Open Government Licence - Canada, credit Natural Resources Canada, Geological Survey of
   Canada, Canadian Database of Geochemical Surveys (CDoGS)): 233,875 samples, 8.42M results from 1970s-2010s Geological Survey of Canada surveys,
   mostly the National Geochemical Reconnaissance (NGR): stream sediment 87,212, lake sediment 85,455, till 44,734, rock 7,529, soil 6,103,
-  other Quaternary sediment 2,008, heavy-mineral concentrates 523. By survey province (approximate): Yukon about 38,000 (almost all stream
+  other Quaternary sediment 2,008, heavy-mineral concentrates 523, drill core 311 (these add up to 233,875). By survey province (approximate): Yukon about 38,000 (almost all stream
   sediment), British Columbia about 35,000 (stream sediment, some till), Manitoba about 27,000 (lake sediment, till), Newfoundland and
   Labrador about 24,000 (lake sediment), Ontario about 22,000 (lake sediment), New Brunswick about 22,000 (stream sediment, till), Nunavut
   about 21,000 (till, lake sediment), Northwest Territories, Alberta and border surveys the rest. This is the ONLY geochemistry for BC, Yukon,
@@ -742,6 +751,8 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   SWEDEN_SGU_LITHOGEOCHEMISTRY, SWEDEN_SGU_BEDROCK_AGE, SWEDEN_SGU_MARKGEOKEMI (till, sediment, soil), SWEDEN_SGU_BIOGEOKEMI (stream plants),
   SWEDEN_SGU_MINERALRESURSER (occurrences) and SWEDEN_SGU_BORRHAL (drill holes), all CC0 1.0, credit Geological Survey of Sweden (SGU) as a
   courtesy (not required); much of SGU's data was submitted by exploration companies and SGU's written confirmation that CC0 covers it is still pending;
+  SPAIN_IGME_GEOCHEMISTRY (Spain, lithium so far), IGME generic user licence (free commercial re-use), credit 'Source: © NC Geological
+  Survey of Spain (IGME)', do not imply IGME endorsement;
   USA_WA_DGER_MINES_MINERALS for the Washington sites, free to reuse with citation of the Washington Geological Survey; USA_USGS_MRDS
   for the MRDS sites, US public domain, credit USGS; AUSTRALIA_WA_MINEDEX (Western Australian occurrences), CC BY 4.0, credit DEMIRS, State
   of Western Australia; AUSTRALIA_GA_OZMIN and AUSTRALIA_GA_STATE_OCCURRENCES (other Australian occurrences), CC BY 4.0, credit Geoscience
@@ -980,7 +991,7 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
-geochem.sample_chemistry_wide: one row per sample for ALL fourteen geochemical datasets (CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL fifteen geochemical datasets (SPAIN_IGME_GEOCHEMISTRY 43,702, Li only (li_t; the 86 water samples have no value); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 387,527,
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 224 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/
@@ -1643,7 +1654,7 @@ const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   occurrences:
     /occurrence|deposit|\bmines?\b|mining|mineral site|prospect|resource|reserve|tonnage|grade|facilit|smelter|refiner|capacity|countr|commodit|mrds|\bhow many\b|operator|owner|project|critical mineral|exploration|\bcrma\b|critical raw material|strategic|recycl|substitut|\bunfc\b|european commission|seabed|sea[- ]?floor|offshore|deep[- ]sea|nodule|crusts?\b|sulphide|sulfide|\bisa\b|emodnet|marine|minedex|ozmin/i,
   geochemistry_data:
-    /sample|geochem|assay|\bppm\b|stream|sediment|\bsoil|\brock|anomal|element|analyte|analytical|\bree\b|rare earth|pegmatite|lineament|alteration|zircon|u-pb|dating|\bage[sd]?\b|licen|attribution|lithology|\bsegemar|\bgeus\b|\bgtk\b|\bsgu\b|ngdb|\bgsv\b|\bpgm\b|drill|\bholes?\b|collar|downhole|interval|core sample|\bmrt\b|tasmania|intercept|sig[eé]om|\btill\b|lake sediment|athabasca|boron|isotop|radiogenic|sandstone|\bhalo\b|swed|biogeochem|\bplants?\b|\bmoss\b|vegetation/i,
+    /sample|geochem|assay|\bppm\b|stream|sediment|\bsoil|\brock|anomal|element|analyte|analytical|\bree\b|rare earth|pegmatite|lineament|alteration|zircon|u-pb|dating|\bage[sd]?\b|licen|attribution|lithology|\bsegemar|\bgeus\b|\bgtk\b|\bsgu\b|ngdb|\bgsv\b|\bpgm\b|drill|\bholes?\b|collar|downhole|interval|core sample|\bmrt\b|tasmania|intercept|sig[eé]om|\btill\b|lake sediment|athabasca|boron|isotop|radiogenic|sandstone|\bhalo\b|swed|biogeochem|\bplants?\b|\bmoss\b|vegetation|spain|spanish|igme|foregs/i,
   geochemistry_workflow:
     /explor|prospective|target|new lead|anomal|where should|discover|across (all|the|many)|combined|set of (samples|occurrences)/i,
   geochemistry_scripts:

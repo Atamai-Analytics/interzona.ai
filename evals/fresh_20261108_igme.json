@@ -1,0 +1,32 @@
+{
+  "version": "2026-11-08",
+  "notes": "Fresh check for the IGME Spain lithium slice (8 Nov 2026). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-igme-li-highs",
+      "cat": "fresh",
+      "q": "Where are the highest lithium values in Spanish stream sediments? Show them on a map.",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.sample_chemistry_wide WHERE source_system='SPAIN_IGME_GEOCHEMISTRY' AND sample_type_name='Stream Sediment' AND li_t IS NOT NULL"
+      },
+      "expect": {
+        "tools_any": [
+          "run_sql",
+          "find_geochemical_anomalies"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses the IGME Spain data (SPAIN_IGME_GEOCHEMISTRY) stream sediments (about 21,000 with Li from the Mapa Geoquímico de España and Badajoz Sur plus FOREGS), shows the highest Li values on a map (top values around 200-310 ppm), names the campaign(s), says these are stream-sediment values (not ore grades), mentions the method/detection limit or that methods differ by campaign, and credits IGME as 'Source: © NC Geological Survey of Spain (IGME)' or equivalent without implying endorsement. Does not mix in the 86 water values."
+    },
+    {
+      "id": "fresh-igme-coverage",
+      "cat": "fresh",
+      "q": "Do you have copper geochemistry for Spain?",
+      "expect": {
+        "max_turns": 6
+      },
+      "judge": "Says no: only lithium has been loaded so far from IGME's Spanish geochemistry (43,702 samples); other elements such as copper are not loaded yet (IGME holds them). May mention MRDS/EMODnet Spanish occurrences, but must not claim Spanish copper analyses exist in the database."
+    }
+  ]
+}

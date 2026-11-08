@@ -182,7 +182,10 @@ core.geology_summary: occurrence_id, dominant_lithology, dominant_alteration, do
 core.resource_estimates: occurrence_id, commodity_id, classification (Indicated/Inferred...),
   reporting_standard, effective_date, tonnage + tonnage_unit, grade + grade_unit, contained_metal +
   contained_metal_unit (often NULL — only published contained metal is stored; derived values sit in
-  the occurrence comments), cutoff_grade + cutoff_grade_unit, competent_person, source_document_id.
+  the occurrence comments; EXCEPTION: the Geoscience Australia rows below have contained metal calculated by Interzona from
+  tonnage x grade, and their comments say so), cutoff_grade + cutoff_grade_unit, competent_person, source_document_id,
+  source_system (NULL for the hand-loaded rows; 'AUSTRALIA_GA_OZMIN_RESOURCES' for the Geoscience Australia rows), zone_name
+  (the ore zone or orebody the row is for), comments (source, reference, whether resources include reserves).
   Grade units differ by row (for example '% TREO', 'ppm Nd2O3', 'g/t') — read grade_unit before
   comparing rows, and never add rows across classifications without saying so.
 `;
@@ -291,7 +294,8 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   is as recorded by the survey and can lag reality, so for current operating status prefer a recent company source or project row.
   Commodities: gold 58,028, copper 15,270, silver 13,314, tin 7,533, lead 6,165, zinc 3,879, iron 3,742, tungsten 2,487, nickel 2,228,
   lithium 486, plus about 20,000 aggregate, sand, gravel, limestone and other construction-material sites (leave them out of metal questions).
-  NO tonnage or grade on these rows (GA's reserves and resources layer is not loaded yet). Positions: about 2,100 points with a stated
+  NO tonnage or grade on these occurrence rows; Geoscience Australia's reserves and resources are in core.resource_estimates (see
+  AUSTRALIAN RESOURCES, mostly older statements). Positions: about 2,100 points with a stated
   accuracy of 1 km or worse are marked position_accuracy AREA_CENTROID; the accuracy in metres is in comments. Jurisdiction is the
   country (jurisdiction_path {Australia}); the state is in comments ('State: QLD'), so filter Australian states by a bounding box,
   by the comments text or by the MINEDEX source for WA. CC BY 4.0 REQUIRES a credit, so every answer that uses these Australian rows must
@@ -361,7 +365,19 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   the location method and caveats — read it before quoting figures or coordinates for a specific
   occurrence, and say when a location is approximate.
 
-- core.resource_estimates has 284 active rows for 94 occurrences (filter is_active). 37 of them (created_by
+- AUSTRALIAN RESOURCES (loaded 2026-11-08, source_system 'AUSTRALIA_GA_OZMIN_RESOURCES', created_by migration_ga_resources_20261108):
+  16,459 rows for 2,748 Australian occurrences from Geoscience Australia's OZMIN ore reserves and mineral resources (CC BY 4.0; credit
+  Geoscience Australia). GA compiles them from company reports; only the LATEST statement GA holds for each deposit zone is loaded (one row
+  per category - Proven, Probable, Proven+Probable, Measured, Indicated, Measured+Indicated, Inferred, Other - per commodity; zone in
+  zone_name). MANY ARE OLD: effective dates run from the 1940s to March 2026 and only about a third are 2020 or later; for example GA's latest
+  Greenbushes lithium statement is March 2011 and Pilgangoora's 2011-2015, far below today's resources. So ALWAYS give the effective_date
+  next to a GA figure, and for ANY GA figure dated before 2025 say in so many words that it may have been superseded by a newer company
+  statement (older than about 5 years: say it is out of date); prefer a newer company source or library document when one exists.
+  Resources are inclusive of reserves for some zones and exclusive for others (comments say which): do not add reserves to resources
+  unless the comment says exclusive, and never add rows of different commodities that share a tonnage (Cu, Au, Ag rows of one zone are the
+  SAME ore). Tonnage units vary (t, kt, Mt, also m3/bcm for some placers); contained_metal (t or koz) is OUR calculation. Zones GA marks as
+  zeroed (mined out or withdrawn) are not loaded. 19 deposits could not be placed on an occurrence and were not loaded.
+- core.resource_estimates has 284 hand-loaded active rows for 94 occurrences (filter is_active) besides the Australian rows above. 37 of them (created_by
   'claude_report_summaries_20261029') come from company technical-report summaries in the library (source_document_id
   372-383), one row per classification, Measured/Indicated/Inferred AND Proven/Probable reserves: Cinovec (occurrence
   325354; JORC, Sep 2025 resource at 0.08% Li, Dec 2025 reserve, grades in % Li), Barroso (578889; all-deposit resource,

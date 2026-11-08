@@ -7,24 +7,67 @@
       "id": "fresh-aus-wa-lithium",
       "cat": "fresh",
       "q": "Which lithium mines are operating in Western Australia? Show them on a map.",
-      "truth": {"n": "SELECT count(DISTINCT substring(comments from 'Project: ([^;]+)')) FROM core.occurrences WHERE is_active AND created_by = 'migration_minedex_occ_20261108' AND 'Li' = ANY(commodities) AND status = 'PRODUCER'"},
-      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "truth": {
+        "n": "SELECT count(DISTINCT substring(comments from 'Project: ([^;]+)')) FROM core.occurrences WHERE is_active AND created_by = 'migration_minedex_occ_20261108' AND 'Li' = ANY(commodities) AND status = 'PRODUCER'"
+      },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
       "judge": "Uses the MINEDEX occurrences and groups the producing lithium sites into mines/projects rather than counting every pit as a separate mine: Greenbushes, Pilgangoora, Wodgina, Mt Marion, Mt Holland (Earl Grey), Kathleen Valley and Bald Hill (Greenbushes Tantalum / Cornwall may appear as part of Greenbushes). About 7-8 operations, not 16 'mines'. Shows a map. Says the status is MINEDEX's as recorded (may lag recent closures or care-and-maintenance decisions) and credits DEMIRS / MINEDEX (CC BY 4.0)."
     },
     {
       "id": "fresh-aus-qld-copper",
       "cat": "fresh",
       "q": "List the operating copper mines in Queensland with their operators.",
-      "truth": {"n": "SELECT count(*) FROM core.occurrences WHERE is_active AND country_name = 'Australia' AND 'Cu' = ANY(commodities) AND status = 'PRODUCER' AND comments LIKE '%State: QLD%'"},
-      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "truth": {
+        "n": "SELECT count(*) FROM core.occurrences WHERE is_active AND country_name = 'Australia' AND 'Cu' = ANY(commodities) AND status = 'PRODUCER' AND comments LIKE '%State: QLD%'"
+      },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
       "judge": "Lists Queensland copper sites recorded as operating from the Geoscience Australia data, e.g. Ernest Henry (Evolution), Mount Isa / George Fisher (Glencore), Dugald River (MMG), Eloise (AIC Mines), Cracow, Lady Annie / Mount Kelly / Anthill (Austral Resources), Starra, Mammoth, with operators taken from OZMIN's companies where given. Must say the status and operators are as recorded by Geoscience Australia / the Queensland survey and can be out of date (e.g. Mammoth and some Mount Isa copper operations may no longer be operating), rather than presenting it as a current verified list. Credits Geoscience Australia."
     },
     {
       "id": "fresh-aus-coverage",
       "cat": "fresh",
       "q": "How complete is your mineral occurrence data for Australia, and where does it come from?",
-      "expect": {"max_turns": 6},
-      "judge": "Says Australian occurrences now come from the government surveys: MINEDEX for Western Australia (about 40,000 sites) and Geoscience Australia's OZMIN deposits plus the state and territory survey occurrences for the other states (about 90,000), about 131,000 in all, replacing the old USGS MRDS coverage; names the CC BY 4.0 sources; notes there is no tonnage or grade on these rows (GA reserves and resources not loaded yet) and that status is as recorded by the surveys. Must not say Australia is covered only by MRDS."
+      "expect": {
+        "max_turns": 6
+      },
+      "judge": "Says Australian occurrences now come from the government surveys: MINEDEX for Western Australia (about 40,000 sites) and Geoscience Australia's OZMIN deposits plus the state and territory survey occurrences for the other states (about 90,000), about 131,000 in all, replacing the old USGS MRDS coverage; names the CC BY 4.0 sources; notes the occurrence rows carry no tonnage or grade but Geoscience Australia's reserves and resources are held separately (often older statements) and that status is as recorded by the surveys. Must not say Australia is covered only by MRDS."
+    },
+    {
+      "id": "fresh-aus-res-ernest-henry",
+      "cat": "fresh",
+      "q": "What are the copper resources and reserves at Ernest Henry?",
+      "truth": {
+        "n": "SELECT count(*) FROM core.resource_estimates WHERE source_system = 'AUSTRALIA_GA_OZMIN_RESOURCES' AND zone_name ILIKE 'Ernest Henry%' AND grade_unit = '% Cu'"
+      },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Gives Geoscience Australia's Ernest Henry underground statement dated 31 Dec 2020: Measured 4.7 Mt at 0.93% Cu, Indicated 55.2 Mt at 1.16%, Inferred 15.5 Mt at 1.17%, Proven 2.7 Mt at 1.49%, Probable 35.8 Mt at 0.91% (reasonable rounding fine). States the date, says the figure is from Geoscience Australia (credited) and may be superseded, and that resources include reserves (so reserves are not added on top). Does not invent a newer figure."
+    },
+    {
+      "id": "fresh-aus-res-greenbushes",
+      "cat": "fresh",
+      "q": "How big is the Greenbushes lithium resource?",
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
+      "judge": "If it uses the Geoscience Australia row, it must give the statement's date (2011; the month is optional) with the Central Lode figures (about 70 Mt Indicated at 2.6% Li2O, 31 Mt Probable at 3.1%), say it is far out of date, and must not present it as Greenbushes' current resource. Pointing to newer operator reporting is good but naming the companies is optional. Credits Geoscience Australia if it uses the GA row. Fails only if it presents the 2011 figure as current or gives no date."
     }
   ]
 }

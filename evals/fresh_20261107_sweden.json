@@ -17,7 +17,7 @@
       "q": "How many drill holes do you have in Sweden, who drilled most of them, and do they have assays?",
       "truth": {"holes": "SELECT count(*) FROM drilling.drillholes WHERE source_system = 'SWEDEN_SGU_BORRHAL'"},
       "expect": {"tools_any": ["run_sql"], "numbers": [{"truth": "holes"}], "max_turns": 6},
-      "judge": "Says about 27,343 Swedish drill holes from SGU, names the main previous owners (Boliden first, then NSG, SGU, Viscaria/Outokumpu, LKAB or similar), says they have NO assays, logs or intercepts in our database (collars only), and may mention core kept at SGU's archive in Malå. Credits SGU."
+      "judge": "Says about 27,343 Swedish drill holes from SGU, names the main previous owners (Boliden first, then NSG, SGU, Viscaria/Outokumpu, LKAB or similar), says most are collars only with no logs or reported intercepts, and that only about 1,500 holes have assayed core sections (from SGU's lithogeochemistry samples, linked 7 Nov 2026); it must not say every hole has assays. May mention core kept at SGU's archive in Malå. Credits SGU."
     },
     {
       "id": "fresh-se-till-cu",

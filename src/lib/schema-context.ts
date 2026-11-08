@@ -458,6 +458,10 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   Credit: Austrade, Australian Critical Minerals Prospectus (October 2026), CC BY 4.0. Austrade says there are more projects than it lists, so this is not a full list of Australian projects.
 `,
   geochemistry_data: `
+SAMPLES NEAR A DEPOSIT (any method: sample_occurrence_links, ST_DWithin or a bounding box): whenever you report samples selected because they
+are near or around a deposit, mine or occurrence, say in one sentence that nearness does not show a sample is ore or belongs to that deposit
+(positions can be approximate and drill-core samples sit at the collar). Do not call them ore, ore-zone or ore-grade samples; describe high
+values as high or enriched and, if useful, compare them with an ore-grade threshold.
 DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
 - geochem sample and analytical-result data exists for Argentina (SEGEMAR, 37,838 samples, 1.78M
   active analytical results), Greenland (GEUS, 49,397 samples, 1.37M analytical results of

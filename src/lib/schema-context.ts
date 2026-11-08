@@ -164,6 +164,19 @@ core.projects: project_id, name, company_id, jurisdiction_id, status, primary_co
 core.project_designations: one row per CRMA strategic project (programme = 'EU_CRMA_STRATEGIC_PROJECT'): project_id, scope
   ('EU' / 'non-EU'), approval_date, decision_ref, value_chain_stage, materials_as_published, promoter_as_published,
   countries_as_published, unfc_classification, est_start_production (text), website, eu_benefit, factsheet_url.
+core.isa_exploration_contracts: the International Seabed Authority's EXPLORATION contracts in the Area (international seabed beyond
+  national jurisdiction), 32 rows as listed on the ISA contractor pages retrieved 7 Nov 2026: contract_id, contractor, resource_type
+  ('POLYMETALLIC_NODULES' 19, 'POLYMETALLIC_SULPHIDES' 8, 'COBALT_RICH_CRUSTS' 5), sponsoring_states (text[]; for a state contractor such as
+  the Government of India it is that state; contractor_is_state), location, ocean_region (Clarion-Clipperton Zone, Indian Ocean, Atlantic
+  Ocean, Western Pacific Ocean), contract_date, original_expiry, extensions_as_listed (ISA's text), latest_listed_expiry, terminated_date,
+  listed_status ('ACTIVE_AS_LISTED' 23, 'EXPIRY_PASSED_AS_LISTED' 8, 'TERMINATED' 1 = Brazil CPRM Rio Grande Rise crusts, June 2022),
+  source_url, source_page_modified (nodule page 2025-11-17, crust page 2025-11-14, sulphide page 2026-03-13), retrieved_date.
+  EXPIRY_PASSED_AS_LISTED (eight nodule contracts whose listed expiry fell between March and July 2026: Yuzhmorgeologiya, Interoceanmetal,
+  Korea, COMRA, DORD, Ifremer, BGR and Nauru Ocean Resources) means the expiry ISA lists has passed but the page predates the 2026 decisions:
+  NEVER say these contracts have expired or lapsed; say the ISA page shows an expiry of <date> and any later extension is not on it.
+  No exploitation contract has been issued. Credit: International Seabed Authority (isa.org.jm), contract particulars as published.
+  Use it for 'who holds ISA contracts', 'which contracts expire before X', 'contracts sponsored by Y'; the policy context (Mining Code,
+  US leasing, moratoria) is in document 442. Contract areas (polygons) are NOT loaded.
 core.geology_summary: occurrence_id, dominant_lithology, dominant_alteration, dominant_mineral,
   dominant_formation, dominant_stratigraphic_age, primary_age_ma, primary_age_method, observations (jsonb).
 core.resource_estimates: occurrence_id, commodity_id, classification (Indicated/Inferred...),
@@ -259,6 +272,24 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   are in comments; occurrence_type_id is set only where it is unambiguous (about 9,000, mostly skarn iron). NO tonnage or grade: SGU's
   tonnage and grade fields are empty in the download, so Swedish resource figures come only from projects or documents. Jurisdiction is the
   country (jurisdiction_path {Sweden}). Positions are SGU's (about half within 10 m; within 500 m marked position_accuracy AREA_CENTROID).
+- SEABED (offshore) OCCURRENCES (loaded 2026-11-07): 535 points from EMODnet Geology's Marine Minerals layers (CC BY 4.0; credit 'EMODnet
+  Geology, Marine Minerals (European Commission)' plus the data provider named in comments; created_by migration_emodnet_marine_20261107,
+  external_ids source 'EMODNET_GEOLOGY_MARINE_MINERALS', id '<layer>:<n>'): polymetallic nodules 241 (Baltic and Gulf of Finland
+  ferromanganese concretions from Russia's VSEGEI, SGU Sweden and Estonia; Black Sea; Spain), seafloor sulphide / hydrothermal sites 146
+  (mostly Iceland: Reykjanes Ridge, Grímsey, Eyjafjörður; plus Mid-Atlantic Ridge vents such as North Famous and Caribbean arc vents),
+  cobalt-rich ferromanganese crusts 45 (Canary Islands and Iberian seamounts, Mexico), marine placers (Spain, Latvia, Albania, Poland:
+  ilmenite, rutile, zircon, garnet, gold) 30, phosphorites 25 (Izmir Bay, Canary seamounts, Venezuela), metal-rich sediments 26 (Black Sea gold, molybdenum) and offshore
+  pegmatites/veins 22 (Galicia). Commodities: Mn 317, Fe 311, REE 37, Co 37, Ni 36, Au 29, phosphate 25, Pt 15 (crusts). Status: deposits with a
+  reported resource (proven, reserve, indicated, inferred) -> PROSPECT with is_deposit (111); 'under investigation' -> PROSPECT (88, incl.
+  39 of the 45 crusts, which IGME rates 'Potential resource': describe them as potential resources under investigation, not as 'not
+  resources' and not as estimated resources); one
+  depleted offshore uranium mine -> PAST_PRODUCER; the rest OCCURRENCE (335). Resource and grade text as reported (mixed units, e.g.
+  '1960 thsd.t.', 'up to 5 kg per square metre') is in comments, NOT in core.resource_estimates. jurisdiction = the CONTRIBUTING survey's
+  country (not a legal EEZ test); 19 ISA-supplied points in international waters have no country (comments say so). These are European
+  seas plus some Caribbean contributions, NOT a global seabed inventory: the Clarion-Clipperton Zone, Pacific and Indian Ocean nodule and
+  crust fields are not here as points (use core.isa_exploration_contracts and document 442 for those). Left out: 1,169 Finnish Baltic
+  underwater-video concretion sightings (not assessed), 32 Caribbean/Central American records already held as USGS MRDS sites, and the
+  aggregate, evaporite, sapropel and gas-hydrate layers. Filter offshore points with created_by = 'migration_emodnet_marine_20261107'.
 - US MINES, SMELTERS, REFINERIES AND RECYCLING FACILITIES (USGS 2026 data release, CC0, source 'USGS_US_FACILITIES' in core.external_ids,
   id like USA0001; created_by migration_usgs_facilities_20261015): 849 facilities in the source, 840 loaded (168 attached to occurrences that
   already existed, mostly MRDS, and 672 new occurrences with is_deposit = false), 9 not loaded because their location could not be established
@@ -751,7 +782,7 @@ core.external_ids: external_id_id, entity_type ('OCCURRENCE' or 'SAMPLE'), entit
   Washington Geological Survey, 'migration_greenland_20260930' and 'claude_gl_mapadd_20261006' = Greenland, 'migration_fi_deposits_20261011' = Finland,
   'claude_india_primary_20261002' = India, 'claude_sdsg_*' = SDSG rare earth projects, 'claude_mindat_20261002' = Mindat,
   'migration_canada_occ_20261103' = Québec SIGÉOM and Saskatchewan SMDI, 'migration_nrcan_projects_20261103' = NRCan project sites,
-  'migration_sgu_occ_20261107' = Sweden (SGU Mineralresurser); join core.data_sources only for
+  'migration_sgu_occ_20261107' = Sweden (SGU Mineralresurser), 'migration_emodnet_marine_20261107' = seabed points (EMODnet Geology); join core.data_sources only for
   geochemical source_system values, not for occurrences.
 core.data_sources: source_system (PK), publisher, dataset_name, licence, licence_url, attribution_required,
   attribution_text, is_loaded, licence_status, caveats, evidence_location, evidence_date.
@@ -1235,7 +1266,8 @@ DATA COVERAGE CAVEATS for the document library — mention these when relevant:
   advocacy paper for African ASM and mining-economy funds), document 441 (Strategic Materials Policy Tracker, Benjamin Yang,
   "Tungsten Supply Security" dossier, cutoff 3 November 2026 - an individually authored informal source: say so and suggest
   checking its primary sources) and document 442 (Esri StoryMap "The State of Deep-Sea Minerals: A World View", current to 26
-  October 2026 - say events after that date, such as the 19 November 2026 PACM-1 auction, are not covered). Also note that some are company presentations, newsletters or draft market reports rather than
+  October 2026 - say events after that date, such as the 19 November 2026 PACM-1 auction, are not covered; for the list of ISA
+  contracts query core.isa_exploration_contracts, and for European seabed nodule, crust and sulphide sites the EMODnet occurrences). Also note that some are company presentations, newsletters or draft market reports rather than
   audited filings or peer-reviewed work. Eleven documents were text-extracted by OCR (the SQM Form 20-F filings and the Sibanye-Stillwater annual financial reports, which were scanned images,
   plus Geoscience
   Australia's Australia's Identified Mineral Resources 2025, the INSG World Nickel Factbook 2024 and
@@ -1526,7 +1558,7 @@ const DEPENDS_ON: Partial<Record<TopicId, TopicId[]>> = {
 
 const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   occurrences:
-    /occurrence|deposit|\bmines?\b|mining|mineral site|prospect|resource|reserve|tonnage|grade|facilit|smelter|refiner|capacity|countr|commodit|mrds|\bhow many\b|operator|owner|project|critical mineral|exploration|\bcrma\b|critical raw material|strategic|recycl|substitut|\bunfc\b|european commission/i,
+    /occurrence|deposit|\bmines?\b|mining|mineral site|prospect|resource|reserve|tonnage|grade|facilit|smelter|refiner|capacity|countr|commodit|mrds|\bhow many\b|operator|owner|project|critical mineral|exploration|\bcrma\b|critical raw material|strategic|recycl|substitut|\bunfc\b|european commission|seabed|sea[- ]?floor|offshore|deep[- ]sea|nodule|crusts?\b|sulphide|sulfide|\bisa\b|emodnet|marine/i,
   geochemistry_data:
     /sample|geochem|assay|\bppm\b|stream|sediment|\bsoil|\brock|anomal|element|analyte|analytical|\bree\b|rare earth|pegmatite|lineament|alteration|zircon|u-pb|dating|\bage[sd]?\b|licen|attribution|lithology|\bsegemar|\bgeus\b|\bgtk\b|\bsgu\b|ngdb|\bgsv\b|\bpgm\b|drill|\bholes?\b|collar|downhole|interval|core sample|\bmrt\b|tasmania|intercept|sig[eé]om|\btill\b|lake sediment|athabasca|boron|isotop|radiogenic|sandstone|\bhalo\b|swed|biogeochem|\bplants?\b|\bmoss\b|vegetation/i,
   geochemistry_workflow:

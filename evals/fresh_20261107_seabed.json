@@ -1,0 +1,36 @@
+{
+  "version": "2026-11-07",
+  "notes": "Fresh check for the 7 Nov 2026 seabed loads (EMODnet Geology marine-mineral points, core.isa_exploration_contracts). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-isa-sponsors",
+      "cat": "fresh",
+      "q": "Which countries sponsor the most ISA exploration contracts, and how many contracts are there for each resource type?",
+      "truth": {"n": "SELECT count(*) FROM core.isa_exploration_contracts WHERE resource_type = 'POLYMETALLIC_NODULES'"},
+      "expect": {"tools_any": ["run_sql"], "numbers": [{"truth": "n"}], "max_turns": 6},
+      "judge": "Uses the ISA contracts table: 19 nodule, 8 sulphide and 5 cobalt-crust contracts (32 listed, one terminated), and names China as the leading sponsor (5) followed by Russia (4), India and Korea (3 each). Credits the International Seabed Authority. Must not claim any contract has expired; if it mentions the eight nodule contracts whose listed expiry has passed, it says the ISA page predates 2026 extension decisions."
+    },
+    {
+      "id": "fresh-isa-nori",
+      "cat": "fresh",
+      "q": "When does Nauru Ocean Resources' ISA contract expire?",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 6},
+      "judge": "Says the ISA page lists the Nauru Ocean Resources Inc. (NORI) nodule contract (Clarion-Clipperton Zone, signed 22 July 2011) with an expiry of 21 July 2026, and that the page was last updated before that date, so any extension is not shown; it must NOT state flatly that the contract has expired or lapsed. May suggest checking the ISA directly."
+    },
+    {
+      "id": "fresh-seabed-crusts",
+      "cat": "fresh",
+      "q": "Where are cobalt-rich crusts with rare earths known in European seas?",
+      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "judge": "Lists cobalt-rich ferromanganese crust sites from the EMODnet seabed occurrences, mainly Canary Islands and Iberian/Atlantic seamounts (e.g. Amanay, Drago, Tropic or similar names) with Co, Ni, REE (and Pt for some), says they are potential resources under investigation (Geological Survey of Spain, IGME) rather than reserves, and credits EMODnet Geology. Does not invent tonnages."
+    },
+    {
+      "id": "fresh-seabed-scope",
+      "cat": "fresh",
+      "q": "Do you have the polymetallic nodule deposits of the Clarion-Clipperton Zone in your occurrence data?",
+      "expect": {"max_turns": 6},
+      "judge": "Says no: the seabed occurrence points are European seas (Baltic, Black Sea, Iberian and Icelandic waters) plus some Caribbean contributions from EMODnet Geology; the Clarion-Clipperton Zone is covered only through the ISA exploration contracts table (contractors, dates) and the deep-sea policy document, with no deposit points or contract-area polygons."
+    }
+  ]
+}

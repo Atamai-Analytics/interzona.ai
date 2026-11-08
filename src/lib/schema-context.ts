@@ -223,7 +223,7 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
 - USGS MRDS (Mineral Resources Data System, created_by migration_mrds_20261014, external_ids source 'USGS_MRDS' = MRDS dep_id):
   275,984 mineral sites in 164 countries, loaded broad but SHALLOW: United States 239,460 (CA, CO, OR, NV, UT, AK, AZ, MO each 13,000-43,000),
   then Chile 4,072, Mexico 3,645, Peru 3,049, Argentina 2,307, Brazil 2,068, Bolivia 1,659, Canada 1,504. core.occurrences now holds about
-  285,000 rows, so ALWAYS filter by country_name, commodity, status or a bounding box/ST_DWithin and COUNT first before listing; never list
+  455,000 active rows, so ALWAYS filter by country_name, commodity, status or a bounding box/ST_DWithin and COUNT first before listing; never list
   the whole table. Facts and warnings: (1) the data were compiled over decades from published reports, USGS itself calls the quality
   'highly variable', stopped systematic updates in 2011, so status (producer, past producer ...) and ownership may be out of date, and
   non-US coverage is incomplete; (2) status comes from MRDS development status (past producer 117,440, occurrence 61,720, producer 40,036,
@@ -272,6 +272,32 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   are in comments; occurrence_type_id is set only where it is unambiguous (about 9,000, mostly skarn iron). NO tonnage or grade: SGU's
   tonnage and grade fields are empty in the download, so Swedish resource figures come only from projects or documents. Jurisdiction is the
   country (jurisdiction_path {Sweden}). Positions are SGU's (about half within 10 m; within 500 m marked position_accuracy AREA_CENTROID).
+- AUSTRALIA (loaded 2026-11-08): about 131,000 active occurrences from the government surveys' own inventories, which replace the old thin
+  USGS MRDS coverage (240 MRDS duplicates merged, MRDS row inactive; about 940 other MRDS Australian points remain active). Three sources,
+  all CC BY 4.0: (1) WESTERN AUSTRALIA = MINEDEX (Department of Energy, Mines, Industry Regulation and Safety, created_by
+  migration_minedex_occ_20261108, external_ids 'AUSTRALIA_WA_MINEDEX' with the MINEDEX site code such as 'S0002167'): 40,578 mines, deposits,
+  prospects, occurrences and exploration targets (infrastructure such as plants, dumps, tailings and roads was NOT loaded). MINEDEX records
+  one mine as several sites (pits, shafts, workings, deposits of one project), so COUNT DISTINCT projects or group by name before calling
+  them separate mines; the MINEDEX project name and code are in comments. (2) GEOSCIENCE AUSTRALIA OZMIN (created_by
+  migration_ga_aus_occ_20261108, external_ids 'AUSTRALIA_GA_OZMIN' = OZMIN ENO): the national database of major and historically significant
+  deposits, with status, companies, province and deposit model in comments; 2,403 loaded as their own rows, and 1,968 Western Australian
+  OZMIN deposits were attached to their MINEDEX site instead (OZMIN ENO in external_ids, OZMIN status / model / companies appended to the
+  MINEDEX comments). (3) STATE AND TERRITORY SURVEY OCCURRENCES compiled by Geoscience Australia (same created_by, external_ids
+  'AUSTRALIA_GA_STATE_OCCURRENCES'): 87,434 for NSW, Queensland, Victoria, SA, Tasmania, NT and the ACT (state rows that duplicate an OZMIN
+  deposit are attached to it, not loaded twice). By state: WA 40,834, NSW 30,551, Queensland 21,416, Victoria 18,420, SA 8,647,
+  Tasmania 7,133, NT 3,337, ACT 76. Status is mapped from each source's own wording (kept in comments): PRODUCER 3,244, CARE_AND_MAINTENANCE
+  1,297, DEVELOPMENT 79, FEASIBILITY 1,979 (MINEDEX 'Proposed' and OZMIN scoping-to-bankable stages), EXPLORATION 1,447 (MINEDEX targets),
+  PAST_PRODUCER 35,099, PROSPECT 33,058, OCCURRENCE 44,457, UNKNOWN 10,702 (state 'mine'/'pit'/'quarry' records with no status). Status
+  is as recorded by the survey and can lag reality, so for current operating status prefer a recent company source or project row.
+  Commodities: gold 58,028, copper 15,270, silver 13,314, tin 7,533, lead 6,165, zinc 3,879, iron 3,742, tungsten 2,487, nickel 2,228,
+  lithium 486, plus about 20,000 aggregate, sand, gravel, limestone and other construction-material sites (leave them out of metal questions).
+  NO tonnage or grade on these rows (GA's reserves and resources layer is not loaded yet). Positions: about 2,100 points with a stated
+  accuracy of 1 km or worse are marked position_accuracy AREA_CENTROID; the accuracy in metres is in comments. Jurisdiction is the
+  country (jurisdiction_path {Australia}); the state is in comments ('State: QLD'), so filter Australian states by a bounding box,
+  by the comments text or by the MINEDEX source for WA. CC BY 4.0 REQUIRES a credit, so every answer that uses these Australian rows must
+  name the source by name (not just 'government surveys'): 'MINEDEX, Department of Energy, Mines, Industry Regulation and Safety, State of
+  Western Australia (CC BY 4.0)' for Western Australia and 'Geoscience Australia (OZMIN and state and territory mineral occurrence data,
+  CC BY 4.0)' for the other states.
 - SEABED (offshore) OCCURRENCES (loaded 2026-11-07): 535 points from EMODnet Geology's Marine Minerals layers (CC BY 4.0; credit 'EMODnet
   Geology, Marine Minerals (European Commission)' plus the data provider named in comments; created_by migration_emodnet_marine_20261107,
   external_ids source 'EMODNET_GEOLOGY_MARINE_MINERALS', id '<layer>:<n>'): polymetallic nodules 241 (Baltic and Gulf of Finland
@@ -678,7 +704,9 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   SWEDEN_SGU_MINERALRESURSER (occurrences) and SWEDEN_SGU_BORRHAL (drill holes), all CC0 1.0, credit Geological Survey of Sweden (SGU) as a
   courtesy (not required); much of SGU's data was submitted by exploration companies and SGU's written confirmation that CC0 covers it is still pending;
   USA_WA_DGER_MINES_MINERALS for the Washington sites, free to reuse with citation of the Washington Geological Survey; USA_USGS_MRDS
-  for the MRDS sites, US public domain, credit USGS)
+  for the MRDS sites, US public domain, credit USGS; AUSTRALIA_WA_MINEDEX (Western Australian occurrences), CC BY 4.0, credit DEMIRS, State
+  of Western Australia; AUSTRALIA_GA_OZMIN and AUSTRALIA_GA_STATE_OCCURRENCES (other Australian occurrences), CC BY 4.0, credit Geoscience
+  Australia)
   (publisher, dataset_name, licence, attribution_text, licence_status, caveats). When you present or
   summarise geochemical results, name the publisher from attribution_text (CC BY datasets such as GTK
   Finland and SEGEMAR REQUIRE it). Greenland (GREENLAND_GEUS) is used under a written GEUS permission of
@@ -791,7 +819,8 @@ core.external_ids: external_id_id, entity_type ('OCCURRENCE' or 'SAMPLE'), entit
   Washington Geological Survey, 'migration_greenland_20260930' and 'claude_gl_mapadd_20261006' = Greenland, 'migration_fi_deposits_20261011' = Finland,
   'claude_india_primary_20261002' = India, 'claude_sdsg_*' = SDSG rare earth projects, 'claude_mindat_20261002' = Mindat,
   'migration_canada_occ_20261103' = Québec SIGÉOM and Saskatchewan SMDI, 'migration_nrcan_projects_20261103' = NRCan project sites,
-  'migration_sgu_occ_20261107' = Sweden (SGU Mineralresurser), 'migration_emodnet_marine_20261107' = seabed points (EMODnet Geology); join core.data_sources only for
+  'migration_sgu_occ_20261107' = Sweden (SGU Mineralresurser), 'migration_emodnet_marine_20261107' = seabed points (EMODnet Geology),
+  'migration_minedex_occ_20261108' = Western Australia (MINEDEX), 'migration_ga_aus_occ_20261108' = rest of Australia (GA OZMIN + state surveys); join core.data_sources only for
   geochemical source_system values, not for occurrences.
 core.data_sources: source_system (PK), publisher, dataset_name, licence, licence_url, attribution_required,
   attribution_text, is_loaded, licence_status, caveats, evidence_location, evidence_date.
@@ -1570,7 +1599,7 @@ const DEPENDS_ON: Partial<Record<TopicId, TopicId[]>> = {
 
 const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   occurrences:
-    /occurrence|deposit|\bmines?\b|mining|mineral site|prospect|resource|reserve|tonnage|grade|facilit|smelter|refiner|capacity|countr|commodit|mrds|\bhow many\b|operator|owner|project|critical mineral|exploration|\bcrma\b|critical raw material|strategic|recycl|substitut|\bunfc\b|european commission|seabed|sea[- ]?floor|offshore|deep[- ]sea|nodule|crusts?\b|sulphide|sulfide|\bisa\b|emodnet|marine/i,
+    /occurrence|deposit|\bmines?\b|mining|mineral site|prospect|resource|reserve|tonnage|grade|facilit|smelter|refiner|capacity|countr|commodit|mrds|\bhow many\b|operator|owner|project|critical mineral|exploration|\bcrma\b|critical raw material|strategic|recycl|substitut|\bunfc\b|european commission|seabed|sea[- ]?floor|offshore|deep[- ]sea|nodule|crusts?\b|sulphide|sulfide|\bisa\b|emodnet|marine|minedex|ozmin/i,
   geochemistry_data:
     /sample|geochem|assay|\bppm\b|stream|sediment|\bsoil|\brock|anomal|element|analyte|analytical|\bree\b|rare earth|pegmatite|lineament|alteration|zircon|u-pb|dating|\bage[sd]?\b|licen|attribution|lithology|\bsegemar|\bgeus\b|\bgtk\b|\bsgu\b|ngdb|\bgsv\b|\bpgm\b|drill|\bholes?\b|collar|downhole|interval|core sample|\bmrt\b|tasmania|intercept|sig[eé]om|\btill\b|lake sediment|athabasca|boron|isotop|radiogenic|sandstone|\bhalo\b|swed|biogeochem|\bplants?\b|\bmoss\b|vegetation/i,
   geochemistry_workflow:

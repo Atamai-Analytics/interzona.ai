@@ -1,0 +1,30 @@
+{
+  "version": "2026-11-08",
+  "notes": "Fresh check for the 8 Nov 2026 Australian occurrence loads (WA MINEDEX, Geoscience Australia OZMIN + state/territory occurrences). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-aus-wa-lithium",
+      "cat": "fresh",
+      "q": "Which lithium mines are operating in Western Australia? Show them on a map.",
+      "truth": {"n": "SELECT count(DISTINCT substring(comments from 'Project: ([^;]+)')) FROM core.occurrences WHERE is_active AND created_by = 'migration_minedex_occ_20261108' AND 'Li' = ANY(commodities) AND status = 'PRODUCER'"},
+      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "judge": "Uses the MINEDEX occurrences and groups the producing lithium sites into mines/projects rather than counting every pit as a separate mine: Greenbushes, Pilgangoora, Wodgina, Mt Marion, Mt Holland (Earl Grey), Kathleen Valley and Bald Hill (Greenbushes Tantalum / Cornwall may appear as part of Greenbushes). About 7-8 operations, not 16 'mines'. Shows a map. Says the status is MINEDEX's as recorded (may lag recent closures or care-and-maintenance decisions) and credits DEMIRS / MINEDEX (CC BY 4.0)."
+    },
+    {
+      "id": "fresh-aus-qld-copper",
+      "cat": "fresh",
+      "q": "List the operating copper mines in Queensland with their operators.",
+      "truth": {"n": "SELECT count(*) FROM core.occurrences WHERE is_active AND country_name = 'Australia' AND 'Cu' = ANY(commodities) AND status = 'PRODUCER' AND comments LIKE '%State: QLD%'"},
+      "expect": {"tools_any": ["run_sql"], "max_turns": 8},
+      "judge": "Lists Queensland copper sites recorded as operating from the Geoscience Australia data, e.g. Ernest Henry (Evolution), Mount Isa / George Fisher (Glencore), Dugald River (MMG), Eloise (AIC Mines), Cracow, Lady Annie / Mount Kelly / Anthill (Austral Resources), Starra, Mammoth, with operators taken from OZMIN's companies where given. Must say the status and operators are as recorded by Geoscience Australia / the Queensland survey and can be out of date (e.g. Mammoth and some Mount Isa copper operations may no longer be operating), rather than presenting it as a current verified list. Credits Geoscience Australia."
+    },
+    {
+      "id": "fresh-aus-coverage",
+      "cat": "fresh",
+      "q": "How complete is your mineral occurrence data for Australia, and where does it come from?",
+      "expect": {"max_turns": 6},
+      "judge": "Says Australian occurrences now come from the government surveys: MINEDEX for Western Australia (about 40,000 sites) and Geoscience Australia's OZMIN deposits plus the state and territory survey occurrences for the other states (about 90,000), about 131,000 in all, replacing the old USGS MRDS coverage; names the CC BY 4.0 sources; notes there is no tonnage or grade on these rows (GA reserves and resources not loaded yet) and that status is as recorded by the surveys. Must not say Australia is covered only by MRDS."
+    }
+  ]
+}

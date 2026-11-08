@@ -647,9 +647,9 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   sedges or Filipendula, or Fontinalis aquatic moss, from streams), values on DRY WEIGHT (ash % in comments): packages SGU-BIO-XRF (total),
   SGU-BIO-AR-ICPMS and SGU-BIO-HNO3 (partial). These are biogeochemical concentrations: never compare them with rock, till or soil values,
   and screen them only against other plant samples; SGU used them like stream sediments to find metal-rich catchments.
-  India occurrences have no samples/results. The Swedish ROCK samples ('SWEDEN_SGU_LITHOGEOCHEMISTRY') have occurrence_id NULL and
-  sample_occurrence_links only to the 84 Swedish occurrences that existed before 7 Nov 2026 (the new SGU occurrences are not linked to samples
-  yet: use a distance search to find rock samples near them), have NO sample dates and NO drill depths (a drill-core
+  India occurrences have no samples/results. The Swedish ROCK samples ('SWEDEN_SGU_LITHOGEOCHEMISTRY') have occurrence_id NULL but are in
+  geochem.sample_occurrence_links (re-linked 7 Nov 2026 to the SGU occurrences: 113,129 samples within 2 km of one, 82,081 within 500 m;
+  most-sampled sites Olserum, Malmberget, Storliden, Nautanen, Salmivaara), have NO sample dates and NO drill depths (a drill-core
   sample is a point at the collar, not an interval), and only 11,778 have a lithology. About a third of Swedish
   results (512,892) have an unknown method (package 'UNK-UNK-UNK' and similar '-UNK' codes), and the wide table
   treats those as PARTIAL (_p). Most Swedish samples (118,735 of 139,163, 85%) are flagged third_party_likely
@@ -787,9 +787,12 @@ core.external_ids: external_id_id, entity_type ('OCCURRENCE' or 'SAMPLE'), entit
 core.data_sources: source_system (PK), publisher, dataset_name, licence, licence_url, attribution_required,
   attribution_text, is_loaded, licence_status, caveats, evidence_location, evidence_date.
 geochem.sample_occurrence_links: sample_id, occurrence_id, distance_m (integer metres), is_nearest (boolean). One row for every pair of a
-  geochemistry sample and an occurrence within 2,000 m (1,271,425 links): USGS 159,634 samples linked (60,076 within 500 m), Sweden 14,314 (to 84
-  occurrences only; the 23,349 SGU occurrences loaded 7 Nov 2026 are not in this table yet),
-  the deposit-geochemistry compilation GLOBAL_DEPOSIT_GEOCHEM_GA 19,763 (6,715 within 500 m), Argentina 4,188, Greenland 284, Finland 29, Victoria 25 (Victoria and Greenland have almost no known occurrences nearby). It is the way to
+  geochemistry sample and an occurrence within 2,000 m (2,680,963 links): USGS 159,634 samples linked (60,076 within 500 m), Swedish rock
+  samples 113,129 (82,081 within 500 m; 1.43M links because SGU's occurrences are dense: many are small historical iron workings and some are
+  quarries, so filter by commodity and status),
+  the deposit-geochemistry compilation GLOBAL_DEPOSIT_GEOCHEM_GA 19,763 (6,715 within 500 m), Argentina 4,188, Greenland 284, Finland 29, Victoria 25 (Victoria and Greenland have almost no known occurrences nearby).
+  Samples from Tasmania, Québec (rock and sediment), Saskatchewan, CDoGS, Athabasca and the Swedish till and plant sets are NOT in this table:
+  for those use a distance query (ST_DWithin on geog) against core.occurrences. It is the way to
   answer 'samples near deposits': distance_m <= 500 means AT the site, <= 2000 means NEAR; is_nearest marks each sample's closest
   occurrence (exactly one row per linked sample); samples with no occurrence within 2 km have no row, and the Swedish age points and Wu zircon
   points are not included. Proximity is NOT proof that a sample belongs to a deposit: many occurrence positions are only good to hundreds of

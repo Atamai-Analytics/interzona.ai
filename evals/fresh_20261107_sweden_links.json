@@ -1,0 +1,22 @@
+{
+  "version": "2026-11-07",
+  "notes": "Fresh check for the 7 Nov 2026 re-link of Swedish rock samples to the SGU occurrences (geochem.sample_occurrence_links). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-se-link-cu",
+      "cat": "fresh",
+      "q": "How many Swedish rock samples are within 500 m of a copper occurrence?",
+      "truth": {"n": "SELECT count(DISTINCT l.sample_id) FROM geochem.sample_occurrence_links l JOIN geochem.samples s ON s.sample_id = l.sample_id JOIN core.occurrences o ON o.occurrence_id = l.occurrence_id WHERE s.source_system = 'SWEDEN_SGU_LITHOGEOCHEMISTRY' AND l.distance_m <= 500 AND 'Cu' = ANY(o.commodities)"},
+      "expect": {"tools_any": ["run_sql"], "numbers": [{"truth": "n"}], "max_turns": 6},
+      "judge": "Uses geochem.sample_occurrence_links (or an equivalent distance query) to count Swedish SGU lithogeochemistry samples within 500 m of an occurrence with copper, giving a number close to the truth, and notes that proximity is not proof a sample belongs to the deposit. Credits SGU."
+    },
+    {
+      "id": "fresh-se-link-garpenberg",
+      "cat": "fresh",
+      "q": "What do Swedish rock samples near Garpenberg show for zinc and lead?",
+      "expect": {"tools_any": ["run_sql", "run_geochem_analysis"], "max_turns": 8},
+      "judge": "Finds rock samples near the Garpenberg occurrence(s) (via sample_occurrence_links or a distance search), reports zinc and lead statistics (count, median and/or max in ppm or %) for those samples, says they are SGU lithogeochemistry samples (many drill core at the collar position) and that proximity does not prove the sample is ore. Does not invent values."
+    }
+  ]
+}

@@ -1,0 +1,347 @@
+{
+  "version": "2026-11-08",
+  "notes": "Geochemistry regression set (audit item 7): exact counts that guard the data fixes (dedup, unit fixes, sample types). Truths are live SQL, so the expected numbers follow the database. Run: python evals/run_evals.py --set geochem_regression",
+  "ids": [],
+  "questions": [
+    {
+      "id": "geo-reg-01",
+      "cat": "geochem-regression",
+      "q": "How many USGS (NGDB) geochemistry samples are in the database?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'USA_USGS_NGDB'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-02",
+      "cat": "geochem-regression",
+      "q": "How many Tasmanian (Mineral Resources Tasmania) geochemistry samples do you hold?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'AUSTRALIA_TAS_MRT'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-03",
+      "cat": "geochem-regression",
+      "q": "How many Victorian GSV geochemistry samples are loaded?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-04",
+      "cat": "geochem-regression",
+      "q": "How many Geological Survey of Finland (GTK) rock samples are in the database?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'FINLAND_GTK_ROCK'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-05",
+      "cat": "geochem-regression",
+      "q": "How many SGU Sweden lithogeochemistry (rock) samples are loaded?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'SWEDEN_SGU_LITHOGEOCHEMISTRY'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-06",
+      "cat": "geochem-regression",
+      "q": "How many GEUS Greenland geochemistry samples are in the database?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'GREENLAND_GEUS'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count. Credits GEUS."
+    },
+    {
+      "id": "geo-reg-07",
+      "cat": "geochem-regression",
+      "q": "How many SEGEMAR Argentina geochemistry samples are loaded?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'ARGENTINA_SEGEMAR'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-08",
+      "cat": "geochem-regression",
+      "q": "How many Québec SIGÉOM rock samples are in the database?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'CANADA_QC_SIGEOM'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-09",
+      "cat": "geochem-regression",
+      "q": "How many Québec sediment, soil and till samples (SIGÉOM) are loaded?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'CANADA_QC_SIGEOM_SED'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-10",
+      "cat": "geochem-regression",
+      "q": "How many samples are in the federal Canadian CDoGS surveys you hold?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'CANADA_NRCAN_CDOGS'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-11",
+      "cat": "geochem-regression",
+      "q": "How many samples are in the Athabasca uranium dataset (GSC Open File 7792)?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE is_active AND source_system = 'CANADA_ATHABASCA_OF7792'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-12",
+      "cat": "geochem-regression",
+      "q": "How many USGS samples are laboratory or field blanks (quality-control samples) rather than geological samples?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE source_system = 'USA_USGS_NGDB' AND sample_type_id = 51"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "Gives the number of USGS quality-control (blank) samples matching the truth (462 at creation) and says they are blanks, not rock samples."
+    },
+    {
+      "id": "geo-reg-13",
+      "cat": "geochem-regression",
+      "q": "How many Victorian samples are panned heavy-mineral concentrates?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.sample_chemistry_wide WHERE source_system = 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY' AND sample_type_name = 'Heavy Mineral Concentrate'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "Gives the count of Victorian heavy-mineral concentrate (panned) samples matching the truth (656 at creation), distinct from stream sediments."
+    },
+    {
+      "id": "geo-reg-14",
+      "cat": "geochem-regression",
+      "q": "Using total analyses, how many Tasmanian samples have tin at or above 1% Sn?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.sample_chemistry_wide WHERE source_system = 'AUSTRALIA_TAS_MRT' AND sn_t >= 10000"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-15",
+      "cat": "geochem-regression",
+      "q": "Using total analyses, how many Tasmanian samples have copper at or above 1% Cu?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.sample_chemistry_wide WHERE source_system = 'AUSTRALIA_TAS_MRT' AND cu_t >= 10000"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count. (Guards the Jarmans Cu % -> ppm fix: the count must not be inflated by mislabelled ppm values.)"
+    },
+    {
+      "id": "geo-reg-16",
+      "cat": "geochem-regression",
+      "q": "Using total analyses, how many Québec rock samples have lithium at or above 5,000 ppm?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.sample_chemistry_wide WHERE source_system = 'CANADA_QC_SIGEOM' AND li_t >= 5000"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-17",
+      "cat": "geochem-regression",
+      "q": "Using total analyses, how many Swedish SGU rock samples have copper at or above 1%?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.sample_chemistry_wide WHERE source_system = 'SWEDEN_SGU_LITHOGEOCHEMISTRY' AND cu_t >= 10000"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-18",
+      "cat": "geochem-regression",
+      "q": "Using total analyses, how many USGS samples have gold at or above 1 ppm?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.sample_chemistry_wide WHERE source_system = 'USA_USGS_NGDB' AND au_t >= 1"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-19",
+      "cat": "geochem-regression",
+      "q": "Using total analyses, how many GTK Finland rock samples have nickel at or above 1,000 ppm?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.sample_chemistry_wide WHERE source_system = 'FINLAND_GTK_ROCK' AND ni_t >= 1000"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "The headline count must match the truth (exact, or clearly flagged rounding) and the data source/publisher must be named. Extra context figures (results, analytes, breakdowns) are fine unless they contradict the headline count or each other; fail only on a wrong or missing headline count."
+    },
+    {
+      "id": "geo-reg-20",
+      "cat": "geochem-regression",
+      "q": "How many different geochemistry datasets hold chemical analyses (not just ages or locations)?",
+      "truth": {
+        "n": "SELECT count(*) FROM (SELECT DISTINCT source_system FROM geochem.samples WHERE is_active) s WHERE EXISTS (SELECT 1 FROM geochem.analytical_results r WHERE r.source_system = s.source_system)"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n"
+          }
+        ],
+        "max_turns": 8
+      },
+      "judge": "Gives the number of geochemistry source systems with chemical analyses matching the truth (15 at creation, including the GA deposit-geochemistry compilation that is not in the wide table; the Swedish bedrock-age points and the Wu zircon points have no chemistry). Listing them is fine."
+    }
+  ]
+}

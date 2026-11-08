@@ -276,7 +276,8 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   tonnage and grade fields are empty in the download, so Swedish resource figures come only from projects or documents. Jurisdiction is the
   country (jurisdiction_path {Sweden}). Positions are SGU's (about half within 10 m; within 500 m marked position_accuracy AREA_CENTROID).
 - AUSTRALIA (loaded 2026-11-08): about 131,000 active occurrences from the government surveys' own inventories, which replace the old thin
-  USGS MRDS coverage (240 MRDS duplicates merged, MRDS row inactive; about 940 other MRDS Australian points remain active). Three sources,
+  USGS MRDS coverage (319 MRDS duplicates merged, MRDS row inactive; 861 other MRDS Australian points remain active, mostly sites the surveys
+  do not list). Three sources,
   all CC BY 4.0: (1) WESTERN AUSTRALIA = MINEDEX (Department of Energy, Mines, Industry Regulation and Safety, created_by
   migration_minedex_occ_20261108, external_ids 'AUSTRALIA_WA_MINEDEX' with the MINEDEX site code such as 'S0002167'): 40,578 mines, deposits,
   prospects, occurrences and exploration targets (infrastructure such as plants, dumps, tailings and roads was NOT loaded). MINEDEX records
@@ -355,7 +356,8 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   centre (50), recorded in core.occurrences.position_accuracy (TOWN_CENTROID, AREA_CENTROID, COUNTY_CENTROID; NULL means the position is as
   published by the source). Those positions can be off by kilometres to tens of kilometres: say so, never use them for distances to samples,
   and they are deliberately excluded from geochem.sample_occurrence_links; (4) join with core.occurrences for names, status and
-  commodities and filter on facility_capacity.commodity_name (as published: 'Lithium', 'Rare earths', 'Gold', ...), for example the refineries
+  commodities and filter on facility_capacity.commodity_name (as published: 'Lithium', 'Rare earths', 'Gold', ...; every row now has a
+  commodity_id - helium, coke, ferroalloys, iron oxide pigments and direct-reduced iron got their own core.commodities entries on 8 Nov 2026), for example the refineries
   of a metal: facility_stage = 'Refinery' AND commodity_name = 'Lithium'; (5) owners are company names as published, use the
   share_pct only where present; (6) when the user asks WHICH facilities there are, list each one (name, state, stage, status, capacity or
   "unknown") in a compact table per stage, up to about 40 rows - the run_sql rows are not shown to the user as a table, so stage or status
@@ -513,7 +515,10 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   Scoping Study, Care and Maintenance, Midstream; also report_companies and report_minerals as shown there): quote it as "Austrade's label". core.projects.status for the 56 new upstream projects is a COARSE category built on it: DEVELOPMENT (Austrade
   Feasibility Study, Pre Construction or Construction), EXPLORATION (Austrade Scoping Study or Pre Feasibility Study, which includes large advanced projects), CARE_AND_MAINTENANCE (Avebury), and PRODUCER where the published text says the project is operating or
   producing (Hillgrove, Finniss, Pilgangoora, Dolphin, Mount Carbine) even though Austrade's label for four of them is the stage of the project it is marketing (for example Feasibility Study or Pre Feasibility Study); in that case give both. Always quote the
-  published project_status text as well, and never call an EXPLORATION-coded project "an exploration project" without it. The 33 new midstream plants have no status (Austrade labels them 'Midstream'): describe them from the project description. The same text is in the document library (document 370, one passage per project).
+  published project_status text as well, and never call an EXPLORATION-coded project "an exploration project" without it. The midstream entries have no published status (Austrade labels them 'Midstream'); core.project_prospectus.status_inferred holds OUR stage
+  read from each description (Operating 5, Construction 4, Pre Construction 1, Demonstration 9, Pilot 1, Feasibility Study 8, Pre Feasibility
+  Study 6, Scoping Study 1, Care and Maintenance 1) and status_inferred_basis the phrase it rests on: say it is inferred by Interzona from the
+  Prospectus text, never Austrade's status. The same text is in the document library (document 370, one passage per project).
   Credit: Austrade, Australian Critical Minerals Prospectus (October 2026), CC BY 4.0. Austrade says there are more projects than it lists, so this is not a full list of Australian projects.
 `,
   geochemistry_data: `
@@ -529,7 +534,8 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   suite) and Sweden (SGU lithogeochemistry, 'SWEDEN_SGU_LITHOGEOCHEMISTRY', 139,163 bedrock samples:
   100,639 drill core, 37,195 rock, 1,329 drill samples; 3,253,798 results, all active, 82 analytes, CC0)
   and the USA (USGS National Geochemical Database rock-type samples, 'USA_USGS_NGDB', 387,527 samples,
-  13.44M active results, 102 analytes) and Victoria, Australia (Geological Survey of Victoria geochemistry
+  13.44M active results, 102 analytes; 462 of them are laboratory/field BLANKS typed sample_type 'Quality Control Sample' (id 51) since
+  8 Nov 2026 - leave sample_type_id 51 out of geological statistics) and Victoria, Australia (Geological Survey of Victoria geochemistry
   collection, 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY', 156,331 samples, 778,219 active results, 75 analytes) and Tasmania, Australia
   (Mineral Resources Tasmania bulk data package, 'AUSTRALIA_TAS_MRT', 383,939 samples, 3.85M results, 106 analytes, plus 34,871 drill
   holes in the drilling schema) and Québec, Canada (SIGÉOM rock geochemistry, 'CANADA_QC_SIGEOM', 587,000 rock samples, 18.13M results,
@@ -859,11 +865,13 @@ core.external_ids: external_id_id, entity_type ('OCCURRENCE' or 'SAMPLE'), entit
 core.data_sources: source_system (PK), publisher, dataset_name, licence, licence_url, attribution_required,
   attribution_text, is_loaded, licence_status, caveats, evidence_location, evidence_date.
 geochem.sample_occurrence_links: sample_id, occurrence_id, distance_m (integer metres), is_nearest (boolean). One row for every pair of a
-  geochemistry sample and an occurrence within 2,000 m (2,680,963 links): USGS 159,634 samples linked (60,076 within 500 m), Swedish rock
+  geochemistry sample and an occurrence within 2,000 m (about 10.3M links): Tasmania 361,052 of 383,939 samples linked (281,613 within 500 m;
+  6.15M links because the drill core sits on dense clusters of state-survey workings, many named just 'Unnamed' - filter by commodity and
+  status), Victoria 101,491 (46,702 within 500 m; 1.44M links, now against the state-survey occurrences), USGS 159,634 samples linked (60,076 within 500 m), Swedish rock
   samples 113,129 (82,081 within 500 m; 1.43M links because SGU's occurrences are dense: many are small historical iron workings and some are
   quarries, so filter by commodity and status),
-  the deposit-geochemistry compilation GLOBAL_DEPOSIT_GEOCHEM_GA 19,763 (6,715 within 500 m), Argentina 4,188, Greenland 284, Finland 29, Victoria 25 (Victoria and Greenland have almost no known occurrences nearby).
-  Samples from Tasmania, Québec (rock and sediment), Saskatchewan, CDoGS, Athabasca and the Swedish till and plant sets are NOT in this table:
+  the deposit-geochemistry compilation GLOBAL_DEPOSIT_GEOCHEM_GA 19,763 (6,715 within 500 m), Argentina 4,188, Greenland 284, Finland 29 (Greenland has almost no known occurrences nearby).
+  Samples from Québec (rock and sediment), Saskatchewan, CDoGS, Athabasca and the Swedish till and plant sets are NOT in this table:
   for those use a distance query (ST_DWithin on geog) against core.occurrences. It is the way to
   answer 'samples near deposits': distance_m <= 500 means AT the site, <= 2000 means NEAR; is_nearest marks each sample's closest
   occurrence (exactly one row per linked sample); samples with no occurrence within 2 km have no row, and the Swedish age points and Wu zircon

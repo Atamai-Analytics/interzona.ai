@@ -22,11 +22,24 @@
     {
       "id": "fresh-igme-coverage",
       "cat": "fresh",
-      "q": "Do you have copper geochemistry for Spain?",
+      "q": "Do you have nickel geochemistry for Spain?",
       "expect": {
         "max_turns": 6
       },
-      "judge": "Says no: only lithium has been loaded so far from IGME's Spanish geochemistry (43,702 samples); other elements such as copper are not loaded yet (IGME holds them). May mention MRDS/EMODnet Spanish occurrences, but must not claim Spanish copper analyses exist in the database."
+      "judge": "Says no: only lithium and copper have been loaded so far from IGME's Spanish geochemistry; nickel is not loaded yet (IGME holds it). Must not claim Spanish nickel analyses exist in the database."
+    },
+    {
+      "id": "fresh-igme-cu-highs",
+      "cat": "fresh",
+      "q": "Where are the strongest copper anomalies in Spanish stream sediments? Show them on a map.",
+      "expect": {
+        "tools_any": [
+          "run_sql",
+          "find_geochemical_anomalies"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses IGME Spain copper (SPAIN_IGME_GEOCHEMISTRY) stream sediments, shows the highest values or anomalous cells on a map, places them in campaigns or named regions (campaign names OR regions such as the Iberian Pyrite Belt / Badajoz / Guadalupe area are fine), says detection limits/methods differ by campaign or that old campaigns are coarser, says the Badajoz panned heavy-mineral concentrates were left out or kept separate (e.g. by filtering to stream sediments), says these are sediment values not ore grades, and credits IGME (IGME's own required wording 'Source: © NC Geological Survey of Spain (IGME)' is correct) without implying endorsement."
     }
   ]
 }

@@ -514,7 +514,7 @@
         ],
         "max_turns": 4
       },
-      "judge": "Explains that the Greenland data is used under a written GEUS permission for derived products (analyses, maps, summaries) for exploration clients, with GEUS acknowledged, and that raw sample tables should not be reproduced wholesale. It does not claim blanket redistribution rights."
+      "judge": "Explains that the GEUS catalogue lists the Greenland geochemistry as CC BY 4.0 (since the 10 Nov 2026 check), so redistribution, including commercial, is allowed WITH attribution to GEUS and the Greenland Mineral Resources Authority (MMR) and an indication of changes. It should not present this as unconditional: attribution is required, and ideally it suggests the user check the licence on the GEUS portal for their own downloads or notes it is the current catalogue licence. Fail if it says the data may only be used as derived products / not redistributed (outdated), or if it omits the attribution requirement."
     },
     {
       "id": "geo-sweden-ages",

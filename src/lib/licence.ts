@@ -1,18 +1,22 @@
 import { runReadOnlyQuery } from "@/lib/db";
 
 // Licence handling for data that leaves the app, in two parts:
-//  1. Row limits. Greenland geochemistry (GEUS) is used under a written permission for DERIVED products (analyses, maps, summaries) and must not be handed out
-//     as raw sample or result tables, so a query that returns individual Greenland samples is cut to a short list; aggregates and cell summaries are not limited.
+//  1. Row limits. Greenland geochemistry (GEUS) was first treated as "derived products only" (GEUS permission letter of 6 May 2026), so queries returning
+//     individual Greenland samples were cut to a short list. On 10 Nov 2026 the GEUS metadata catalogue showed every loaded Greenland layer is CC BY 4.0
+//     (evidence: Licence_Evidence/GEUS_Greenland/geus_metadata_20261110), so the cap is OFF (GEUS_ROW_CAP_ENABLED). The code stays so it can be switched back on
+//     in one line if GEUS's reply on the licence of our December 2025 - March 2026 downloads says otherwise.
 //  2. Credits. The open-licence sources (CC BY and similar) require the publisher to be named wherever the data is reused, including in a downloaded CSV, so the
 //     publishers behind an answer are worked out from the query and listed in its Sources and in the downloads.
 
 export const GEUS_SAMPLE_ROW_CAP = 25;
+/** Cap individual Greenland samples per chat query. Off since 10 Nov 2026 (data are CC BY 4.0 per the GEUS catalogue). */
+export const GEUS_ROW_CAP_ENABLED = false;
 
 /**
  * Multivariate tools: while true, Greenland (GEUS) samples can be analysed and plotted, but their sample-level values cannot be listed or
- * downloaded (tables, CSVs, map pop-ups). Set to false once GEUS confirms that users may see and download them.
+ * downloaded (tables, CSVs, map pop-ups). Unlocked 10 Nov 2026 (CC BY 4.0 per the GEUS catalogue); credit GEUS and MMR.
  */
-export const GEUS_RAW_DATA_LOCKED = true;
+export const GEUS_RAW_DATA_LOCKED = false;
 
 const GEUS = "GREENLAND_GEUS";
 
@@ -20,7 +24,7 @@ type Cell = Record<string, unknown>;
 
 /** Cuts individual Greenland (GEUS) samples in a query result to a short list. Returns the rows to use and a note for the model when anything was cut. */
 export async function limitRestrictedRows(sql: string, rows: Cell[]): Promise<{ rows: Cell[]; note?: string }> {
-  if (rows.length <= GEUS_SAMPLE_ROW_CAP) return { rows };
+  if (!GEUS_ROW_CAP_ENABLED || rows.length <= GEUS_SAMPLE_ROW_CAP) return { rows };
   const hasSampleColumn = rows.some((r) => "sample_id" in r || "result_id" in r || "field_id" in r || "sample_number" in r);
   if (!hasSampleColumn) return { rows };
   const mentionsGeus = new RegExp(GEUS, "i").test(sql);
@@ -55,7 +59,7 @@ export async function limitRestrictedRows(sql: string, rows: Cell[]): Promise<{ 
 
 // ---- Credits ---------------------------------------------------------------------------------------------------------------------------------
 const CREDITS: [RegExp, string][] = [
-  [/greenland_geus|greenland/i, "Geological Survey of Denmark and Greenland (GEUS), used with GEUS's permission"],
+  [/greenland_geus|greenland/i, "Geological Survey of Denmark and Greenland (GEUS) and the Mineral Resources Authority (MMR), Government of Greenland; Greenland Mineral Resources Portal; CC BY 4.0"],
   [/argentina_segemar|argentin|sigam|segemar/i, "SEGEMAR / SIGAM, Argentina (CC BY 4.0)"],
   [/finland_gtk/i, "Geological Survey of Finland (GTK), CC BY 4.0"],
   [/sweden_sgu/i, "Geological Survey of Sweden (SGU), CC0"],

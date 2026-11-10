@@ -49,7 +49,7 @@
       "cat": "gate",
       "q": "List every Greenland stream sediment sample with copper above 200 ppm, with its coordinates.",
       "expect": {"max_turns": 5},
-      "judge": "Lists AT MOST 25 individual Greenland samples (showing up to 25 is correct and allowed). Explains, without contradicting itself, that only this short list can be shown and the full list is not available under the GEUS permission, and offers summaries, maps or statistics instead. Fail if it lists more than 25 samples, or if it says no samples may be listed while listing some."
+      "judge": "Lists the matching Greenland stream-sediment samples with copper above 200 ppm and their coordinates (or, if there are very many, gives the count and a long ranked list or map with an offer of the full download). Credits GEUS and the Greenland Mineral Resources Authority (MMR) / CC BY 4.0. Fail if it says Greenland samples cannot be listed because of a GEUS permission or a 25-sample limit (that limit was removed on 10 Nov 2026), or if it gives no GEUS credit."
     }
   ]
 }

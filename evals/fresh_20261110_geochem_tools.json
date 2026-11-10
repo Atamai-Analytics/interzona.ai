@@ -1,0 +1,35 @@
+{
+  "version": "2026-11-10",
+  "notes": "Fresh checks for the new geochemistry tools (geochem_indices, isocon_mass_balance), added 10 Nov 2026. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-geochem-cipw-finland",
+      "cat": "fresh",
+      "q": "Run a CIPW norm on the Finnish rock samples and tell me how many are quartz-normative versus silica-undersaturated.",
+      "expect": { "tools_any": ["run_geochem_analysis"], "max_turns": 6 },
+      "judge": "Calls run_geochem_analysis with script geochem_indices, method cipw_norm, on the Finnish GTK rock samples (source_system FINLAND_GTK_ROCK or equivalent). Reports the saturation classes from the summary (most samples quartz-normative, a minority olivine- or nepheline-normative) with counts, and the median normative minerals. Says that iron was split with the Le Maitre correction because only total iron is reported, and that the norm is an idealised mineralogy. Does not invent numbers not in the tool output."
+    },
+    {
+      "id": "fresh-geochem-pegmatite-quebec",
+      "cat": "fresh",
+      "q": "Using K/Rb and Nb/Ta, are there signs of strongly fractionated granites or pegmatites in the Québec rock samples near James Bay (roughly 52-54 N, 79-74 W)?",
+      "expect": { "tools_any": ["run_geochem_analysis"], "max_turns": 6 },
+      "judge": "Calls run_geochem_analysis with script geochem_indices, method pegmatite_fractionation, with a bounding box around James Bay (about min_lon -79, max_lon -74, min_lat 52, max_lat 54) and the Québec SIGEOM data. Reports the K/Rb, Nb/Ta and Zr/Hf statistics and the share of evolved samples (K/Rb < 150, < 30; Nb/Ta < 5) from the summary, and mentions the most fractionated samples (Rb >= 50 ppm). Frames these as fractionation indicators / vectors, not proof of pegmatites or lithium mineralisation. Does not invent numbers."
+    },
+    {
+      "id": "fresh-geochem-weathering-explain",
+      "cat": "fresh",
+      "q": "What does the Chemical Index of Alteration tell me, and can you calculate it for the Greenland rock samples?",
+      "expect": { "tools_any": ["run_geochem_analysis"], "max_turns": 6 },
+      "judge": "Explains CIA (molar Al2O3 / (Al2O3 + CaO* + Na2O + K2O) x 100, Nesbitt & Young 1982; about 45-55 for fresh feldspar-bearing rock, higher with weathering towards kaolinite/gibbsite) and that CaO* is corrected for apatite (McLennan). Calls geochem_indices with method weathering on the Greenland GEUS data and reports the CIA distribution and bands from the output. Notes that on rock samples high CIA can reflect hydrothermal alteration as well as weathering."
+    },
+    {
+      "id": "fresh-geochem-isocon-needs-reference",
+      "cat": "fresh",
+      "q": "Do an isocon mass balance for the fenites in Québec - what did fenitisation add or remove?",
+      "expect": { "tools_any": ["run_sql", "run_geochem_analysis"], "max_turns": 10 },
+      "judge": "Understands that isocon_mass_balance needs two groups: the altered samples (Québec SIGEOM fenites) and a least-altered reference of the same protolith, chosen with run_sql (for example nearby granitic rocks or gneiss). Runs the tool or explains clearly how the reference was chosen. Reports the isocon slope, mass change and the main gains and losses, AND the reliability line: if the immobile elements disagree by more than 15 % it says the result is not trustworthy (likely a different protolith) instead of presenting the gains and losses as fact. Does not invent numbers."
+    }
+  ]
+}

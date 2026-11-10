@@ -1384,6 +1384,41 @@ occurrences, but not a substitute for a real structural field study.
   You see the actual plot plus a printed summary (counts, correlations, quartiles of the plotted ratio, lithology mix): describe
   what the numbers and the image show together, report how many samples were plotted out of how many were selected, and
   name the dataset in plain words (for example "the Finnish Geological Survey rock samples"), never the code.
+- "geochem_indices" (added 10 Nov 2026): standard whole-rock geochemistry calculations, ONE method per call (parameter method),
+  each returning a chart plus statistics and per-sample values (first 200). Sample selection exactly as halley_plots (source_system,
+  lithology_category, bounding box, or sample_ids; dataset/box selections keep rock and drill samples only; over 30,000 thinned).
+  Total-basis analyses only. Methods and when to use them:
+  niggli - Niggli numbers (si, al, fm, c, alk, k, mg, ti, p, qz) for classic petrochemical comparison; qz > 0 = silica oversaturated.
+  cipw_norm - CIPW norm (Verma et al. 2003 revision, via pyrolite): normative minerals in wt % and a saturation class
+    (quartz-normative / hypersthene / olivine-normative / nepheline-normative). Where only total iron is reported (most datasets) the
+    iron is split with the Le Maitre (1976) correction - say so; the norm is an idealised mineralogy, not the real one.
+  weathering - CIA, CIW, PIA (Nesbitt & Young; Harnois; Fedo et al.) with the McLennan CaO* correction, and Parker's WIP; A-CN-K
+    diagram. Name the methods with their references (CIA Nesbitt & Young 1982; CaO* correction McLennan 1993). CaO* removes APATITE
+    calcium only (CaO - 10/3 P2O5, capped at Na2O) - it does NOT remove carbonate, so never say carbonate calcium was removed; for
+    carbonate-bearing samples CIA is understated. Use for regolith, saprolite, laterite and ionic-clay REE or clay-hosted Li questions. On fresh crystalline rock CIA ~45-55
+    reflects feldspar; high CIA in drill core or outcrop can also be hydrothermal (argillic, sericite) alteration - do not call it
+    weathering without context.
+  porphyry_fertility - Sr/Y, V/Sc, Eu/Eu*, La/Yb, with the shares above Sr/Y 40 (adakite-like) and V/Sc 10 (Loucks 2014). Meaningful
+    for intermediate-felsic intrusive rocks (filter lithology_category IGNEOUS_INTRUSIVE; the summary also gives the SiO2 55-75 subset).
+    These are SCREENING ratios: never say a sample "is fertile"; say it has fertile-arc-like ratios. Eu needs ICP-MS REE data, so far
+    fewer samples have Eu/Eu* than Sr/Y. Complements halley_plots sr_y / v_sc (which plot the trends).
+  pegmatite_fractionation - K/Rb, Rb/Sr, Nb/Ta, Zr/Hf, Li, Cs for LCT pegmatite and rare-metal granite targeting: K/Rb < 150
+    evolved, < 30 highly fractionated (Cerny et al. 1985); Nb/Ta < 5 and Zr/Hf < 25 strongly fractionated (chondritic ~17.5 and
+    ~36). Report all four ratios' medians (K/Rb, Rb/Sr, Nb/Ta, Zr/Hf) and the shares past each cut-off. The summary lists the most
+    fractionated samples, ranked only among samples with Rb >= 50 ppm - say that rule (low-K rocks give low K/Rb without being evolved). Point
+    out that whole-rock K/Rb in host rocks is a vector, and that pegmatites themselves are rarely sampled in regional surveys.
+  harker - oxides against SiO2 by lithology, with Spearman correlations (fractionation trends).
+  jensen - Jensen (1976) cation plot (Al, Fe+Ti, Mg) for volcanic series: tholeiitic, calc-alkaline, komatiitic. Field counts are not
+    computed: read the series from the figure and the median cation percentages.
+  COVERAGE (major oxides): Québec SIGEOM (~368,000 samples), USGS (~68,000), Tasmania (~21,000), Sweden lithogeochemistry (~12,000),
+  Finland, Greenland and CDoGS (~6,000 each); K+Rb (K from K2O where only the oxide is reported): CDoGS, USGS and Greenland have the most;
+  Nb+Ta: Québec ~99,000, Sweden ~18,600, Athabasca ~14,000. Argentina, Victoria and Saskatchewan have no usable data.
+- "isocon_mass_balance" (added 10 Nov 2026): Grant (1986) isocon. Needs sample_ids = ALTERED samples and reference_sample_ids =
+  least-altered samples of the SAME protolith (choose both with run_sql: same lithology family, nearby, the reference group with low
+  alteration). Default immobile elements Al2O3, TiO2, Zr (option immobile). Reports the isocon slope, rock mass change and each
+  element's percent and absolute gain or loss. ALWAYS report the reliability line: if the immobile elements disagree by more than
+  15 % the result is not trustworthy (different protoliths or mobile 'immobile' elements) - say so and suggest a better reference
+  group instead of interpreting the gains and losses.
 `,
   documents: `
 DATA COVERAGE CAVEATS for the document library — mention these when relevant:

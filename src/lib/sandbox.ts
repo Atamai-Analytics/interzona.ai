@@ -145,6 +145,24 @@ const SCRIPT_REGISTRY: Record<string, ScriptEntry> = {
     selection: "sample_ids_or_filter",
     category: "geochem",
   },
+  geochem_indices: {
+    file: "geochem_indices.py",
+    description:
+      "Whole-rock geochemistry calculations with a chart, ONE method per call (parameter `method`): niggli (Niggli numbers si, al, fm, c, alk, k, mg, qz; Niggli variation diagram), cipw_norm (CIPW norm, Verma et al. 2003 via pyrolite, normative minerals and silica-saturation class; Q-Ab-Or ternary), weathering (CIA, CIW, PIA, WIP with the McLennan CaO* correction; A-CN-K diagram with CIA scale - for regolith, laterite and clay-hosted REE/Li), porphyry_fertility (Sr/Y, V/Sc, Eu/Eu*, La/Yb with shares above Sr/Y 40 and V/Sc 10), pegmatite_fractionation (K/Rb, Rb/Sr, Nb/Ta, Zr/Hf, Li, Cs; shares of evolved samples and the most fractionated samples with Rb >= 50 ppm), harker (oxides against SiO2) and jensen (Jensen 1976 cation plot, tholeiitic/calc-alkaline/komatiitic). Like halley_plots it can select the samples itself: give source_system (and optionally lithology_category or a bounding box) INSTEAD of sample_ids; sample_ids also work. TOTAL-basis analyses only. Major-oxide methods (niggli, cipw_norm, weathering, harker, jensen) need oxide data: Québec SIGEOM (about 368,000 samples), USGS (68,000), Tasmania (21,000), Sweden (12,000), Finland, Greenland and CDoGS (about 6,000 each); Argentina, Victoria and Saskatchewan have none. Returns an image plus a numeric summary with per-sample values.",
+    outputType: "plot",
+    entryPoint: "generate_geochem_indices",
+    selection: "sample_ids_or_filter",
+    category: "geochem",
+  },
+  isocon_mass_balance: {
+    file: "isocon_mass_balance.py",
+    description:
+      "Grant (1986) isocon mass balance: which elements an ALTERED rock gained or lost against its least-altered equivalent. Needs TWO groups: sample_ids = altered samples, reference_sample_ids = least-altered samples of the SAME rock type (find both with run_sql, e.g. by lithology and distance). Uses group medians and immobile elements (default Al2O3, TiO2, Zr; option `immobile`) to fit the isocon, then reports rock mass change and per-element percent and absolute gains/losses, plus a reliability flag when the immobile elements disagree by more than 15 % (wrong protolith or mobile 'immobile' elements). Returns an image plus numbers.",
+    outputType: "plot",
+    entryPoint: "generate_isocon",
+    selection: "sample_ids",
+    category: "geochem",
+  },
   project_dcf_model: {
     file: "project_dcf_model.py",
     requirements: "requirements-dcf.txt",

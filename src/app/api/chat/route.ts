@@ -429,7 +429,7 @@ const tools: Anthropic.ToolUnion[] = [
           items: { type: "number" },
           description:
             "The sample_ids to analyze â€” required for every script EXCEPT lineament_network_stats " +
-            "and lineament_rose_diagram, and EXCEPT halley_plots, which can instead select a whole dataset itself " +
+            "and lineament_rose_diagram, and EXCEPT halley_plots and geochem_indices, which can instead select a whole dataset itself " +
             "(source_system, lithology_category, bounding box). Resolve these yourself first via run_sql (e.g. 'SELECT " +
             "sample_id FROM geochem.samples s JOIN core.occurrences o ON o.occurrence_id = " +
             "s.occurrence_id WHERE o.occurrence_type_name = ...'). Can span one occurrence or many â€” " +
@@ -462,6 +462,20 @@ const tools: Anthropic.ToolUnion[] = [
           type: "number",
           description: "Optional number of top results for clr_correlation_analysis (default 10).",
         },
+        method: {
+          type: "string",
+          enum: ["niggli", "cipw_norm", "weathering", "porphyry_fertility", "pegmatite_fractionation", "harker", "jensen"],
+          description: "geochem_indices only: which calculation to run (one per call). Default niggli.",
+        },
+        reference_sample_ids: {
+          type: "array",
+          items: { type: "number" },
+          description: "isocon_mass_balance only: the least-altered reference samples (same rock type as the altered sample_ids).",
+        },
+        immobile: {
+          type: "string",
+          description: "isocon_mass_balance only: comma-separated elements assumed immobile (default 'Al2O3,TiO2,Zr'; oxides as SiO2, Al2O3, TiO2..., traces as Zr, Nb, Y...).",
+        },
         figure: {
           type: "string",
           enum: ["sc_vs", "v_sc", "sr_y", "sc_ni_cu", "hf_zr", "ti_nb", "ta_nb_ti", "k_al_na_al", "ca_k_na", "al_k_mg", "rb_k", "ca_mg", "ca_fe_mg", "fe_s", "ca_fe_s"],
@@ -470,21 +484,21 @@ const tools: Anthropic.ToolUnion[] = [
         source_system: {
           type: "string",
           description:
-            "halley_plots only: select the samples by dataset instead of listing sample_ids (FINLAND_GTK_ROCK, GREENLAND_GEUS, " +
+            "halley_plots and geochem_indices: select the samples by dataset instead of listing sample_ids (FINLAND_GTK_ROCK, GREENLAND_GEUS, " +
             "USA_USGS_NGDB, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_QC_SIGEOM, CANADA_NRCAN_CDOGS; only their rock and drill samples are used. " +
             "ARGENTINA_SEGEMAR, AUSTRALIA_VIC_GSV_GEOCHEMISTRY, CANADA_SK_SGS and CANADA_QC_SIGEOM_SED are sediments and soils with no rock data it can use).",
         },
         lithology_category: {
           type: "string",
-          description: "halley_plots only: optionally restrict to one lithology category, e.g. IGNEOUS_INTRUSIVE, IGNEOUS_EXTRUSIVE, METAMORPHIC_FOLIATED, SEDIMENTARY_CLASTIC.",
+          description: "halley_plots and geochem_indices: optionally restrict to one lithology category, e.g. IGNEOUS_INTRUSIVE, IGNEOUS_EXTRUSIVE, METAMORPHIC_FOLIATED, SEDIMENTARY_CLASTIC.",
         },
-        min_lon: { type: "number", description: "halley_plots only: bounding box west edge (decimal degrees); give all four edges or none." },
+        min_lon: { type: "number", description: "halley_plots and geochem_indices: bounding box west edge (decimal degrees); give all four edges or none." },
         min_lat: { type: "number", description: "halley_plots only: bounding box south edge." },
         max_lon: { type: "number", description: "halley_plots only: bounding box east edge." },
         max_lat: { type: "number", description: "halley_plots only: bounding box north edge." },
         max_samples: {
           type: "number",
-          description: "halley_plots only: cap on samples plotted (default 30,000; larger selections are thinned evenly and the summary says so).",
+          description: "halley_plots and geochem_indices: cap on samples plotted (default 30,000; larger selections are thinned evenly and the summary says so).",
         },
       },
       required: ["script"],
@@ -821,8 +835,11 @@ async function executeTool(
     if (input.radius_km) options.radius_km = input.radius_km as number;
     if (input.top_n) options.top_n = input.top_n as number;
     // halley_plots selects its own samples from these filters (regional runs would need thousands of sample_ids otherwise).
-    for (const k of ["figure", "source_system", "lithology_category"] as const) {
+    for (const k of ["figure", "method", "immobile", "source_system", "lithology_category"] as const) {
       if (typeof input[k] === "string" && input[k]) options[k] = input[k] as string;
+    }
+    if (Array.isArray(input.reference_sample_ids) && input.reference_sample_ids.length) {
+      options.reference_sample_ids = (input.reference_sample_ids as number[]).map((x) => Math.trunc(Number(x))).filter(Number.isFinite).join(",");
     }
     for (const k of ["min_lon", "min_lat", "max_lon", "max_lat", "max_samples"] as const) {
       if (typeof input[k] === "number" && Number.isFinite(input[k] as number)) options[k] = input[k] as number;
@@ -833,7 +850,7 @@ async function executeTool(
     const occurrenceId = input.occurrence_id as number | undefined;
     const hasFilter = options.source_system !== undefined || options.min_lon !== undefined;
     if (!sampleIds && occurrenceId === undefined && !hasFilter) {
-      throw new Error("run_geochem_analysis needs sample_ids, an occurrence_id, or (halley_plots only) a source_system or bounding box.");
+      throw new Error("run_geochem_analysis needs sample_ids, an occurrence_id, or (halley_plots and geochem_indices only) a source_system or bounding box.");
     }
     const selection = sampleIds ? { sampleIds } : occurrenceId !== undefined ? { occurrenceId } : {};
     const result = await runAnalyticsScript(input.script as string, selection, options, label);

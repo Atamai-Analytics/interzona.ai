@@ -32,6 +32,26 @@
       },
       "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
       "judge": "Counts South African processing plants from the USGS Africa facilities as DISTINCT facilities (not per-commodity rows), gives a breakdown by stage including the plants whose stage is not stated (cement, steel, fertiliser, acid...), roughly matching the truth query, and says the data year is 2018. Credits the USGS Africa compilation."
+    },
+    {
+      "id": "fresh-africa-copperbelt-asm",
+      "cat": "fresh",
+      "q": "Where is artisanal and small-scale mining happening in the DRC and Zambian Copperbelt, and how many areas are there in each country?",
+      "truth": {
+        "n": "SELECT o.country_name, count(*) FROM core.occurrences o WHERE o.created_by='migration_usgs_copperbelt_20261110' AND o.workings_type='Artisanal and small-scale mining' GROUP BY 1"
+      },
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses the USGS Copperbelt mining database (source USGS_COPPERBELT_ASM): counts ASM AREAS as records (about 150 in the DRC, 51 in Zambia, a few without a country - roughly matching the truth query), not 1 km cells, and describes where they cluster (e.g. around Kolwezi / Lualaba and Haut-Katanga in the DRC). Says the areas were mapped from 2019-2023 satellite imagery, that points are area centroids, and that commodities such as cobalt are only POSSIBLE (from the cadastre licence covering the area), not observed. Credits USGS (Boston and Alessi 2024). FAIL if it says the ASM areas are confirmed cobalt producers or reports cells as sites."
+    },
+    {
+      "id": "fresh-africa-kansanshi-status",
+      "cat": "fresh",
+      "q": "What is the status of the Kansanshi mine in Zambia according to the database, and where does that status come from?",
+      "truth": {
+        "n": "SELECT status FROM core.occurrences WHERE occurrence_id = 467931"
+      },
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Says Kansanshi is recorded as PRODUCER (active), and that this status comes from the USGS Minerals Yearbook facility data for 2017 ('Assumed Active', USGS's assumption) which replaced an older MRDS 'past producer' status on 10 Nov 2026. Gives the year of the status. FAIL if it says Kansanshi is a past producer or presents the status as verified current information without the year."
     }
   ]
 }

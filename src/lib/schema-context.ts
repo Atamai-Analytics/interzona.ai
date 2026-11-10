@@ -369,7 +369,8 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   never count or list the per-metal rows as facilities. Credit: U.S. Geological Survey (O'Brien and others, 2026), Mines, smelters, refineries, and recycling facilities
   in the United States, https://doi.org/10.5066/P1BUPUAM.
 - AFRICA: mines, plants (with capacity and owners), deposits and exploration projects from the USGS Africa GIS compilation (source
-  USGS_AFRICA_GIS, loaded 10 Nov 2026). Its own reference notes (subject 'africa') hold the caveats - load them before answering.
+  USGS_AFRICA_GIS, loaded 10 Nov 2026), plus artisanal (ASM) and large-scale mining areas in the DRC-Zambia Copperbelt mapped from 2019-2023
+  imagery (source USGS_COPPERBELT_ASM). Their own reference notes (subject 'africa') hold the caveats - load them before answering.
 
 - Finland: 16 deposits from Table 1 of the Nordic journal article (doc 74) are in core.occurrences
   (Talvivaara/Terrafame, Kevitsa, Sakatti, Aitolampi graphite, Rapasaaret lithium, Sokli, Ahmavaara,
@@ -548,6 +549,29 @@ AFRICA - USGS COMPILATION (USGS 2021 Africa GIS compilation, public domain, sour
   mine beside it are separate occurrences (e.g. Chambishi mine, Chambishi Copper Smelter, Chambishi Cobalt Plant) - list them as separate
   facilities. Zambia now has 208 active occurrences (95 from this load, 80 Zambian capacity rows). Credit: U.S. Geological Survey,
   Compilation of Geospatial Data (GIS) for the Mineral Industries and Related Infrastructure of Africa, https://doi.org/10.5066/P97EQWXP.
+STATUS UPDATES (modified_by 'fix_africa_status_20261110', 10 Nov 2026): on 67 older records (all MRDS) that this compilation matched, the
+  status was replaced by the newer USGS one - 43 from the Minerals Yearbook facility status (2017/2018; e.g. Kansanshi, Etoile and Fitwaola
+  PAST_PRODUCER -> PRODUCER, Tenke Fungurume PROSPECT -> PRODUCER, Baluba and Nampundwe PRODUCER -> CARE_AND_MAINTENANCE, Kombat
+  -> CLOSED) and 24 filled in from the exploration stage only where the old status was UNKNOWN/OCCURRENCE/PROSPECT. The comment of each
+  says "Status changed <old> -> <new> ... (year)". These statuses are as of 2017/2018, not today: some mines have restarted or closed since
+  (e.g. Trojan nickel), so give the year with the status.
+COPPERBELT MINING AREAS (USGS Copperbelt mining database, Boston and Alessi 2024, public domain, source 'USGS_COPPERBELT_ASM', created_by
+  migration_usgs_copperbelt_20261110): USGS marked 1 km grid cells of the DRC-Zambia Copperbelt where 2019-2023 satellite imagery shows
+  active mining, as ASM (artisanal and small-scale) or LSM (medium and large-scale). Touching cells of the same scale were merged into
+  mining AREAS: (a) 205 ASM areas, all NEW occurrences (workings_type 'Artisanal and small-scale mining', is_deposit false; 150 DRC, 51
+  Zambia, 4 no country) - USGS's mapping of artisanal mining, which no other source here holds; (b) 153 LSM areas: 66 lie on known
+  occurrences, so those 174 records got an external id 'lsm:...' and a comment "Inside a medium/large-scale mining area of N km2 mapped as
+  ACTIVE on 2019-2023 imagery", and 42 of them went UNKNOWN/PROSPECT/OCCURRENCE -> PRODUCER (processing plants were not changed); the other
+  87 are NEW occurrences (workings_type 'Large-scale mining area', named 'Large-scale mining area near <nearest named site> (LSM:nnn)').
+  COPPERBELT RULES: (1) each new record is the CENTROID of an area (position_accuracy AREA_CENTROID); its size in km2 (= number of 1 km cells)
+  is in comments - say "a mining area of about N km2 near X", not a mine; (2) status PRODUCER on these = mining seen on the imagery in
+  2019-2023 (dates in comments), not a verified operation or output; ASM areas have no operator, tonnage or grade; (3) commodities: the
+  source only copies the POSSIBLE commodities of the cadastre licence covering the cell (DRC cadastre 2016, Zambia 2023) - the full list is
+  in comments as 'Possible commodities', and only Cu and Co are linked (SECONDARY) where that list names them; never say an ASM area
+  produces cobalt - say it lies on a licence listing cobalt; (4) to count ASM: workings_type = 'Artisanal and small-scale mining' (or
+  external_ids source_id LIKE 'asm:%'); one area = one record, so count records, not cells, and give the area in km2 if asked about extent.
+  Credit: U.S. Geological Survey, Boston and Alessi (2024), A database of artisanal, small-scale, and large-scale mining in the Copperbelt
+  region of the Democratic Republic of Congo and Zambia, https://doi.org/10.5066/P9LWU4FT.
 `,
   geochemistry_data: `
 SAMPLES NEAR A DEPOSIT (any method: sample_occurrence_links, ST_DWithin or a bounding box): whenever you report samples selected because they
@@ -1700,7 +1724,7 @@ const DEPENDS_ON: Partial<Record<TopicId, TopicId[]>> = {
 };
 
 const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
-  africa: /africa|zambia|copperbelt|congo|\bdrc\b|katanga|zimbabwe|botswana|namibia|south africa|mozambique|tanzania|malawi|angola|madagascar|ghana|\bmali\b|burkina|guinea|sierra leone|liberia|c[oô]te d|ivory coast|\bniger\b|nigeria|senegal|mauritania|morocco|algeria|tunisia|egypt|sudan|ethiopia|eritrea|kenya|uganda|rwanda|burundi|gabon|cameroon|eswatini|lesotho|kansanshi|lumwana|kamoa|kolwezi/i,
+  africa: /africa|zambia|copperbelt|congo|\bdrc\b|katanga|zimbabwe|botswana|namibia|south africa|mozambique|tanzania|malawi|angola|madagascar|ghana|\bmali\b|burkina|guinea|sierra leone|liberia|c[oô]te d|ivory coast|\bniger\b|nigeria|senegal|mauritania|morocco|algeria|tunisia|egypt|sudan|ethiopia|eritrea|kenya|uganda|rwanda|burundi|gabon|cameroon|eswatini|lesotho|kansanshi|lumwana|kamoa|kolwezi|artisanal|small-scale min|\basm\b/i,
   occurrences:
     /occurrence|deposit|\bmines?\b|mining|mineral site|prospect|resource|reserve|tonnage|grade|facilit|smelter|refiner|capacity|countr|commodit|mrds|\bhow many\b|operator|owner|project|critical mineral|exploration|\bcrma\b|critical raw material|strategic|recycl|substitut|\bunfc\b|european commission|seabed|sea[- ]?floor|offshore|deep[- ]sea|nodule|crusts?\b|sulphide|sulfide|\bisa\b|emodnet|marine|minedex|ozmin/i,
   geochemistry_data:

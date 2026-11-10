@@ -25,6 +25,14 @@
       "judge": "Explains CIA (molar Al2O3 / (Al2O3 + CaO* + Na2O + K2O) x 100, Nesbitt & Young 1982; about 45-55 for fresh feldspar-bearing rock, higher with weathering towards kaolinite/gibbsite) and that CaO* is corrected for apatite (McLennan). Calls geochem_indices with method weathering on the Greenland GEUS data and reports the CIA distribution and bands from the output. Notes that on rock samples high CIA can reflect hydrothermal alteration as well as weathering."
     },
     {
+      "id": "fresh-germany-erzgebirge-li-granites",
+      "cat": "fresh",
+      "q": "Do you have any geochemistry for lithium granites in the German Erzgebirge? How fractionated are they?",
+      "truth": {"n": "SELECT count(*) FROM geochem.samples WHERE source_system = 'GERMANY_GFZ_ERZGEBIRGE'"},
+      "expect": { "tools_any": ["run_sql", "run_geochem_analysis"], "max_turns": 8 },
+      "judge": "Uses the GFZ Erzgebirge-Vogtland granite data (GERMANY_GFZ_ERZGEBIRGE, 309 whole-rock analyses by Förster, GFZ Data Services, CC BY 4.0) and says it is an academic compilation of granite types (not a regional exploration survey), with about 103 drill-core samples from Wismut boreholes. Reports fractionation indicators from the data (e.g. K/Rb mostly below 150, Nb/Ta low, Li up to about 1,300 ppm, Rb, Cs) - via geochem_indices pegmatite_fractionation or SQL - and names granites such as Eibenstock, Pobershau, Geyer, Annaberg. Credits Förster / GFZ. Does not invent numbers."
+    },
+    {
       "id": "fresh-geochem-isocon-needs-reference",
       "cat": "fresh",
       "q": "Do an isocon mass balance for the fenites in Québec - what did fenitisation add or remove?",

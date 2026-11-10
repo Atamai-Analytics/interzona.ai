@@ -600,7 +600,16 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   (Natural Resources Canada CDoGS, 'CANADA_NRCAN_CDOGS', 233,875 samples, 8.42M results) and Athabasca Basin uranium drill core (GSC Open
   File 7792, 'CANADA_ATHABASCA_OF7792', 40,373 samples, 1.84M results) and Swedish till, sediment and soil (SGU regional sampling,
   'SWEDEN_SGU_MARKGEOKEMI', 61,290 samples, 2.98M active results) and Swedish stream plants (SGU biogeochemistry, 'SWEDEN_SGU_BIOGEOKEMI',
-  37,423 samples, 1.05M results) and Spain (IGME Geoquímica, 'SPAIN_IGME_GEOCHEMISTRY', loaded 8 Nov 2026 from IGME's public geochemistry
+  37,423 samples, 1.05M results) and Germany (GFZ Erzgebirge-Vogtland granites, 'GERMANY_GFZ_ERZGEBIRGE', loaded 10 Nov 2026: 309 whole-rock
+  analyses by H.-J. Förster (GFZ Data Services, CC BY 4.0) of the late-Variscan granites of the Saxon Erzgebirge-Vogtland Sn-W-Li-F province -
+  P-F-rich Li-mica granites of Eibenstock, Satzung, Pobershau, Geyer and Annaberg (134) and F-poor biotite and two-mica granites of Kirchberg,
+  Niederbobritzsch, the Aue suite, Bergen, Lauter, Schwarzenberg and others (175); granites, aplites, endocontact rocks and enclaves (enclaves
+  stored as lithology XENOLITH); majors by XRF fused disc, traces by ICP-MS at GFZ Potsdam (B, As, V, Cr, Cu, Cd: method not stated), F by ion
+  electrode; 103 samples are DRILL CORE from (mostly SDAG Wismut) boreholes at 10-1,324 m (sample_context DRILLHOLE_POINT, hole number in
+  sample_number_alt), the rest outcrop/quarry, several sharing one quarry coordinate. It is an ACADEMIC compilation of granite types, not an
+  exploration survey: Li up to 1,302 ppm, Rb 1,730, Cs 213, F 1.4 %, Sn and W up to ~100 ppm in the most evolved Li-mica granites - use it for
+  fractionation and fertility questions about European Li-Sn-W granites (geochem_indices pegmatite_fractionation works well on it), not as
+  regional coverage; altered/mineralised samples are flagged in comments) and Spain (IGME Geoquímica, 'SPAIN_IGME_GEOCHEMISTRY', loaded 8 Nov 2026 from IGME's public geochemistry
   site, ONE ELEMENT AT A TIME - so far LITHIUM, COPPER and TUNGSTEN only: 99,874 samples in 18 campaigns). TUNGSTEN (96,754 samples, loaded
   10 Nov 2026): reliable in the national map (36,005, INAA total, DL 1 ppm, max 692), Badajoz Sur (7,791, INAA, DL 0.5: stream sediments max 2,170
   ppm - an isolated high, 99th percentile only 14 ppm - and the 281 panned heavy-mineral concentrates up to 2,480, 99th percentile 1,822, which
@@ -827,7 +836,8 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   SWEDEN_SGU_MINERALRESURSER (occurrences) and SWEDEN_SGU_BORRHAL (drill holes), all CC0 1.0, credit Geological Survey of Sweden (SGU) as a
   courtesy (not required); much of SGU's data was submitted by exploration companies and SGU's written confirmation that CC0 covers it is still pending;
   SPAIN_IGME_GEOCHEMISTRY (Spain, lithium, copper and tungsten so far), IGME generic user licence (free commercial re-use), credit 'Source: © NC Geological
-  Survey of Spain (IGME)', do not imply IGME endorsement;
+  Survey of Spain (IGME)', do not imply IGME endorsement; GERMANY_GFZ_ERZGEBIRGE (Erzgebirge granites), CC BY 4.0, credit 'Förster, H.-J.
+  (2021, 2022), GFZ Data Services, doi:10.5880/GFZ.4.8.2021.005 and doi:10.5880/GFZ.4.8.2022.002';
   USA_WA_DGER_MINES_MINERALS for the Washington sites, free to reuse with citation of the Washington Geological Survey; USA_USGS_MRDS
   for the MRDS sites, US public domain, credit USGS; AUSTRALIA_WA_MINEDEX (Western Australian occurrences), CC BY 4.0, credit DEMIRS, State
   of Western Australia; AUSTRALIA_GA_OZMIN and AUSTRALIA_GA_STATE_OCCURRENCES (other Australian occurrences), CC BY 4.0, credit Geoscience
@@ -1066,7 +1076,7 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
-geochem.sample_chemistry_wide: one row per sample for ALL fifteen geochemical datasets (SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL sixteen geochemical datasets (GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 387,527,
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 224 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/
@@ -1411,7 +1421,8 @@ occurrences, but not a substitute for a real structural field study.
   jensen - Jensen (1976) cation plot (Al, Fe+Ti, Mg) for volcanic series: tholeiitic, calc-alkaline, komatiitic. Field counts are not
     computed: read the series from the figure and the median cation percentages.
   COVERAGE (major oxides): Québec SIGEOM (~368,000 samples), USGS (~68,000), Tasmania (~21,000), Sweden lithogeochemistry (~12,000),
-  Finland, Greenland and CDoGS (~6,000 each); K+Rb (K from K2O where only the oxide is reported): CDoGS, USGS and Greenland have the most;
+  Finland, Greenland and CDoGS (~6,000 each), Germany's Erzgebirge granites (GERMANY_GFZ_ERZGEBIRGE, 309, small but complete: majors, Li, Rb,
+  Cs, Nb, Ta, Zr, Hf, REE); K+Rb (K from K2O where only the oxide is reported): CDoGS, USGS and Greenland have the most;
   Nb+Ta: Québec ~99,000, Sweden ~18,600, Athabasca ~14,000. Argentina, Victoria and Saskatchewan have no usable data.
 - "isocon_mass_balance" (added 10 Nov 2026): Grant (1986) isocon. Needs sample_ids = ALTERED samples and reference_sample_ids =
   least-altered samples of the SAME protolith (choose both with run_sql: same lithology family, nearby, the reference group with low

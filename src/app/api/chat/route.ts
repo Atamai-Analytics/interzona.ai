@@ -485,7 +485,7 @@ const tools: Anthropic.ToolUnion[] = [
           type: "string",
           description:
             "halley_plots and geochem_indices: select the samples by dataset instead of listing sample_ids (FINLAND_GTK_ROCK, GREENLAND_GEUS, " +
-            "USA_USGS_NGDB, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_QC_SIGEOM, CANADA_NRCAN_CDOGS; only their rock and drill samples are used. " +
+            "USA_USGS_NGDB, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_QC_SIGEOM, CANADA_NRCAN_CDOGS, GERMANY_GFZ_ERZGEBIRGE; only their rock and drill samples are used. " +
             "ARGENTINA_SEGEMAR, AUSTRALIA_VIC_GSV_GEOCHEMISTRY, CANADA_SK_SGS and CANADA_QC_SIGEOM_SED are sediments and soils with no rock data it can use).",
         },
         lithology_category: {

@@ -20,8 +20,8 @@
       "cat": "gate",
       "q": "How many of the facilities in the USGS list of US mines, smelters, refineries and recycling facilities are in your data, and how many could not be placed on a map?",
       "truth": {"loaded": "SELECT count(DISTINCT source_id) FROM core.external_ids WHERE source_system = 'USGS_US_FACILITIES'"},
-      "expect": {"numbers": [{"truth": "loaded"}], "contains_all": ["\\b9\\b"], "max_turns": 4},
-      "judge": "States that 840 of the 849 facilities are loaded and that 9 could not be placed (their location could not be established). Does not invent a different total."
+      "expect": {"numbers": [{"truth": "loaded"}], "max_turns": 4},
+      "judge": "States that all 849 facilities are loaded and none is left unplaced (the last 9 were placed in November 2026 from site research; some positions are approximate - town, county or area points). Does not say 9 are missing and does not invent a different total."
     },
     {
       "id": "gate-assets-records-only",

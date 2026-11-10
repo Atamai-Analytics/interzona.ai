@@ -340,15 +340,18 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   underwater-video concretion sightings (not assessed), 32 Caribbean/Central American records already held as USGS MRDS sites, and the
   aggregate, evaporite, sapropel and gas-hydrate layers. Filter offshore points with created_by = 'migration_emodnet_marine_20261107'.
 - US MINES, SMELTERS, REFINERIES AND RECYCLING FACILITIES (USGS 2026 data release, CC0, source 'USGS_US_FACILITIES' in core.external_ids,
-  id like USA0001; created_by migration_usgs_facilities_20261015): 849 facilities in the source, 840 loaded (168 attached to occurrences that
-  already existed, mostly MRDS, and 672 new occurrences with is_deposit = false), 9 not loaded because their location could not be established
-  (College Grove TN, Riverside TN, Little Valley UT, Advanced Chemical Co. RI, Midland Basin TX, Reward mine and plant NV, St. Clair plant and quarry OK). Annual
+  id like USA0001; created_by migration_usgs_facilities_20261015): all 849 facilities in the source loaded (168 attached to occurrences that
+  already existed, mostly MRDS, and 681 new occurrences with is_deposit = false). The last 9 were placed on 10 Nov 2026 from site research
+  (comments say how): Advanced Chemical Co. refinery is in Warwick RI (not Greenwich), Reward mine and plant are near Beatty NV (not Lone
+  Pine), Midland Basin lithium carbonate = Howard County TX (county point), NOVONIX Riverside = Chattanooga, Little Valley gypsum = St. George
+  UT, St. Clair lime plant and quarry = Marble City OK (precise points); College Grove TN lead smelter is a town point from a 1998 source and
+  may no longer operate - say so if it comes up. Annual
   capacity and ownership live in two tables: core.facility_capacity (occurrence_id, commodity_id, commodity_name, commodity_group, feature_type
   'Mines and Quarries' / 'Mineral Processing Plant', facility_stage Mine / Concentrator / Smelter / Refinery, phase Primary / Secondary /
   Byproduct, product_form, annual_capacity, capacity_unit 'mt' = metric tons, capacity_basis ELEMENTAL_CONTENT / GROSS_WEIGHT /
-  COMPOUND_WEIGHT, shared_with_rows, facility_status as published, source_row_id) with 1,277 rows (724 have a capacity; NULL means unknown) and
+  COMPOUND_WEIGHT, shared_with_rows, facility_status as published, source_row_id) with 1,289 rows (731 have a capacity; NULL means unknown) and
   core.occurrence_ownership (occurrence_id, owner_name, company_id only for the few owners that are in core.companies, ownership_role OPERATOR /
-  EQUITY_OWNER, share_pct) with 1,182 rows. RULES: (1) capacity is an ANNUAL figure and an estimate from public sources, not production; the
+  EQUITY_OWNER, share_pct) with 1,196 rows. RULES: (1) capacity is an ANNUAL figure and an estimate from public sources, not production; the
   status values are the compilers' assumptions (Assumed active becomes status PRODUCER, In development DEVELOPMENT, Care and maintenance
   CARE_AND_MAINTENANCE, Inactive CLOSED); (2) NEVER add capacities across stages (a mine, a concentrator, a smelter and a refinery of the same
   metal are one chain, so adding them counts the same tonnes two or three times) or across rows that list each other in shared_with_rows;

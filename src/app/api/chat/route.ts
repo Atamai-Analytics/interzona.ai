@@ -500,7 +500,7 @@ const tools: Anthropic.ToolUnion[] = [
       "the top sample_ids (pass them to run_geochem_analysis), the nearest catalogued occurrence of that commodity and of ANY kind, " +
       "and a group: NEW_LEAD (nothing catalogued nearby), NEAR_OTHER_OCCURRENCE, or NEAR_KNOWN_COMMODITY (the data see a known system). " +
       "Also returns coverage by sample type. Needs a region: source_system (ARGENTINA_SEGEMAR, GREENLAND_GEUS, FINLAND_GTK_ROCK, " +
-      "SWEDEN_SGU_LITHOGEOCHEMISTRY, SWEDEN_SGU_MARKGEOKEMI (till), SWEDEN_SGU_BIOGEOKEMI (stream plants; compare only with plants), USA_USGS_NGDB, AUSTRALIA_VIC_GSV_GEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_QC_SIGEOM, CANADA_QC_SIGEOM_SED, CANADA_SK_SGS, CANADA_NRCAN_CDOGS, CANADA_ATHABASCA_OF7792 - Athabasca uranium drill core, so set include_drill_samples true for it, SPAIN_IGME_GEOCHEMISTRY - Spain, lithium and copper only so far) and/or a bbox. Non-oxide elements only, in ppm. Drill-hole assays are left out unless include_drill_samples is true. " +
+      "SWEDEN_SGU_LITHOGEOCHEMISTRY, SWEDEN_SGU_MARKGEOKEMI (till), SWEDEN_SGU_BIOGEOKEMI (stream plants; compare only with plants), USA_USGS_NGDB, AUSTRALIA_VIC_GSV_GEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_QC_SIGEOM, CANADA_QC_SIGEOM_SED, CANADA_SK_SGS, CANADA_NRCAN_CDOGS, CANADA_ATHABASCA_OF7792 - Athabasca uranium drill core, so set include_drill_samples true for it, SPAIN_IGME_GEOCHEMISTRY - Spain, lithium, copper and tungsten only so far) and/or a bbox. Non-oxide elements only, in ppm. Drill-hole assays are left out unless include_drill_samples is true. " +
       "Lead your answer with the NEW_LEAD cells, then confirmation near known deposits; say how many samples have the data.",
     input_schema: {
       type: "object",

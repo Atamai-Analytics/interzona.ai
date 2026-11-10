@@ -546,7 +546,14 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   File 7792, 'CANADA_ATHABASCA_OF7792', 40,373 samples, 1.84M results) and Swedish till, sediment and soil (SGU regional sampling,
   'SWEDEN_SGU_MARKGEOKEMI', 61,290 samples, 2.98M active results) and Swedish stream plants (SGU biogeochemistry, 'SWEDEN_SGU_BIOGEOKEMI',
   37,423 samples, 1.05M results) and Spain (IGME Geoquímica, 'SPAIN_IGME_GEOCHEMISTRY', loaded 8 Nov 2026 from IGME's public geochemistry
-  site, ONE ELEMENT AT A TIME - so far LITHIUM and COPPER only: 99,866 samples in 18 campaigns). COPPER (99,866 samples, every campaign):
+  site, ONE ELEMENT AT A TIME - so far LITHIUM, COPPER and TUNGSTEN only: 99,874 samples in 18 campaigns). TUNGSTEN (96,754 samples, loaded
+  10 Nov 2026): reliable in the national map (36,005, INAA total, DL 1 ppm, max 692), Badajoz Sur (7,791, INAA, DL 0.5: stream sediments max 2,170
+  ppm - an isolated high, 99th percentile only 14 ppm - and the 281 panned heavy-mineral concentrates up to 2,480, 99th percentile 1,822, which
+  must be reported separately from sediments), Galicia-Lovios (1,247, DCP, DL 10, max 2,842 - the highest), Abenojar (2,568, ICP, DL 10, max 553) and Siruela /
+  Chillón / Valdemanco (ICP DL 2, a few % below DL); Almadén and both Pirineos campaigns have low values only (max 15-21). In Reserva
+  Guadalupe (95 % below DL), Valdelacasa (94 %), Alcudia (92 %), Herrera del Duque (100 %) and Hinojosa (84 %) tungsten is essentially
+  NON-DETECTS (ICP after acid digestion does not dissolve tungsten minerals well; DCP DL 10 ppm): they are flagged below DL and left out of
+  statistics - say W there is uninformative rather than 'low'. 38,323 W values (40 %) are below DL in all. COPPER (99,866 samples, every campaign):
   Mapa Geoquímico de España 36,005 (14,818 stream sediments, 13,505 soils, 7,682 C-horizon soils; IGME 'MULT TD-ICP/TD-ICP-MS' total
   digestion, DL 0.2 ppm), the regional stream-sediment campaigns of the 1980s-2000s - Reserva Guadalupe 16,504, Reserva Valdelacasa 15,084,
   Reserva Alcudia 7,649, Almadén 2,970, Abenojar 2,568, Herrera del Duque 2,400, Valdemanco 1,426, Chillón 1,368, Siruela 1,360, Galicia-Lovios
@@ -565,7 +572,7 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   Alcudia, Almadén, Herrera del Duque, Siruela, Abenojar, Valdemanco, Chillón, Hinojosa; Badajoz Sur in SW Badajoz; Galicia-Lovios in Ourense;
   Sort and Tremp in the Lleida Pyrenees; the national map covers the whole country). Lithium stream sediments are 21,183 in all
   (national map 14,818, Badajoz Sur 6,262, FOREGS 103). The method per campaign comes from IGME's sample detail records (25 checked per
-  campaign and element, all identical). IGME's OTHER elements are NOT loaded yet - say so if asked about any element other than Li and Cu in
+  campaign and element, all identical). IGME's OTHER elements are NOT loaded yet - say so if asked about any element other than Li, Cu and W in
   Spain; IGME withholds As, Au, Hg and U (restricted). Credit 'Source: © NC Geological Survey of Spain (IGME)' and never imply IGME endorses the
   answer) ONLY (geochem.samples also holds 2,519 age-only points, source_system
   'SWEDEN_SGU_BEDROCK_AGE', and 1,053 bare sample points from the Wu zircon database, source_system
@@ -764,7 +771,7 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   SWEDEN_SGU_LITHOGEOCHEMISTRY, SWEDEN_SGU_BEDROCK_AGE, SWEDEN_SGU_MARKGEOKEMI (till, sediment, soil), SWEDEN_SGU_BIOGEOKEMI (stream plants),
   SWEDEN_SGU_MINERALRESURSER (occurrences) and SWEDEN_SGU_BORRHAL (drill holes), all CC0 1.0, credit Geological Survey of Sweden (SGU) as a
   courtesy (not required); much of SGU's data was submitted by exploration companies and SGU's written confirmation that CC0 covers it is still pending;
-  SPAIN_IGME_GEOCHEMISTRY (Spain, lithium and copper so far), IGME generic user licence (free commercial re-use), credit 'Source: © NC Geological
+  SPAIN_IGME_GEOCHEMISTRY (Spain, lithium, copper and tungsten so far), IGME generic user licence (free commercial re-use), credit 'Source: © NC Geological
   Survey of Spain (IGME)', do not imply IGME endorsement;
   USA_WA_DGER_MINES_MINERALS for the Washington sites, free to reuse with citation of the Washington Geological Survey; USA_USGS_MRDS
   for the MRDS sites, US public domain, credit USGS; AUSTRALIA_WA_MINEDEX (Western Australian occurrences), CC BY 4.0, credit DEMIRS, State
@@ -1004,7 +1011,7 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
-geochem.sample_chemistry_wide: one row per sample for ALL fifteen geochemical datasets (SPAIN_IGME_GEOCHEMISTRY 99,866, Li and Cu only (li_t, cu_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL fifteen geochemical datasets (SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 387,527,
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 224 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/

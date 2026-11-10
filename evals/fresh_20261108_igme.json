@@ -26,7 +26,7 @@
       "expect": {
         "max_turns": 6
       },
-      "judge": "Says no: only lithium and copper have been loaded so far from IGME's Spanish geochemistry; nickel is not loaded yet (IGME holds it). Must not claim Spanish nickel analyses exist in the database."
+      "judge": "Says no: only lithium, copper and tungsten have been loaded so far from IGME's Spanish geochemistry, so there is no Spanish nickel geochemistry in the database yet (mentioning that IGME has it, or offering to load it, is a plus but not required). Must not claim Spanish nickel analyses exist in the database."
     },
     {
       "id": "fresh-igme-cu-highs",
@@ -40,6 +40,19 @@
         "max_turns": 8
       },
       "judge": "Uses IGME Spain copper (SPAIN_IGME_GEOCHEMISTRY) stream sediments, shows the highest values or anomalous cells on a map, places them in campaigns or named regions (campaign names OR regions such as the Iberian Pyrite Belt / Badajoz / Guadalupe area are fine), says detection limits/methods differ by campaign or that old campaigns are coarser, says the Badajoz panned heavy-mineral concentrates were left out or kept separate (e.g. by filtering to stream sediments), says these are sediment values not ore grades, and credits IGME (IGME's own required wording 'Source: © NC Geological Survey of Spain (IGME)' is correct) without implying endorsement."
+    },
+    {
+      "id": "fresh-igme-w",
+      "cat": "fresh",
+      "q": "Where are the best tungsten anomalies in Spain's stream sediments, and how reliable is the tungsten data?",
+      "expect": {
+        "tools_any": [
+          "run_sql",
+          "find_geochemical_anomalies"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses IGME Spain tungsten (SPAIN_IGME_GEOCHEMISTRY) stream sediments: highlights the high values from reliable campaigns (Galicia-Lovios up to ~2,800 ppm; Badajoz Sur sediments with an isolated high ~2,170 ppm; national map INAA; Abenojar - any reasonable subset naming Galicia and at least one other), and says tungsten is essentially below detection (uninformative) in Guadalupe, Valdelacasa, Alcudia, Herrera del Duque and Hinojosa because of the method, not 'low tungsten'. Mentions methods/detection limits differ by campaign, keeps the Badajoz panned concentrates separate or excluded (mentioning them separately is a plus), credits IGME. Must not attribute high values to a campaign it also calls all non-detect."
     }
   ]
 }

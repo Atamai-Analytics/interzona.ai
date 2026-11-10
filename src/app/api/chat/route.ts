@@ -1071,7 +1071,7 @@ function chooseEffort(topics: TopicId[], userText = ""): Effort {
 // The small model works from our own data only: if a figure is missing it should say so and offer to search the web, not search on its own.
 const toolsWithoutWeb: Anthropic.ToolUnion[] = tools.filter((t) => !("name" in t && (t.name === "web_search" || t.name === "web_fetch")));
 
-const SIMPLE_TOPICS: TopicId[] = ["financials", "markets", "occurrences"];
+const SIMPLE_TOPICS: TopicId[] = ["financials", "markets", "occurrences", "africa"];
 const NOT_SIMPLE = /\b(compar\w*|versus|vs\.?|rank\w*|trend\w*|since|over the|histor\w*|moved|why|explain\w*|analy[sz]\w*|summari[sz]\w*|reliab\w*|caveat\w*|forecast\w*|predict\w*|explor\w*|plot|chart|diagram|top \d+|which|who|best|worst|most|least|between|all|every|list|what does|literature|reports? says?|will|would|future|outlook|expect\w*|project(ed|ions?)|next (year|decade)|20[3-9]\d|us dollars?|usd|us\$|convert\w*|exchange rates?|fx|ebitda|interest cover|leverage|net debt|effective tax|sensitiv\w*|exposure|exposed|elasticit\w*|regress\w*|correlat\w*|beta|map\w*|where|located|locations?|positions?|sites?|assets?|own\w*|stakes?|plants?|refiner\w*|smelter\w*|facilit\w*)\b/i;
 // Maps, locations and company assets stay on MODEL (2026-11-01): the small model skipped company_assets and named catalogue sites instead.
 

@@ -67,6 +67,7 @@ const CREDITS: [RegExp, string][] = [
   [/global_zircon/i, "Wu, Fang and Ji (2023), zircon database (CC BY 4.0)"],
   [/washington/i, "Washington Geological Survey (Washington State Department of Natural Resources)"],
   [/mrds/i, "U.S. Geological Survey, Mineral Resources Data System"],
+  [/usgs_africa|migration_usgs_africa/i, "U.S. Geological Survey, Compilation of Geospatial Data (GIS) for the Mineral Industries and Related Infrastructure of Africa (2021), doi:10.5066/P97EQWXP"],
   // \bcanada\b catches country filters ('Canada'); source codes such as canada_qc_sigeom are matched by their own patterns
   [/\bcanada\b|qu[eé]bec|sigeom|canada_qc|migration_canada_occ|drilling\./i, "Ministère des Ressources naturelles et des Forêts, Québec, SIGÉOM (Indices, gîtes, mines et carrières; Géochimie; Sondages), CC BY 4.0"],
   [/\bcanada\b|saskatchewan|smdi|canada_sk|migration_canada_occ|drilling\./i, "Saskatchewan Mining and Petroleum GeoAtlas, Saskatchewan Geological Survey (Mineral Deposit Index; drill holes; till and lake-sediment geochemistry, incl. Geological Survey of Canada lake-sediment data), retrieved 3 November 2026; Government of Saskatchewan Standard Unrestricted Use Data Licence v2.0"],

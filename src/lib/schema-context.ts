@@ -145,8 +145,9 @@ core.occurrence_commodities: occurrence_id, commodity_id, commodity_role (PRIMAR
   core.occurrence_commodities to core.commodities and match commodity_name OR commodity_symbol (e.g. lithium = 'Lithium' or 'Li'). Do NOT search the
   occurrences.commodities array for the commodity's full name: most records hold the element symbol there ('Li', 'Cu', 'Au'), so a name match
   silently misses most of the sites (Argentina has 32 producing or past-producing lithium sites, none of which contain the word 'lithium' in that array).
-core.facility_capacity: annual capacity of US mines, smelters and refineries by commodity (see the facilities paragraph above for columns and
-  the do-not-add rules); core.occurrence_ownership: operator and equity owners with shares for those facilities.
+core.facility_capacity: annual capacity of US and African mines, smelters, refineries and plants by commodity (see the US and AFRICA facilities
+  paragraphs for columns and the do-not-add rules; source_system USGS_US_FACILITIES or USGS_AFRICA_GIS); core.occurrence_ownership: operator
+  and equity owners with shares for those facilities.
 core.commodities: commodity_id, commodity_name, commodity_symbol, commodity_category, is_critical_mineral.
   is_critical_mineral follows the USGS 2025 final critical minerals list (60 minerals), applied to
   element rows and to rows that map directly to a listed mineral (e.g. Baryte, Fluorite, Phosphate
@@ -189,8 +190,8 @@ core.resource_estimates: occurrence_id, commodity_id, classification (Indicated/
   Grade units differ by row (for example '% TREO', 'ppm Nd2O3', 'g/t') — read grade_unit before
   comparing rows, and never add rows across classifications without saying so.
 `;
-export type TopicId = "occurrences" | "geochemistry_data" | "geochemistry_workflow" | "geochemistry_scripts" | "documents" | "financials" | "markets" | "project_economics";
-export const TOPIC_IDS: TopicId[] = ["occurrences", "geochemistry_data", "geochemistry_workflow", "geochemistry_scripts", "documents", "financials", "markets", "project_economics"];
+export type TopicId = "occurrences" | "africa" | "geochemistry_data" | "geochemistry_workflow" | "geochemistry_scripts" | "documents" | "financials" | "markets" | "project_economics";
+export const TOPIC_IDS: TopicId[] = ["occurrences", "africa", "geochemistry_data", "geochemistry_workflow", "geochemistry_scripts", "documents", "financials", "markets", "project_economics"];
 
 export const REFERENCE_NOTES: Record<TopicId, string> = {
   occurrences: `
@@ -367,6 +368,8 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   breakdown with COUNT(DISTINCT occurrence_id) ... GROUP BY status, and list one line per facility with its metals combined (string_agg) -
   never count or list the per-metal rows as facilities. Credit: U.S. Geological Survey (O'Brien and others, 2026), Mines, smelters, refineries, and recycling facilities
   in the United States, https://doi.org/10.5066/P1BUPUAM.
+- AFRICA: mines, plants (with capacity and owners), deposits and exploration projects from the USGS Africa GIS compilation (source
+  USGS_AFRICA_GIS, loaded 10 Nov 2026). Its own reference notes (subject 'africa') hold the caveats - load them before answering.
 
 - Finland: 16 deposits from Table 1 of the Nordic journal article (doc 74) are in core.occurrences
   (Talvivaara/Terrafame, Kevitsa, Sakatti, Aitolampi graphite, Rapasaaret lithium, Sokli, Ahmavaara,
@@ -520,6 +523,31 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   Study 6, Scoping Study 1, Care and Maintenance 1) and status_inferred_basis the phrase it rests on: say it is inferred by Interzona from the
   Prospectus text, never Austrade's status. The same text is in the document library (document 370, one passage per project).
   Credit: Austrade, Australian Critical Minerals Prospectus (October 2026), CC BY 4.0. Austrade says there are more projects than it lists, so this is not a full list of Australian projects.
+`,
+  africa: `
+AFRICA - USGS COMPILATION (USGS 2021 Africa GIS compilation, public domain, source 'USGS_AFRICA_GIS' in core.external_ids, source_id prefixed dep: / fac: /
+  exp:; created_by migration_usgs_africa_20261110, loaded 10 Nov 2026), 52 countries, three parts: (a) DEPOSITS (dep:, USGS PP1802
+  critical-minerals deposits): 1,190, of which 874 were already held (mostly MRDS) and only got missing commodities added, 316 new
+  (is_deposit, status UNKNOWN - the source gives no status - deposit type in mineralization_style); (b) MINES AND PROCESSING PLANTS (fac:,
+  USGS Minerals Yearbook, data year 2018, Zambia 2017; oil, gas and refinery facilities NOT loaded): 1,381 facility occurrences (1,255 new, the rest
+  attached to existing sites), with 1,912 rows in core.facility_capacity (same columns and RULES as the US facilities above; feature_type
+  'Mines and Quarries' / 'Mineral Processing Plants' / 'Brine'; facility_stage Mine, or for plants Smelter / Refinery / Concentrator taken
+  from the published product, NULL where the product does not say - cement, steel, fertiliser, acid plants; product_form as published e.g.
+  'Ore and concentrate', 'Refined', 'Cathode') and 3,259 owner/operator rows in core.occurrence_ownership (as_of_year = data year);
+  (c) EXPLORATION AND DEVELOPMENT PROJECTS (exp:, USGS World Minerals Exploration Database, unpublished): 1,093, 986 new. AFRICA RULES:
+  (1) MINE CAPACITY IS OFTEN ORE TONNAGE, NOT METAL: product_form 'Ore and concentrate' / 'Ore' rows give tonnes of ore milled (Lumwana
+  copper 21,000,000 mt and Kansanshi 12,000,000 mt are ore; Kansanshi lists the same 12 Mt under copper AND cobalt), so never call them
+  tonnes of copper and never add them to metal output; refinery/smelter rows (product 'Refined', 'Cathode', 'Blister', 'Metal') are closer to
+  metal; capacity_basis is GROSS_WEIGHT only where USGS flagged it (66 rows), NULL otherwise = not stated; capacity_notes says 'estimated'
+  and 'capacity shared with other facilities' where flagged (442 rows share one figure with the facilities in shared_with_rows - count it
+  once); 'Thousand metric tons' and 'Thousand carats' were converted to mt and carats; (2) status PRODUCER mostly comes from USGS's
+  'Assumed Active' for 2017/2018 = assumed, not verified, and now 8 years old - say "listed as active in 2018"; (3) exploration-project
+  status (EXPLORATION, FEASIBILITY, DEVELOPMENT ...) is the stage WHEN THE PROJECT WAS LAST VERIFIED ACTIVE, between 2004 and 2018 (the year
+  is in comments and occurrence_ownership.as_of_year): always give that year and say it may be out of date; (4) 1,159 of the new points are
+  approximate (USGS location accuracy 'A' -> position_accuracy AREA_CENTROID): do not use them for distances to samples; (5) a plant and the
+  mine beside it are separate occurrences (e.g. Chambishi mine, Chambishi Copper Smelter, Chambishi Cobalt Plant) - list them as separate
+  facilities. Zambia now has 208 active occurrences (95 from this load, 80 Zambian capacity rows). Credit: U.S. Geological Survey,
+  Compilation of Geospatial Data (GIS) for the Mineral Industries and Related Infrastructure of Africa, https://doi.org/10.5066/P97EQWXP.
 `,
   geochemistry_data: `
 SAMPLES NEAR A DEPOSIT (any method: sample_occurrence_links, ST_DWithin or a bounding box): whenever you report samples selected because they
@@ -1664,6 +1692,7 @@ CURRENT run_financial_model SCRIPTS:
 
 // Subjects that need other subjects' notes to be usable.
 const DEPENDS_ON: Partial<Record<TopicId, TopicId[]>> = {
+  africa: ["occurrences"],
   geochemistry_workflow: [],
   geochemistry_scripts: ["geochemistry_data"],
   financials: ["markets"],
@@ -1671,6 +1700,7 @@ const DEPENDS_ON: Partial<Record<TopicId, TopicId[]>> = {
 };
 
 const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
+  africa: /africa|zambia|copperbelt|congo|\bdrc\b|katanga|zimbabwe|botswana|namibia|south africa|mozambique|tanzania|malawi|angola|madagascar|ghana|\bmali\b|burkina|guinea|sierra leone|liberia|c[oô]te d|ivory coast|\bniger\b|nigeria|senegal|mauritania|morocco|algeria|tunisia|egypt|sudan|ethiopia|eritrea|kenya|uganda|rwanda|burundi|gabon|cameroon|eswatini|lesotho|kansanshi|lumwana|kamoa|kolwezi/i,
   occurrences:
     /occurrence|deposit|\bmines?\b|mining|mineral site|prospect|resource|reserve|tonnage|grade|facilit|smelter|refiner|capacity|countr|commodit|mrds|\bhow many\b|operator|owner|project|critical mineral|exploration|\bcrma\b|critical raw material|strategic|recycl|substitut|\bunfc\b|european commission|seabed|sea[- ]?floor|offshore|deep[- ]sea|nodule|crusts?\b|sulphide|sulfide|\bisa\b|emodnet|marine|minedex|ozmin/i,
   geochemistry_data:

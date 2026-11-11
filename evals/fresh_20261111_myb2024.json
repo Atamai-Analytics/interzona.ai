@@ -1,0 +1,52 @@
+{
+  "version": "2026-11-11",
+  "notes": "Fresh checks for the USGS 2024 Minerals Yearbook global facilities table loaded 11 Nov 2026 (source_system USGS_MYB2024). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-myb2024-australia-lithium",
+      "cat": "fresh",
+      "q": "Which lithium mines and plants in Australia have capacity figures in your data?",
+      "truth": {
+        "n": "SELECT count(DISTINCT p.facility_key) FROM core.facility_capacity_published p JOIN core.occurrences o USING (occurrence_id) WHERE p.source_system = 'USGS_MYB2024' AND o.country_name = 'Australia' AND p.commodity_name ILIKE '%lithium%'"
+      },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses the USGS 2024 Minerals Yearbook global facilities table (source USGS_MYB2024, data year 2024) for Australian lithium facilities, with capacities and product/measure as published (e.g. spodumene concentrate gross weight vs Li content). Credits USGS 2024 Minerals Yearbook. Says the list may be incomplete (facilities located only to a state were not loaded) and positions are approximate (town). Does not add mine and plant capacities. Does not invent figures."
+    },
+    {
+      "id": "fresh-myb2024-indonesia-nickel-latest",
+      "cat": "fresh",
+      "q": "What is the latest capacity data you have for Indonesian nickel smelters?",
+      "truth": {
+        "n": "SELECT count(DISTINCT p.facility_key) FROM core.facility_capacity_published p JOIN core.occurrences o USING (occurrence_id) WHERE p.source_system = 'USGS_MYB2024' AND o.country_name = 'Indonesia' AND p.commodity_name ILIKE '%nickel%'"
+      },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses the newest figure per facility: 2024 Minerals Yearbook figures where the 2024 table has the facility, and older (2018 Southwest Asia release) figures only for facilities the 2024 table lacks - each row labelled with its data year/release (a split of the headline count by release is optional, but if given it must match the answer's own rows). A mine line and a smelter/plant line at the same site (e.g. Weda Bay mine and smelter, Sorowako mine and smelter) are separate facilities, not duplicates. Shows capacities with product and measure (e.g. matte Ni content). Notes the list may be incomplete and that Indonesia's industry keeps growing. Credits USGS. Does not sum different measures or stages, and does not show the same plant twice with two years."
+    },
+    {
+      "id": "fresh-myb2024-germany-smelters",
+      "cat": "fresh",
+      "q": "List the copper smelters and refineries in Germany with their capacities.",
+      "truth": {
+        "n": "SELECT count(DISTINCT p.facility_key) FROM core.facility_capacity_published p JOIN core.occurrences o USING (occurrence_id) WHERE o.country_name = 'Germany' AND p.commodity_name ILIKE '%copper%' AND p.stage_group IN ('Smelter','Refinery','Other processing plant')"
+      },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses the USGS 2024 Minerals Yearbook facilities table for German copper smelters/refineries (e.g. Aurubis Hamburg, Lunen) with capacities and measure as published and the 2024 data year. Credits USGS. Says the positions are approximate and the list may be incomplete. Does not invent facilities or figures."
+    }
+  ]
+}

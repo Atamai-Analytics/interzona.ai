@@ -7,25 +7,46 @@
       "id": "fresh-usgs-china-rare-earth-plants",
       "cat": "fresh",
       "q": "Which rare-earth mines and processing plants in China are in your data, with capacities?",
-      "truth": {"n": "SELECT count(DISTINCT occurrence_id) FROM core.facility_capacity WHERE source_system = 'USGS_CHINA_GIS' AND commodity_name ILIKE '%rare%'"},
-      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
-      "judge": "Counts are consistent: there are 27 distinct sites (occurrences) but 29 USGS facilities, because three separate Baotou separation plants (CHN1155-1157) share one name and location - either 27 sites or 29 USGS facilities is correct if the answer is internally consistent. Uses the USGS China compilation (core.facility_capacity, source USGS_CHINA_GIS) and lists Chinese rare-earth facilities (e.g. Bayan Obo / Baotou) with stage and capacity and units as published. Gives the data year (2019 Minerals Yearbook) and says the status is USGS's assumption for that year and newer figures may differ. Does not add mine and plant capacities together. Credits USGS (China GIS compilation). Does not invent facilities or numbers."
+      "truth": {
+        "n": "SELECT count(DISTINCT occurrence_id) FROM core.facility_capacity WHERE source_system = 'USGS_CHINA_GIS' AND commodity_name ILIKE '%rare%'"
+      },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Counts are consistent: there are 27 distinct sites (occurrences) but 29 USGS facilities, because three separate Baotou separation plants (CHN1155-1157) share one name and location - either 27 sites or 29 USGS facilities is correct if the answer is internally consistent. Uses the USGS China compilation (core.facility_capacity, source USGS_CHINA_GIS) and lists Chinese rare-earth facilities (e.g. Bayan Obo / Baotou) with stage and capacity and units as published. Gives the data year (2019 Minerals Yearbook) and says the status is USGS's assumption for that year and newer figures may differ. Does not add mine and plant capacities together. Credits USGS (China GIS compilation). Does not invent facilities or numbers. DATA UPDATE 11 Nov 2026: the USGS 2024 Minerals Yearbook table (USGS_MYB2024) is now loaded too, so a correct answer may combine releases: it should use the newest figure per facility and label every row's data year/release; a split of the headline count by release is OPTIONAL (do not fail for leaving it out), but if one is given it must match the answer's own rows. A mine line and a smelter/plant line at the same site (e.g. Weda Bay mine and Weda Bay smelter, Sorowako mine and smelter) are separate facilities, not duplicates; an older-release processing plant that the 2024 table does not list (e.g. Escondida's 2014 cathode plants next to the 2024 Escondida mine line) is not a duplicate either. Judge counts against that combined list (the truth query counts only the older release), and accept 2024 figures where shown with their year."
     },
     {
       "id": "fresh-usgs-indonesia-nickel",
       "cat": "fresh",
       "q": "What nickel smelters and mines are there in Indonesia and who owns them?",
-      "truth": {"n": "SELECT count(DISTINCT fc.occurrence_id) FROM core.facility_capacity fc JOIN core.occurrences o USING (occurrence_id) WHERE fc.source_system = 'USGS_SWASIA_GIS' AND o.country_name = 'Indonesia' AND fc.commodity_name ILIKE '%nickel%'"},
-      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
-      "judge": "Uses the USGS Southwest Asia compilation (USGS_SWASIA_GIS) facilities and ownership for Indonesian nickel (mines, smelters and matte, MHP or sulphate plants as recorded - the 2018 release has no nickel-pig-iron rows for Indonesia, so do not require them) with capacities and owners as recorded. States the data year 2018 (a source line naming Minerals Yearbook 2018 data is enough) and that Indonesia's nickel industry has expanded greatly since, so the list is out of date and incomplete. Does not sum ore and metal capacities. Credits USGS."
+      "truth": {
+        "n": "SELECT count(DISTINCT fc.occurrence_id) FROM core.facility_capacity fc JOIN core.occurrences o USING (occurrence_id) WHERE fc.source_system = 'USGS_SWASIA_GIS' AND o.country_name = 'Indonesia' AND fc.commodity_name ILIKE '%nickel%'"
+      },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses the USGS Southwest Asia compilation (USGS_SWASIA_GIS) facilities and ownership for Indonesian nickel (mines, smelters and matte, MHP or sulphate plants as recorded - the 2018 release has no nickel-pig-iron rows for Indonesia, so do not require them) with capacities and owners as recorded. States the data year 2018 (a source line naming Minerals Yearbook 2018 data is enough) and that Indonesia's nickel industry has expanded greatly since, so the list is out of date and incomplete. Does not sum ore and metal capacities. Credits USGS. DATA UPDATE 11 Nov 2026: the USGS 2024 Minerals Yearbook table (USGS_MYB2024) is now loaded too, so a correct answer may combine releases: it should use the newest figure per facility and label every row's data year/release; a split of the headline count by release is OPTIONAL (do not fail for leaving it out), but if one is given it must match the answer's own rows. A mine line and a smelter/plant line at the same site (e.g. Weda Bay mine and Weda Bay smelter, Sorowako mine and smelter) are separate facilities, not duplicates; an older-release processing plant that the 2024 table does not list (e.g. Escondida's 2014 cathode plants next to the 2024 Escondida mine line) is not a duplicate either. Judge counts against that combined list (the truth query counts only the older release), and accept 2024 figures where shown with their year."
     },
     {
       "id": "fresh-usgs-chile-copper-capacity",
       "cat": "fresh",
       "q": "Show the largest copper mines in Chile by capacity from your data.",
-      "truth": {"n": "SELECT count(DISTINCT fc.occurrence_id) FROM core.facility_capacity fc JOIN core.occurrences o USING (occurrence_id) WHERE fc.source_system = 'USGS_LAC_GIS' AND o.country_name = 'Chile' AND fc.commodity_name ILIKE '%copper%'"},
-      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
-      "judge": "Uses the USGS Latin America compilation (USGS_LAC_GIS) and lists large Chilean copper mines (e.g. Escondida, Collahuasi, El Teniente, Los Pelambres, Chuquicamata) with capacity and units/product form as published. Says the data year is 2014 and figures may be out of date; says what each figure measures as published (USGS lists Chilean copper capacities only as 'Copper' without saying whether ore, concentrate or copper content - saying the measure is not stated, or showing a Measure column, meets this); treats a capacity USGS repeats across one complex (e.g. Escondida's 1.3 Mt on mine, concentrator and cathode plants) as one figure; does not add capacities across stages. Credits USGS."
+      "truth": {
+        "n": "SELECT count(DISTINCT fc.occurrence_id) FROM core.facility_capacity fc JOIN core.occurrences o USING (occurrence_id) WHERE fc.source_system = 'USGS_LAC_GIS' AND o.country_name = 'Chile' AND fc.commodity_name ILIKE '%copper%'"
+      },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses the USGS Latin America compilation (USGS_LAC_GIS) and lists large Chilean copper mines (e.g. Escondida, Collahuasi, El Teniente, Los Pelambres, Chuquicamata) with capacity and units/product form as published. Says the data year is 2014 and figures may be out of date; says what each figure measures as published (USGS lists Chilean copper capacities only as 'Copper' without saying whether ore, concentrate or copper content - saying the measure is not stated, or showing a Measure column, meets this); treats a capacity USGS repeats across one complex (e.g. Escondida's 1.3 Mt on mine, concentrator and cathode plants) as one figure; does not add capacities across stages. Credits USGS. DATA UPDATE 11 Nov 2026: the USGS 2024 Minerals Yearbook table (USGS_MYB2024) is now loaded too, so a correct answer may combine releases: it should use the newest figure per facility and label every row's data year/release; a split of the headline count by release is OPTIONAL (do not fail for leaving it out), but if one is given it must match the answer's own rows. A mine line and a smelter/plant line at the same site (e.g. Weda Bay mine and Weda Bay smelter, Sorowako mine and smelter) are separate facilities, not duplicates; an older-release processing plant that the 2024 table does not list (e.g. Escondida's 2014 cathode plants next to the 2024 Escondida mine line) is not a duplicate either. Judge counts against that combined list (the truth query counts only the older release), and accept 2024 figures where shown with their year."
     }
   ]
 }

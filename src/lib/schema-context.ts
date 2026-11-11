@@ -279,6 +279,24 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   are in comments; occurrence_type_id is set only where it is unambiguous (about 9,000, mostly skarn iron). NO tonnage or grade: SGU's
   tonnage and grade fields are empty in the download, so Swedish resource figures come only from projects or documents. Jurisdiction is the
   country (jurisdiction_path {Sweden}). Positions are SGU's (about half within 10 m; within 500 m marked position_accuracy AREA_CENTROID).
+- EUROPE - MIN4EU (loaded 2026-11-11): 12,307 new occurrences (122 more attached to existing sites) from the MIN4EU harmonised dataset of
+  the European Geological Data Infrastructure (EGDI / GeoERA Mintell4EU, built from the national geological surveys' databases; CC BY 4.0;
+  credit "MIN4EU harmonised data, EGDI / GeoERA Mintell4EU, CC BY 4.0"), created_by migration_min4eu_20261111, external_ids source
+  'EU_MIN4EU'. Two layers combined: mines (status as published) and critical-raw-material occurrences (significance occurrence / prospect /
+  deposit, and deposit size). Biggest gains: France 4,013 (BRGM; BRGM codes such as FRA-00473 are kept in comments), Spain 2,070 (IGME),
+  Norway 1,396 (NGU), Portugal 832, Czechia 791, Austria 601, Belgium 530, Finland 415, Ukraine 314, plus Slovakia, Italy, Albania, Greece,
+  Switzerland, Cyprus, the Balkans. NOT included: Poland (its MIN4EU data is non-commercial), Sweden (SGU loaded directly), construction
+  materials and fuels, unnamed records. Commodities: barite 1,359, W 1,343, Cu 1,219, Pb 1,102, Fe 991, phosphate 939, fluorite 919, Zn 871,
+  Sb 608, Co 579, graphite 500, U 463, Au 438, Ti 386, Li 139, Be 134. Status mapping: operating -> PRODUCER (521), abandoned / historic /
+  closed -> PAST_PRODUCER (5,733), not operating / retention -> CARE_AND_MAINTENANCE (1,188), pending approval / under development ->
+  DEVELOPMENT (71); critical-raw-material points without a mine status -> OCCURRENCE / PROSPECT or UNKNOWN for deposits. Status, commodities
+  as published, significance and deposit size are in comments. RULES: the status is each survey's, often years old - say so; NO tonnage or
+  grade (deposit size only: SMALL / MEDIUM / LARGE / GIANT where given); many records are small historic workings, so for "major" deposits
+  prefer size LARGE / GIANT, PRODUCER status, CRMA strategic projects and documents; coverage is uneven by country (Germany, the UK, Italy
+  and Hungary remain thin) - say so for country comparisons; Poland's big copper district (KGHM Lubin-Glogow) may be missing or only in
+  older records. COUNTS: for "how many / which" in a country, run ONE query that returns count(*) OVER () AS total and count(*) OVER
+  (PARTITION BY status) AS status_total next to the listed rows (filter on country_name and the commodity symbol, e.g. 'W' = ANY(commodities))
+  and copy those totals; never count rows by hand or give a different number in the text. Credit MIN4EU / EGDI whenever these records are used.
 - AUSTRALIA (loaded 2026-11-08): about 131,000 active occurrences from the government surveys' own inventories, which replace the old thin
   USGS MRDS coverage (319 MRDS duplicates merged, MRDS row inactive; 861 other MRDS Australian points remain active, mostly sites the surveys
   do not list). Three sources,

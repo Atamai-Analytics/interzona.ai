@@ -1,0 +1,31 @@
+{
+  "version": "2026-11-11",
+  "notes": "Fresh checks for the MIN4EU European occurrences loaded 11 Nov 2026 (created_by migration_min4eu_20261111). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-min4eu-france-tungsten",
+      "cat": "fresh",
+      "q": "Which tungsten deposits and mines are there in France?",
+      "truth": {"n": "SELECT count(*) FROM core.occurrences WHERE is_active AND country_name = 'France' AND 'W' = ANY(commodities)"},
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the database occurrences for France with tungsten (most from the MIN4EU / EGDI dataset, BRGM data), gives a count and lists or summarises notable sites (e.g. Salau, Leucamp, Montredon or others actually in the data) with status as published. Says statuses are the survey's and often historic, and that no tonnage or grade is held (deposit size at most). Credits MIN4EU / EGDI (CC BY 4.0). Does not invent figures."
+    },
+    {
+      "id": "fresh-min4eu-portugal-lithium",
+      "cat": "fresh",
+      "q": "What lithium occurrences and deposits are recorded in Portugal?",
+      "truth": {"n": "SELECT count(*) FROM core.occurrences WHERE is_active AND country_name = 'Portugal' AND 'Li' = ANY(commodities)"},
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the database occurrences for Portugal with lithium (MIN4EU / EGDI plus any other sources), gives a count consistent with the data and names some sites; may add context from CRMA strategic projects or documents (e.g. Barroso) clearly labelled. Notes no grade/tonnage for MIN4EU records and that status is as published. Credits the sources."
+    },
+    {
+      "id": "fresh-min4eu-poland-coverage",
+      "cat": "fresh",
+      "q": "How many copper deposits in Poland do you have, and how complete is that?",
+      "truth": {"n": "SELECT count(*) FROM core.occurrences WHERE is_active AND country_name = 'Poland' AND 'Cu' = ANY(commodities)"},
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Gives the count from the data and says plainly that Polish coverage is thin: the MIN4EU Polish data was not loaded because its licence is non-commercial (CC BY-NC-ND), so major districts (e.g. KGHM's Lubin-Glogow / Legnica-Glogow copper district) may be missing or represented only by older records. Does not claim the list is complete."
+    }
+  ]
+}

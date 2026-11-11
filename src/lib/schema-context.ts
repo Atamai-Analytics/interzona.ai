@@ -383,20 +383,22 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   USGS_INDOPAC_GIS (2019) = Bangladesh, Bhutan, Brunei, Burma, Fiji, Malaysia, Mongolia, Nauru, New Caledonia, New Zealand, Papua New Guinea,
   Philippines, Singapore, Solomon Islands, South Korea, Sri Lanka, Taiwan, Timor-Leste, Vietnam (NOT Indonesia or India); USGS_CHINA_GIS (2019) = China;
   USGS_LAC_GIS (2014) = Latin America and the Caribbean; USGS_AFRICA_GIS (2018, Zambia 2017) = Africa.
-  PRESENTING CAPACITY - MANDATORY: every capacity table has a 'Product (as published)' column filled from product_form (plus product_descriptor
-  if any) and a unit column from capacity_unit; write the figure as published, e.g. "1,300,000 t - Ore" or "400,000 t - Concentrate" or
-  "300,000 t - Cathode". NEVER write 't Cu', 'contained copper' or 'metal' unless product_form itself says metal/cathode/refined/contained; if
-  product_form is empty, say "product not stated". State once that mine capacities may be ore or concentrate tonnage, not metal.
-  ANSWER CHECKLIST for any answer from these releases (do all five):
-  (a) FIRST LINE: "Source: U.S. Geological Survey, <release title> (Minerals Yearbook <year> data)" - e.g. "U.S. Geological Survey, Southwest
-      Asia mineral-industry GIS compilation (Minerals Yearbook 2018 data)" - always the words "Minerals Yearbook" and the one year.
-  (b) Get the full list with ONE query (facility + stage + product_form + capacity + capacity_unit + owners, one row per facility with rows combined
-      via string_agg) BEFORE writing; count the rows of that result yourself and use that number in every heading and sentence. Never write
-      "correction", "actually" or revise a count mid-answer; if a stage heading says N, that table has exactly N rows.
-  (c) Show the capacity of EVERY listed facility that has one (never answer without capacities); group tables by stage (mines; smelters / NPI /
-      ferronickel / matte plants; refineries; development projects).
-  (d) Include the sentence: "Mine capacities are as published by USGS - often ore or concentrate tonnage, not contained metal - so they cannot
-      be added to plant or metal figures."
+  QUERY core.facility_capacity_published FOR ANY CAPACITY ANSWER (all USGS facility sources: US, Africa and these four): it is
+  facility_capacity plus ready-made columns - stage_group (Mine / Concentrator / Smelter / Refinery / Brine operation / Other processing plant:
+  use it for every per-stage count and heading, COUNT(DISTINCT occurrence_id) GROUP BY stage_group), capacity_as_published (e.g. '1,300,000 t - Copper'), measure (what the tonnage is:
+  'contained metal/element content', 'ore or concentrate tonnage, not metal content', 'gross weight of the product, not metal content',
+  'metal, alloy, matte or refined product', 'weight of the compound' or 'measure not stated by USGS'), shared_capacity_note (USGS gives ONE
+  figure for several facilities of a complex, e.g. Escondida's 1.3 Mt copper is repeated on the mine, concentrator and two cathode plants -
+  count it once) and release (e.g. 'USGS Southwest Asia mineral-industry GIS compilation (Minerals Yearbook 2018 data)').
+  ANSWER CHECKLIST (do all five):
+  (a) FIRST LINE: "Source: U.S. Geological Survey, " + the release column, word for word (it carries "Minerals Yearbook <year> data").
+  (b) Get the full list with ONE query (facility, stage_group, capacity_as_published, measure, shared_capacity_note, owners; one row per
+      facility and stage_group, rows combined with string_agg, ORDER BY stage_group) BEFORE writing; the rows per stage_group in that result
+      are the counts for the stage headings - copy them, never estimate or revise a count mid-answer.
+  (c) Every capacity table has the columns Capacity (as published) and Measure, filled from capacity_as_published and measure word for word;
+      never write 't Cu', 'contained copper' or 'metal content' unless measure says so. Show capacity for every facility that has one.
+  (d) Say once under the table: where measure is not stated, USGS does not say whether a figure is ore, concentrate or metal content, so
+      figures of different stages or measures cannot be added; mark shared capacities "(shared - counted once)".
   (e) End with the out-of-date warning for that data year.
   * USGS_CHINA_GIS (Neustaedter and others 2023, doi:10.5066/P9HK2K8I): 1,770 facility sites (1,744 new) with 2,189 capacity rows from the
     Minerals Yearbook 2019 (revised), 336 exploration projects (stage last verified 2019-2023), 280 deposits.
@@ -585,7 +587,8 @@ AFRICA - USGS COMPILATION (USGS 2021 Africa GIS compilation, public domain, sour
   critical-minerals deposits): 1,190, of which 874 were already held (mostly MRDS) and only got missing commodities added, 316 new
   (is_deposit, status UNKNOWN - the source gives no status - deposit type in mineralization_style); (b) MINES AND PROCESSING PLANTS (fac:,
   USGS Minerals Yearbook, data year 2018, Zambia 2017; oil, gas and refinery facilities NOT loaded): 1,381 facility occurrences (1,255 new, the rest
-  attached to existing sites), with 1,912 rows in core.facility_capacity (same columns and RULES as the US facilities above; feature_type
+  attached to existing sites), with 1,912 rows in core.facility_capacity (same columns and RULES as the US facilities above; for capacities
+  shown in an answer query core.facility_capacity_published and use its capacity_as_published, measure, shared_capacity_note and release; feature_type
   'Mines and Quarries' / 'Mineral Processing Plants' / 'Brine'; facility_stage Mine, or for plants Smelter / Refinery / Concentrator taken
   from the published product, NULL where the product does not say - cement, steel, fertiliser, acid plants; product_form as published e.g.
   'Ore and concentrate', 'Refined', 'Cathode') and 3,259 owner/operator rows in core.occurrence_ownership (as_of_year = data year);

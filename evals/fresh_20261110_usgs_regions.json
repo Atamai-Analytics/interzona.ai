@@ -17,7 +17,7 @@
       "q": "What nickel smelters and mines are there in Indonesia and who owns them?",
       "truth": {"n": "SELECT count(DISTINCT fc.occurrence_id) FROM core.facility_capacity fc JOIN core.occurrences o USING (occurrence_id) WHERE fc.source_system = 'USGS_SWASIA_GIS' AND o.country_name = 'Indonesia' AND fc.commodity_name ILIKE '%nickel%'"},
       "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
-      "judge": "Uses the USGS Southwest Asia compilation (USGS_SWASIA_GIS) facilities and ownership for Indonesian nickel (mines, smelters, NPI/ferronickel plants) with capacities and owners as recorded. Clearly states the data year is 2018 (Minerals Yearbook 2018) and that Indonesia's nickel industry has expanded greatly since, so the list is out of date and incomplete. Does not sum ore and metal capacities. Credits USGS."
+      "judge": "Uses the USGS Southwest Asia compilation (USGS_SWASIA_GIS) facilities and ownership for Indonesian nickel (mines, smelters and matte, MHP or sulphate plants as recorded - the 2018 release has no nickel-pig-iron rows for Indonesia, so do not require them) with capacities and owners as recorded. States the data year 2018 (a source line naming Minerals Yearbook 2018 data is enough) and that Indonesia's nickel industry has expanded greatly since, so the list is out of date and incomplete. Does not sum ore and metal capacities. Credits USGS."
     },
     {
       "id": "fresh-usgs-chile-copper-capacity",
@@ -25,7 +25,7 @@
       "q": "Show the largest copper mines in Chile by capacity from your data.",
       "truth": {"n": "SELECT count(DISTINCT fc.occurrence_id) FROM core.facility_capacity fc JOIN core.occurrences o USING (occurrence_id) WHERE fc.source_system = 'USGS_LAC_GIS' AND o.country_name = 'Chile' AND fc.commodity_name ILIKE '%copper%'"},
       "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
-      "judge": "Uses the USGS Latin America compilation (USGS_LAC_GIS) and lists large Chilean copper mines (e.g. Escondida, Collahuasi, El Teniente, Los Pelambres, Chuquicamata) with capacity and units/product form as published. Says the data year is 2014 (the oldest of the USGS compilations) and figures may be out of date; notes that capacity may be ore or contained copper per the product form; does not add capacities across stages. Credits USGS."
+      "judge": "Uses the USGS Latin America compilation (USGS_LAC_GIS) and lists large Chilean copper mines (e.g. Escondida, Collahuasi, El Teniente, Los Pelambres, Chuquicamata) with capacity and units/product form as published. Says the data year is 2014 and figures may be out of date; says what each figure measures as published (USGS lists Chilean copper capacities only as 'Copper' without saying whether ore, concentrate or copper content - saying the measure is not stated, or showing a Measure column, meets this); treats a capacity USGS repeats across one complex (e.g. Escondida's 1.3 Mt on mine, concentrator and cathode plants) as one figure; does not add capacities across stages. Credits USGS."
     }
   ]
 }

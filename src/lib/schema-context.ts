@@ -378,6 +378,15 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
 - USGS REGIONAL FACILITIES (loaded 10 Nov 2026; U.S. Geological Survey "Compilation of Geospatial Data (GIS) for the Mineral Industries" releases,
   public domain, same structure as the Africa load): source_system / external_ids prefixes fac: (facilities), exp: (exploration), dev:
   (development projects), dep: (deposits); created_by migration_usgs_<region>_20261110.
+  WHICH RELEASE COVERS WHICH COUNTRY (name the release from facility_capacity.source_system, never from the region name - the release names are
+  misleading): USGS_SWASIA_GIS (data year 2018) = Afghanistan, Cambodia, INDIA, INDONESIA, Iran, Laos, Nepal, North Korea, Pakistan, Thailand;
+  USGS_INDOPAC_GIS (2019) = Bangladesh, Bhutan, Brunei, Burma, Fiji, Malaysia, Mongolia, Nauru, New Caledonia, New Zealand, Papua New Guinea,
+  Philippines, Singapore, Solomon Islands, South Korea, Sri Lanka, Taiwan, Timor-Leste, Vietnam (NOT Indonesia or India); USGS_CHINA_GIS (2019) = China;
+  USGS_LAC_GIS (2014) = Latin America and the Caribbean; USGS_AFRICA_GIS (2018, Zambia 2017) = Africa.
+  PRESENTING CAPACITY - MANDATORY: every capacity table has a 'Product (as published)' column filled from product_form (plus product_descriptor
+  if any) and a unit column from capacity_unit; write the figure as published, e.g. "1,300,000 t - Ore" or "400,000 t - Concentrate" or
+  "300,000 t - Cathode". NEVER write 't Cu', 'contained copper' or 'metal' unless product_form itself says metal/cathode/refined/contained; if
+  product_form is empty, say "product not stated". State once that mine capacities may be ore or concentrate tonnage, not metal.
   * USGS_CHINA_GIS (Neustaedter and others 2023, doi:10.5066/P9HK2K8I): 1,770 facility sites (1,744 new) with 2,189 capacity rows from the
     Minerals Yearbook 2019 (revised), 336 exploration projects (stage last verified 2019-2023), 280 deposits.
   * USGS_SWASIA_GIS (Padilla and others 2022, doi:10.5066/P9OCRYYO): India, Iran, Indonesia, Afghanistan, Pakistan, Thailand, North Korea,

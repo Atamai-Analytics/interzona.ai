@@ -343,7 +343,7 @@ export function GeochemApp() {
                   )}
                   {r.summary && (
                     <details className="text-xs text-gray-400 print:hidden">
-                      <summary className="cursor-pointer">Numbers</summary>
+                      <summary className="cursor-pointer">Numbers behind the interpretation</summary>
                       <pre className="mt-1 max-h-64 overflow-auto whitespace-pre-wrap break-words rounded bg-gray-950 p-2 text-[11px]">{r.summary}</pre>
                     </details>
                   )}

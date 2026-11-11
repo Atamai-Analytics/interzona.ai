@@ -145,8 +145,9 @@ core.occurrence_commodities: occurrence_id, commodity_id, commodity_role (PRIMAR
   core.occurrence_commodities to core.commodities and match commodity_name OR commodity_symbol (e.g. lithium = 'Lithium' or 'Li'). Do NOT search the
   occurrences.commodities array for the commodity's full name: most records hold the element symbol there ('Li', 'Cu', 'Au'), so a name match
   silently misses most of the sites (Argentina has 32 producing or past-producing lithium sites, none of which contain the word 'lithium' in that array).
-core.facility_capacity: annual capacity of US and African mines, smelters, refineries and plants by commodity (see the US and AFRICA facilities
-  paragraphs for columns and the do-not-add rules; source_system USGS_US_FACILITIES or USGS_AFRICA_GIS); core.occurrence_ownership: operator
+core.facility_capacity: annual capacity of mines, smelters, refineries and plants by commodity in the US, Africa, China, Southwest/South/
+  Southeast Asia, the Indo-Pacific and Latin America (see the US, AFRICA and USGS REGIONAL FACILITIES paragraphs for columns, data years and the
+  do-not-add rules; source_system USGS_US_FACILITIES, USGS_AFRICA_GIS, USGS_CHINA_GIS, USGS_SWASIA_GIS, USGS_INDOPAC_GIS, USGS_LAC_GIS); core.occurrence_ownership: operator
   and equity owners with shares for those facilities.
 core.commodities: commodity_id, commodity_name, commodity_symbol, commodity_category, is_critical_mineral.
   is_critical_mineral follows the USGS 2025 final critical minerals list (60 minerals), applied to
@@ -374,6 +375,36 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
 - AFRICA: mines, plants (with capacity and owners), deposits and exploration projects from the USGS Africa GIS compilation (source
   USGS_AFRICA_GIS, loaded 10 Nov 2026), plus artisanal (ASM) and large-scale mining areas in the DRC-Zambia Copperbelt mapped from 2019-2023
   imagery (source USGS_COPPERBELT_ASM). Their own reference notes (subject 'africa') hold the caveats - load them before answering.
+- USGS REGIONAL FACILITIES (loaded 10 Nov 2026; U.S. Geological Survey "Compilation of Geospatial Data (GIS) for the Mineral Industries" releases,
+  public domain, same structure as the Africa load): source_system / external_ids prefixes fac: (facilities), exp: (exploration), dev:
+  (development projects), dep: (deposits); created_by migration_usgs_<region>_20261110.
+  * USGS_CHINA_GIS (Neustaedter and others 2023, doi:10.5066/P9HK2K8I): 1,770 facility sites (1,744 new) with 2,189 capacity rows from the
+    Minerals Yearbook 2019 (revised), 336 exploration projects (stage last verified 2019-2023), 280 deposits.
+  * USGS_SWASIA_GIS (Padilla and others 2022, doi:10.5066/P9OCRYYO): India, Iran, Indonesia, Afghanistan, Pakistan, Thailand, North Korea,
+    Laos, Cambodia, Nepal...: 1,566 facility sites with 1,819 capacity rows (Minerals Yearbook 2018), 316 exploration projects (WMED, stage as
+    last verified, often 2000s-2010s), 1,974 deposits (1,787 new).
+  * USGS_INDOPAC_GIS (Trimmer and others 2024, doi:10.5066/P13YRCDU): Malaysia, Vietnam, Philippines, Mongolia, PNG, South Korea, New Zealand,
+    Burma, Bangladesh, Bhutan, Sri Lanka, New Caledonia, Taiwan...: 1,066 facility sites, 1,321 capacity rows (Minerals Yearbook 2019, revised),
+    683 exploration and 213 development projects (2020-2023).
+  * USGS_LAC_GIS (USGS 2017, ScienceBase 5804d720e4b0824b2d1c19c6): Latin America and the Caribbean: 1,057 facility sites, 1,310 capacity
+    rows (Minerals Yearbook 2014 - the OLDEST data here, 12 years old), 148 exploration projects (2015).
+  RULES (same as AFRICA, say them): (0) a facility has ONE ROW PER COMMODITY/PRODUCT in facility_capacity: count facilities with
+  COUNT(DISTINCT occurrence_id), list ONE line per facility (combine its rows), and make the count you state match the list (a few sites hold
+  SEVERAL USGS facilities with the same name and position - e.g. three Baotou rare-earth separation plants on one site; source_row_id starts
+  with each USGS facility id - say "N sites (M USGS facilities)" when they differ); ALWAYS show
+  product_form and capacity_unit exactly as published (e.g. '120,000 t ore', '300,000 t cathode') - never relabel a figure as metal content
+  ('t Cu') unless product_form says it is metal or contained metal; (1) give the EXACT DATA YEAR of the release with any capacity or status
+  (Latin America 2014, Southwest Asia 2018, China 2019, Indo-Pacific 2019 - one year per region, not a range) and say newer figures may differ
+  (for fast-growing industries such as Indonesian nickel, say plainly the list is out of date and incomplete); (2) status PRODUCER mostly means USGS's 'Assumed active' for that year, not verified;
+  (3) mine capacities are often ORE or gross tonnage, not metal (product_form 'Ore', 'Concentrate', capacity_notes), and several facilities can
+  share ONE capacity figure (shared_with_rows; e.g. Vale's Brazilian iron-ore systems repeat 120 Mt across several mines) - count it once and never
+  sum mine + smelter + refinery; (4) a handful of capacities that USGS published but that are impossible for one plant (e.g. 3,000 Mt/yr barite,
+  100 Mt/yr steel at one Korean plant, 150 Mt/yr at a small Brazilian iron-ore mine) were NOT loaded - capacity_notes says 'implausible ... not
+  loaded'; (5) exploration/development stages are as last verified (year in comments); (6) fuel (oil, gas, coal, refineries) was not loaded;
+  (7) many points are approximate (position_accuracy AREA_CENTROID). Credit: U.S. Geological Survey with the release name and DOI above.
+  NOT LOADED YET: the USGS 2024 Minerals Yearbook vol. III global facilities table (doi:10.5066/P1KEQASH, 157 countries, data year 2024, CC0) - it
+  has no coordinates; for Europe, Russia, Central Asia, Japan, Canada, Australia and the Middle East outside these releases, say that USGS
+  facility capacities are not in the database yet.
 
 - Finland: 16 deposits from Table 1 of the Nordic journal article (doc 74) are in core.occurrences
   (Talvivaara/Terrafame, Kevitsa, Sakatti, Aitolampi graphite, Rapasaaret lithium, Sokli, Ahmavaara,

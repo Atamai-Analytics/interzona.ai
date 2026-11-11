@@ -1059,14 +1059,18 @@ core.external_ids: external_id_id, entity_type ('OCCURRENCE' or 'SAMPLE'), entit
 core.data_sources: source_system (PK), publisher, dataset_name, licence, licence_url, attribution_required,
   attribution_text, is_loaded, licence_status, caveats, evidence_location, evidence_date.
 geochem.sample_occurrence_links: sample_id, occurrence_id, distance_m (integer metres), is_nearest (boolean). One row for every pair of a
-  geochemistry sample and an occurrence within 2,000 m (about 10.3M links): Tasmania 361,052 of 383,939 samples linked (281,613 within 500 m;
+  geochemistry sample and an occurrence within 2,000 m (about 12.3M links): Tasmania 361,052 of 383,939 samples linked (281,613 within 500 m;
   6.15M links because the drill core sits on dense clusters of state-survey workings, many named just 'Unnamed' - filter by commodity and
   status), Victoria 101,491 (46,702 within 500 m; 1.44M links, now against the state-survey occurrences), USGS 159,634 samples linked (60,076 within 500 m), Swedish rock
   samples 113,129 (82,081 within 500 m; 1.43M links because SGU's occurrences are dense: many are small historical iron workings and some are
   quarries, so filter by commodity and status),
   the deposit-geochemistry compilation GLOBAL_DEPOSIT_GEOCHEM_GA 19,763 (6,715 within 500 m), Argentina 4,188, Greenland 284, Finland 29 (Greenland has almost no known occurrences nearby).
-  Samples from Québec (rock and sediment), Saskatchewan, CDoGS, Athabasca and the Swedish till and plant sets are NOT in this table:
-  for those use a distance query (ST_DWithin on geog) against core.occurrences. It is the way to
+  Linked 11 Nov 2026: Québec rock (CANADA_QC_SIGEOM) 470,513 of 587,000 samples (254,700 within 500 m; 1.56M links - SIGÉOM rock
+  samples are mostly taken at showings), Québec sediment/soil/till 93,839 of 522,453 (14,850 within 500 m), Athabasca OF 7792 drill core
+  32,300 (25,127 within 500 m, on 458 occurrences), Swedish till/soil 10,739 and plants 6,856, Spain IGME 4,977, Saskatchewan 4,056,
+  CDoGS 2,702 of 233,875 (few because the BC, Ontario, Newfoundland and Nunavut deposit inventories are not loaded - no licence for
+  commercial use - so 'no nearby occurrence' there means none in our data, not none on the ground), Germany GFZ Erzgebirge 11.
+  It is the way to
   answer 'samples near deposits': distance_m <= 500 means AT the site, <= 2000 means NEAR; is_nearest marks each sample's closest
   occurrence (exactly one row per linked sample); samples with no occurrence within 2 km have no row, and the Swedish age points and Wu zircon
   points are not included. Proximity is NOT proof that a sample belongs to a deposit: many occurrence positions are only good to hundreds of

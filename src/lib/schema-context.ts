@@ -387,6 +387,17 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   if any) and a unit column from capacity_unit; write the figure as published, e.g. "1,300,000 t - Ore" or "400,000 t - Concentrate" or
   "300,000 t - Cathode". NEVER write 't Cu', 'contained copper' or 'metal' unless product_form itself says metal/cathode/refined/contained; if
   product_form is empty, say "product not stated". State once that mine capacities may be ore or concentrate tonnage, not metal.
+  ANSWER CHECKLIST for any answer from these releases (do all five):
+  (a) FIRST LINE: "Source: U.S. Geological Survey, <release title> (Minerals Yearbook <year> data)" - e.g. "U.S. Geological Survey, Southwest
+      Asia mineral-industry GIS compilation (Minerals Yearbook 2018 data)" - always the words "Minerals Yearbook" and the one year.
+  (b) Get the full list with ONE query (facility + stage + product_form + capacity + capacity_unit + owners, one row per facility with rows combined
+      via string_agg) BEFORE writing; count the rows of that result yourself and use that number in every heading and sentence. Never write
+      "correction", "actually" or revise a count mid-answer; if a stage heading says N, that table has exactly N rows.
+  (c) Show the capacity of EVERY listed facility that has one (never answer without capacities); group tables by stage (mines; smelters / NPI /
+      ferronickel / matte plants; refineries; development projects).
+  (d) Include the sentence: "Mine capacities are as published by USGS - often ore or concentrate tonnage, not contained metal - so they cannot
+      be added to plant or metal figures."
+  (e) End with the out-of-date warning for that data year.
   * USGS_CHINA_GIS (Neustaedter and others 2023, doi:10.5066/P9HK2K8I): 1,770 facility sites (1,744 new) with 2,189 capacity rows from the
     Minerals Yearbook 2019 (revised), 336 exploration projects (stage last verified 2019-2023), 280 deposits.
   * USGS_SWASIA_GIS (Padilla and others 2022, doi:10.5066/P9OCRYYO): India, Iran, Indonesia, Afghanistan, Pakistan, Thailand, North Korea,

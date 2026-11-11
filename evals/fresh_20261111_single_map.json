@@ -1,0 +1,18 @@
+{
+  "version": "2026-11-11",
+  "notes": "Regression check for maps of a single place (before 11 Nov 2026 the app needed 2+ places, so a one-plant answer promised a map that never appeared). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-single-map-lunen",
+      "cat": "maps",
+      "q": "Which secondary copper facilities in North Rhine-Westphalia are in the USGS 2024 facilities table, with capacity? Show them on a map.",
+      "expect": {
+        "tools_any": ["run_sql"],
+        "maps_min": 1,
+        "max_turns": 8
+      },
+      "judge": "Lists the Aurubis secondary copper plant in Lünen from the USGS 2024 Minerals Yearbook facilities table with its capacity as published (210,000 t, gross weight of product, not copper content) and data year 2024. A map is shown (the app showed at least one map); the answer may say a map is shown below and should say the point is placed at the town of Lünen, so it is approximate. Does not say a map failed or apologise for a missing map. Credits USGS."
+    }
+  ]
+}

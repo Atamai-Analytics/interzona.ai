@@ -403,7 +403,21 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   USGS_INDOPAC_GIS (2019) = Bangladesh, Bhutan, Brunei, Burma, Fiji, Malaysia, Mongolia, Nauru, New Caledonia, New Zealand, Papua New Guinea,
   Philippines, Singapore, Solomon Islands, South Korea, Sri Lanka, Taiwan, Timor-Leste, Vietnam (NOT Indonesia or India); USGS_CHINA_GIS (2019) = China;
   USGS_LAC_GIS (2014) = Latin America and the Caribbean; USGS_AFRICA_GIS (2018, Zambia 2017) = Africa.
-  QUERY core.facility_capacity_published FOR ANY CAPACITY ANSWER (all USGS facility sources: US, Africa and these four): it is
+  PLUS USGS_MYB2024 (loaded 11 Nov 2026): the USGS 2024 Minerals Yearbook vol. III global facilities table (157 countries outside the US, data
+  year 2024, currentness Sep 2025, CC0; doi:10.5066/P1KEQASH): 8,303 capacity rows on 5,915 sites - 3,532 new sites (UK 337, Germany 184,
+  Japan 150, Australia 149, Canada 138, Turkey 96, Saudi Arabia 65 ...) and 2024 rows added to 2,383 existing sites (including many from the
+  regional releases above). The table has NO coordinates: new sites sit at the town named in USGS's location text (GeoNames, CC BY 4.0;
+  position_accuracy TOWN_CENTROID - near that town, not at the mine); about 45% of its facilities (located only to a province - many in
+  India, Burma, Russia, Kazakhstan, Turkey, the UK) are NOT loaded, so lists are incomplete - say so. Its capacity_basis is published, so
+  measure is exact (e.g. '105,000 t - Concentrates Cu content' = contained copper). NEWEST FIGURES - MIXED RELEASES: a country can now have
+  facilities from the 2024 table AND from an older regional release (many older facilities have no 2024 row because the 2024 table located
+  them only to a province). Always filter is_latest_year = true (a 2024 figure supersedes older figures of the same commodity and stage
+  anywhere in the same complex - the mine, plant and smelter points of one operation are often separate sites), list ALL resulting facilities
+  with a 'Data year' column (2024 or the older release year) and a 'Release' column, give the headline count split by release (e.g. "23
+  facilities: 7 with 2024 figures, 16 known only from the 2018 Southwest Asia release"), and use the SOURCE line to name every release used.
+  Mention an older figure for a site that has a 2024 figure only if the user asks for history. For Europe, Russia, Central Asia, Japan, Canada, Australia and the Middle East the 2024 table is the only
+  USGS capacity source.
+  QUERY core.facility_capacity_published FOR ANY CAPACITY ANSWER (all USGS facility sources: US, Africa, these four and the 2024 table): it is
   facility_capacity plus ready-made columns - facility_key (THE unit to list and count, one line each: one USGS facility at one site; three
   Baotou separation plants share one site, and Nkana open pits A and E share one USGS id, so neither occurrence_id nor usgs_facility_id
   alone is right), stage_group (Mine / Concentrator / Smelter / Refinery / Brine operation / Other
@@ -417,10 +431,12 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   (b) Get the full list with ONE query BEFORE writing, one row per facility_key (rows combined with string_agg), with these count columns
       so you never count by hand: row_number() OVER (PARTITION BY stage_group ORDER BY name) AS n, count(*) OVER (PARTITION BY stage_group)
       AS stage_total, count(*) OVER () AS facilities_total, and (SELECT count(DISTINCT occurrence_id) ...same filter...) AS sites_total.
-      Example: WITH f AS (SELECT facility_key, stage_group, min(o.name) name, string_agg(DISTINCT capacity_as_published, '; ')
-      capacity, string_agg(DISTINCT measure, '; ') measure, ... FROM core.facility_capacity_published p JOIN core.occurrences o USING
-      (occurrence_id) WHERE ... GROUP BY 1, 2) SELECT *, row_number() OVER (PARTITION BY stage_group ORDER BY name) n, count(*) OVER
-      (PARTITION BY stage_group) stage_total, count(*) OVER () facilities_total FROM f ORDER BY stage_group, name.
+      Example: WITH f AS (SELECT facility_key, stage_group, release, data_year, min(o.name) name, string_agg(DISTINCT capacity_as_published,
+      '; ') capacity, string_agg(DISTINCT measure, '; ') measure, ... FROM core.facility_capacity_published p JOIN core.occurrences o USING
+      (occurrence_id) WHERE p.is_latest_year AND o.is_active AND ... GROUP BY 1, 2, 3, 4) SELECT *, row_number() OVER (PARTITION BY
+      stage_group ORDER BY name) n, count(*) OVER (PARTITION BY stage_group) stage_total, count(*) OVER (PARTITION BY release)
+      release_total, count(*) OVER () facilities_total FROM f ORDER BY stage_group, name. Show release and data_year as columns and split
+      the headline count with release_total.
       Headings and sentences use stage_total and facilities_total exactly; number each table's rows with n; if sites_total differs, say
       "N facilities on M sites" once. Never estimate, recount or revise a count in the text.
   (c) Every capacity table has the columns Capacity (as published) and Measure, filled from capacity_as_published and measure word for word;
@@ -428,7 +444,8 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   (d) Say once under the table: where measure is not stated, USGS does not say whether a figure is ore, concentrate or metal content, so
       figures of different stages or measures cannot be added; mark shared capacities "(shared - counted once)".
   (e) End with one short paragraph: the status shown (producing, etc.) is USGS's assumed status for that data year, not verified, and the
-      list is out of date - newer capacities and facilities may differ.
+      list is out of date - newer capacities and facilities may differ; if any 2024-table rows are shown, add that their positions are
+      approximate (placed at the named town) and that facilities located only to a province are missing.
   * USGS_CHINA_GIS (Neustaedter and others 2023, doi:10.5066/P9HK2K8I): 1,770 facility sites (1,744 new) with 2,189 capacity rows from the
     Minerals Yearbook 2019 (revised), 336 exploration projects (stage last verified 2019-2023), 280 deposits.
   * USGS_SWASIA_GIS (Padilla and others 2022, doi:10.5066/P9OCRYYO): India, Iran, Indonesia, Afghanistan, Pakistan, Thailand, North Korea,
@@ -449,10 +466,8 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   sum mine + smelter + refinery; (4) a handful of capacities that USGS published but that are impossible for one plant (e.g. 3,000 Mt/yr barite,
   100 Mt/yr steel at one Korean plant, 150 Mt/yr at a small Brazilian iron-ore mine) were NOT loaded - capacity_notes says 'implausible ... not
   loaded'; (5) exploration/development stages are as last verified (year in comments); (6) fuel (oil, gas, coal, refineries) was not loaded;
-  (7) many points are approximate (position_accuracy AREA_CENTROID). Credit: U.S. Geological Survey with the release name and DOI above.
-  NOT LOADED YET: the USGS 2024 Minerals Yearbook vol. III global facilities table (doi:10.5066/P1KEQASH, 157 countries, data year 2024, CC0) - it
-  has no coordinates; for Europe, Russia, Central Asia, Japan, Canada, Australia and the Middle East outside these releases, say that USGS
-  facility capacities are not in the database yet.
+  (7) many points are approximate (position_accuracy AREA_CENTROID; TOWN_CENTROID for the 2024 table). Credit: U.S. Geological Survey with
+  the release name and DOI above (2024 table: "U.S. Geological Survey, 2024 Minerals Yearbook, vol. III, facilities table, doi:10.5066/P1KEQASH").
 
 - Finland: 16 deposits from Table 1 of the Nordic journal article (doc 74) are in core.occurrences
   (Talvivaara/Terrafame, Kevitsa, Sakatti, Aitolampi graphite, Rapasaaret lithium, Sokli, Ahmavaara,

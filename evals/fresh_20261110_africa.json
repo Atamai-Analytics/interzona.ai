@@ -10,8 +10,13 @@
       "truth": {
         "n": "SELECT count(DISTINCT occurrence_id) FROM core.facility_capacity fc JOIN core.occurrences o USING (occurrence_id) WHERE fc.source_system='USGS_AFRICA_GIS' AND o.country_name='Zambia' AND fc.commodity_name='Copper'"
       },
-      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
-      "judge": "Uses the USGS Africa facilities (core.facility_capacity, source USGS_AFRICA_GIS) and lists Zambian copper facilities by stage (mines such as Lumwana, Kansanshi, Nkana, Konkola/Chingola, Mopani/Mufulira, Chibuluma; smelters/refineries such as Chambishi, Nkana, Mufulira). Says that mine capacities like Lumwana 21,000,000 t and Kansanshi 12,000,000 t are ORE tonnage (ore and concentrate), not tonnes of copper metal, and does not add mine and smelter/refinery capacities together. Says the data year is 2017 and that 'active' status is the USGS assumption from then. Credits the USGS Africa compilation. FAIL if it presents 21 Mt as copper metal production or sums capacities across stages."
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Uses the USGS Africa facilities (core.facility_capacity, source USGS_AFRICA_GIS) and lists Zambian copper facilities by stage (mines such as Lumwana, Kansanshi, Nkana, Konkola/Chingola, Mopani/Mufulira, Chibuluma; smelters/refineries such as Chambishi, Nkana, Mufulira). Says that mine capacities like Lumwana 21,000,000 t and Kansanshi 12,000,000 t are ORE tonnage (ore and concentrate), not tonnes of copper metal, and does not add mine and smelter/refinery capacities together. Says the data year is 2017 and that 'active' status is the USGS assumption from then. Credits the USGS Africa compilation. FAIL if it presents 21 Mt as copper metal production or sums capacities across stages. DATA UPDATE 11 Nov 2026: the USGS 2024 Minerals Yearbook table (USGS_MYB2024) is now loaded too, so a correct answer may combine releases: it should use the newest figure per facility, label every row's data year/release, and split the headline count by release. Judge counts against that combined list (the truth query counts only the older release), and accept 2024 figures where shown with their year."
     },
     {
       "id": "fresh-africa-li-exploration",
@@ -20,7 +25,12 @@
       "truth": {
         "n": "SELECT count(*) FROM core.occurrences o JOIN core.external_ids e ON e.entity_type='OCCURRENCE' AND e.entity_id=o.occurrence_id AND e.source_system='USGS_AFRICA_GIS' AND e.source_id LIKE 'exp:%' WHERE o.comments ILIKE '%Lithium%'"
       },
-      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 10
+      },
       "judge": "Lists African lithium projects (e.g. in Zimbabwe, Mali, Namibia, DR Congo - Manono, Goulamina, Bikita, Arcadia) using the database, including USGS exploration-database projects (source USGS_AFRICA_GIS exp:). For those projects it states that the stage is as last verified by USGS (with the year, between 2004 and 2018) and may be out of date; it may add newer information from curated or document sources and say which is newer. Does not present a 2010s 'exploration' stage as current without that caveat."
     },
     {
@@ -30,8 +40,13 @@
       "truth": {
         "n": "SELECT fc.facility_stage, count(DISTINCT fc.occurrence_id) FROM core.facility_capacity fc JOIN core.occurrences o USING (occurrence_id) WHERE fc.source_system='USGS_AFRICA_GIS' AND o.country_name='South Africa' AND fc.feature_type='Mineral Processing Plants' GROUP BY 1"
       },
-      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
-      "judge": "Counts South African processing plants from the USGS Africa facilities as DISTINCT facilities (not per-commodity rows), gives a breakdown by stage including the plants whose stage is not stated (cement, steel, fertiliser, acid...), roughly matching the truth query, and says the data year is 2018. Credits the USGS Africa compilation."
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Counts South African processing plants from the USGS Africa facilities as DISTINCT facilities (not per-commodity rows), gives a breakdown by stage including the plants whose stage is not stated (cement, steel, fertiliser, acid...), roughly matching the truth query, and says the data year is 2018. Credits the USGS Africa compilation. DATA UPDATE 11 Nov 2026: the USGS 2024 Minerals Yearbook table (USGS_MYB2024) is now loaded too, so a correct answer may combine releases: it should use the newest figure per facility, label every row's data year/release, and split the headline count by release. Judge counts against that combined list (the truth query counts only the older release), and accept 2024 figures where shown with their year."
     },
     {
       "id": "fresh-africa-copperbelt-asm",
@@ -40,7 +55,12 @@
       "truth": {
         "n": "SELECT o.country_name, count(*) FROM core.occurrences o WHERE o.created_by='migration_usgs_copperbelt_20261110' AND o.workings_type='Artisanal and small-scale mining' GROUP BY 1"
       },
-      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 10
+      },
       "judge": "Uses the USGS Copperbelt mining database (source USGS_COPPERBELT_ASM): counts ASM AREAS as records (about 150 in the DRC, 51 in Zambia, a few without a country - roughly matching the truth query), not 1 km cells, and describes where they cluster (e.g. around Kolwezi / Lualaba and Haut-Katanga in the DRC). Says the areas were mapped from 2019-2023 satellite imagery, that points are area centroids, and that commodities such as cobalt are only POSSIBLE (from the cadastre licence covering the area), not observed. Credits USGS (Boston and Alessi 2024). FAIL if it says the ASM areas are confirmed cobalt producers or reports cells as sites."
     },
     {
@@ -50,7 +70,12 @@
       "truth": {
         "n": "SELECT status FROM core.occurrences WHERE occurrence_id = 467931"
       },
-      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 8
+      },
       "judge": "Says Kansanshi is recorded as PRODUCER (active), and that this status comes from the USGS Minerals Yearbook facility data for 2017 ('Assumed Active', USGS's assumption) which replaced an older MRDS 'past producer' status on 10 Nov 2026. Gives the year of the status. FAIL if it says Kansanshi is a past producer or presents the status as verified current information without the year."
     }
   ]

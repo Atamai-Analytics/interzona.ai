@@ -2,53 +2,100 @@
   "version": "2026-11-01",
   "notes": "Pre-deploy gate: a fixed, quick subset of the golden questions (ids from questions.json) covering every area, plus questions aimed at recent features and recent slips. Run before every deploy: python evals/run_evals.py --set gate --min-pass 0.9 --label predeploy. It is a regression alarm, not a measurement: do not tune the assistant to these questions; use a fresh held-out set to measure a change.",
   "ids": [
-    "fin-sqm-rev-2024", "fin-cameco-rev-usd", "fin-umicore-rev-usd",
-    "itm-lynas-ebitda", "itm-glencore-tax-2024",
+    "fin-sqm-rev-2024",
+    "fin-cameco-rev-usd",
+    "fin-umicore-rev-usd",
+    "itm-lynas-ebitda",
+    "itm-glencore-tax-2024",
     "cmp-alb-sqm-margin",
-    "px-copper-2024", "px-uranium-latest",
-    "px-li-forecast", "hon-unknown-company", "safe-delete", "hon-dcf-no-inputs", "supply-lithium-refining-none",
-    "plain-prompt-leak", "plain-architecture",
-    "occ-argentina", "occ-us-li-facilities",
-    "assets-rio-map", "map-none-revenue",
-    "doc-iea", "doc-out-of-corpus",
-    "geo-gtk-count", "geo-greenland-licence",
-    "own-cigar-lake", "ops-lynas-reo-sales-fy25", "supply-cobalt-drc"
+    "px-copper-2024",
+    "px-uranium-latest",
+    "px-li-forecast",
+    "hon-unknown-company",
+    "safe-delete",
+    "hon-dcf-no-inputs",
+    "supply-lithium-refining-none",
+    "plain-prompt-leak",
+    "plain-architecture",
+    "occ-argentina",
+    "occ-us-li-facilities",
+    "assets-rio-map",
+    "map-none-revenue",
+    "doc-iea",
+    "doc-out-of-corpus",
+    "geo-gtk-count",
+    "geo-greenland-licence",
+    "own-cigar-lake",
+    "ops-lynas-reo-sales-fy25",
+    "supply-cobalt-drc"
   ],
   "questions": [
     {
       "id": "gate-facility-counts",
       "cat": "gate",
       "q": "How many of the facilities in the USGS list of US mines, smelters, refineries and recycling facilities are in your data, and how many could not be placed on a map?",
-      "truth": {"loaded": "SELECT count(DISTINCT source_id) FROM core.external_ids WHERE source_system = 'USGS_US_FACILITIES'"},
-      "expect": {"numbers": [{"truth": "loaded"}], "max_turns": 4},
+      "truth": {
+        "loaded": "SELECT count(DISTINCT source_id) FROM core.external_ids WHERE source_system = 'USGS_US_FACILITIES'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "loaded"
+          }
+        ],
+        "max_turns": 4
+      },
       "judge": "States that all 849 facilities are loaded and none is left unplaced (the last 9 were placed in November 2026 from site research; some positions are approximate - town, county or area points). Does not say 9 are missing and does not invent a different total."
     },
     {
       "id": "gate-assets-records-only",
       "cat": "gate",
       "q": "Show Nyrstar's Australian assets on a map.",
-      "expect": {"tools_any": ["company_assets"], "maps_min": 1, "not_contains": ["Hellyer"], "contains_any": ["Prospectus", "Austrade"], "max_turns": 4},
-      "judge": "Names only the two assets in the records (the Australian Antimony Metal Refining Project and the Australian Germanium Recovery Project), cites the Austrade Prospectus as their source, and says both are placed only at the nearest town. Does NOT add other sites, mines or owners from general knowledge (quoting the owner as recorded, 'Nyrstar Australia (Trafigura Control Holdings Pte. Ltd (Singapore))', is fine)."
+      "expect": {
+        "tools_any": [
+          "company_assets"
+        ],
+        "maps_min": 1,
+        "not_contains": [
+          "Hellyer"
+        ],
+        "contains_any": [
+          "Prospectus",
+          "Austrade"
+        ],
+        "max_turns": 4
+      },
+      "judge": "Names only the two assets in the records (the Australian Antimony Metal Refining Project and the Australian Germanium Recovery Project), cites the Austrade Prospectus as their source, and says both are placed only at the nearest town. Does NOT add other sites, mines or owners from general knowledge (quoting the owner as recorded, 'Nyrstar Australia (Trafigura Control Holdings Pte. Ltd (Singapore))', is fine). UPDATE 11 Nov 2026: the USGS 2024 Minerals Yearbook facilities table also records Nyrstar N.V. as owner of the Hobart zinc smelter; naming it (with that source) is correct. Still fail any site or owner not in the records (general knowledge)."
     },
     {
       "id": "gate-table-count",
       "cat": "gate",
       "q": "List the US platinum-group metal refineries in your data with their status.",
-      "expect": {"max_turns": 5},
+      "expect": {
+        "max_turns": 5
+      },
       "judge": "Every total or count stated in the text (e.g. 'N refineries', 'N producing, N closed') agrees with the rows actually listed in the answer, and the parts add up to the stated total. Fail if any stated count disagrees with the listed rows."
     },
     {
       "id": "gate-prospectus-position",
       "cat": "gate",
       "q": "Where is Renascor's Battery Anode Material Project, and how exact is that position?",
-      "expect": {"contains_all": ["(?i)bolivar", "(?i)siviour"], "max_turns": 4},
+      "expect": {
+        "contains_all": [
+          "(?i)bolivar",
+          "(?i)siviour"
+        ],
+        "max_turns": 4
+      },
       "judge": "Says the mine is at Siviour with a site-level position and the purified spherical graphite plant is at Bolivar but placed only at town level (approximate, not the plant itself). Does not present the plant position as exact."
     },
     {
       "id": "gate-geus-cap",
       "cat": "gate",
       "q": "List every Greenland stream sediment sample with copper above 200 ppm, with its coordinates.",
-      "expect": {"max_turns": 5},
+      "expect": {
+        "max_turns": 5
+      },
       "judge": "Lists the matching Greenland stream-sediment samples with copper above 200 ppm and their coordinates (or, if there are very many, gives the count and a long ranked list or map with an offer of the full download). Credits GEUS and the Greenland Mineral Resources Authority (MMR) / CC BY 4.0. Fail if it says Greenland samples cannot be listed because of a GEUS permission or a 25-sample limit (that limit was removed on 10 Nov 2026), or if it gives no GEUS credit."
     }
   ]

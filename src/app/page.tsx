@@ -834,6 +834,16 @@ export default function Home() {
             Drill intercepts
           </Link>
         )}
+        {who && !(who.role === "guest" && who.ended) && (
+          <Link
+            href="/tools/geochemistry"
+            className="shrink-0 md:self-center flex items-center gap-1.5 rounded-lg border border-sky-600 bg-sky-900/30 px-2.5 py-1.5 text-xs md:text-sm font-medium text-sky-100 hover:bg-sky-800/50"
+            title="Classification diagrams, norms, alteration, fertility and REE plots on chosen samples, with a written interpretation"
+          >
+            <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4" fill="currentColor"><path d="M8 1.5 14.5 13h-13z" fillOpacity="0.35" /><circle cx="6" cy="10" r="1.3" /><circle cx="9" cy="8" r="1.3" /><circle cx="10.5" cy="11" r="1.3" /></svg>
+            Geochemistry
+          </Link>
+        )}
         {who && (
           <div className="order-last md:order-none w-full md:w-auto md:ml-auto shrink-0 md:self-start text-left md:text-right text-xs text-gray-400 flex flex-wrap items-baseline gap-x-3 gap-y-0 md:block">
             {who.role === "guest" ? (

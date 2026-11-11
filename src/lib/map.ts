@@ -63,8 +63,9 @@ export function mapFromRows(rows: Record<string, unknown>[], title = "Places in 
     });
     if (points.length >= MAX_POINTS) break;
   }
-  // A single place is usually an exploratory lookup, not something to map.
-  if (points.length < 2) return null;
+  // A single place is often an exploratory lookup, so the chat route holds one-place maps back and shows only the last one, and only when the
+  // answer has no larger map (an answer about one plant still gets its map).
+  if (points.length < 1) return null;
   return { id: "map-" + Date.now() + "-" + Math.floor(Math.random() * 1e4), title, note: POSITION_NOTE, points };
 }
 

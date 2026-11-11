@@ -784,7 +784,8 @@ async function executeTool(
     const t = trimRows(limited.rows);
     const map = mapFromRows(limited.rows);
     if (map) extras.maps.push(map);
-    return capJson({ ...result, rows: t.rows, ...(limited.note ? { licence_note: limited.note } : {}) });
+    // Tell the model whether these rows made a map, so it never promises one that is not there.
+    return capJson({ ...result, rows: t.rows, map_shown: Boolean(map), ...(limited.note ? { licence_note: limited.note } : {}) });
   }
   if (name === "search_documents") {
     const embedding = await embedQuery(input.query as string);
@@ -1134,6 +1135,9 @@ export async function POST(req: NextRequest) {
   }
   const messages = parsed.messages;
   let sandboxRuns = 0;
+  // One-place maps are held back until the final answer (see mapFromRows): only the last one is shown, and only if no larger map was shown.
+  let pendingSingleMap: MapData | null = null;
+  let largerMapShown = false;
 
   const conversation: Anthropic.MessageParam[] = messages
     .filter((m) => m.content && m.content.trim())
@@ -1268,6 +1272,8 @@ export async function POST(req: NextRequest) {
           console.log(`[chat] turn ${turn} model tokens in=${u.input_tokens} cache_read=${u.cache_read_input_tokens ?? 0} cache_write=${u.cache_creation_input_tokens ?? 0} out=${u.output_tokens}`);
 
           if (response.stop_reason !== "tool_use" && response.stop_reason !== "pause_turn") {
+            if (pendingSingleMap && !largerMapShown) emit({ type: "map", map: pendingSingleMap });
+            pendingSingleMap = null;
             emit({ type: "turn_end", final: true });
             if (response.stop_reason === "max_tokens") {
               // Hit the token ceiling mid-turn: any tool_use block may be truncated, so treat this as final and say so plainly.
@@ -1309,7 +1315,10 @@ export async function POST(req: NextRequest) {
                 }
                 const result = await executeTool(block.name, input, localImages, loadedTopics, extras);
                 for (const ds of extras.datasets) emit({ type: "dataset", dataset: ds });
-                for (const mp of extras.maps) emit({ type: "map", map: mp });
+                for (const mp of extras.maps) {
+                  if (mp.points.length < 2) pendingSingleMap = mp;
+                  else { largerMapShown = true; emit({ type: "map", map: mp }); }
+                }
                 console.log(`[chat] turn ${turn} ${block.name} ok ${Date.now() - startedAt}ms`);
                 for (const img of localImages) {
                   collectedImages.push(img);

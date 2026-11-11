@@ -31,7 +31,7 @@
         ],
         "max_turns": 8
       },
-      "judge": "Uses the newest figure per facility: 2024 Minerals Yearbook figures where the 2024 table has the facility, and older (2018 Southwest Asia release) figures only for facilities the 2024 table lacks - each row labelled with its data year/release, and the headline count split by release. Shows capacities with product and measure (e.g. matte Ni content). Notes the list may be incomplete and that Indonesia's industry keeps growing. Credits USGS. Does not sum different measures or stages, and does not show the same plant twice with two years."
+      "judge": "Uses the newest figure per facility: 2024 Minerals Yearbook figures where the 2024 table has the facility, and older (2018 Southwest Asia release) figures only for facilities the 2024 table lacks - each row labelled with its data year/release (a split of the headline count by release is optional, but if given it must match the answer's own rows). A mine line and a smelter/plant line at the same site (e.g. Weda Bay mine and smelter, Sorowako mine and smelter) are separate facilities, not duplicates. Shows capacities with product and measure (e.g. matte Ni content). Notes the list may be incomplete and that Indonesia's industry keeps growing. Credits USGS. Does not sum different measures or stages, and does not show the same plant twice with two years."
     },
     {
       "id": "fresh-myb2024-germany-smelters",

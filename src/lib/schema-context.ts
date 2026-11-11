@@ -413,8 +413,9 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   facilities from the 2024 table AND from an older regional release (many older facilities have no 2024 row because the 2024 table located
   them only to a province). Always filter is_latest_year = true (a 2024 figure supersedes older figures of the same commodity and stage
   anywhere in the same complex - the mine, plant and smelter points of one operation are often separate sites), list ALL resulting facilities
-  with a 'Data year' column (2024 or the older release year) and a 'Release' column, give the headline count split by release (e.g. "23
-  facilities: 7 with 2024 figures, 16 known only from the 2018 Southwest Asia release"), and use the SOURCE line to name every release used.
+  with a 'Data year' column (2024 or the older release year), and use the SOURCE line to name every release used. A split of the headline
+  count by release is optional; give it only by copying release_total from core.facility_list (e.g. "21 facilities: 7 with 2024 figures,
+  14 known only from the 2018 Southwest Asia release") - never count releases yourself.
   Mention an older figure for a site that has a 2024 figure only if the user asks for history. For Europe, Russia, Central Asia, Japan, Canada, Australia and the Middle East the 2024 table is the only
   USGS capacity source.
   QUERY core.facility_capacity_published FOR ANY CAPACITY ANSWER (all USGS facility sources: US, Africa, these four and the 2024 table): it is
@@ -428,18 +429,20 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   count it once) and release (e.g. 'USGS Southwest Asia mineral-industry GIS compilation (Minerals Yearbook 2018 data)').
   ANSWER CHECKLIST (do all five):
   (a) FIRST LINE: "Source: U.S. Geological Survey, " + the release column, word for word (it carries "Minerals Yearbook <year> data").
-  (b) Get the full list with ONE query BEFORE writing, one row per facility_key (rows combined with string_agg), with these count columns
-      so you never count by hand: row_number() OVER (PARTITION BY stage_group ORDER BY name) AS n, count(*) OVER (PARTITION BY stage_group)
-      AS stage_total, count(*) OVER () AS facilities_total, and (SELECT count(DISTINCT occurrence_id) ...same filter...) AS sites_total.
-      Example: WITH f AS (SELECT facility_key, stage_group, release, data_year, min(o.name) name, string_agg(DISTINCT capacity_as_published,
-      '; ') capacity, string_agg(DISTINCT measure, '; ') measure, ... FROM core.facility_capacity_published p JOIN core.occurrences o USING
-      (occurrence_id) WHERE p.is_latest_year AND o.is_active AND ... GROUP BY 1, 2, 3, 4) SELECT *, row_number() OVER (PARTITION BY
-      stage_group ORDER BY name) n, count(*) OVER (PARTITION BY stage_group) stage_total, count(*) OVER (PARTITION BY release)
-      release_total, count(*) OVER () facilities_total FROM f ORDER BY stage_group, name. Show release and data_year as columns and split
-      the headline count with release_total.
-      Headings and sentences use stage_total and facilities_total exactly; number each table's rows with n; if sites_total differs, say
-      "N facilities on M sites" once. Never estimate, recount or revise a count in the text.
-  (c) Every capacity table has the columns Capacity (as published) and Measure, filled from capacity_as_published and measure word for word;
+  (b) Get the full list with ONE call BEFORE writing: SELECT * FROM core.facility_list('<country>', '<commodity substring>') - arguments
+      country (exact name, case-insensitive), commodity substring (e.g. 'nickel', 'rare', 'copper'), optional stage_group, optional
+      include_superseded (default false = newest figure per complex, already filtered); NULL skips a filter. It returns one row per
+      facility line (facility_key x stage_group) with name, country, data_year, release, commodities, capacity_as_published, measure,
+      shared_capacity_note, status, owners (as published, with share %), position_accuracy, lat, lon, and the counts already worked out:
+      n (row number within the stage), stage_total, release_total, facilities_total, sites_total. Filter with the arguments, not an outer
+      WHERE (the counts are those of the call's own list, so a WHERE on top leaves them describing the unfiltered list); add ORDER BY /
+      LIMIT on top as needed (for "largest": ORDER BY capacity_sort DESC NULLS LAST, only within one measure - units and measures differ; the counts
+      stay those of the whole list, so say "top 20 of <facilities_total>"). Use the hand-written
+      query on core.facility_capacity_published only for questions the function cannot answer (other groupings, sums, history).
+      Headings and sentences use stage_total, release_total and facilities_total exactly; number each table's rows with n; if sites_total
+      differs, say "N facilities on M sites" once. Never estimate, recount or revise a count in the text.
+  (c) Every capacity table (every stage's table, mines included) has the columns Capacity (as published), Measure and Data year, filled
+      from capacity_as_published, measure and data_year word for word - every row labelled, even when all rows share one year;
       never write 't Cu', 'contained copper' or 'metal content' unless measure says so. Show capacity for every facility that has one.
   (d) Say once under the table: where measure is not stated, USGS does not say whether a figure is ore, concentrate or metal content, so
       figures of different stages or measures cannot be added; mark shared capacities "(shared - counted once)".

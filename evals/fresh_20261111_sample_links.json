@@ -1,0 +1,24 @@
+{
+  "version": "2026-11-11",
+  "notes": "Fresh checks for sample->occurrence links added 11 Nov 2026 (Québec, Athabasca, Swedish till, CDoGS). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-links-quebec-lithium",
+      "cat": "geochemistry",
+      "q": "How many Québec rock samples were taken within 500 m of a lithium occurrence, and what are their highest lithium values?",
+      "truth": {
+        "n": "SELECT count(DISTINCT l.sample_id) FROM geochem.sample_occurrence_links l JOIN geochem.samples s ON s.sample_id = l.sample_id JOIN core.occurrences o ON o.occurrence_id = l.occurrence_id WHERE s.source_system = 'CANADA_QC_SIGEOM' AND l.distance_m <= 500 AND 'Li' = ANY(o.commodities)"
+      },
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses the sample-to-occurrence links (or an equivalent distance query) for Québec SIGÉOM rock samples and lithium occurrences; gives a count of samples within 500 m consistent with the truth query (within about 10%, or explains a different filter such as counting by occurrence) and lists some high lithium values with units. Says proximity is not proof that a sample belongs to the deposit. Credits the Québec government (SIGÉOM). Does not claim Québec samples are unlinked or unavailable."
+    },
+    {
+      "id": "fresh-links-cdogs-bc",
+      "cat": "geochemistry",
+      "q": "Are there federal (CDoGS) geochemistry samples near known mineral deposits in British Columbia?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Answers from the CDoGS samples and their links to occurrences in British Columbia. Must explain that the BC provincial deposit inventory (MINFILE) is not in the database (no licence for commercial use), so few or no BC samples are near a known occurrence in our data, and that this means 'none in our data', not that there are no deposits. Does not invent deposits."
+    }
+  ]
+}

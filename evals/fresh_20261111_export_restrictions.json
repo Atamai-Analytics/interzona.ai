@@ -1,0 +1,31 @@
+{
+  "version": "2026-11-11",
+  "notes": "Fresh checks for the OECD export-restrictions inventory loaded 11 Nov 2026 (markets.export_restrictions). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-exprestr-cobalt-2024",
+      "cat": "supply",
+      "q": "Which countries restricted cobalt exports in 2024, and with what kind of measures?",
+      "truth": {
+        "n": "SELECT count(DISTINCT country_iso3) FROM markets.export_restrictions WHERE commodity = 'Cobalt' AND year = 2024"
+      },
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the OECD export-restrictions inventory for 2024 and lists the countries with cobalt measures (the truth query counts distinct countries; the answer's country count must match it or explain a narrower filter) with the measure types named exactly (e.g. export tax, licensing requirement, export prohibition - a licensing requirement or VAT rebate cut is not called a ban). Says 2024 is the latest year in the inventory and later measures are not included. Credits the OECD inventory. Does not invent measures or rates."
+    },
+    {
+      "id": "fresh-exprestr-us-not-covered",
+      "cat": "supply",
+      "q": "Does the United States restrict exports of critical minerals according to your data?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the OECD export-restrictions inventory. Says the United States appears only for wood/log export measures (an export prohibition and licensing requirements on logs/timber, 2009-2024) and that no mineral or metal export restrictions are recorded for it in the inventory through 2024. Does not invent US mineral measures. Says later measures (after 2024) are not included. Credits the OECD inventory."
+    },
+    {
+      "id": "fresh-exprestr-china-gallium",
+      "cat": "supply",
+      "q": "What export restrictions does China have on gallium and germanium?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses the OECD inventory rows for China. Explains that gallium and germanium share one HS code group with several other metals (indium, vanadium, niobium, hafnium, rhenium), so the recorded measures (and any germanium oxide code 282560) are for that grouped code or for products as named in the law. Names the measure types and years as recorded (the inventory runs to 2024). Says measures after 2024 are not in the data and does not add them from memory as if they came from the data. Credits the OECD inventory."
+    }
+  ]
+}

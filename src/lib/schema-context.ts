@@ -1835,6 +1835,38 @@ markets.fx_rates: exchange rates, LOCAL currency units per 1 US dollar (source B
   monthly from 1945 (CAD), 1957 (AUD, CNY), 1974 (EUR), 1993-11 (KZT), 1900 (ZAR); monthly data run
   to 2026-09 (KZT to 2026-08); annual rows to 2025. USD itself is not stored (rate 1). These are
   market rates from one source; they are not the rates companies used in their own reporting.
+
+markets.export_restrictions: EXPORT RESTRICTIONS on minerals, metals, scrap and wood - the OECD Inventory of Export Restrictions on Critical Raw
+  Materials (loaded 11 Nov 2026; data years 2009-2024, OECD update 25 Sep 2026). One row per country x product (HS2007 6-digit code) x measure x
+  year, as published: country_iso3, country_name, hs6, hs6_description, commodity (OUR grouping of the HS code, e.g. 'Cobalt' = cobalt ores 2605
+  + cobalt metal 8105 + oxides; 'Lithium' = lithium oxide/hydroxide 282520 and lithium carbonate 283691 (Zimbabwe's and Argentina's lithium measures
+  are recorded under these two codes; Brazil's 'lithium and its compounds' licensing sits under 280519) - there is no lithium-ore (spodumene)
+  code in this inventory, so quote the HS codes and product wording as recorded and do not relabel them as ore; gallium and germanium metal share one group 'Germanium,
+  gallium, indium, vanadium, niobium, hafnium, rhenium (grouped)' - say the HS code also covers indium, vanadium, niobium, hafnium and
+  rhenium, naming them; germanium oxides have their own code 282560), product_as_in_law (the product as
+  the national law names it - use it to tell which metal a grouped code means), measure_type (Licensing requirement, Export tax, Other export
+  measures, Fiscal tax on exports, Export prohibition, VAT tax rebate reduction / withdrawal, Export surtax, Export quota, Restriction on
+  customs clearance point for exports, Domestic market obligation, Minimum export price / price reference for exports, Qualified exporters
+  list, Captive mining), year, value_text (as published: a rate, 'N' = no value, or wording such as '15%, but not less than 100 EUR per tonne'),
+  value_numeric (only when value_text is a plain number) with value_unit, direction_of_change (introduction, left unchanged, increase,
+  decrease, extension, elimination, partial elimination, revision, reintroduction), date_introduced, date_ending, is_temporary, exemptions,
+  legal_basis, document_name, document_link, agency_in_charge, purpose.
+  RULES: 2024 is the latest year - 'current' means year = 2024 (say "as of 2024 in the OECD inventory") and a measure whose 2024 row says
+  'elimination' was removed during 2024. Measures after 2024 (e.g. any 2025-2026 export controls) are NOT in this table: say so and do not
+  fill them in from memory. Count countries or products with count(DISTINCT ...), never rows (one measure repeats every year it stays in
+  force). The 60 countries in the table are those with at least one restriction found; OECD reviewed 22 more and found none 2009-2024
+  (Austria, Belgium, Bulgaria, Czechia, Denmark, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Korea, Netherlands, New
+  Caledonia, Norway, Poland, Portugal, Slovak Republic, Spain, Sweden, United Kingdom); any country in neither list is simply not covered -
+  never say it has no restrictions. Several countries appear ONLY for wood or scrap: the United States, Australia and Canada have only log /
+  timber export measures in this inventory (no mineral or metal measures recorded 2009-2024) - say exactly that; Chile has a fiscal tax on
+  copper exports. Always check the commodity before saying a country restricts minerals. A VAT rebate cut and a licensing requirement are not bans: name
+  the measure type exactly. Some legal-document titles have broken accents in OECD's own file - quote them as stored or leave them out.
+  Example (who restricts cobalt exports in 2024): SELECT country_name, measure_type, string_agg(DISTINCT value_text || coalesce(' ' ||
+  value_unit, ''), '; ') AS value, count(DISTINCT hs6) AS products, (SELECT count(DISTINCT country_iso3) FROM markets.export_restrictions
+  WHERE commodity = 'Cobalt' AND year = 2024) AS countries_total FROM markets.export_restrictions WHERE commodity = 'Cobalt' AND year = 2024
+  GROUP BY 1, 2 ORDER BY 1, 2. The rows are country x measure, so NEVER count countries from them by hand: quote countries_total for "how many
+  countries", and for counts per measure type run count(DISTINCT country_iso3) ... GROUP BY measure_type. Credit: OECD (2026), Inventory of Export Restrictions on Critical Raw Materials, OECD Data Explorer
+  (accessed 11 November 2026).
 `,
   project_economics: `
 CURRENT run_financial_model SCRIPTS:
@@ -1889,7 +1921,7 @@ const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   financials:
     /financ|revenue|income|profit|margin|who owns|owner(?:ship)?|stake|interest in|joint venture|\bjv\b|which (?:projects|assets|mines)|primary commodity|peer group|sector|produc(?:tion|ed)|sales volume|volumes?|realis|realiz|unit cost|cash cost|aisc|output|\bdebt\b|cash ?flow|balance sheet|ebitda|\beps\b|capex|equity|assets|liabilit|compan|earnings|dividend|\bpeers?\b|\broe\b|\broa\b|turnover|sales|loss|impairment|albemarle|lynas|iluka|sqm|glencore|umicore|cameco|syrah|neo perf|mp materials|energy fuels|south32|rio tinto|sibanye|impala|kazatomprom|northern rare earth|pilbara|\bpls\b|liontown|arafura|paladin|amaroq/i,
   markets:
-    /\bprice|pricing|spot|\$ ?\/|usd per|per (tonne|ton|pound|ounce|kg|kilogram)|exchange rate|\bfx\b|currenc|\busd\b|\baud\b|\bcad\b|\beur\b|\bgbp\b|\bzar\b|\bcny\b|\bkzt\b|dollar|convert|world bank|\bimf\b|pink sheet/i,
+    /\bprice|pricing|spot|\$ ?\/|usd per|per (tonne|ton|pound|ounce|kg|kilogram)|exchange rate|\bfx\b|currenc|\busd\b|\baud\b|\bcad\b|\beur\b|\bgbp\b|\bzar\b|\bcny\b|\bkzt\b|dollar|convert|world bank|\bimf\b|pink sheet|\bexports?\b[^.?!]{0,40}\b(ban|restrict|tax|dut|quota|control|licen|prohibit|polic|measure)|\b(ban|bans|banned|restrict\w*|quota|duty|duties|prohibit\w*|control\w*)\b[^.?!]{0,40}\bexports?\b|trade restrict|embargo|\boecd\b/i,
   project_economics:
     /\bdcf\b|\bnpv\b|\birr\b|payback|discount rate|financial model|project economics|sensitivity|capital cost|operating cost|feasibility|cash flow model/i,
 };

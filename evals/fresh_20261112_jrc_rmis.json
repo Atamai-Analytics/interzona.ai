@@ -1,0 +1,31 @@
+{
+  "version": "2026-11-12",
+  "notes": "Fresh checks for JRC RMIS EU-owned indicators and EU trade loaded 12 Nov 2026 (markets.rmis_*). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-rmis-graphite-eu-sourcing",
+      "cat": "supply",
+      "q": "How dependent is the EU on imports of natural graphite, and where does it get it from?",
+      "truth": {
+        "n": "SELECT value_numeric FROM markets.rmis_indicators WHERE material = 'Graphite-natural' AND indicator = 'ir1'"
+      },
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the JRC RMIS EU indicators: EU import reliance for natural graphite of 99% (the truth value) and EU sourcing led by China (40%), Brazil (13%) and Mozambique (12%), with country names written out. Says these are 2016-2020 figures from the 2023 EU critical raw materials assessment (not current) and that they describe the EU's position. Credits the JRC Raw Materials Information System. Does not invent other shares."
+    },
+    {
+      "id": "fresh-rmis-gallium-eu",
+      "cat": "supply",
+      "q": "What is the EU's import reliance for gallium and who supplies it?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the JRC RMIS EU indicators for gallium: import reliance for processed/refined gallium of 98% and EU sourcing led by China (69%), then the United States (10%) and the United Kingdom (9%). Gives the 2016-2020 reference period from the 2023 assessment. Credits the JRC Raw Materials Information System. Does not quote an EU supply-risk score as if it came from this data."
+    },
+    {
+      "id": "fresh-rmis-lithium-eu-trade",
+      "cat": "supply",
+      "q": "What was the EU's trade balance in lithium in 2025, by value-chain stage?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the JRC RMIS EU trade series (Eurostat Comext) for lithium in 2025 by value-chain stage: processing/refining exports about EUR 52 million, imports about EUR 126.6 million, a deficit of about EUR 74.6 million. States the figures are in euros (not US dollars) and are extra-EU trade. Credits JRC RMIS / Eurostat. Does not convert to dollars without saying so and does not invent other stages."
+    }
+  ]
+}

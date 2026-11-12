@@ -1913,6 +1913,30 @@ EU VIEW - JRC Raw Materials Information System (RMIS, loaded 12 Nov 2026; EU-own
   asked and point to the 2023 assessment report in the library if one is found); for world production and reserves use the
   supply-concentration tool (USGS), not RMIS. Credit: European Commission, Joint Research Centre, Raw Materials Information System (RMIS),
   CC BY 4.0 (EU trade based on Eurostat Comext).
+
+EITI - extractive-sector PAYMENTS, REVENUES and PRODUCTION disclosed by EITI implementing countries (EITI database, loaded 12 Nov 2026;
+  55 reporting countries, fiscal years 1999-2024, oil and gas as well as mining). Tables (country_name as EITI spells it, e.g. 'DR Congo',
+  'Congo', 'Zambia'): markets.eiti_payments (company-reported payments to governments: year, country_name, company_name, project_name,
+  gov_entity_name, revenue_stream_name (national wording), gfs_code / gfs_name (IMF classification, e.g. 'Royalties', 'Ordinary taxes on
+  income, profits and capital gains'), payment_value + currency_code, payment_value_usd (converted by EITI), payment_in_kind);
+  markets.eiti_revenues (government-reported revenues by stream: year, country_name, gov_entity_name, sector_name, gfs_name,
+  revenue_value_usd); markets.eiti_production_exports (country totals: year, indicator_label 'Production by commodity, volume / value',
+  'Exports by commodity, volume / value', commodity (EITI name with HS code, e.g. 'Copper ores and concentrates (2603)'), hs4,
+  commodity_group (our grouping, same as the trade tables), value_numeric, value_usd, unit); markets.eiti_project_production (project_name,
+  commodity_name, production_volume + production_unit, production_value_usd, project_phase); markets.eiti_projects, markets.eiti_companies
+  (sectors, countries_of_operation, first/last_year_reported), markets.eiti_countries (membership_status, first/last_year_covered),
+  markets.eiti_commodities.
+  RULES: only EITI implementing countries are covered and each country only for the years it has reported (check
+  markets.eiti_countries.last_year_covered; e.g. DR Congo payments run to 2019) - say the year and never call it current; when the year
+  asked for is not covered, say so and then GIVE the latest covered year's figures in the same answer (do not just offer them), credited
+  to the EITI database; payments and
+  revenues are two sides of the same flows (company-reported vs government-reported) - never add them together, say which side you used;
+  quote USD from the *_usd columns and say "converted by EITI", or the local currency with its code; a company's total is the sum of its
+  payment rows for that country and year (several revenue streams and government entities); figures are as disclosed in EITI reports and
+  may be revised. Licence: the EITI database invites reuse but states no formal licence (we have asked EITI to confirm) - always credit
+  "Extractive Industries Transparency Initiative (EITI), EITI database" and the reporting country. Example (top payers in Zambia's
+  mining sector, 2022): SELECT company_name, round(sum(payment_value_usd)/1e6, 1) AS usd_million FROM markets.eiti_payments WHERE
+  country_name = 'Zambia' AND year = 2022 GROUP BY 1 ORDER BY 2 DESC NULLS LAST LIMIT 10.
 `,
   project_economics: `
 CURRENT run_financial_model SCRIPTS:
@@ -1967,7 +1991,7 @@ const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   financials:
     /financ|revenue|income|profit|margin|who owns|owner(?:ship)?|stake|interest in|joint venture|\bjv\b|which (?:projects|assets|mines)|primary commodity|peer group|sector|produc(?:tion|ed)|sales volume|volumes?|realis|realiz|unit cost|cash cost|aisc|output|\bdebt\b|cash ?flow|balance sheet|ebitda|\beps\b|capex|equity|assets|liabilit|compan|earnings|dividend|\bpeers?\b|\broe\b|\broa\b|turnover|sales|loss|impairment|albemarle|lynas|iluka|sqm|glencore|umicore|cameco|syrah|neo perf|mp materials|energy fuels|south32|rio tinto|sibanye|impala|kazatomprom|northern rare earth|pilbara|\bpls\b|liontown|arafura|paladin|amaroq/i,
   markets:
-    /\bprice|pricing|spot|\$ ?\/|usd per|per (tonne|ton|pound|ounce|kg|kilogram)|exchange rate|\bfx\b|currenc|\busd\b|\baud\b|\bcad\b|\beur\b|\bgbp\b|\bzar\b|\bcny\b|\bkzt\b|dollar|convert|world bank|\bimf\b|pink sheet|\bexports?\b[^.?!]{0,40}\b(ban|restrict|tax|dut|quota|control|licen|prohibit|polic|measure)|\b(ban|bans|banned|restrict\w*|quota|duty|duties|prohibit\w*|control\w*)\b[^.?!]{0,40}\bexports?\b|trade restrict|embargo|\boecd\b|\bimport(s|ed|er|ers|ing)?\b|\bexport(s|ed|er|ers|ing)?\b|trade flow|\btrade\b|shipment|who (buys|supplies|sells)|\bbaci\b|comtrade|import relian|import dependen|self-suffic|recycling (input )?rate|eol-rir|\brmis\b|\bjrc\b|(eu|europe\w*|european union)('s)? (sourc|supplier|suppl|import|depend|relian|recycl)|where does (the )?(eu|europe) |end[- ]uses?\b|main uses/i,
+    /\bprice|pricing|spot|\$ ?\/|usd per|per (tonne|ton|pound|ounce|kg|kilogram)|exchange rate|\bfx\b|currenc|\busd\b|\baud\b|\bcad\b|\beur\b|\bgbp\b|\bzar\b|\bcny\b|\bkzt\b|dollar|convert|world bank|\bimf\b|pink sheet|\bexports?\b[^.?!]{0,40}\b(ban|restrict|tax|dut|quota|control|licen|prohibit|polic|measure)|\b(ban|bans|banned|restrict\w*|quota|duty|duties|prohibit\w*|control\w*)\b[^.?!]{0,40}\bexports?\b|trade restrict|embargo|\boecd\b|\bimport(s|ed|er|ers|ing)?\b|\bexport(s|ed|er|ers|ing)?\b|trade flow|\btrade\b|shipment|who (buys|supplies|sells)|\bbaci\b|comtrade|import relian|import dependen|self-suffic|recycling (input )?rate|eol-rir|\brmis\b|\bjrc\b|(eu|europe\w*|european union)('s)? (sourc|supplier|suppl|import|depend|relian|recycl)|where does (the )?(eu|europe) |end[- ]uses?\b|main uses|\beiti\b|royalt|payments? to (the )?(government|state)|government revenue|tax(es)? paid|paid (in )?tax|fiscal (regime|revenue|take)|extractive (sector|industr)|transparency/i,
   project_economics:
     /\bdcf\b|\bnpv\b|\birr\b|payback|discount rate|financial model|project economics|sensitivity|capital cost|operating cost|feasibility|cash flow model/i,
 };

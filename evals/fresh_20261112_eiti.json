@@ -1,0 +1,31 @@
+{
+  "version": "2026-11-12",
+  "notes": "Fresh checks for the EITI database loaded 12 Nov 2026 (markets.eiti_*). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-eiti-zambia-top-payers",
+      "cat": "supply",
+      "q": "Which mining companies paid the most to the Zambian government in 2022?",
+      "truth": {
+        "n": "SELECT round(sum(payment_value_usd)/1e6, 1) FROM markets.eiti_payments WHERE country_name = 'Zambia' AND year = 2022 AND company_name = 'Kansanshi Mining Plc'"
+      },
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the EITI company payments for Zambia, 2022, and ranks companies with Kansanshi Mining first (its total should match the truth figure, about USD 611 million, within 2%), followed by First Quantum's Trident and Lumwana. Says the USD figures were converted by EITI and are company-reported payments. Credits the EITI database. Does not add government-reported revenues to company payments and does not invent figures."
+    },
+    {
+      "id": "fresh-eiti-zambia-copper-production",
+      "cat": "supply",
+      "q": "According to EITI, how much copper did Zambia produce and export in 2022?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the EITI production and exports for Zambia 2022: copper production about 763,550 tonnes and exports about 1,242,748 tonnes, with values if shown, naming the HS code/commodity as recorded (copper ores and concentrates or copper). May note that exports can exceed production (stock, imported concentrate or different product forms). Credits the EITI database and the year. Does not invent figures."
+    },
+    {
+      "id": "fresh-eiti-drc-coverage",
+      "cat": "supply",
+      "q": "What did mining companies pay the DRC government in 2023?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the EITI data and says that company payments for DR Congo in the EITI database run only to 2019 (no 2023 figures), offering the latest available year instead with figures from that year. Does not present any 2023 figure for DR Congo company payments and does not invent figures. Credits the EITI database."
+    }
+  ]
+}

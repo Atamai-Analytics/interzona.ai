@@ -1896,9 +1896,12 @@ markets.trade_flows / markets.trade_flows_named: international TRADE in minerals
   AS tonnes FROM markets.trade_flows_named WHERE exporter_iso3 = 'COD' AND importer_iso3 = 'CHN' AND commodity = 'Cobalt' AND year >= 2021
   GROUP BY 1, 2, 3), r AS (SELECT *, rank() OVER (PARTITION BY year ORDER BY usd_million DESC) AS rank_in_year FROM f) SELECT year, hs6,
   product, round(usd_million, 1) AS usd_million, round(tonnes) AS tonnes, rank_in_year, count(*) OVER (PARTITION BY hs6) AS
-  years_with_flows, count(*) FILTER (WHERE rank_in_year = 1) OVER (PARTITION BY hs6) AS years_ranked_first, (SELECT count(DISTINCT year)
-  FROM f) AS years_total FROM r ORDER BY year, rank_in_year. Write summary sentences only from these columns, e.g. "810520 was the largest
-  code in <years_ranked_first> of <years_total> years" - never "every year", "most years" or "N of M years" from your own counting. For shares, divide by the world total of the SAME
+  years_with_flows, count(*) FILTER (WHERE rank_in_year = 1) OVER (PARTITION BY hs6) AS years_ranked_first, min(usd_million) OVER
+  (PARTITION BY hs6) AS min_usd_million, max(usd_million) OVER (PARTITION BY hs6) AS max_usd_million, (SELECT count(DISTINCT year) FROM f)
+  AS years_total FROM r ORDER BY year, rank_in_year. Write summary sentences only from these columns, e.g. "810520 was the largest code in
+  <years_ranked_first> of <years_total> years" or "810590 ranged from <min_usd_million> to <max_usd_million>" - never "every year", "most
+  years", "under $X" or "N of M years" from your own counting. The year filter must cover EVERY year you mention: if you will say anything
+  about 2012-2020, run the pattern from 2012 (BACI starts in 2012), not from 2021; never describe a year that is not in your result rows. For shares, divide by the world total of the SAME
   product and year from this table (SUM over all exporters) and say it is a share of recorded trade, not of production (use the
   supply-concentration tool for production). Count partners with count(DISTINCT ...). Example (top exporters of lithium carbonate, 2023):
   SELECT exporter, round(sum(value_kusd)/1000, 1) AS usd_million, round(sum(quantity_t)) AS tonnes, round(100*sum(value_kusd)/sum(sum(value_kusd))

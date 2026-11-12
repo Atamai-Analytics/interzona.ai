@@ -11,8 +11,10 @@ import { tradeComparison } from "@/lib/trade";
 // Sources whose licence requires a credit in every answer that uses them. If the final answer does not mention the source, the
 // credit line is appended (models forget it now and then even when told to).
 const DATA_CREDITS: { key: string; tool?: string; sql: RegExp; mention: RegExp; line: string }[] = [
-  { key: "baci", tool: "trade_comparison", sql: /\bmarkets\.trade_(flows|flows_named|products|countries)\b/i, mention: /\bBACI\b/i,
+  { key: "baci", tool: "trade_comparison", sql: /\bmarkets\.trade_(flows|flows_named|products|countries)\b/i, mention: /\bCEPII\b/i,
     line: "Source: CEPII BACI (version 202601, HS12), Gaulier and Zignago (2010), Etalab Open Licence 2.0." },
+  { key: "baci_units", tool: "trade_comparison", sql: /\bmarkets\.trade_(flows|flows_named)\b/i, mention: /current (US|U\.S\.)\s?(dollars|\$)|current US\$|US\$[^.]{0,40}current/i,
+    line: "Trade values are in current US dollars; tonnes are the weight of the product shipped, not metal content." },
   { key: "oecd_exp", sql: /\bmarkets\.export_restrictions\b/i, mention: /\bOECD\b/,
     line: "Source: OECD (2026), Inventory of Export Restrictions on Critical Raw Materials, OECD Data Explorer." },
   { key: "rmis", sql: /\bmarkets\.rmis_/i, mention: /\b(RMIS|Raw Materials Information System)\b/i,

@@ -120,7 +120,16 @@ export async function tradeComparison(input: Record<string, unknown>): Promise<O
     const mn = rk.reduce((a, b) => (b.usd_million < a.usd_million ? b : a));
     const mx = rk.reduce((a, b) => (b.usd_million > a.usd_million ? b : a));
     const sum = rk.reduce((s, r) => s + r.usd_million, 0);
-    return { key: k, label: lbl, total_usd_million: r1(sum), years_with_flows: withFlow.length, years_ranked_first: firstYears.length, ranked_first_in: yearList(firstYears) || "none", no_recorded_flow_in: yearList(noFlow) || "none", min: { usd_million: r1(mn.usd_million), year: mn.year }, max: { usd_million: r1(mx.usd_million), year: mx.year } };
+    // share of each year's total (a year with no row counts as 0%), so "small" / "large" claims can be checked against numbers
+    const shares = allYears.filter((y) => totals.has(y)).map((y) => {
+      const r = rk.find((x) => x.year === y);
+      const tot = totals.get(y)!.usd;
+      return { year: y, pct: tot > 0 && r ? (r.usd_million / tot) * 100 : 0 };
+    });
+    const sMin = shares.reduce((a, b) => (b.pct < a.pct ? b : a));
+    const sMax = shares.reduce((a, b) => (b.pct > a.pct ? b : a));
+    const over20 = shares.filter((s) => s.pct >= 20).map((s) => s.year);
+    return { key: k, label: lbl, total_usd_million: r1(sum), years_with_flows: withFlow.length, years_ranked_first: firstYears.length, ranked_first_in: yearList(firstYears) || "none", no_recorded_flow_in: yearList(noFlow) || "none", min: { usd_million: r1(mn.usd_million), year: mn.year }, max: { usd_million: r1(mx.usd_million), year: mx.year }, share_of_year_total_pct: { min: r1(sMin.pct), min_year: sMin.year, max: r1(sMax.pct), max_year: sMax.year, years_at_or_above_20pct: yearList(over20) || "none" } };
   }).sort((a, b) => b.total_usd_million - a.total_usd_million);
 
   // ---- ready-made statements -----------------------------------------------------------------------------------------------------------
@@ -146,6 +155,9 @@ export async function tradeComparison(input: Record<string, unknown>): Promise<O
     const prevT = totals.get(prevY)!.usd;
     statements.push(`From ${prevY} to ${lastY} the total went from ${usd(prevT)} to ${usd(lastT)} (${prevT > 0 ? `${lastT >= prevT ? "+" : ""}${r1(((lastT - prevT) / prevT) * 100)}%` : "no earlier value"}).`);
   }
+  if (peak[0] !== lastY) {
+    statements.push(`From the peak in ${peak[0]} (${usd(peak[1].usd)}) to ${lastY} (${usd(lastT)}) the total changed by ${r1(((lastT - peak[1].usd) / peak[1].usd) * 100)}%.`);
+  }
   const yNo = allYears.filter((y) => !totals.has(y));
   if (yNo.length) statements.push(`No flow was recorded at all in ${yearList(yNo)}.`);
   for (const f of facts.slice(0, topN)) {
@@ -153,6 +165,16 @@ export async function tradeComparison(input: Record<string, unknown>): Promise<O
     const flowPart = f.no_recorded_flow_in === "none" ? "" : `; no flow (or under US$0.05 million) was recorded in ${f.no_recorded_flow_in}`;
     const range = f.min.usd_million === f.max.usd_million ? `${usd(f.max.usd_million)} in ${f.max.year}` : `ranged from ${usd(f.min.usd_million)} (${f.min.year}) to ${usd(f.max.usd_million)} (${f.max.year})`;
     statements.push(`${f.label} ${firstPart}; in the years it appears it ${range}${flowPart}.`);
+    // full rank by year (answers otherwise guess "second in most years")
+    const byRank = new Map<number, number[]>();
+    for (const y of years) { const rk = rank.get(`${y}|${f.key}`); if (rk) byRank.set(rk, [...(byRank.get(rk) ?? []), y]); }
+    const ord = (n: number) => (n === 1 ? "1st" : n === 2 ? "2nd" : n === 3 ? "3rd" : `${n}th`);
+    statements.push(`${f.label} ranked ${[...byRank.entries()].sort((a, b) => a[0] - b[0]).map(([n, ys]) => `${ord(n)} in ${yearList(ys)}`).join("; ")}${f.no_recorded_flow_in === "none" ? "" : `; not ranked (no flow) in ${f.no_recorded_flow_in}`}.`);
+    const sh = f.share_of_year_total_pct;
+    statements.push(
+      `${f.label}'s share of each year's total ranged from ${sh.min}% (${sh.min_year}) to ${sh.max}% (${sh.max_year})` +
+        (sh.years_at_or_above_20pct === "none" ? "; it was below 20% of the total in every year." : `; it was 20% or more of the total in ${sh.years_at_or_above_20pct}.`),
+    );
   }
 
   // ---- tables -------------------------------------------------------------------------------------------------------------------------
@@ -178,7 +200,7 @@ export async function tradeComparison(input: Record<string, unknown>): Promise<O
     content: JSON.stringify({
       what: `Trade comparison over years: ${title}`,
       units: "Values in current US dollars (FOB-reconciled by CEPII from UN Comtrade); tonnes are the weight of the product shipped (ore, concentrate, hydroxide, matte...), NOT metal content; 2024 is provisional.",
-      how_to_use: "For ANY statement that compares years, ranks, ranges or says 'every year' / 'never' / 'from X onward' / 'under $X' / 'lowest (highest) since', quote or closely paraphrase the matching entry in 'statements' - if no statement covers a comparison, do not make it. Per-year figures may be quoted from 'table'. Shares are of recorded trade, not production. Write tonnage as 'tonnes of <product shipped>' (e.g. 'tonnes of cobalt intermediate product') - NEVER 'tonnes of cobalt' or any metal name alone, including in the opening sentence.",
+      how_to_use: "For ANY statement that compares years, ranks, ranges or says 'every year' / 'never' / 'from X onward' / 'under $X' / 'lowest (highest) since', quote or closely paraphrase the matching entry in 'statements' - if no statement covers a comparison, do not make it. Words like 'small', 'large', 'minor', 'negligible', 'dominant' or 'always' about a code or country across years are comparisons too: use them only for the years the share statements support (e.g. 'small since 2015' only if its share was low in every year from 2015), otherwise give the share range from the statement. Never compute a percentage change yourself - use the change statements; never say a code was 'second' or 'largest' in a year unless the rank statement says so. Per-year figures may be quoted from 'table'. Shares are of recorded trade, not production. Write tonnage as 'tonnes of <product shipped>' (e.g. 'tonnes of cobalt intermediate product') - NEVER 'tonnes of cobalt' or any metal name alone, including in the opening sentence.",
       statements,
       per_key: facts.slice(0, topN),
       other_keys_not_shown: Math.max(0, facts.length - topN),

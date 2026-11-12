@@ -1882,8 +1882,15 @@ markets.trade_flows / markets.trade_flows_named: international TRADE in minerals
   statistics); 2024 is provisional and may be revised - say so when quoting 2024; "Other Asia, nes" (code 490) is in practice Taiwan -
   say "Taiwan (reported as Other Asia, n.e.s.)"; one HS code can mix several metals or forms (e.g. 811292/811299 group gallium, germanium,
   indium, vanadium, niobium, hafnium and rhenium; 260500 cobalt ore is small because the DRC ships cobalt mostly as hydroxide/intermediate
-  under 282200 and 810520, and the split between those codes shifts by year (DRC to China: 2022 almost all 810520, 2023 about half
-  282200), so for a commodity use commodity = '...' (all its codes) or name the codes you used; tonnage is product weight, not metal content). For shares, divide by the world total of the SAME
+  under 282200 and 810520, and which code is larger changes from year to year (DRC to China, USD million: 2021 810520 4,402 vs 282200
+  2,345; 2022 810520 5,741 vs 282200 0; 2023 282200 2,662 vs 810520 2,396; 2024 810520 3,020 and no 282200 row), so for a commodity use
+  commodity = '...' (all its codes) or name the codes you used. When you compare codes over several years, rank them WITHIN each year from
+  the query result and never write that one code was the largest "every year" or "throughout" unless the rows show it for every year;
+  a year with no row for a code means no flow was recorded under it that year).
+  EVERY trade answer must say, in words: (1) values are in current US dollars; (2) tonnes are the weight of the product shipped (ore,
+  concentrate, hydroxide, matte...), NOT metal content - write "tonnes of cobalt hydroxide/intermediate product", never "tonnes of
+  cobalt", and do not convert to contained metal. Before writing any comparison across years ("higher", "lower", "fell", "largest"),
+  check it against the numbers in your own table for each year named. For shares, divide by the world total of the SAME
   product and year from this table (SUM over all exporters) and say it is a share of recorded trade, not of production (use the
   supply-concentration tool for production). Count partners with count(DISTINCT ...). Example (top exporters of lithium carbonate, 2023):
   SELECT exporter, round(sum(value_kusd)/1000, 1) AS usd_million, round(sum(quantity_t)) AS tonnes, round(100*sum(value_kusd)/sum(sum(value_kusd))

@@ -7,6 +7,19 @@ import { assayNext } from "@/lib/assay-next";
 import { drillIntercepts } from "@/lib/intercepts";
 import { supplyConcentration } from "@/lib/supply";
 import { tradeComparison } from "@/lib/trade";
+
+// Sources whose licence requires a credit in every answer that uses them. If the final answer does not mention the source, the
+// credit line is appended (models forget it now and then even when told to).
+const DATA_CREDITS: { key: string; tool?: string; sql: RegExp; mention: RegExp; line: string }[] = [
+  { key: "baci", tool: "trade_comparison", sql: /\bmarkets\.trade_(flows|flows_named|products|countries)\b/i, mention: /\bBACI\b/i,
+    line: "Source: CEPII BACI (version 202601, HS12), Gaulier and Zignago (2010), Etalab Open Licence 2.0." },
+  { key: "oecd_exp", sql: /\bmarkets\.export_restrictions\b/i, mention: /\bOECD\b/,
+    line: "Source: OECD (2026), Inventory of Export Restrictions on Critical Raw Materials, OECD Data Explorer." },
+  { key: "rmis", sql: /\bmarkets\.rmis_/i, mention: /\b(RMIS|Raw Materials Information System)\b/i,
+    line: "Source: European Commission, Joint Research Centre, Raw Materials Information System (RMIS), CC BY 4.0." },
+  { key: "eiti", sql: /\bmarkets\.eiti_/i, mention: /\bEITI\b|Extractive Industries Transparency/i,
+    line: "Source: Extractive Industries Transparency Initiative (EITI), EITI database; data disclosed by EITI implementing countries." },
+];
 import { priceOutlook } from "@/lib/outlook";
 import { futureOrVerdictNote } from "@/lib/intent";
 import { rankLeads } from "@/lib/leads";
@@ -1165,6 +1178,8 @@ export async function POST(req: NextRequest) {
   }
   const messages = parsed.messages;
   let sandboxRuns = 0;
+  // Data sources whose credit must appear in the answer (licence condition): set when a tool or SQL query touches them; checked at the end.
+  const creditsNeeded = new Set<string>();
   // One-place maps are held back until the final answer (see mapFromRows): only the last one is shown, and only if no larger map was shown.
   let pendingSingleMap: MapData | null = null;
   let largerMapShown = false;
@@ -1302,6 +1317,10 @@ export async function POST(req: NextRequest) {
           console.log(`[chat] turn ${turn} model tokens in=${u.input_tokens} cache_read=${u.cache_read_input_tokens ?? 0} cache_write=${u.cache_creation_input_tokens ?? 0} out=${u.output_tokens}`);
 
           if (response.stop_reason !== "tool_use" && response.stop_reason !== "pause_turn") {
+            // Licence credits the answer forgot: append the source line rather than rely on the model remembering it.
+            const finalText = response.content.map((b) => (b.type === "text" ? b.text : "")).join("");
+            const missing = DATA_CREDITS.filter((dc) => creditsNeeded.has(dc.key) && !dc.mention.test(finalText));
+            if (missing.length && finalText.trim()) emit({ type: "text", delta: "\n\n" + missing.map((dc) => dc.line).join("\n\n") });
             if (pendingSingleMap && !largerMapShown) emit({ type: "map", map: pendingSingleMap });
             pendingSingleMap = null;
             emit({ type: "turn_end", final: true });
@@ -1330,6 +1349,10 @@ export async function POST(req: NextRequest) {
           // Run all tool calls from this turn in parallel.
           const calls = response.content.filter((b): b is Anthropic.ToolUseBlock => b.type === "tool_use");
           for (const c of calls) toolsUsed.add(c.name);
+          for (const c of calls) {
+            const sql = c.name === "run_sql" ? String((c.input as { sql?: unknown }).sql ?? "") : "";
+            for (const dc of DATA_CREDITS) if ((dc.tool && c.name === dc.tool) || (sql && dc.sql.test(sql))) creditsNeeded.add(dc.key);
+          }
           const toolResults: Anthropic.ToolResultBlockParam[] = await Promise.all(
             calls.map(async (block): Promise<Anthropic.ToolResultBlockParam> => {
               const id = `t${++stepSeq}`;

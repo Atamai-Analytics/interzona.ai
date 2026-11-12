@@ -40,7 +40,7 @@
       "cat": "fresh",
       "q": "List the copper smelters and refineries in Germany with their capacities.",
       "truth": {
-        "n": "SELECT count(DISTINCT p.facility_key) FROM core.facility_capacity_published p JOIN core.occurrences o USING (occurrence_id) WHERE o.country_name = 'Germany' AND p.commodity_name ILIKE '%copper%' AND p.stage_group IN ('Smelter','Refinery','Other processing plant')"
+        "n": "SELECT max(facilities_total) FROM core.facility_list('Germany', 'copper')"
       },
       "expect": {
         "tools_any": [
@@ -49,7 +49,7 @@
         ],
         "max_turns": 8
       },
-      "judge": "Lists the German copper smelters/refineries in the database from the USGS 2024 Minerals Yearbook table with capacities, measure and the 2024 data year. KNOWN DATA GAP: only the Lunen line is loaded; the Hamburg plants (Aurubis) are not in the database. An answer that lists only Lunen and says Hamburg (or other German plants) is not in the data or that the list is incomplete is CORRECT - it does not need to explain why, and saying other Aurubis operations may be missing is acceptable. Credits USGS. Says positions are approximate. Does not invent facilities or capacity figures."
+      "judge": "Lists the German copper smelters/refineries in the USGS 2024 Minerals Yearbook table (loaded 12 Nov 2026 incl. the Hamburg plants): Aurubis Hamburg primary smelter, Hamburg refinery and Hamburg secondary plant - for which USGS publishes NO capacity ('capacity not published' is correct) - and the Lunen secondary plant/refinery (210,000 t, gross weight). The truth figure is the number of German copper facility lines; the headline count should match it. Says the data year is 2024, that positions are approximate (placed at the town) and that facilities located only to a region may be missing. Credits USGS. Does not invent capacities for the Hamburg lines."
     }
   ]
 }

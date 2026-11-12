@@ -1867,6 +1867,29 @@ markets.export_restrictions: EXPORT RESTRICTIONS on minerals, metals, scrap and 
   GROUP BY 1, 2 ORDER BY 1, 2. The rows are country x measure, so NEVER count countries from them by hand: quote countries_total for "how many
   countries", and for counts per measure type run count(DISTINCT country_iso3) ... GROUP BY measure_type. Credit: OECD (2026), Inventory of Export Restrictions on Critical Raw Materials, OECD Data Explorer
   (accessed 11 November 2026).
+
+markets.trade_flows / markets.trade_flows_named: international TRADE in minerals and metals - CEPII BACI, version 202601, HS12 product codes,
+  2012-2024 (loaded 11 Nov 2026). One row per year x product (hs6) x exporter x importer: value_kusd (THOUSANDS of current US dollars - divide
+  by 1,000 for USD million and say "current US dollars", not inflation-adjusted) and quantity_t (metric tons; NULL on about 4% of rows, so
+  never compute a price from rows without quantity). Use trade_flows_named for names: product, commodity (OUR grouping of the HS code - same
+  groups as the export-restrictions table), exporter, exporter_iso3, importer, importer_iso3. markets.trade_products lists the 253 products
+  kept: ores and concentrates (chapter 26), graphite, phosphate rock, barite, magnesite, talc, borates, fluorspar, critical-mineral
+  chemicals (lithium carbonate 283691, lithium oxide/hydroxide 282520, cobalt oxides 2822, nickel/cobalt sulphates 2833, rare-earth
+  compounds 2846 and metals 280530, germanium/vanadium oxides 2825, silicon 2804), silver, gold and platinum-group metals, ferroalloys,
+  scrap, unwrought/refined copper, nickel, aluminium, lead, zinc, tin and all of chapter 81 (cobalt, tungsten, gallium/germanium group
+  ...), plus permanent magnets 850511 and lithium-ion batteries 850760. Finished steel and other manufactures are NOT loaded.
+  RULES: values are BACI's reconciled FOB flows from UN Comtrade (not customs data of one country, so they differ from national
+  statistics); 2024 is provisional and may be revised - say so when quoting 2024; "Other Asia, nes" (code 490) is in practice Taiwan -
+  say "Taiwan (reported as Other Asia, n.e.s.)"; one HS code can mix several metals or forms (e.g. 811292/811299 group gallium, germanium,
+  indium, vanadium, niobium, hafnium and rhenium; 260500 cobalt ore is small because the DRC ships cobalt mostly as hydroxide/intermediate
+  under 282200 and 810520, and the split between those codes shifts by year (DRC to China: 2022 almost all 810520, 2023 about half
+  282200), so for a commodity use commodity = '...' (all its codes) or name the codes you used; tonnage is product weight, not metal content). For shares, divide by the world total of the SAME
+  product and year from this table (SUM over all exporters) and say it is a share of recorded trade, not of production (use the
+  supply-concentration tool for production). Count partners with count(DISTINCT ...). Example (top exporters of lithium carbonate, 2023):
+  SELECT exporter, round(sum(value_kusd)/1000, 1) AS usd_million, round(sum(quantity_t)) AS tonnes, round(100*sum(value_kusd)/sum(sum(value_kusd))
+  OVER (), 1) AS pct_of_world FROM markets.trade_flows_named WHERE hs6 = '283691' AND year = 2023 GROUP BY 1 ORDER BY 2 DESC LIMIT 10.
+  Credit (required, by name - "UN Comtrade" alone is not enough): CEPII BACI (version 202601, HS12), Gaulier and Zignago (2010), Etalab
+  Open Licence 2.0.
 `,
   project_economics: `
 CURRENT run_financial_model SCRIPTS:
@@ -1921,7 +1944,7 @@ const TOPIC_PATTERNS: Record<TopicId, RegExp> = {
   financials:
     /financ|revenue|income|profit|margin|who owns|owner(?:ship)?|stake|interest in|joint venture|\bjv\b|which (?:projects|assets|mines)|primary commodity|peer group|sector|produc(?:tion|ed)|sales volume|volumes?|realis|realiz|unit cost|cash cost|aisc|output|\bdebt\b|cash ?flow|balance sheet|ebitda|\beps\b|capex|equity|assets|liabilit|compan|earnings|dividend|\bpeers?\b|\broe\b|\broa\b|turnover|sales|loss|impairment|albemarle|lynas|iluka|sqm|glencore|umicore|cameco|syrah|neo perf|mp materials|energy fuels|south32|rio tinto|sibanye|impala|kazatomprom|northern rare earth|pilbara|\bpls\b|liontown|arafura|paladin|amaroq/i,
   markets:
-    /\bprice|pricing|spot|\$ ?\/|usd per|per (tonne|ton|pound|ounce|kg|kilogram)|exchange rate|\bfx\b|currenc|\busd\b|\baud\b|\bcad\b|\beur\b|\bgbp\b|\bzar\b|\bcny\b|\bkzt\b|dollar|convert|world bank|\bimf\b|pink sheet|\bexports?\b[^.?!]{0,40}\b(ban|restrict|tax|dut|quota|control|licen|prohibit|polic|measure)|\b(ban|bans|banned|restrict\w*|quota|duty|duties|prohibit\w*|control\w*)\b[^.?!]{0,40}\bexports?\b|trade restrict|embargo|\boecd\b/i,
+    /\bprice|pricing|spot|\$ ?\/|usd per|per (tonne|ton|pound|ounce|kg|kilogram)|exchange rate|\bfx\b|currenc|\busd\b|\baud\b|\bcad\b|\beur\b|\bgbp\b|\bzar\b|\bcny\b|\bkzt\b|dollar|convert|world bank|\bimf\b|pink sheet|\bexports?\b[^.?!]{0,40}\b(ban|restrict|tax|dut|quota|control|licen|prohibit|polic|measure)|\b(ban|bans|banned|restrict\w*|quota|duty|duties|prohibit\w*|control\w*)\b[^.?!]{0,40}\bexports?\b|trade restrict|embargo|\boecd\b|\bimport(s|ed|er|ers|ing)?\b|\bexport(s|ed|er|ers|ing)?\b|trade flow|\btrade\b|shipment|who (buys|supplies|sells)|\bbaci\b|comtrade/i,
   project_economics:
     /\bdcf\b|\bnpv\b|\birr\b|payback|discount rate|financial model|project economics|sensitivity|capital cost|operating cost|feasibility|cash flow model/i,
 };

@@ -1,0 +1,31 @@
+{
+  "version": "2026-11-11",
+  "notes": "Fresh checks for CEPII BACI mineral trade flows loaded 11 Nov 2026 (markets.trade_flows). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-baci-li-carbonate-exporters",
+      "cat": "supply",
+      "q": "Who were the largest exporters of lithium carbonate in 2023, by value and tonnage?",
+      "truth": {
+        "n": "SELECT round(sum(value_kusd)/1000) FROM markets.trade_flows_named WHERE hs6 = '283691' AND year = 2023 AND exporter = 'Chile'"
+      },
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the BACI trade flows for HS 283691 (lithium carbonates) in 2023 and ranks exporters, with Chile first; Chile's export value should match the truth figure (USD million, within about 2%) and be stated in current US dollars, with tonnage. Gives shares of recorded world trade, not of production. Credits CEPII BACI. Does not invent figures."
+    },
+    {
+      "id": "fresh-baci-china-cobalt-from-drc",
+      "cat": "supply",
+      "q": "How much cobalt does China import from the DRC, and in what form?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses the BACI trade flows from the Democratic Republic of the Congo to China for cobalt products, names the HS codes/forms used (e.g. cobalt oxides and hydroxides 2822, cobalt mattes and other intermediate products 8105, cobalt ores 2605) with values in current US dollars and tonnages by year or for the latest years, and says the tonnage is product weight, not contained cobalt. Says 2024 is provisional if quoting it. Credits CEPII BACI. Does not invent figures."
+    },
+    {
+      "id": "fresh-baci-taiwan-gallium",
+      "cat": "supply",
+      "q": "Which countries imported the most of the HS group that includes gallium and germanium (811292) in 2023?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses BACI flows for HS 811292 in 2023 and ranks importers by value in current US dollars. Says the code groups several metals (gallium, germanium, indium, vanadium, niobium, hafnium, rhenium), so the figures are not gallium or germanium alone. If 'Other Asia, nes' appears, it is described as Taiwan (reported as Other Asia, n.e.s.). Credits CEPII BACI."
+    }
+  ]
+}

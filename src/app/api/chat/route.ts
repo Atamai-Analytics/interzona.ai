@@ -7,6 +7,7 @@ import { assayNext } from "@/lib/assay-next";
 import { drillIntercepts } from "@/lib/intercepts";
 import { supplyConcentration } from "@/lib/supply";
 import { tradeComparison } from "@/lib/trade";
+import { facilityList } from "@/lib/facilities";
 
 // Sources whose licence requires a credit in every answer that uses them. If the final answer does not mention the source, the
 // credit line is appended (models forget it now and then even when told to).
@@ -280,6 +281,25 @@ const tools: Anthropic.ToolUnion[] = [
       type: "object",
       properties: { commodity: { type: "string", description: "Commodity name, for example copper, cobalt, uranium, nickel, gold, iron ore." } },
       required: ["commodity"],
+    },
+  },
+  {
+    name: "facility_list",
+    description:
+      "USGS mineral FACILITIES with capacities (mines, concentrators, smelters, refineries, other plants) for a country and/or commodity: the 2024 Minerals Yearbook table plus the older USGS regional releases (US, Africa, China, Southwest Asia, Indo-Pacific, Latin America), newest figure per complex. " +
+      "Returns computed counts (total lines, sites, by release, by stage) as ready-made statements and every row labelled with stage, data year and release. " +
+      "USE THIS for 'which mines / smelters / refineries are there in X', 'capacity of ... plants in X', 'how many processing plants in X by stage', 'largest copper mines in Chile' (order='capacity'). Quote its statements for every count. " +
+      "For 'smelters', 'plants', 'processing' or 'refineries' questions leave stage empty and present all processing stages (Smelter, Refinery, Other processing plant): many processing plants - HPAL/MHP, leach, SX-EW, matte plants - are filed as 'Other processing plant'. Use stage only when the user names exactly one stage, and use stage='Mine' for questions about mines.",
+    input_schema: {
+      type: "object",
+      properties: {
+        country: { type: "string", description: "Country as in the occurrence catalogue, e.g. Zambia, Indonesia, Chile, China, Germany, South Africa, Australia." },
+        commodity: { type: "string", description: "Commodity substring, e.g. copper, nickel, lithium, rare (rare earths), cobalt." },
+        stage: { type: "string", enum: ["Mine", "Concentrator", "Smelter", "Refinery", "Brine operation", "Other processing plant"], description: "Optional: one stage only." },
+        order: { type: "string", enum: ["stage", "capacity"], description: "stage (default: grouped by stage, then name) or capacity (largest published capacity number first - for 'largest ...')." },
+        limit: { type: "number", description: "Rows to return (default and max 150; counts always cover the whole list)." },
+      },
+      required: [],
     },
   },
   {
@@ -755,6 +775,12 @@ async function executeTool(
     extras.datasets.push(...(out.datasets ?? []));
     return out.content;
   }
+  if (name === "facility_list") {
+    const out = await facilityList(input);
+    extras.evidence.push(...(out.evidence ?? []));
+    extras.datasets.push(...(out.datasets ?? []));
+    return out.content;
+  }
   if (name === "trade_comparison") {
     const out = await tradeComparison(input);
     extras.evidence.push(...(out.evidence ?? []));
@@ -1102,6 +1128,8 @@ function stepLabel(name: string, input: Record<string, unknown>): string {
       return "Looking up who supplies it, country by country";
     case "trade_comparison":
       return "Comparing trade flows year by year";
+    case "facility_list":
+      return "Listing the facilities and their capacities";
     case "price_outlook":
       return "Working out the tested price range";
     case "price_sensitivity": {

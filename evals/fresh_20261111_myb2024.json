@@ -12,7 +12,8 @@
       },
       "expect": {
         "tools_any": [
-          "run_sql"
+          "run_sql",
+          "facility_list"
         ],
         "max_turns": 8
       },
@@ -23,15 +24,16 @@
       "cat": "fresh",
       "q": "What is the latest capacity data you have for Indonesian nickel smelters?",
       "truth": {
-        "n": "SELECT count(DISTINCT p.facility_key) FROM core.facility_capacity_published p JOIN core.occurrences o USING (occurrence_id) WHERE p.source_system = 'USGS_MYB2024' AND o.country_name = 'Indonesia' AND p.commodity_name ILIKE '%nickel%'"
+        "n": "SELECT count(*) FROM core.facility_list('Indonesia', 'nickel') WHERE stage_group NOT IN ('Mine', 'Brine operation')"
       },
       "expect": {
         "tools_any": [
-          "run_sql"
+          "run_sql",
+          "facility_list"
         ],
         "max_turns": 8
       },
-      "judge": "Uses the newest figure per facility: 2024 Minerals Yearbook figures where the 2024 table has the facility, and older (2018 Southwest Asia release) figures only for facilities the 2024 table lacks - each row labelled with its data year/release (a split of the headline count by release is optional, but if given it must match the answer's own rows). A mine line and a smelter/plant line at the same site (e.g. Weda Bay mine and smelter, Sorowako mine and smelter) are separate facilities, not duplicates. Shows capacities with product and measure (e.g. matte Ni content). Notes the list may be incomplete and that Indonesia's industry keeps growing. Credits USGS. Does not sum different measures or stages, and does not show the same plant twice with two years."
+      "judge": "The question is about SMELTERS, so the answer should list Indonesia's nickel PROCESSING lines - smelters and other processing plants such as the Obi Island HPAL/MHP and sulphate plants (the truth figure counts these processing lines across releases); mine lines are optional and their absence is not a failure. Uses the newest figure per facility: 2024 Minerals Yearbook figures where the 2024 table has the facility, and older (2018 Southwest Asia release) figures only for facilities the 2024 table lacks - each row labelled with its data year/release (a split of the headline count by release is optional, but if given it must match the answer's own rows). A mine line and a smelter/plant line at the same site (e.g. Weda Bay mine and smelter, Sorowako mine and smelter) are separate facilities, not duplicates. Shows capacities with product and measure (e.g. matte Ni content). Notes the list may be incomplete and that Indonesia's industry keeps growing. Credits USGS. Does not sum different measures or stages, and does not show the same plant twice with two years."
     },
     {
       "id": "fresh-myb2024-germany-smelters",
@@ -42,11 +44,12 @@
       },
       "expect": {
         "tools_any": [
-          "run_sql"
+          "run_sql",
+          "facility_list"
         ],
         "max_turns": 8
       },
-      "judge": "Uses the USGS 2024 Minerals Yearbook facilities table for German copper smelters/refineries (e.g. Aurubis Hamburg, Lunen) with capacities and measure as published and the 2024 data year. Credits USGS. Says the positions are approximate and the list may be incomplete. Does not invent facilities or figures."
+      "judge": "Lists the German copper smelters/refineries in the database from the USGS 2024 Minerals Yearbook table with capacities, measure and the 2024 data year. KNOWN DATA GAP: only the Lunen line is loaded; the Hamburg plants (Aurubis) are not in the database. An answer that lists only Lunen and says Hamburg (or other German plants) is not in the data or that the list is incomplete is CORRECT - it does not need to explain why, and saying other Aurubis operations may be missing is acceptable. Credits USGS. Says positions are approximate. Does not invent facilities or capacity figures."
     }
   ]
 }

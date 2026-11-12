@@ -429,7 +429,12 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   count it once) and release (e.g. 'USGS Southwest Asia mineral-industry GIS compilation (Minerals Yearbook 2018 data)').
   ANSWER CHECKLIST (do all five):
   (a) FIRST LINE: "Source: U.S. Geological Survey, " + the release column, word for word (it carries "Minerals Yearbook <year> data").
-  (b) Get the full list with ONE call BEFORE writing: SELECT * FROM core.facility_list('<country>', '<commodity substring>') - arguments
+  (b) USE THE FACILITY-LIST TOOL for any list or count of facilities: it returns the counts (total, sites, by release, by stage) as
+      ready-made statements - copy them word for word, never count or split by hand - and every row with Stage, Facility, Data year and
+      Release, which every table must show for every row (mines included). In the 2024 table names are location text ('Weda Bay
+      Smelter' can be the mine line): describe each line by its Stage, not its name. For 'largest' use order 'capacity' and say
+      'top N of <total>'. Only if the tool cannot express the question, fall back to SQL:
+      SELECT * FROM core.facility_list('<country>', '<commodity substring>') - arguments
       country (exact name, case-insensitive), commodity substring (e.g. 'nickel', 'rare', 'copper'), optional stage_group, optional
       include_superseded (default false = newest figure per complex, already filtered); NULL skips a filter. It returns one row per
       facility line (facility_key x stage_group) with name, country, data_year, release, commodities, capacity_as_published, measure,

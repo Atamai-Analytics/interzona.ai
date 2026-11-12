@@ -8,15 +8,16 @@
       "cat": "fresh",
       "q": "Which copper mines, smelters and refineries are there in Zambia, and what are their capacities?",
       "truth": {
-        "n": "SELECT count(DISTINCT occurrence_id) FROM core.facility_capacity fc JOIN core.occurrences o USING (occurrence_id) WHERE fc.source_system='USGS_AFRICA_GIS' AND o.country_name='Zambia' AND fc.commodity_name='Copper'"
+        "n": "SELECT max(facilities_total) FROM core.facility_list('Zambia', 'copper')"
       },
       "expect": {
         "tools_any": [
-          "run_sql"
+          "run_sql",
+          "facility_list"
         ],
         "max_turns": 10
       },
-      "judge": "Uses the USGS Africa facilities (core.facility_capacity, source USGS_AFRICA_GIS) and lists Zambian copper facilities by stage (mines such as Lumwana, Kansanshi, Nkana, Konkola/Chingola, Mopani/Mufulira, Chibuluma; smelters/refineries such as Chambishi, Nkana, Mufulira). Says that mine capacities like Lumwana 21,000,000 t and Kansanshi 12,000,000 t are ORE tonnage (ore and concentrate), not tonnes of copper metal, and does not add mine and smelter/refinery capacities together. Says the data year is 2017 and that 'active' status is the USGS assumption from then. Credits the USGS Africa compilation. FAIL if it presents 21 Mt as copper metal production or sums capacities across stages. DATA UPDATE 11 Nov 2026: the USGS 2024 Minerals Yearbook table (USGS_MYB2024) is now loaded too, so a correct answer may combine releases: it should use the newest figure per facility and label every row's data year/release; a split of the headline count by release is OPTIONAL (do not fail for leaving it out), but if one is given it must match the answer's own rows. A mine line and a smelter/plant line at the same site (e.g. Weda Bay mine and Weda Bay smelter, Sorowako mine and smelter) are separate facilities, not duplicates; an older-release processing plant that the 2024 table does not list (e.g. Escondida's 2014 cathode plants next to the 2024 Escondida mine line) is not a duplicate either. Judge counts against that combined list (the truth query counts only the older release), and accept 2024 figures where shown with their year."
+      "judge": "Lists Zambian copper facilities by stage (mines such as Lumwana, Kansanshi, Nkana, Konkola/Chingola, Mopani/Mufulira, Chibuluma; smelters/refineries such as Chambishi, Nkana, Mufulira) from the USGS facility data, newest figure per facility, with every row labelled with its data year/release. DATA UPDATE 12 Nov 2026: almost all Zambian copper mine lines now carry USGS 2024 Minerals Yearbook figures stated as copper CONTENT (e.g. Lumwana 120,000 t Cu content, Kansanshi 180,000 t ore Cu content) - quoting those as copper content is CORRECT; rows still from the 2017 Africa compilation keep their published wording: Munali '1,700 t - Ore and concentrate, Cu content' is the COPPER CONTENT of ore and concentrate, so calling it copper content is correct; a 2017 figure published without 'content' (plain ore tonnage) must not be called metal. The 2024 table's names are location text ('Kansanshi Smelter', 'Mufulira Refinery' can be mine lines) - an answer that follows the Stage column is correct. Does not add capacities across stages or measures; counts must match the answer's own rows (a split by release is optional). Says the status is USGS's assumption for the data year. Credits USGS. FAIL if it calls a figure published as plain ore tonnage copper metal, or sums capacities across stages. The truth figure is the number of facility lines in the combined list (both releases); a headline count should match it, and per-stage counts should match the rows shown under each stage."
     },
     {
       "id": "fresh-africa-li-exploration",
@@ -27,7 +28,8 @@
       },
       "expect": {
         "tools_any": [
-          "run_sql"
+          "run_sql",
+          "facility_list"
         ],
         "max_turns": 10
       },
@@ -38,15 +40,16 @@
       "cat": "fresh",
       "q": "How many mineral processing plants are recorded in South Africa, broken down by stage (smelter, refinery, other)?",
       "truth": {
-        "n": "SELECT fc.facility_stage, count(DISTINCT fc.occurrence_id) FROM core.facility_capacity fc JOIN core.occurrences o USING (occurrence_id) WHERE fc.source_system='USGS_AFRICA_GIS' AND o.country_name='South Africa' AND fc.feature_type='Mineral Processing Plants' GROUP BY 1"
+        "n": "SELECT count(DISTINCT occurrence_id) FROM core.facility_list('South Africa', NULL) WHERE stage_group NOT IN ('Mine', 'Brine operation')"
       },
       "expect": {
         "tools_any": [
-          "run_sql"
+          "run_sql",
+          "facility_list"
         ],
         "max_turns": 10
       },
-      "judge": "Counts South African processing plants from the USGS Africa facilities as DISTINCT facilities (not per-commodity rows), gives a breakdown by stage including the plants whose stage is not stated (cement, steel, fertiliser, acid...), roughly matching the truth query, and says the data year is 2018. Credits the USGS Africa compilation. DATA UPDATE 11 Nov 2026: the USGS 2024 Minerals Yearbook table (USGS_MYB2024) is now loaded too, so a correct answer may combine releases: it should use the newest figure per facility and label every row's data year/release; a split of the headline count by release is OPTIONAL (do not fail for leaving it out), but if one is given it must match the answer's own rows. A mine line and a smelter/plant line at the same site (e.g. Weda Bay mine and Weda Bay smelter, Sorowako mine and smelter) are separate facilities, not duplicates; an older-release processing plant that the 2024 table does not list (e.g. Escondida's 2014 cathode plants next to the 2024 Escondida mine line) is not a duplicate either. Judge counts against that combined list (the truth query counts only the older release), and accept 2024 figures where shown with their year."
+      "judge": "Counts South African processing plants as DISTINCT sites (not commodity rows or facility lines) - the truth figure is the number of distinct processing sites in the combined list (2018 Africa compilation plus 2024 Yearbook table, newest figure per facility) - and gives a breakdown by stage (smelter, refinery, concentrator, other processing plant) as distinct sites, roughly matching the truth. Labels the data year/release. Credits USGS. A breakdown that also reports facility lines is fine if it says which is which."
     },
     {
       "id": "fresh-africa-copperbelt-asm",
@@ -57,7 +60,8 @@
       },
       "expect": {
         "tools_any": [
-          "run_sql"
+          "run_sql",
+          "facility_list"
         ],
         "max_turns": 10
       },
@@ -72,7 +76,8 @@
       },
       "expect": {
         "tools_any": [
-          "run_sql"
+          "run_sql",
+          "facility_list"
         ],
         "max_turns": 8
       },

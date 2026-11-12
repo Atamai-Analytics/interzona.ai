@@ -6,6 +6,7 @@ import { depositFingerprint } from "@/lib/fingerprint";
 import { assayNext } from "@/lib/assay-next";
 import { drillIntercepts } from "@/lib/intercepts";
 import { supplyConcentration } from "@/lib/supply";
+import { tradeComparison } from "@/lib/trade";
 import { priceOutlook } from "@/lib/outlook";
 import { futureOrVerdictNote } from "@/lib/intent";
 import { rankLeads } from "@/lib/leads";
@@ -264,6 +265,27 @@ const tools: Anthropic.ToolUnion[] = [
       type: "object",
       properties: { commodity: { type: "string", description: "Commodity name, for example copper, cobalt, uranium, nickel, gold, iron ore." } },
       required: ["commodity"],
+    },
+  },
+  {
+    name: "trade_comparison",
+    description:
+      "Mineral and metal TRADE over several years from CEPII BACI (2012-2024, current US dollars, tonnes of product): compares HS codes (product forms), exporters or importers year by year and returns ready-made, computed statements about ranks, years ranked first, years with no flow, minimum and maximum and the peak and low of the total, plus the per-year table. " +
+      "USE THIS for any trade question that spans more than one year or compares forms/partners over time, e.g. 'how much cobalt does China import from the DRC and in what form', 'who has exported the most lithium carbonate since 2018', 'how has the EU's ... changed'. " +
+      "For a single year, run_sql on markets.trade_flows_named is fine. Quote the returned statements for every cross-year claim; do not generalise across years yourself.",
+    input_schema: {
+      type: "object",
+      properties: {
+        commodity: { type: "string", description: "Commodity group, e.g. cobalt, lithium, rare earths, graphite, copper, nickel, tungsten, 'Germanium, gallium...' (or use hs6)." },
+        hs6: { type: "array", items: { type: "string" }, description: "Optional HS6 codes instead of a commodity, e.g. ['283691'] for lithium carbonate, ['811292','811299'] for the gallium/germanium group." },
+        exporter: { type: "string", description: "Optional exporting country (name or ISO3, e.g. DRC, Chile, China)." },
+        importer: { type: "string", description: "Optional importing country (name or ISO3)." },
+        compare: { type: "string", enum: ["codes", "exporters", "importers"], description: "What to compare over the years: product codes (default), exporters (leave exporter empty) or importers (leave importer empty)." },
+        from_year: { type: "number", description: "First year, 2012-2024 (default 2012)." },
+        to_year: { type: "number", description: "Last year (default 2024; 2024 is provisional)." },
+        top_n: { type: "number", description: "How many codes or countries to detail (default 8, max 15)." },
+      },
+      required: [],
     },
   },
   {
@@ -718,6 +740,12 @@ async function executeTool(
     extras.datasets.push(...(out.datasets ?? []));
     return out.content;
   }
+  if (name === "trade_comparison") {
+    const out = await tradeComparison(input);
+    extras.evidence.push(...(out.evidence ?? []));
+    extras.datasets.push(...(out.datasets ?? []));
+    return out.content;
+  }
   if (name === "supply_concentration") {
     const out = await supplyConcentration(input);
     extras.evidence.push(...(out.evidence ?? []));
@@ -1057,6 +1085,8 @@ function stepLabel(name: string, input: Record<string, unknown>): string {
       return "Testing which extra element would separate the deposit types";
     case "supply_concentration":
       return "Looking up who supplies it, country by country";
+    case "trade_comparison":
+      return "Comparing trade flows year by year";
     case "price_outlook":
       return "Working out the tested price range";
     case "price_sensitivity": {

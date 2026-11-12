@@ -1891,7 +1891,10 @@ markets.trade_flows / markets.trade_flows_named: international TRADE in minerals
   concentrate, hydroxide, matte...), NOT metal content - write "tonnes of cobalt hydroxide/intermediate product", never "tonnes of
   cobalt", and do not convert to contained metal. Before writing any comparison across years ("higher", "lower", "fell", "largest"),
   check it against the numbers in your own table for each year named.
-  MULTI-YEAR COMPARISONS OF CODES OR PARTNERS: never count years or rank positions by hand - get them as columns and copy them. Pattern
+  MULTI-YEAR COMPARISONS OF CODES OR PARTNERS: use the trade-comparison tool (it computes ranks, years ranked first, years with no flow,
+  minimum/maximum and the peak/low of the total and returns them as ready-made statements) and quote its statements for every cross-year
+  claim - write no cross-year generalisation of your own. Only if the tool cannot express the question, fall back to SQL and never count
+  years or rank positions by hand - get them as columns and copy them. Fallback pattern
   (DRC to China cobalt by code, 2021 onward): WITH f AS (SELECT year, hs6, product, sum(value_kusd)/1000 AS usd_million, sum(quantity_t)
   AS tonnes FROM markets.trade_flows_named WHERE exporter_iso3 = 'COD' AND importer_iso3 = 'CHN' AND commodity = 'Cobalt' AND year >= 2021
   GROUP BY 1, 2, 3), r AS (SELECT *, rank() OVER (PARTITION BY year ORDER BY usd_million DESC) AS rank_in_year FROM f) SELECT year, hs6,

@@ -1,7 +1,8 @@
 import { getPool } from "@/lib/db";
 
 // What the database holds, for the intro panel. Read live (so the panel never goes stale as data is added) and kept in memory for six hours.
-// The count of analyses (about 21 million rows) is too slow to run here, so the panel states it as a round figure.
+// Analyses (about 80 million rows) and other big tables are counted from the planner's row estimates (pg_class.reltuples), which are
+// instant and accurate to within a few per cent after ANALYZE; the panel rounds them.
 
 export type Coverage = {
   occurrences: number;
@@ -17,6 +18,15 @@ export type Coverage = {
   priceSeries: number;
   monthlySeries: number;
   latestMonthly: string | null;
+  analyses: number;
+  sampleSurveys: number;
+  drillHoles: number;
+  facilitySites: number;
+  facilityCountries: number;
+  tradeFlows: number;
+  exportRestrictionCountries: number;
+  eitiCountries: number;
+  rmisMaterials: number;
   asOf: string;
 };
 
@@ -46,6 +56,19 @@ export async function getCoverage(): Promise<Coverage> {
         (select max(extract(year from period_end_date))::int from financials.income_statement where period_type = 'FY') last_fy`);
     const c = await one(`select count(*) series, count(*) filter (where frequency = 'monthly') monthly,
         max(last_period) filter (where frequency = 'monthly') latest_monthly from markets.price_series where is_active`);
+    // big tables: planner estimates; the rest are small enough to count
+    const est = (rel: string) => `(select greatest(reltuples, 0)::bigint from pg_class where oid = to_regclass('${rel}'))`;
+    const d = await one(`select
+        (select coalesce(sum(greatest(c.reltuples, 0)), 0)::bigint from pg_class c join pg_namespace n on n.oid = c.relnamespace
+           where n.nspname = 'geochem' and c.relkind = 'r' and c.relname like 'analytical\\_results\\_%') analyses,
+        (select count(distinct source_system) from geochem.samples where source_system not in ('SWEDEN_SGU_BEDROCK_AGE', 'GLOBAL_ZIRCON_WU')) surveys,
+        ${est("drilling.drillholes")} drill_holes,
+        ${est("markets.trade_flows")} trade_flows,
+        (select count(distinct occurrence_id) from core.facility_capacity_published) facility_sites,
+        (select count(distinct o.country_name) from core.facility_capacity_published f join core.occurrences o on o.occurrence_id = f.occurrence_id and o.is_active) facility_countries,
+        (select count(distinct country_iso3) from markets.export_restrictions) export_countries,
+        (select count(distinct country_name) from markets.eiti_payments) eiti_countries,
+        (select count(distinct material) from markets.rmis_indicators) rmis_materials`);
     const value: Coverage = {
       occurrences: num(a.occurrences),
       occurrenceCountries: num(a.countries),
@@ -60,6 +83,15 @@ export async function getCoverage(): Promise<Coverage> {
       priceSeries: num(c.series),
       monthlySeries: num(c.monthly),
       latestMonthly: c.latest_monthly ? new Date(c.latest_monthly as string).toISOString().slice(0, 7) : null,
+      analyses: num(d.analyses),
+      sampleSurveys: num(d.surveys),
+      drillHoles: num(d.drill_holes),
+      facilitySites: num(d.facility_sites),
+      facilityCountries: num(d.facility_countries),
+      tradeFlows: num(d.trade_flows),
+      exportRestrictionCountries: num(d.export_countries),
+      eitiCountries: num(d.eiti_countries),
+      rmisMaterials: num(d.rmis_materials),
       asOf: new Date().toISOString(),
     };
     cache = { at: Date.now(), value };

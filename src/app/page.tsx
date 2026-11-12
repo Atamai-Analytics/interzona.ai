@@ -390,7 +390,7 @@ const CAPABILITIES: Capability[] = [
     icon: "🌍",
     domain: "Database",
     title: "Global occurrence search",
-    description: "About 285,000 mineral sites in 165 countries (USGS MRDS, Washington, SEGEMAR and others). Filter by commodity, status and country — quality varies by source.",
+    description: "Nearly half a million mineral sites in about 190 countries (USGS MRDS, national survey catalogues in Australia, Canada, Europe and Africa, and others). Filter by commodity, status and country — quality varies by source.",
     prompt: "Which countries have the most producing or past-producing lithium, cobalt or graphite occurrences in the mineral occurrence data? Show the top 10 and tell me how reliable this data is.",
   },
   {

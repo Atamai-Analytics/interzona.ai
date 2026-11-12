@@ -230,7 +230,7 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
 - USGS MRDS (Mineral Resources Data System, created_by migration_mrds_20261014, external_ids source 'USGS_MRDS' = MRDS dep_id):
   275,984 mineral sites in 164 countries, loaded broad but SHALLOW: United States 239,460 (CA, CO, OR, NV, UT, AK, AZ, MO each 13,000-43,000),
   then Chile 4,072, Mexico 3,645, Peru 3,049, Argentina 2,307, Brazil 2,068, Bolivia 1,659, Canada 1,504. core.occurrences now holds about
-  455,000 active rows, so ALWAYS filter by country_name, commodity, status or a bounding box/ST_DWithin and COUNT first before listing; never list
+  480,000 active rows, so ALWAYS filter by country_name, commodity, status or a bounding box/ST_DWithin and COUNT first before listing; never list
   the whole table. Facts and warnings: (1) the data were compiled over decades from published reports, USGS itself calls the quality
   'highly variable', stopped systematic updates in 2011, so status (producer, past producer ...) and ownership may be out of date, and
   non-US coverage is incomplete; (2) status comes from MRDS development status (past producer 117,440, occurrence 61,720, producer 40,036,

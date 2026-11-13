@@ -844,6 +844,16 @@ export default function Home() {
             Geochemistry
           </Link>
         )}
+        {who && !(who.role === "guest" && who.ended) && (
+          <Link
+            href="/tools/geostatistics"
+            className="shrink-0 md:self-center flex items-center gap-1.5 rounded-lg border border-violet-600 bg-violet-900/30 px-2.5 py-1.5 text-xs md:text-sm font-medium text-violet-100 hover:bg-violet-800/50"
+            title="Kriging, indicator kriging and inverse-distance grids of one soil, till or lake-sediment survey, with the variogram, error map and cross-validation"
+          >
+            <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.3"><ellipse cx="8" cy="8" rx="6.5" ry="5" /><ellipse cx="8.6" cy="7.6" rx="3.8" ry="2.8" /><circle cx="9.2" cy="7.2" r="1" fill="currentColor" /></svg>
+            Geostatistics
+          </Link>
+        )}
         {who && (
           <div className="order-last md:order-none w-full md:w-auto md:ml-auto shrink-0 md:self-start text-left md:text-right text-xs text-gray-400 flex flex-wrap items-baseline gap-x-3 gap-y-0 md:block">
             {who.role === "guest" ? (

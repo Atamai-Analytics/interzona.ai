@@ -56,7 +56,7 @@ export const VariogramChart = forwardRef<SVGSVGElement, { lags: Lag[]; model: Va
         <rect x="0" y="0" width={W} height={H} fill="#111827" />
         <Axes x0={0} x1={maxLag} y0={0} y1={yMax} xLabel="Separation distance (km)" yLabel={yLabel} />
         <line x1={M.l} x2={W - M.r} y1={sy(variance)} y2={sy(variance)} stroke="#6b7280" strokeDasharray="5 4" />
-        <text x={W - M.r - 4} y={sy(variance) - 4} fontSize="10" fill="#9ca3af" textAnchor="end">sample variance</text>
+        <text x={M.l + 6} y={sy(variance) - 4} fontSize="10" fill="#9ca3af">sample variance</text>
         {lags.map((l, i) => (
           <circle key={i} cx={sx(l.h)} cy={sy(l.gamma)} r={2.5 + 4 * Math.sqrt(l.pairs / maxPairs)} fill="#38bdf8" fillOpacity="0.85">
             <title>{`${l.h.toFixed(2)} km: semivariance ${l.gamma.toPrecision(3)} from ${l.pairs.toLocaleString()} pairs`}</title>

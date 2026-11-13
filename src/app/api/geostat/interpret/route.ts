@@ -39,6 +39,9 @@ Rules:
 - Values in log units are log10 of the concentration; a back-transformed estimate is closer to a median than a mean.
 - Till reflects glacial transport (anomalies can be displaced down-ice from their source); lake sediments reflect their catchment; soils
   reflect the local substrate. Say which applies.
+- The tool takes at most 5,000 samples per grid and areas up to 800 km a side, with one survey, method and fraction at a time; the
+  variogram is omnidirectional (no anisotropy option yet). Only suggest next steps the user can actually do within those limits (e.g. a
+  smaller area to use every sample, another method or element, IDW for comparison, fewer neighbours) or outside the tool.
 - Plain professional English for a mixed audience. Do not add a data-credits section: the page shows the credits.`;
 
 type Body = { summary: Record<string, unknown>; image: string | null };

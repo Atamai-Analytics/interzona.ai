@@ -22,6 +22,7 @@ export default function GridMap({
   const LRef = useRef<typeof import("leaflet") | null>(null);
   const layerRef = useRef<import("leaflet").LayerGroup | null>(null);
   const fittedRef = useRef<string>("");
+  const roRef = useRef<ResizeObserver | null>(null);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -31,12 +32,17 @@ export default function GridMap({
       try {
         const L = (await import("leaflet")).default;
         if (cancelled || !el.current) return;
-        const m = L.map(el.current, { preferCanvas: true });
+        // Quarter-step zoom so a survey area fills the map instead of snapping out a whole level.
+        const m = L.map(el.current, { preferCanvas: true, zoomSnap: 0.25, zoomDelta: 0.5 });
         addBaseLayer(L, m);
         m.setView([0, 0], 2);
         LRef.current = L;
         mapRef.current = m;
         layerRef.current = L.layerGroup().addTo(m);
+        // The layout switches between one and two map columns (IDW vs kriging) and the page can be resized: keep Leaflet's size in step.
+        const ro = new ResizeObserver(() => m.invalidateSize());
+        ro.observe(el.current);
+        roRef.current = ro;
         setReady(true);
       } catch (e) {
         console.error(e);
@@ -45,6 +51,7 @@ export default function GridMap({
     })();
     return () => {
       cancelled = true;
+      roRef.current?.disconnect();
       mapRef.current?.remove();
       mapRef.current = null;
     };
@@ -62,14 +69,17 @@ export default function GridMap({
       bounds.extend(b);
     }
     if (showSamples) {
-      const r = samples.length > 2500 ? 2.5 : 3.5;
+      // Dense surveys: smaller markers and thinner outlines, or thousands of circles hide the grid they sit on.
+      const dense = samples.length > 1500;
+      const r = dense ? 2 : 3.5;
       const span = hi - lo || 1;
       for (const s of samples) {
-        const fill = colourSamples ? rampCss((s.t - lo) / span) : "#ffffff";
-        L.circleMarker([s.lat, s.lon], s.bdl
-          ? { radius: r, color: "#9ca3af", weight: 1, fill: false }
-          : { radius: r, color: "#111827", weight: 0.6, fillColor: fill, fillOpacity: 0.95 }
-        ).bindPopup(s.popup).addTo(layer);
+        const style = !colourSamples
+          ? { radius: dense ? 1.2 : 2, stroke: false, fillColor: "#111827", fillOpacity: 0.7 } // error map: locations only
+          : s.bdl
+            ? { radius: r, color: "#e5e7eb", weight: dense ? 0.6 : 1, fill: false }
+            : { radius: r, color: "#111827", weight: dense ? 0.25 : 0.6, fillColor: rampCss((s.t - lo) / span), fillOpacity: 0.95 };
+        L.circleMarker([s.lat, s.lon], style).bindPopup(s.popup).addTo(layer);
         bounds.extend([s.lat, s.lon]);
       }
     }

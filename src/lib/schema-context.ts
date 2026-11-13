@@ -691,8 +691,10 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   'FINLAND_GTK_ROCK', 6,544 samples, 568,882 results, also with major oxides and the full rare earth
   suite) and Sweden (SGU lithogeochemistry, 'SWEDEN_SGU_LITHOGEOCHEMISTRY', 139,163 bedrock samples:
   100,639 drill core, 37,195 rock, 1,329 drill samples; 3,253,798 results, all active, 82 analytes, CC0)
-  and the USA (USGS National Geochemical Database rock-type samples, 'USA_USGS_NGDB', 387,527 samples,
-  13.44M active results, 102 analytes; 462 of them are laboratory/field BLANKS typed sample_type 'Quality Control Sample' (id 51) since
+  and the USA (USGS National Geochemical Database, 'USA_USGS_NGDB', 826,604 samples: 387,527 rock-type samples plus, since
+  13 Nov 2026, 334,901 SEDIMENT samples (202,500 stream sediment, 5,973 lake, 1,109 bog, 1,315 glacial/till and 124,004 other or
+  unspecified sediment, including about 15,000 marine) and 104,176 SOIL samples (80,695 unspecified, A-horizon 12,808,
+  B-horizon 6,706, C-horizon 3,768, 199 mine tailings); 29.74M active results, 103 analytes; 462 of them are laboratory/field BLANKS typed sample_type 'Quality Control Sample' (id 51) since
   8 Nov 2026 - leave sample_type_id 51 out of geological statistics) and Victoria, Australia (Geological Survey of Victoria geochemistry
   collection, 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY', 156,331 samples, 778,219 active results, 75 analytes) and Tasmania, Australia
   (Mineral Resources Tasmania bulk data package, 'AUSTRALIA_TAS_MRT', 383,939 samples, 3.85M results, 106 analytes, plus 34,871 drill
@@ -744,10 +746,19 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   answer) ONLY (geochem.samples also holds 2,519 age-only points, source_system
   'SWEDEN_SGU_BEDROCK_AGE', and 1,053 bare sample points from the Wu zircon database, source_system
   'GLOBAL_ZIRCON_WU', none of which has results; do not count them as geochemical samples).
-  USGS NGDB: almost all samples are rocks (grab 238,515, composite 47,191, drill core 31,729, float, channel,
-  unknown type 33,512), about 375,000 in the United States and the rest in Canada, Russia, Puerto Rico, Chile, Poland and
-  others; the NGDB sediment and soil sets are NOT loaded. Only 4,781 samples have a date and none is linked to an
-  occurrence. Every USGS package is an 'UNK-*' method family with the laboratory unknown (UNK-USGS-ES emission
+  USGS NGDB sediment and soil (loaded 13 Nov 2026 from the USGS ngdbsed / ngdbsoil releases, created_by
+  migration_usgs_ngdb_sed_20261113 / migration_usgs_ngdb_soil_20261113): one package per USGS analytical method, package_code
+  'USGS-NGDB-<method>' (USGS-NGDB-ES_SQ semi-quantitative emission spectrography 9.2M results, USGS-NGDB-AES_HF four-acid
+  ICP-AES 4.1M, USGS-NGDB-MS_HF four-acid ICP-MS 0.45M, USGS-NGDB-AES_AZ_P partial HCl-H2O2 extraction ICP-AES 0.45M,
+  USGS-NGDB-AA_F_HNO3_P partial nitric AAS 0.37M, USGS-NGDB-AES_AR_P aqua regia ICP-AES 0.32M, INAA, XRF, fire assay ...);
+  the USGS method code is in result_comment, the mesh size (when recorded) in fraction, sample_number = USGS lab id, and
+  comments hold job, project, submitter, state and coordinate precision. Below detection is qualifier '<' with the limit
+  (USGS letters L/N/< in result_comment), above range '>'. Most sediment samples are 1960s-1990s Alaska and western US
+  mineral-resource surveys; dates are mostly missing. Stream sediments represent their upstream catchment.
+  USGS NGDB rock samples: grab 238,515, composite 47,191, drill core 31,729, float, channel,
+  unknown type 33,512, about 375,000 in the United States and the rest in Canada, Russia, Puerto Rico, Chile, Poland and
+  others. Only 4,781 rock samples have a date and none is linked to an
+  occurrence. Every USGS rock package is an 'UNK-*' method family with the laboratory unknown (UNK-USGS-ES emission
   spectrography 6.4M results, UNK-UNK-UNK 2.0M, UNK-ICP-AES 1.8M, UNK-XRF 1.1M, UNK-INAA 0.74M ...); about 36% of
   results are below detection (qualifiers N, L, <) and 83,298 are above the range (G, >). Emission spectrography is
   SEMI-QUANTITATIVE (values in coarse steps): fine for screening, not for precise statistics, and 3.2M sample-element
@@ -1039,7 +1050,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   ALWAYS filter analytical_results.is_active = true: results that the source database had already marked
   inactive (loader-time duplicates and QC rejects such as values above 100 %, sentinel 999) are kept but
   flagged is_active = false — 246,624 rows in GREENLAND_GEUS (1,127,679 active), 166 in
-  ARGENTINA_SEGEMAR (1,782,202 active), 240 in USA_USGS_NGDB (13,476,885 active) and 20,037 in
+  ARGENTINA_SEGEMAR (1,782,202 active), 48,847 in USA_USGS_NGDB (29,736,330 active; includes 13,643 exact duplicates deactivated by QC on 13 Nov 2026) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
   CANADA_NRCAN_CDOGS 27,089 (exact duplicates); CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
   FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS and CANADA_ATHABASCA_OF7792 have none (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
@@ -1184,8 +1195,8 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
 geochem.sample_chemistry_wide: one row per sample for ALL sixteen geochemical datasets (GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
-  GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 387,527,
-  AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 224 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
+  GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 826,604 (rock, sediment and soil),
+  AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 225 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/
   lithology_local, sample_date, lat, lon, geog, n_values, bdl_codes (text[] of analytes below detection)
   plus one column per analyte AND basis: <analyte_code>_t = total or no-digestion method (XRF, fusion
@@ -1206,7 +1217,7 @@ geochem.sample_chemistry_wide: one row per sample for ALL sixteen geochemical da
   emission spectrography always last) and these basis assumptions, because the NGDB marks partial digestions with a
   P suffix: unknown-lab ICP-AES, ICP-MS and AAS packages without it are treated as TOTAL, emission spectrography is
   TOTAL but lowest priority, wet chemistry is total, the P-suffixed AAS/ICP-AES/colorimetry packages and UNK-UNK-UNK
-  (method unknown) stay PARTIAL (_p). 6.26M USGS values are in _t columns and about 1.87M in _p columns (35,000 INAA counting-error percentages that had been
+  (method unknown) stay PARTIAL (_p). for the rock samples 6.26M USGS values are in _t columns and about 1.87M in _p columns (the sediment/soil 'USGS-NGDB-*' packages follow the same rule: basis P only when the USGS method code ends in _P) (35,000 INAA counting-error percentages that had been
   loaded as if they were concentrations, package UNK-CV, were deactivated on 2026-10-30). A USGS _t
   value may therefore be semi-quantitative emission spectrography; check analytical_results (package_id) when the
   method matters.

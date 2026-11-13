@@ -46,6 +46,15 @@ Rules:
   (skill over guessing the overall share, the average probability where samples really are above versus below; a wide gap = good
   separation). Probabilities from few exceedances are fragile. Below-detection samples whose detection limit is above the threshold
   cannot be classed and were counted as below. Do not talk about kriging error factors or back-transformation in this case.
+- If the numbers include "mapType" (sample catchment basins), there is no grid, variogram or kriging: stream-sediment samples are shown
+  as the catchments that drain to them (the picture: each shape coloured by its value class, dark purple = below the median, yellow =
+  top 2%; dots = sampled stream points). Use the headings Summary, Patterns and anomalies, How far to trust this, Suggested next steps.
+  A high value points to a source inside that sample's own catchment (upstream of the sample, not at the dot). Dilution: a large
+  catchment mixes in more barren ground, so the same value there implies a bigger or richer source and is the stronger evidence;
+  in a very small catchment a single outcrop or boulder can produce it. Never say a large catchment is "less diluted". Several
+  adjacent high catchments strengthen a target. Glacier-fed catchments (iceShare) also carry far-travelled glacial flour, so their values speak
+  less for the local bedrock. Catchments flagged unreliable had no mapped stream near the sample. Catchments come from a 90 m
+  elevation model: small streams in flat or lake-filled ground can be misplaced.
 - The tool takes at most 5,000 samples per grid and areas up to 800 km a side, with one survey, method and fraction at a time; the
   variogram is omnidirectional (no anisotropy option yet). Only suggest next steps the user can actually do within those limits (e.g. a
   smaller area to use every sample, another method or element, IDW for comparison, fewer neighbours) or outside the tool.

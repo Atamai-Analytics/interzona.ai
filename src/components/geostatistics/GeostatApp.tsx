@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import type { GeostatData, GeostatOptions, Locations, Series } from "@/lib/geostat/data";
+import type { CatchmentPour, Catchments, GeostatData, GeostatOptions, Locations, Series } from "@/lib/geostat/data";
 import { MAX_SPAN_KM, spanKm } from "@/lib/geostat/limits";
 import {
   KdTree, MODEL_TYPES, autoFit, indicatorScores, crossValidate, experimentalVariogram, interpolateGrid, makeProjection, medianSpacing, mergeColocated, quantile,
@@ -17,7 +17,8 @@ import { Check, Notice, Num, Select, btnGreen, btnRun, card, downloadSvgPng, dow
 import GridMap, { type MapSample } from "./GridMap";
 import AreaPicker from "./AreaPicker";
 import { CvChart, Histogram, VariogramChart } from "./Charts";
-import { gridSnapshotBase64 } from "./render";
+import { catchmentSnapshotBase64, gridSnapshotBase64, rampCss } from "./render";
+import CatchmentMap, { type PourStyle } from "./CatchmentMap";
 
 // Geostatistics page (/tools/geostatistics), phase 1: grid ONE series (one dataset, sample type, element, survey, method, fraction and unit) of
 // soil, till or lake-sediment samples by ordinary kriging or inverse-distance weighting, with the variogram, a kriging error map and
@@ -74,6 +75,10 @@ export function GeostatApp() {
   const [cells, setCells] = useState<(typeof CELL_OPTIONS)[number]>("120");
   const [maskKm, setMaskKm] = useState(NaN);
   const [showSamples, setShowSamples] = useState(true);
+  // Stream sediments (catchment map mode): sample catchment basins of the loaded samples.
+  const [catchments, setCatchments] = useState<Catchments | null>(null);
+  const [catchError, setCatchError] = useState<string | null>(null);
+  const [showPours, setShowPours] = useState(true);
   const [running, setRunning] = useState(false);
   const [result, setResult] = useState<RunResult | null>(null);
   const [text, setText] = useState("");
@@ -379,15 +384,15 @@ export function GeostatApp() {
     };
   }
 
-  async function interpret() {
-    const summary = buildSummary();
-    if (!summary || !result || !dispScale || !proc) return;
+  async function interpret(given?: { summary: Record<string, unknown>; image: string }) {
+    const summary = given?.summary ?? buildSummary();
+    if (!summary || !proc || (!given && (!result || !dispScale))) return;
     abortRef.current?.abort();
     const ac = new AbortController();
     abortRef.current = ac;
     setInterpreting(true); setInterpError(null); setText("");
     try {
-      const image = gridSnapshotBase64(result.grid, dispScale.lo, dispScale.hi, proc.rows);
+      const image = given ? given.image : gridSnapshotBase64(result!.grid, dispScale!.lo, dispScale!.hi, proc.rows);
       const res = await fetch("/api/geostat/interpret", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ summary, image }), signal: ac.signal });
       if (!res.ok || !res.body) {
         const j = await res.json().catch(() => ({}));
@@ -455,6 +460,113 @@ export function GeostatApp() {
     downloadText(`${baseName}_samples.csv`, csvWithCredits(["sample_id", "lon", "lat", `${data.element}_${unit}`, "flag", logT ? "log10" : "value"], rows, data.credits));
   }
 
+  // ---- stream sediments: catchment map ----
+  const catchMode = !!data && !!options?.datasets.find((d) => d.source === data.source && d.sampleType === data.sampleType)?.catchments;
+  useEffect(() => {
+    setCatchments(null);
+    setCatchError(null);
+    if (!data || !catchMode) return;
+    let cancelled = false;
+    post<Catchments>("/api/geostat/catchments", { ids: data.ids })
+      .then((c) => { if (!cancelled) setCatchments(c); })
+      .catch((e) => { if (!cancelled) setCatchError(e instanceof Error ? e.message : String(e)); });
+    return () => { cancelled = true; };
+  }, [data, catchMode]);
+  // One value per catchment: samples taken at the same stream point are averaged (geometric mean when log-transformed).
+  const pourValues = useMemo(() => {
+    if (!proc || !catchments) return null;
+    const acc = new Map<number, { sumT: number; n: number; bdl: number; ids: string[]; max: number }>();
+    for (const r of proc.rows) {
+      const k = catchments.pourOf[r.id];
+      if (k === undefined) continue;
+      const a = acc.get(k) ?? { sumT: 0, n: 0, bdl: 0, ids: [], max: -Infinity };
+      a.sumT += r.t; a.n += 1; a.bdl += r.bdl ? 1 : 0; a.ids.push(r.id); a.max = Math.max(a.max, r.val);
+      acc.set(k, a);
+    }
+    const vals = new Map<number, { value: number; n: number; bdl: number; ids: string[]; max: number }>();
+    acc.forEach((a, k) => vals.set(k, { value: back(a.sumT / a.n), n: a.n, bdl: a.bdl, ids: a.ids, max: a.max }));
+    const sorted = [...vals.values()].map((v) => v.value).sort((a, b) => a - b);
+    const qs = [0.5, 0.75, 0.9, 0.95, 0.98];
+    const breaks = qs.map((q) => quantile(sorted, q));
+    const without = proc.rows.filter((r) => catchments.pourOf[r.id] === undefined).length;
+    return { vals, breaks, qs, sorted, without };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [proc, catchments]);
+  const CLASS_LABELS = ["below the median", "50th-75th percentile", "75th-90th", "90th-95th", "95th-98th", "top 2%"];
+  const classOf = useCallback((v: number) => (pourValues ? pourValues.breaks.filter((b) => v > b).length : 0), [pourValues]);
+  const classColour = (c: number) => rampCss(c / 5);
+  const styleOf = useCallback((p: CatchmentPour): PourStyle | null => {
+    const v = pourValues?.vals.get(p.pour);
+    if (!v) return null;
+    const c = classOf(v.value);
+    const weak = p.upstreamKm2 < 0.1;
+    const popup = `<strong>${data?.element} ${fmtV(v.value)} ${unit}</strong>${v.n > 1 ? ` (mean of ${v.n} samples)` : ""}${v.bdl ? `; ${v.bdl} below detection` : ""}<br/>` +
+      `Class: ${CLASS_LABELS[c]}<br/>Catchment of this sample: ${fmtV(p.ownKm2)} km²; all ground upstream: ${fmtV(p.upstreamKm2)} km²<br/>` +
+      `${p.iceShare > 0 ? `Glacier/ice in it: ${Math.round(100 * p.iceShare)}% (left out of the shape)<br/>` : ""}` +
+      `${p.upstreamSamples ? `${p.upstreamSamples} sampled catchments upstream<br/>` : ""}` +
+      `Moved ${Math.round(p.snapM)} m onto the stream${weak ? "; <em>no mapped stream nearby: catchment unreliable</em>" : ""}`;
+    return { colour: classColour(c), popup, weak };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pourValues, classOf, unit, data]);
+  const catchPours = useMemo(() => (catchments && pourValues ? catchments.pours.filter((p) => pourValues.vals.has(p.pour)) : []), [catchments, pourValues]);
+  function buildCatchmentSummary() {
+    if (!proc || !data || !catchments || !pourValues) return null;
+    const r3 = (v: number) => Number(v.toPrecision(3));
+    const ps = catchPours;
+    const own = ps.map((p) => p.ownKm2).sort((a, b) => a - b);
+    const top = [...ps].sort((a, b) => pourValues.vals.get(b.pour)!.value - pourValues.vals.get(a.pour)!.value).slice(0, 8);
+    return {
+      mapType: "sample catchment basins (stream sediments): each polygon is the ice-free ground draining to one sampled stream point, minus the ground draining to the next sample upstream",
+      dataset: data.source, sampleType: data.sampleType, element: data.element, unit, survey: data.series.survey, method: data.series.method, fraction: data.series.fraction,
+      samples: {
+        matchingInArea: data.matching, loaded: data.points.length, randomDraw: data.matching > data.points.length, used: proc.rows.length,
+        onCatchments: proc.rows.length - pourValues.without, withoutCatchment: pourValues.without, belowDetection: proc.nBdl,
+      },
+      distribution: { p5: r3(quantile(proc.sortedVals, 0.05)), median: r3(quantile(proc.sortedVals, 0.5)), p95: r3(quantile(proc.sortedVals, 0.95)), max: r3(proc.sortedVals[proc.sortedVals.length - 1]) },
+      catchments: {
+        count: ps.length, ownAreaKm2Median: r3(quantile(own, 0.5)), ownAreaKm2P90: r3(quantile(own, 0.9)),
+        glacierFedOver50pct: ps.filter((p) => p.iceShare > 0.5).length, noMappedStreamNearby: ps.filter((p) => p.upstreamKm2 < 0.1).length,
+        classBreaks: pourValues.qs.map((q, i) => ({ percentile: q * 100, value: r3(pourValues.breaks[i]) })),
+        averaging: logT ? "geometric mean of samples at the same stream point" : "mean of samples at the same stream point",
+      },
+      highestCatchments: top.map((p) => {
+        const v = pourValues.vals.get(p.pour)!;
+        return { lon: r3(p.lon), lat: r3(p.lat), value: r3(v.value), samples: v.n, ownKm2: r3(p.ownKm2), upstreamKm2: r3(p.upstreamKm2), iceShare: r3(p.iceShare), sampledCatchmentsUpstream: p.upstreamSamples, unreliable: p.upstreamKm2 < 0.1 };
+      }),
+      catchmentMethod: catchments.method,
+    };
+  }
+  function interpretCatchments() {
+    const summary = buildCatchmentSummary();
+    if (!summary || !pourValues) return;
+    const image = catchmentSnapshotBase64(catchPours.map((p) => ({ geometry: p.geometry, colour: classColour(classOf(pourValues.vals.get(p.pour)!.value)), lon: p.lon, lat: p.lat })));
+    interpret({ summary, image });
+  }
+  function downloadCatchmentsGeoJson() {
+    if (!data || !catchments || !pourValues) return;
+    const credits = [...data.credits, ...catchments.credits];
+    const fc = {
+      type: "FeatureCollection",
+      credits, method: catchments.method,
+      features: catchPours.map((p) => {
+        const v = pourValues.vals.get(p.pour)!;
+        return {
+          type: "Feature", geometry: p.geometry,
+          properties: {
+            [`${data.element}_${unit}`]: Number(v.value.toPrecision(5)), class: CLASS_LABELS[classOf(v.value)], samples: v.n, sample_ids: v.ids.join(" "), below_detection: v.bdl,
+            own_km2: p.ownKm2, upstream_km2: p.upstreamKm2, ice_share: p.iceShare, sampled_catchments_upstream: p.upstreamSamples, snap_m: p.snapM,
+            stream_lon: p.lon, stream_lat: p.lat, unreliable: p.upstreamKm2 < 0.1,
+          },
+        };
+      }),
+    };
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(fc)], { type: "application/geo+json" }));
+    a.download = `${baseName}_catchments.geojson`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
   const stale = result && result.settingsKey !== settingsKey;
   const sel = series?.[seriesIdx];
   const bdlShare = proc ? proc.nBdl / Math.max(data!.points.length, 1) : 0;
@@ -491,12 +603,12 @@ export function GeostatApp() {
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
               <div className="space-y-3">
                 <label className="block">
-                  <span className={label}>Dataset and sample type (soil, till and lake sediment only)</span>
+                  <span className={label}>Dataset and sample type (soil, till, lake sediment; stream sediment as catchment maps)</span>
                   <select className={input} value={dsKey} onChange={(e) => { const v = e.target.value; setDsKey(v); if (!options?.datasets.find((d) => `${d.source}|${d.sampleType}` === v)?.elements.some((x) => x.symbol === element)) setElement(""); setSeries(null); setData(null); setResult(null); }}>
                     <option value="">Choose…</option>
                     {bySource.map(([source, list]) => (
                       <optgroup key={source} label={datasetName(source)}>
-                        {list.map((d) => <option key={d.sampleType} value={`${d.source}|${d.sampleType}`}>{d.sampleType} ({d.n.toLocaleString()})</option>)}
+                        {list.map((d) => <option key={d.sampleType} value={`${d.source}|${d.sampleType}`}>{d.catchments ? `${d.sampleType}: catchment map (where built)` : `${d.sampleType} (${d.n.toLocaleString()})`}</option>)}
                       </optgroup>
                     ))}
                   </select>
@@ -508,7 +620,7 @@ export function GeostatApp() {
                     {dataset?.elements.map((el) => <option key={el.symbol} value={el.symbol}>{el.symbol} ({el.n.toLocaleString()} samples)</option>)}
                   </select>
                 </label>
-                <p className="text-[11px] text-gray-500">Stream sediments are not offered: each one stands for its upstream catchment, so they need catchment maps rather than kriging (planned).</p>
+                <p className="text-[11px] text-gray-500">Stream sediments stand for the ground that drains to them, so they are shown as catchment maps, not kriged. Catchments are built so far for South Greenland (GEUS); other stream-sediment surveys are not offered yet.</p>
               </div>
               <div className="space-y-2">
                 <span className={label}>Area (each side at most {MAX_SPAN_KM} km)</span>
@@ -596,6 +708,9 @@ export function GeostatApp() {
                 <div className="space-y-3">
                   <Check name="Log-transform (log10; recommended for trace elements)" value={logT} set={(v) => { setLogT(v); setAutoModel(true); }} />
                   <Select name="Below-detection values" value={bdlMode} set={(v) => { setBdlMode(v); setAutoModel(true); }} options={["half", "full", "exclude"] as const} labels={{ half: "Half the detection limit", full: "The detection limit", exclude: "Leave them out" }} />
+                  {catchMode ? (
+                    <p className="text-xs text-gray-400">Stream sediments are not kriged: each sample stands for the ground that drains to it, so they are shown as catchment maps below.</p>
+                  ) : (<>
                   <div className="grid grid-cols-2 gap-2">
                     <Num name="Maximum lag (km)" value={maxLag} set={(v) => { setMaxLag(v); }} min={0} />
                     <Num name="Number of lags" value={nLags} set={setNLags} step={1} min={5} max={40} />
@@ -613,8 +728,10 @@ export function GeostatApp() {
                     </div>
                     <p className="text-[11px] text-gray-500">Nugget share {Math.round(100 * nuggetShare)}%. {nuggetShare > 0.5 ? "High: much of the variation is at distances below the sample spacing, or is sampling and analytical noise." : "The range is the distance over which samples are related."}{vModel.type === "exponential" ? " Exponential range = practical range (95% of the sill)." : ""}</p>
                   </div>
+                  </>)}
                 </div>
                 <div className="lg:col-span-2 space-y-2">
+                  {!catchMode && (<>
                   <div className="flex items-center gap-3">
                     <span className="text-xs text-gray-400">{isIk && ikProc ? `Indicator semivariogram: above ${fmtV(threshold)} ${unit} or not` : "Experimental semivariogram"} (dot size = number of pairs) and model</span>
                     <button className="ml-auto text-xs text-gray-400 underline" onClick={() => downloadSvgPng(variogramRef.current, `${baseName}_variogram.png`)}>PNG</button>
@@ -622,7 +739,8 @@ export function GeostatApp() {
                   {vLags.length >= 2 ? (
                     <VariogramChart ref={variogramRef} lags={vLags} model={vModel} maxLag={maxLag} variance={vVariance} yLabel={isIk ? "Semivariance (indicator)" : `Semivariance (${logT ? "log10 units²" : `${unit}²`})`} />
                   ) : <Notice tone="warn">Not enough sample pairs within the maximum lag. Increase it.</Notice>}
-                  <details className="text-xs text-gray-400">
+                  </>)}
+                  <details className="text-xs text-gray-400" open={catchMode}>
                     <summary className="cursor-pointer">Histogram of the values</summary>
                     <Histogram values={proc.rows.map((r) => r.t)} label={tLabel} bdlCut={proc.rows.some((r) => r.bdl) ? Math.max(...proc.rows.filter((r) => r.bdl).map((r) => r.t)) : undefined} />
                   </details>
@@ -630,7 +748,71 @@ export function GeostatApp() {
               </div>
             </section>
 
+            {catchMode && (
+              <section className={`${card} space-y-3`}>
+                <div className="flex flex-wrap items-center gap-3">
+                  <h2 className={heading}>3. Catchment map</h2>
+                  {catchments && pourValues && (
+                    <span className="text-xs text-gray-400">{catchPours.length.toLocaleString()} catchments from {(proc.rows.length - pourValues.without).toLocaleString()} samples{pourValues.without ? `; ${pourValues.without} samples have no catchment` : ""}</span>
+                  )}
+                  <div className="ml-auto flex flex-wrap gap-3 text-xs">
+                    <Check name="Show sampled stream points" value={showPours} set={setShowPours} />
+                    {catchments && <button className="text-gray-300 underline" onClick={downloadCatchmentsGeoJson}>Catchments GeoJSON</button>}
+                    {!data.restricted && <button className="text-gray-300 underline" onClick={downloadSamples}>Samples CSV</button>}
+                  </div>
+                </div>
+                {catchError && <Notice tone="error">{catchError}</Notice>}
+                {!catchments && !catchError && <p className="text-sm text-gray-400">Loading the catchments…</p>}
+                {catchments && pourValues && (
+                  <>
+                    <CatchmentMap pours={catchPours} styleOf={styleOf} showPoints={showPours} />
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-gray-300">
+                      {CLASS_LABELS.map((l, i) => (
+                        <span key={l} className="flex items-center gap-1.5">
+                          <span className="inline-block h-3 w-4 rounded-sm" style={{ background: classColour(i) }} />
+                          {l} ({i === 0 ? `≤ ${fmtV(pourValues.breaks[0])}` : i === 5 ? `> ${fmtV(pourValues.breaks[4])}` : `${fmtV(pourValues.breaks[i - 1])}–${fmtV(pourValues.breaks[i])}`} {unit})
+                        </span>
+                      ))}
+                      <span className="flex items-center gap-1.5"><span className="inline-block h-3 w-4 rounded-sm border border-dashed border-orange-500" /> no mapped stream near the sample: shape unreliable</span>
+                    </div>
+                    <p className="text-[11px] text-gray-500">Each shape is the ground that drains to one sampled stream point, minus the ground that drains to the next sample upstream, so a high value points to a source inside its own shape. Ice-sheet and glacier ground is cut out: glacier-fed streams also carry far-travelled glacial flour. Built from the Copernicus 90 m elevation model; small streams in flat ground can be misplaced.</p>
+                    <div className="overflow-auto">
+                      <table className="min-w-full text-xs">
+                        <thead><tr className="text-left text-gray-400">{["Highest catchments", `${data.element} ${unit}`, "Samples", "Own km²", "Upstream km²", "Ice", "Stream point (lat, lon)"].map((h) => <th key={h} className="px-2 py-1 font-medium">{h}</th>)}</tr></thead>
+                        <tbody>
+                          {[...catchPours].sort((a, b) => pourValues.vals.get(b.pour)!.value - pourValues.vals.get(a.pour)!.value).slice(0, 10).map((p, i) => {
+                            const v = pourValues.vals.get(p.pour)!;
+                            return (
+                              <tr key={p.pour} className="border-t border-gray-800 text-gray-200">
+                                <td className="px-2 py-1">{i + 1}{p.upstreamKm2 < 0.1 ? <span className="text-orange-300"> (unreliable shape)</span> : ""}</td>
+                                <td className="px-2 py-1">{fmtV(v.value)}</td><td className="px-2 py-1">{v.n}</td><td className="px-2 py-1">{fmtV(p.ownKm2)}</td>
+                                <td className="px-2 py-1">{fmtV(p.upstreamKm2)}</td><td className="px-2 py-1">{Math.round(100 * p.iceShare)}%</td>
+                                <td className="px-2 py-1">{p.lat.toFixed(4)}, {p.lon.toFixed(4)}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="space-y-2 border-t border-gray-800 pt-3">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <h3 className={heading}>Interpretation</h3>
+                        <button className={btnRun} disabled={interpreting} onClick={interpretCatchments}>{interpreting ? "Writing…" : text ? "Write again" : "Interpret this map"}</button>
+                        {interpreting && <button className="text-xs text-gray-400 underline" onClick={() => abortRef.current?.abort()}>Stop</button>}
+                        <span className="text-xs text-gray-500">Counts as one question.</span>
+                      </div>
+                      {interpError && <Notice tone="error">{interpError}</Notice>}
+                      {text && <ReactMarkdown remarkPlugins={[remarkGfm]} components={md}>{text}</ReactMarkdown>}
+                      <p className="text-[11px] text-gray-500">AI-written from the numbers above; check it against them. Not a resource estimate or investment advice.</p>
+                    </div>
+                    <p className="text-[11px] text-gray-500">{catchments.credits.join("; ")}</p>
+                  </>
+                )}
+              </section>
+            )}
+
             {/* Step 3: interpolation */}
+            {!catchMode && (<>
             <section className={`${card} space-y-3`}>
               <h2 className={heading}>3. Interpolation</h2>
               <div className="grid grid-cols-2 gap-3 md:grid-cols-6 items-end">
@@ -734,7 +916,7 @@ export function GeostatApp() {
                 <div className={`${card} space-y-2`}>
                   <div className="flex flex-wrap items-center gap-3">
                     <h2 className={heading}>Interpretation</h2>
-                    <button className={btnRun} disabled={interpreting || !!stale} onClick={interpret}>{interpreting ? "Writing…" : text ? "Write again" : "Interpret this grid"}</button>
+                    <button className={btnRun} disabled={interpreting || !!stale} onClick={() => interpret()}>{interpreting ? "Writing…" : text ? "Write again" : "Interpret this grid"}</button>
                     {interpreting && <button className="text-xs text-gray-400 underline" onClick={() => abortRef.current?.abort()}>Stop</button>}
                     <span className="text-xs text-gray-500">Counts as one question.</span>
                   </div>
@@ -744,6 +926,7 @@ export function GeostatApp() {
                 </div>
               </section>
             )}
+            </>)}
             {data.credits.length > 0 && <p className="text-xs text-gray-500">Data: {data.credits.join("; ")}</p>}
           </>
         )}

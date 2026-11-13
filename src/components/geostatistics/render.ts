@@ -78,3 +78,36 @@ export function gridSnapshotBase64(grid: Grid, lo: number, hi: number, samples: 
   }
   return canvas.toDataURL("image/png").split(",")[1];
 }
+
+/** Plain picture of a catchment map (lon/lat, north up, white background) for the AI interpretation. Returns base64 PNG. */
+export function catchmentSnapshotBase64(polys: { geometry: unknown; colour: string; lon: number; lat: number }[]): string {
+  type Ring = number[][];
+  const ringsOf = (g: { type: string; coordinates: unknown }): Ring[] =>
+    g.type === "Polygon" ? (g.coordinates as Ring[]) : g.type === "MultiPolygon" ? (g.coordinates as Ring[][]).flat() : [];
+  let w = Infinity, s = Infinity, e = -Infinity, n = -Infinity;
+  for (const p of polys) for (const r of ringsOf(p.geometry as { type: string; coordinates: unknown })) for (const [x, y] of r) {
+    if (x < w) w = x; if (x > e) e = x; if (y < s) s = y; if (y > n) n = y;
+  }
+  if (!Number.isFinite(w)) return "";
+  const kx = Math.cos((((s + n) / 2) * Math.PI) / 180);
+  const W = 720, H = Math.max(200, Math.min(900, Math.round((W * (n - s)) / ((e - w) * kx))));
+  const canvas = document.createElement("canvas");
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d")!;
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, W, H);
+  const X = (x: number) => ((x - w) / (e - w)) * W, Y = (y: number) => ((n - y) / (n - s)) * H;
+  for (const p of polys) {
+    ctx.fillStyle = p.colour;
+    ctx.beginPath();
+    for (const r of ringsOf(p.geometry as { type: string; coordinates: unknown })) {
+      r.forEach(([x, y], i) => (i ? ctx.lineTo(X(x), Y(y)) : ctx.moveTo(X(x), Y(y))));
+      ctx.closePath();
+    }
+    ctx.fill("evenodd");
+  }
+  ctx.fillStyle = "rgba(0,0,0,0.6)";
+  for (const p of polys) ctx.fillRect(X(p.lon) - 1, Y(p.lat) - 1, 2, 2);
+  return canvas.toDataURL("image/png").split(",")[1];
+}

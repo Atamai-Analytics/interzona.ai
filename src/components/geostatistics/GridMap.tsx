@@ -21,7 +21,7 @@ export default function GridMap({
   const mapRef = useRef<import("leaflet").Map | null>(null);
   const LRef = useRef<typeof import("leaflet") | null>(null);
   const layerRef = useRef<import("leaflet").LayerGroup | null>(null);
-  const fittedRef = useRef<string>("");
+  const fittedRef = useRef<unknown>(null);
   const roRef = useRef<ResizeObserver | null>(null);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -83,8 +83,8 @@ export default function GridMap({
         bounds.extend([s.lat, s.lon]);
       }
     }
-    // Fit the view once per grid extent, not on every redraw (the user may have zoomed in).
-    const key = grid ? `${grid.west},${grid.south},${grid.east},${grid.north}` : `${samples.length}`;
+    // Fit the view once per new grid (each run), not on every redraw such as toggling the samples (the user may have zoomed in).
+    const key = grid ?? samples;
     if (bounds.isValid() && fittedRef.current !== key) {
       m.fitBounds(bounds, { padding: [20, 20], maxZoom: 13 });
       fittedRef.current = key;

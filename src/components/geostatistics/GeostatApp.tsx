@@ -7,7 +7,7 @@ import remarkGfm from "remark-gfm";
 import type { GeostatData, GeostatOptions, Locations, Series } from "@/lib/geostat/data";
 import { MAX_SPAN_KM, spanKm } from "@/lib/geostat/limits";
 import {
-  KdTree, MODEL_TYPES, autoFit, crossValidate, experimentalVariogram, interpolateGrid, makeProjection, medianSpacing, mergeColocated, quantile,
+  KdTree, MODEL_TYPES, autoFit, indicatorScores, crossValidate, experimentalVariogram, interpolateGrid, makeProjection, medianSpacing, mergeColocated, quantile,
   type CvStats, type Grid, type Lag, type Method, type ModelType, type Pt, type VariogramModel,
 } from "@/lib/geostat/engine";
 import { writeGeoTiff } from "@/lib/geostat/geotiff";
@@ -30,8 +30,9 @@ const K_OPTIONS = ["8", "16", "24", "32", "48"] as const;
 const CELL_OPTIONS = ["80", "120", "160", "200"] as const;
 const EXAMPLE = { source: "SWEDEN_SGU_MARKGEOKEMI", sampleType: "Till Sample (unspecified)", element: "Cu", box: { w: "17", s: "64", e: "21.5", n: "66" } };
 
-type Row = { id: string; lon: number; lat: number; val: number; t: number; bdl: boolean; gt: boolean };
-type RunResult = { grid: Grid; cv: CvStats; method: Method; ms: number; cellKm: number; maskKm: number; settingsKey: string; nPts: number };
+type Row = { id: string; lon: number; lat: number; val: number; t: number; bdl: boolean; gt: boolean; dl: number | null };
+type IkInfo = { threshold: number; above: number; share: number; ambiguousBdl: number; brier: number; brierReference: number; meanPAbove: number; meanPBelow: number };
+type RunResult = { grid: Grid; cv: CvStats; method: Method; ms: number; cellKm: number; maskKm: number; settingsKey: string; nPts: number; ik: IkInfo | null };
 
 const fmtV = (v: number) => (!Number.isFinite(v) ? "NA" : Math.abs(v) >= 1000 ? Math.round(v).toLocaleString("en-US") : String(Number(v.toPrecision(3))));
 const md = {
@@ -63,7 +64,11 @@ export function GeostatApp() {
   const [nLags, setNLags] = useState(15);
   const [autoModel, setAutoModel] = useState(true);
   const [model, setModel] = useState<VariogramModel>({ type: "spherical", nugget: 0, sill: 1, range: 10 });
-  const [methodKind, setMethodKind] = useState<"kriging" | "idw">("kriging");
+  const [methodKind, setMethodKind] = useState<"kriging" | "ik" | "idw">("kriging");
+  // Indicator kriging: probability that the value exceeds a threshold (in the original units), with its own variogram of the 0/1 indicator.
+  const [threshold, setThreshold] = useState(NaN);
+  const [ikModel, setIkModel] = useState<VariogramModel>({ type: "spherical", nugget: 0, sill: 0.1, range: 10 });
+  const [autoIk, setAutoIk] = useState(true);
   const [k, setK] = useState<(typeof K_OPTIONS)[number]>("24");
   const [power, setPower] = useState(2);
   const [cells, setCells] = useState<(typeof CELL_OPTIONS)[number]>("120");
@@ -156,6 +161,8 @@ export function GeostatApp() {
       if (r.points.length < 30) throw new Error(`Only ${r.points.length} usable samples in this series and area: at least 30 are needed for a variogram.`);
       setData({ ...r, series: s, source: dataset.source, sampleType: dataset.sampleType, element });
       setAutoModel(true);
+      setAutoIk(true);
+      setThreshold(NaN);
       setMaxLag(NaN);
       setMaskKm(NaN);
     } catch (e) { setError(e instanceof Error ? e.message : String(e)); } finally { setBusy(null); }
@@ -177,7 +184,7 @@ export function GeostatApp() {
         bdl = true;
       } else { nDropped++; return; }
       if (flags & 1) nGt++;
-      rows.push({ id: data.ids[i], lon, lat, val, t: logT ? Math.log10(val) : val, bdl, gt: (flags & 1) === 1 });
+      rows.push({ id: data.ids[i], lon, lat, val, t: logT ? Math.log10(val) : val, bdl, gt: (flags & 1) === 1, dl: bdl ? dl : null });
     });
     const merged = mergeColocated(rows);
     const lon0 = (Math.min(...rows.map((r) => r.lon)) + Math.max(...rows.map((r) => r.lon))) / 2;
@@ -213,13 +220,47 @@ export function GeostatApp() {
     if (autoModel && proc && lags.length >= 3) setModel(autoFit(lags, maxLag, proc.variance));
   }, [autoModel, lags, proc, maxLag]);
 
-  const editModel = (patch: Partial<VariogramModel>) => { setAutoModel(false); setModel((m) => ({ ...m, ...patch })); };
+  // ---- indicator kriging: 1 where the value is above the threshold, 0 elsewhere ----
+  useEffect(() => {
+    if (proc && !Number.isFinite(threshold)) setThreshold(Number(quantile(proc.sortedVals, 0.9).toPrecision(3)));
+  }, [proc, threshold]);
+  const ikProc = useMemo(() => {
+    if (!proc || !Number.isFinite(threshold)) return null;
+    const ind = proc.rows.map((r) => (r.val > threshold ? 1 : 0));
+    const above = ind.reduce((a: number, b) => a + b, 0);
+    // A below-detection sample whose detection limit is above the threshold cannot be classed: it is counted as below, and reported.
+    const ambiguousBdl = proc.rows.filter((r) => r.bdl && r.dl !== null && r.dl > threshold).length;
+    const merged = mergeColocated(proc.rows.map((r, i) => ({ lon: r.lon, lat: r.lat, t: ind[i] })));
+    const pts: Pt[] = merged.map((m) => { const [x, y] = proc.proj.fwd(m.lon, m.lat); return { x, y, z: m.t }; });
+    const tree = new KdTree(pts);
+    const mean = pts.reduce((a, p) => a + p.z, 0) / pts.length;
+    const variance = pts.reduce((a, p) => a + (p.z - mean) ** 2, 0) / Math.max(pts.length - 1, 1);
+    return { ind, above, share: above / proc.rows.length, ambiguousBdl, pts, tree, variance };
+  }, [proc, threshold]);
+  const lagsIk: Lag[] = useMemo(() => {
+    if (!ikProc || methodKind !== "ik" || !Number.isFinite(maxLag) || maxLag <= 0) return [];
+    const sub = ikProc.pts.length > 3000 ? ikProc.pts.filter((_, i) => i % Math.ceil(ikProc.pts.length / 3000) === 0) : ikProc.pts;
+    return experimentalVariogram(sub, maxLag, Math.min(Math.max(nLags, 5), 40));
+  }, [ikProc, methodKind, maxLag, nLags]);
+  useEffect(() => {
+    if (autoIk && ikProc && lagsIk.length >= 3 && ikProc.variance > 0) setIkModel(autoFit(lagsIk, maxLag, ikProc.variance));
+  }, [autoIk, lagsIk, ikProc, maxLag]);
+
+  const isIk = methodKind === "ik";
+  const vModel = isIk ? ikModel : model;
+  const vAuto = isIk ? autoIk : autoModel;
+  const vLags = isIk ? lagsIk : lags;
+  const vVariance = isIk ? ikProc?.variance ?? 0 : proc?.variance ?? 0;
+  const setVAuto = () => (isIk ? setAutoIk(true) : setAutoModel(true));
+  const editModel = (patch: Partial<VariogramModel>) => {
+    if (isIk) { setAutoIk(false); setIkModel((m) => ({ ...m, ...patch })); } else { setAutoModel(false); setModel((m) => ({ ...m, ...patch })); }
+  };
   const tLabel = logT ? `log10 ${data?.element ?? ""}` : `${data?.element ?? ""} ${data?.series.unit ?? ""}`;
   const back = (t: number) => (logT ? Math.pow(10, t) : t);
   const unit = data?.series.unit ?? "";
 
-  const methodNow: Method = methodKind === "kriging" ? { kind: "kriging", model, k: Number(k) } : { kind: "idw", power, k: Number(k) };
-  const settingsKey = JSON.stringify([methodNow, cells, maskKm, logT, bdlMode, data?.ids.length, data?.ids[0]]);
+  const methodNow: Method = methodKind === "kriging" ? { kind: "kriging", model, k: Number(k) } : methodKind === "ik" ? { kind: "kriging", model: ikModel, k: Number(k) } : { kind: "idw", power, k: Number(k) };
+  const settingsKey = JSON.stringify([methodKind, methodNow, cells, maskKm, logT, bdlMode, isIk ? threshold : null, data?.ids.length, data?.ids[0]]);
 
   function run() {
     if (!proc) return;
@@ -236,9 +277,16 @@ export function GeostatApp() {
         const cellKm = Math.max(ew, ns) / Number(cells);
         const nx = Math.max(2, Math.round(ew / cellKm)), ny = Math.max(2, Math.round(ns / cellKm));
         const mask = Number.isFinite(maskKm) && maskKm > 0 ? maskKm : proc.spacing * 3;
-        const grid = interpolateGrid(proc.pts, proc.tree, proc.proj, methodNow, { west, south, east, north }, nx, ny, mask);
-        const cv = crossValidate(proc.pts, proc.tree, methodNow);
-        setResult({ grid, cv, method: methodNow, ms: performance.now() - t0, cellKm, maskKm: mask, settingsKey, nPts: proc.pts.length });
+        const src = isIk && ikProc ? ikProc : proc;
+        const grid = interpolateGrid(src.pts, src.tree, proc.proj, methodNow, { west, south, east, north }, nx, ny, mask);
+        const cv = crossValidate(src.pts, src.tree, methodNow);
+        let ik: IkInfo | null = null;
+        if (isIk && ikProc) {
+          // Kriged indicators can stray slightly outside 0-1 (negative weights): clip them to probabilities.
+          for (let i = 0; i < grid.z.length; i++) if (Number.isFinite(grid.z[i])) grid.z[i] = Math.min(1, Math.max(0, grid.z[i]));
+          ik = { threshold, above: ikProc.above, share: ikProc.share, ambiguousBdl: ikProc.ambiguousBdl, ...indicatorScores(cv) };
+        }
+        setResult({ grid, cv, method: methodNow, ms: performance.now() - t0, cellKm, maskKm: mask, settingsKey, nPts: src.pts.length, ik });
       } catch (e) {
         setError(`The interpolation failed: ${e instanceof Error ? e.message : String(e)}`);
       } finally {
@@ -257,8 +305,10 @@ export function GeostatApp() {
     return { lo, hi, ticksZ };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [proc]);
+  // What the estimate map shows: values (back-transformed) or, for indicator kriging, a 0-100% probability.
+  const dispScale = result?.ik ? { lo: 0, hi: 1, ticksZ: [0, 0.25, 0.5, 0.75, 1].map((t) => ({ t, label: `${Math.round(t * 100)}%` })) } : scale;
   const sdScale = useMemo(() => {
-    if (!result || result.method.kind !== "kriging") return null;
+    if (!result || result.method.kind !== "kriging" || result.ik) return null;
     const v = Array.from(result.grid.sd).filter(Number.isFinite).sort((a, b) => a - b);
     if (!v.length) return null;
     const lo = quantile(v, 0.01), hi = quantile(v, 0.99);
@@ -270,8 +320,8 @@ export function GeostatApp() {
   }, [result, logT]);
 
   const mapSamples: MapSample[] = useMemo(
-    () => proc?.rows.map((r) => ({ lon: r.lon, lat: r.lat, t: r.t, bdl: r.bdl, popup: `<strong>${fmtV(r.val)} ${unit}</strong>${r.bdl ? " (below detection: substituted value)" : ""}${r.gt ? " (above the upper limit)" : ""}<br/>${r.lat.toFixed(4)}, ${r.lon.toFixed(4)}` })) ?? [],
-    [proc, unit]
+    () => proc?.rows.map((r) => ({ lon: r.lon, lat: r.lat, t: result?.ik ? (r.val > result.ik.threshold ? 1 : 0) : r.t, bdl: r.bdl, popup: `<strong>${fmtV(r.val)} ${unit}</strong>${r.bdl ? " (below detection: substituted value)" : ""}${r.gt ? " (above the upper limit)" : ""}<br/>${r.lat.toFixed(4)}, ${r.lon.toFixed(4)}` })) ?? [],
+    [proc, unit, result]
   );
 
   // ---- summary for the interpretation ----
@@ -286,12 +336,14 @@ export function GeostatApp() {
     for (const i of [...cellsIdx].sort((a, b) => g.z[b] - g.z[a])) {
       const lon = g.west + ((i % g.nx) + 0.5) * g.dlon, lat = g.north - (Math.floor(i / g.nx) + 0.5) * g.dlat;
       const [x, y] = proc.proj.fwd(lon, lat);
-      if (top.every((t) => Math.hypot(t.x - x, t.y - y) > sep)) top.push({ lon, lat, estimate: back(g.z[i]), x, y });
+      if (top.every((t) => Math.hypot(t.x - x, t.y - y) > sep)) top.push({ lon, lat, estimate: result.ik ? g.z[i] : back(g.z[i]), x, y });
       if (top.length >= 5) break;
     }
     const topSamples = [...proc.rows].sort((a, b) => b.val - a.val).slice(0, 5);
     const r3 = (v: number) => Number(v.toPrecision(3));
-    const total = model.nugget + model.sill;
+    const vm = result.ik ? ikModel : model;
+    const total = vm.nugget + vm.sill;
+    const ik = result.ik;
     return {
       dataset: data.source, sampleType: data.sampleType, element: data.element, unit, survey: data.series.survey, surveyDescription: data.series.surveyDesc,
       method: data.series.method, fraction: data.series.fraction,
@@ -303,17 +355,25 @@ export function GeostatApp() {
       distribution: { p5: r3(quantile(proc.sortedVals, 0.05)), p25: r3(quantile(proc.sortedVals, 0.25)), median: r3(quantile(proc.sortedVals, 0.5)), p75: r3(quantile(proc.sortedVals, 0.75)), p95: r3(quantile(proc.sortedVals, 0.95)), max: r3(proc.sortedVals[proc.sortedVals.length - 1]) },
       transform: logT ? "log10" : "none",
       variogram: {
-        model: model.type, nugget: r3(model.nugget), partialSill: r3(model.sill), rangeKm: r3(model.range), nuggetShare: r3(total > 0 ? model.nugget / total : 0),
-        autoFitted: autoModel, sampleVariance: r3(proc.variance), maxLagKm: maxLag, usedForGrid: result.method.kind === "kriging",
-        experimental: lags.map((l) => [r3(l.h), r3(l.gamma), l.pairs]),
+        of: ik ? `indicator (1 = above ${ik.threshold} ${unit})` : logT ? "log10 values" : "raw values",
+        model: vm.type, nugget: r3(vm.nugget), partialSill: r3(vm.sill), rangeKm: r3(vm.range), nuggetShare: r3(total > 0 ? vm.nugget / total : 0),
+        autoFitted: ik ? autoIk : autoModel, sampleVariance: r3(ik ? ikProc?.variance ?? NaN : proc.variance), maxLagKm: maxLag, usedForGrid: result.method.kind === "kriging",
+        experimental: (ik ? lagsIk : lags).map((l) => [r3(l.h), r3(l.gamma), l.pairs]),
       },
+      indicatorKriging: ik ? {
+        threshold: ik.threshold, unit, thresholdPercentile: r3(100 * (proc.rows.filter((r) => r.val <= ik.threshold).length / proc.rows.length)),
+        samplesAbove: ik.above, shareAbove: r3(ik.share), belowDetectionWithLimitAboveThreshold: ik.ambiguousBdl,
+        crossValidation: { n: result.cv.n, brierScore: r3(ik.brier), brierIfAlwaysPredictingTheShare: r3(ik.brierReference), skill: r3(1 - ik.brier / Math.max(ik.brierReference, 1e-12)), meanPredictedProbabilityWhereAbove: r3(ik.meanPAbove), meanPredictedProbabilityWhereBelow: r3(ik.meanPBelow) },
+      } : null,
       interpolation: {
-        method: result.method.kind === "kriging" ? "ordinary kriging" : `inverse distance (power ${power})`, neighbours: result.method.k, cellKm: r3(result.cellKm),
+        method: ik ? "indicator kriging (ordinary kriging of the 0/1 indicator; output = probability above the threshold)" : result.method.kind === "kriging" ? "ordinary kriging" : `inverse distance (power ${power})`, neighbours: result.method.k, cellKm: r3(result.cellKm),
         maskBeyondKm: r3(result.maskKm), gridCells: `${g.nx} x ${g.ny}`, cellsEstimated: cellsIdx.length,
       },
-      crossValidation: { n: result.cv.n, meanError: r3(result.cv.meanError), rmse: r3(result.cv.rmse), corrObservedPredicted: r3(result.cv.corr), meanStandardisedError: result.cv.mse === null ? null : r3(result.cv.mse), meanSquaredStandardisedError: result.cv.msse === null ? null : r3(result.cv.msse), units: logT ? "log10" : unit },
-      grid: { estimateMedian: r3(back(quantile(zs, 0.5))), estimateP90: r3(back(quantile(zs, 0.9))), estimateMax: r3(back(zs[zs.length - 1])) },
-      highestGridAreas: top.map((t) => ({ lon: r3(t.lon), lat: r3(t.lat), estimate: r3(t.estimate) })),
+      crossValidation: ik ? null : { n: result.cv.n, meanError: r3(result.cv.meanError), rmse: r3(result.cv.rmse), corrObservedPredicted: r3(result.cv.corr), meanStandardisedError: result.cv.mse === null ? null : r3(result.cv.mse), meanSquaredStandardisedError: result.cv.msse === null ? null : r3(result.cv.msse), units: logT ? "log10" : unit },
+      grid: ik
+        ? { probabilityMedian: r3(quantile(zs, 0.5)), probabilityP90: r3(quantile(zs, 0.9)), probabilityMax: r3(zs[zs.length - 1]), shareOfCellsAbove50pct: r3(zs.filter((v) => v > 0.5).length / Math.max(zs.length, 1)) }
+        : { estimateMedian: r3(back(quantile(zs, 0.5))), estimateP90: r3(back(quantile(zs, 0.9))), estimateMax: r3(back(zs[zs.length - 1])) },
+      highestGridAreas: top.map((t) => (ik ? { lon: r3(t.lon), lat: r3(t.lat), probability: r3(t.estimate) } : { lon: r3(t.lon), lat: r3(t.lat), estimate: r3(t.estimate) })),
       highestSamples: topSamples.map((s) => ({ lon: Number(s.lon.toFixed(3)), lat: Number(s.lat.toFixed(3)), value: r3(s.val) })),
       area: { west: r3(g.west), south: r3(g.south), east: r3(g.east), north: r3(g.north) },
     };
@@ -321,13 +381,13 @@ export function GeostatApp() {
 
   async function interpret() {
     const summary = buildSummary();
-    if (!summary || !result || !scale || !proc) return;
+    if (!summary || !result || !dispScale || !proc) return;
     abortRef.current?.abort();
     const ac = new AbortController();
     abortRef.current = ac;
     setInterpreting(true); setInterpError(null); setText("");
     try {
-      const image = gridSnapshotBase64(result.grid, scale.lo, scale.hi, proc.rows);
+      const image = gridSnapshotBase64(result.grid, dispScale.lo, dispScale.hi, proc.rows);
       const res = await fetch("/api/geostat/interpret", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ summary, image }), signal: ac.signal });
       if (!res.ok || !res.body) {
         const j = await res.json().catch(() => ({}));
@@ -363,25 +423,29 @@ export function GeostatApp() {
     if (!result || !data) return;
     const g = result.grid;
     const rows: (number | null)[][] = [];
+    const ik = result.ik;
     for (let r = 0; r < g.ny; r++) for (let c = 0; c < g.nx; c++) {
       const i = r * g.nx + c;
       if (!Number.isFinite(g.z[i])) continue;
       const lon = g.west + (c + 0.5) * g.dlon, lat = g.north - (r + 0.5) * g.dlat;
+      if (ik) { rows.push([Number(lon.toFixed(6)), Number(lat.toFixed(6)), Number(g.z[i].toFixed(4))]); continue; }
       rows.push([Number(lon.toFixed(6)), Number(lat.toFixed(6)), Number(back(g.z[i]).toPrecision(5)), Number(g.z[i].toPrecision(5)), Number.isFinite(g.sd[i]) ? Number(g.sd[i].toPrecision(4)) : null]);
     }
+    if (ik) { downloadText(`${baseName}_prob_above_${ik.threshold}.csv`, csvWithCredits(["lon", "lat", `probability_${data.element}_above_${ik.threshold}_${unit}`], rows, data.credits)); return; }
     const cols = ["lon", "lat", `${data.element}_${unit}_estimate`, logT ? "log10_estimate" : "estimate_raw", logT ? "kriging_sd_log10" : "kriging_sd"];
     downloadText(`${baseName}_grid.csv`, csvWithCredits(cols, rows, data.credits));
   }
   function downloadTiff() {
     if (!result || !data) return;
     const g = result.grid;
-    const est = g.z.map((v) => (Number.isFinite(v) ? back(v) : NaN));
-    const bands = result.method.kind === "kriging" ? [Float32Array.from(est), g.sd] : [Float32Array.from(est)];
-    const desc = asciiOnly(`${data.element} ${unit} ${result.method.kind === "kriging" ? "ordinary kriging" : "IDW"} estimate (band 1, back-transformed${logT ? " from log10" : ""})${bands.length > 1 ? `; band 2 kriging standard deviation (${logT ? "log10 units" : unit})` : ""}. ${data.source} ${data.sampleType}; ${seriesLabel(data.series)}. Data: ${data.credits.join("; ")}`);
+    const ik = result.ik;
+    const est = ik ? g.z : g.z.map((v) => (Number.isFinite(v) ? back(v) : NaN));
+    const bands = result.method.kind === "kriging" && !ik ? [Float32Array.from(est), g.sd] : [Float32Array.from(est)];
+    const desc = ik ? asciiOnly(`Indicator kriging: probability (0-1) that ${data.element} exceeds ${ik.threshold} ${unit}. ${data.source} ${data.sampleType}; ${seriesLabel(data.series)}. Data: ${data.credits.join("; ")}`) : asciiOnly(`${data.element} ${unit} ${result.method.kind === "kriging" ? "ordinary kriging" : "IDW"} estimate (band 1, back-transformed${logT ? " from log10" : ""})${bands.length > 1 ? `; band 2 kriging standard deviation (${logT ? "log10 units" : unit})` : ""}. ${data.source} ${data.sampleType}; ${seriesLabel(data.series)}. Data: ${data.credits.join("; ")}`);
     const bytes = writeGeoTiff({ width: g.nx, height: g.ny, bands, west: g.west, north: g.north, dlon: g.dlon, dlat: g.dlat, description: desc });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([bytes as BlobPart], { type: "image/tiff" }));
-    a.download = `${baseName}_grid.tif`;
+    a.download = ik ? `${baseName}_prob_above_${ik.threshold}.tif` : `${baseName}_grid.tif`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }
@@ -394,7 +458,7 @@ export function GeostatApp() {
   const stale = result && result.settingsKey !== settingsKey;
   const sel = series?.[seriesIdx];
   const bdlShare = proc ? proc.nBdl / Math.max(data!.points.length, 1) : 0;
-  const nuggetShare = model.nugget + model.sill > 0 ? model.nugget / (model.nugget + model.sill) : 0;
+  const nuggetShare = vModel.nugget + vModel.sill > 0 ? vModel.nugget / (vModel.nugget + vModel.sill) : 0;
 
   return (
     <div className="min-h-dvh bg-gray-950 text-gray-100">
@@ -538,25 +602,25 @@ export function GeostatApp() {
                   </div>
                   <div className="rounded border border-gray-800 p-2 space-y-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-400">Model {autoModel ? "(auto-fitted)" : "(edited)"}</span>
-                      <button className="ml-auto text-xs text-emerald-300 underline" onClick={() => setAutoModel(true)}>Auto-fit</button>
+                      <span className="text-xs text-gray-400">{isIk ? "Indicator model" : "Model"} {vAuto ? "(auto-fitted)" : "(edited)"}</span>
+                      <button className="ml-auto text-xs text-emerald-300 underline" onClick={setVAuto}>Auto-fit</button>
                     </div>
-                    <Select name="Type" value={model.type} set={(v: ModelType) => editModel({ type: v })} options={MODEL_TYPES} />
+                    <Select name="Type" value={vModel.type} set={(v: ModelType) => editModel({ type: v })} options={MODEL_TYPES} />
                     <div className="grid grid-cols-3 gap-2">
-                      <Num name="Nugget" value={Number(model.nugget.toPrecision(3))} set={(v) => editModel({ nugget: Math.max(0, v || 0) })} min={0} />
-                      <Num name="Partial sill" value={Number(model.sill.toPrecision(3))} set={(v) => editModel({ sill: Math.max(1e-9, v || 0) })} min={0} />
-                      <Num name="Range (km)" value={Number(model.range.toPrecision(3))} set={(v) => editModel({ range: Math.max(1e-6, v || 0) })} min={0} />
+                      <Num name="Nugget" value={Number(vModel.nugget.toPrecision(3))} set={(v) => editModel({ nugget: Math.max(0, v || 0) })} min={0} />
+                      <Num name="Partial sill" value={Number(vModel.sill.toPrecision(3))} set={(v) => editModel({ sill: Math.max(1e-9, v || 0) })} min={0} />
+                      <Num name="Range (km)" value={Number(vModel.range.toPrecision(3))} set={(v) => editModel({ range: Math.max(1e-6, v || 0) })} min={0} />
                     </div>
-                    <p className="text-[11px] text-gray-500">Nugget share {Math.round(100 * nuggetShare)}%. {nuggetShare > 0.5 ? "High: much of the variation is at distances below the sample spacing, or is sampling and analytical noise." : "The range is the distance over which samples are related."}{model.type === "exponential" ? " Exponential range = practical range (95% of the sill)." : ""}</p>
+                    <p className="text-[11px] text-gray-500">Nugget share {Math.round(100 * nuggetShare)}%. {nuggetShare > 0.5 ? "High: much of the variation is at distances below the sample spacing, or is sampling and analytical noise." : "The range is the distance over which samples are related."}{vModel.type === "exponential" ? " Exponential range = practical range (95% of the sill)." : ""}</p>
                   </div>
                 </div>
                 <div className="lg:col-span-2 space-y-2">
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-gray-400">Experimental semivariogram (dot size = number of pairs) and model</span>
+                    <span className="text-xs text-gray-400">{isIk && ikProc ? `Indicator semivariogram: above ${fmtV(threshold)} ${unit} or not` : "Experimental semivariogram"} (dot size = number of pairs) and model</span>
                     <button className="ml-auto text-xs text-gray-400 underline" onClick={() => downloadSvgPng(variogramRef.current, `${baseName}_variogram.png`)}>PNG</button>
                   </div>
-                  {lags.length >= 2 ? (
-                    <VariogramChart ref={variogramRef} lags={lags} model={model} maxLag={maxLag} variance={proc.variance} yLabel={`Semivariance (${logT ? "log10 units²" : `${unit}²`})`} />
+                  {vLags.length >= 2 ? (
+                    <VariogramChart ref={variogramRef} lags={vLags} model={vModel} maxLag={maxLag} variance={vVariance} yLabel={isIk ? "Semivariance (indicator)" : `Semivariance (${logT ? "log10 units²" : `${unit}²`})`} />
                   ) : <Notice tone="warn">Not enough sample pairs within the maximum lag. Increase it.</Notice>}
                   <details className="text-xs text-gray-400">
                     <summary className="cursor-pointer">Histogram of the values</summary>
@@ -570,18 +634,36 @@ export function GeostatApp() {
             <section className={`${card} space-y-3`}>
               <h2 className={heading}>3. Interpolation</h2>
               <div className="grid grid-cols-2 gap-3 md:grid-cols-6 items-end">
-                <Select name="Method" value={methodKind} set={setMethodKind} options={["kriging", "idw"] as const} labels={{ kriging: "Ordinary kriging", idw: "Inverse distance" }} />
+                <Select name="Method" value={methodKind} set={setMethodKind} options={["kriging", "ik", "idw"] as const} labels={{ kriging: "Ordinary kriging", ik: "Indicator kriging (probability)", idw: "Inverse distance" }} />
                 <Select name="Neighbours (nearest samples)" value={k} set={setK} options={K_OPTIONS} />
                 {methodKind === "idw" ? <Num name="IDW power" value={power} set={setPower} min={1} max={4} step={0.5} /> : <div className="hidden md:block" />}
                 <Select name="Cells along the longer side" value={cells} set={setCells} options={CELL_OPTIONS} />
                 <Num name="Leave blank beyond (km)" value={maskKm} set={setMaskKm} min={0} />
                 <button className={btnRun} disabled={running} onClick={run}>{running ? "Running…" : result ? "Run again" : "Run"}</button>
               </div>
+              {isIk && ikProc && (
+                <div className="flex flex-wrap items-end gap-3 rounded border border-gray-800 p-2">
+                  <div className="w-44"><Num name={`Threshold (${unit})`} value={threshold} set={(v) => { setThreshold(v); setAutoIk(true); }} min={0} /></div>
+                  <div className="flex flex-wrap gap-1.5 pb-1">
+                    {[0.75, 0.9, 0.95, 0.98].map((q) => (
+                      <button key={q} className="rounded border border-gray-700 px-2 py-0.5 text-xs text-gray-300 hover:border-emerald-500" onClick={() => { setThreshold(Number(quantile(proc.sortedVals, q).toPrecision(3))); setAutoIk(true); }}>
+                        {Math.round(q * 100)}th percentile
+                      </button>
+                    ))}
+                  </div>
+                  <p className="pb-1 text-xs text-gray-300">
+                    {ikProc.above.toLocaleString()} samples ({Math.round(100 * ikProc.share)}%) above.
+                    {ikProc.above < 20 ? <span className="text-amber-300"> Very few: the probability map will rest on a handful of points.</span> : ikProc.share > 0.5 ? <span className="text-amber-300"> More than half: this is not an anomaly threshold.</span> : null}
+                    {ikProc.ambiguousBdl > 0 && <span className="text-amber-300"> {ikProc.ambiguousBdl} below-detection samples have a detection limit above the threshold and are counted as below.</span>}
+                  </p>
+                </div>
+              )}
+              {isIk && <p className="text-[11px] text-gray-500">Indicator kriging maps the probability that {data.element} is above the threshold, using its own variogram of above/below (shown in step 2). It does not depend on the log transform and is not pulled down by single extreme values the way ordinary kriging is.</p>}
               <p className="text-[11px] text-gray-500">Cells farther than the blank distance from every sample are left empty rather than extrapolated (default three times the median sample spacing). Kriging uses the variogram model above.</p>
               {stale && <Notice tone="warn">Settings have changed since this grid was made: run again to update it.</Notice>}
             </section>
 
-            {result && scale && (
+            {result && dispScale && (
               <section className="space-y-4">
                 <div className={`${card} space-y-3`}>
                   <div className="flex flex-wrap items-center gap-3">
@@ -594,21 +676,40 @@ export function GeostatApp() {
                       {!data.restricted && <button className="text-gray-300 underline" onClick={downloadSamples}>Samples CSV</button>}
                     </div>
                   </div>
-                  <div className={`grid grid-cols-1 gap-4 ${result.method.kind === "kriging" ? "lg:grid-cols-2" : ""}`}>
+                  <div className={`grid grid-cols-1 gap-4 ${sdScale ? "lg:grid-cols-2" : ""}`}>
                     <div>
-                      <p className="mb-1 text-xs text-gray-300">Estimate: {data.element} {unit}{logT ? " (back-transformed from log10: closer to a median than a mean)" : ""}</p>
-                      <GridMap grid={result.grid} band="z" lo={scale.lo} hi={scale.hi} samples={mapSamples} legendTitle={`${data.element} ${unit}`} legendTicks={scale.ticksZ} showSamples={showSamples} colourSamples />
+                      {result.ik ? (
+                        <p className="mb-1 text-xs text-gray-300">Probability that {data.element} is above {fmtV(result.ik.threshold)} {unit}. Samples: yellow = above, purple = below.</p>
+                      ) : (
+                        <p className="mb-1 text-xs text-gray-300">Estimate: {data.element} {unit}{logT ? " (back-transformed from log10: closer to a median than a mean)" : ""}</p>
+                      )}
+                      <GridMap grid={result.grid} band="z" lo={dispScale.lo} hi={dispScale.hi} samples={mapSamples} legendTitle={result.ik ? `Probability above ${fmtV(result.ik.threshold)} ${unit}` : `${data.element} ${unit}`} legendTicks={dispScale.ticksZ} showSamples={showSamples} colourSamples />
                     </div>
-                    {result.method.kind === "kriging" && sdScale && (
+                    {sdScale && (
                       <div>
                         <p className="mb-1 text-xs text-gray-300">Kriging standard deviation{logT ? " as a factor (×1.5 = the true value is likely within 1.5 times either way)" : ""}: higher away from samples</p>
                         <GridMap grid={result.grid} band="sd" lo={sdScale.lo} hi={sdScale.hi} samples={mapSamples} legendTitle="Kriging error" legendTicks={sdScale.ticks} showSamples={showSamples} colourSamples={false} />
                       </div>
                     )}
                   </div>
-                  <p className="text-[11px] text-gray-500">Kriging and inverse distance both smooth: a single high sample is pulled down to its neighbours&apos; level. Check the sample points, not only the colours. Colours are stretched between the 2nd and 98th percentile of the samples.</p>
+                  <p className="text-[11px] text-gray-500">{result.ik ? "A probability, not a grade: high values mean neighbouring samples are often above the threshold. Isolated single exceedances give only modest probabilities; check the sample points." : "Kriging and inverse distance both smooth: a single high sample is pulled down to its neighbours\u2019 level. Check the sample points, not only the colours. Colours are stretched between the 2nd and 98th percentile of the samples."}</p>
                 </div>
 
+                {result.ik ? (
+                  <div className={`${card} space-y-2`}>
+                    <h3 className="text-sm font-semibold text-gray-200">Leave-one-out cross-validation (indicator)</h3>
+                    <p className="text-xs text-gray-400">Each of {result.cv.n.toLocaleString()} samples given a probability from its neighbours without itself.</p>
+                    <table className="text-sm">
+                      <tbody className="[&_td]:py-0.5 [&_td]:pr-4">
+                        <tr><td className="text-gray-400">Average probability where the sample is above</td><td>{Math.round(100 * result.ik.meanPAbove)}%</td></tr>
+                        <tr><td className="text-gray-400">Average probability where the sample is below</td><td>{Math.round(100 * result.ik.meanPBelow)}%</td></tr>
+                        <tr><td className="text-gray-400">Brier score (0 = perfect)</td><td>{fmtV(result.ik.brier)} (always guessing {Math.round(100 * result.ik.share)}%: {fmtV(result.ik.brierReference)})</td></tr>
+                        <tr><td className="text-gray-400">Skill over guessing the overall share</td><td>{Math.round(100 * (1 - result.ik.brier / Math.max(result.ik.brierReference, 1e-12)))}%</td></tr>
+                      </tbody>
+                    </table>
+                    <p className="text-[11px] text-gray-500">The bigger the gap between the two averages, the better the map separates anomalous ground from background. Skill near 0% means exceedances are scattered with no spatial pattern.</p>
+                  </div>
+                ) : (
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                   <div className={`${card} space-y-2`}>
                     <h3 className="text-sm font-semibold text-gray-200">Leave-one-out cross-validation</h3>
@@ -628,6 +729,7 @@ export function GeostatApp() {
                     <CvChart pairs={result.cv.pairs} label={logT ? "log10" : unit} />
                   </div>
                 </div>
+                )}
 
                 <div className={`${card} space-y-2`}>
                   <div className="flex flex-wrap items-center gap-3">

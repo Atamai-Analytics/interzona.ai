@@ -280,7 +280,27 @@ export type CvStats = {
   msse: number | null; // mean squared standardised error (kriging only; about 1 when the model's error is honest)
   mse: number | null; // mean standardised error (kriging only; about 0)
   pairs: { obs: number; pred: number }[]; // for the scatter plot (capped)
+  obsAll: number[]; // every tested sample, for scores computed by the caller (e.g. indicator kriging)
+  predAll: number[];
 };
+
+/** Scores for indicator kriging cross-validation (observed 0/1, predicted probabilities clipped to 0-1). */
+export function indicatorScores(cv: CvStats) {
+  const n = cv.obsAll.length;
+  let brier = 0, sumAbove = 0, nAbove = 0, sumBelow = 0, nBelow = 0;
+  for (let i = 0; i < n; i++) {
+    const p = Math.min(1, Math.max(0, cv.predAll[i])), o = cv.obsAll[i] >= 0.5 ? 1 : 0;
+    brier += (p - o) ** 2;
+    if (o) { sumAbove += p; nAbove++; } else { sumBelow += p; nBelow++; }
+  }
+  const share = nAbove / Math.max(n, 1);
+  return {
+    brier: brier / Math.max(n, 1),
+    brierReference: share * (1 - share), // score of always predicting the overall share; skill = 1 - brier / reference
+    meanPAbove: nAbove ? sumAbove / nAbove : NaN, // average predicted probability where the sample really is above the threshold
+    meanPBelow: nBelow ? sumBelow / nBelow : NaN,
+  };
+}
 
 /** Leave-one-out cross-validation on up to maxN samples (evenly spread through the list, which is already in random order). */
 export function crossValidate(pts: Pt[], tree: KdTree, method: Method, maxN = 2000): CvStats {
@@ -313,6 +333,8 @@ export function crossValidate(pts: Pt[], tree: KdTree, method: Method, maxN = 20
     msse: method.kind === "kriging" && std.length ? mean(std.map((s) => s * s)) : null,
     mse: method.kind === "kriging" && std.length ? mean(std) : null,
     pairs: obs.filter((_, i) => i % pstep === 0).map((o, j) => ({ obs: o, pred: pred[j * pstep] })),
+    obsAll: obs,
+    predAll: pred,
   };
 }
 

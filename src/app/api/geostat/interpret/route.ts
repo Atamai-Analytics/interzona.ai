@@ -39,6 +39,13 @@ Rules:
 - Values in log units are log10 of the concentration; a back-transformed estimate is closer to a median than a mean.
 - Till reflects glacial transport (anomalies can be displaced down-ice from their source); lake sediments reflect their catchment; soils
   reflect the local substrate. Say which applies.
+- If the numbers include "indicatorKriging", the grid is NOT a concentration: it is the probability (0-1; in the picture dark purple =
+  0, yellow = 1) that the element exceeds the stated threshold, from ordinary kriging of a 0/1 indicator with its own variogram. Then:
+  describe the indicator variogram (how far exceedances cluster), the areas of highest probability (with their probabilities and
+  coordinates), the threshold choice (its percentile, how many samples exceed it), and judge trust from the indicator cross-validation
+  (skill over guessing the overall share, the average probability where samples really are above versus below; a wide gap = good
+  separation). Probabilities from few exceedances are fragile. Below-detection samples whose detection limit is above the threshold
+  cannot be classed and were counted as below. Do not talk about kriging error factors or back-transformation in this case.
 - The tool takes at most 5,000 samples per grid and areas up to 800 km a side, with one survey, method and fraction at a time; the
   variogram is omnidirectional (no anisotropy option yet). Only suggest next steps the user can actually do within those limits (e.g. a
   smaller area to use every sample, another method or element, IDW for comparison, fewer neighbours) or outside the tool.

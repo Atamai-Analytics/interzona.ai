@@ -167,6 +167,7 @@ export function GeochemApp() {
         <div className="ml-auto flex gap-3 text-xs">
           <Link href="/tools/multivariate" className="text-emerald-300 hover:underline">Multivariate tools</Link>
           <Link href="/tools/intercepts" className="text-orange-300 hover:underline">Drill intercepts</Link>
+          <Link href="/tools/geostatistics" className="text-violet-300 hover:underline">Geostatistics</Link>
         </div>
       </header>
 

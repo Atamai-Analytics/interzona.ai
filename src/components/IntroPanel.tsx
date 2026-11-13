@@ -101,7 +101,7 @@ export function IntroPanel() {
             { href: "/tools/geochemistry", title: "Geochemistry", text: "Pick samples and run classification, alteration, fertility and rare-earth diagrams, with an AI reading of each chart." },
             { href: "/tools/intercepts", title: "Drill intercepts", text: "Rank reported and calculated drill intercepts by element, grade and length, on a map." },
             { href: "/tools/multivariate", title: "Multivariate", text: "Correlation, PCA, clustering, UMAP and t-SNE on database samples or your own CSV, with CLR transforms and downloads." },
-            { href: "/tools/geostatistics", title: "Geostatistics", text: "Krige or IDW-grid one soil, till or lake-sediment survey, with the variogram, error map, cross-validation and GeoTIFF download." },
+            { href: "/tools/geostatistics", title: "Geostatistics", text: "Krige or IDW-grid one soil, till or lake-sediment survey, or map the chance of exceeding a threshold with indicator kriging. GeoTIFF download." },
           ].map((t) => (
             <Link key={t.href} href={t.href} className="group block rounded-md border border-emerald-800/60 p-3 hover:border-emerald-500 hover:bg-emerald-900/40">
               <p className="text-sm font-semibold text-gray-100">{t.title} <span className="inline-block text-emerald-400 transition-transform group-hover:translate-x-0.5">→</span></p>

@@ -1,6 +1,9 @@
 import { getPool } from "@/lib/db";
 import { creditsFromText, GEUS_RAW_DATA_LOCKED } from "@/lib/licence";
-import { getOptions } from "@/lib/geochem-extract";
+import { getOptions, validColumns } from "@/lib/geochem-extract";
+import { MAX_POINTS, MAX_SPAN_KM, spanKm } from "@/lib/geostat/limits";
+
+export { MAX_POINTS, MAX_SPAN_KM, spanKm };
 
 // Data for the Geostatistics page (/tools/geostatistics). A grid is only ever built from ONE series: one dataset, one sample type, one
 // element, and within that one survey (where the dataset records surveys), one analytical method, one size fraction and one unit, so
@@ -12,8 +15,6 @@ import { getOptions } from "@/lib/geochem-extract";
  *  not a point, and unspecified "sediment" may be stream sediment, so neither is offered (catchment maps are phase 2). */
 const ALLOWED_CATEGORIES = ["SOIL", "TILL"];
 const ALLOWED_EXTRA_TYPES = ["Lake Sediment"];
-export const MAX_POINTS = 5000;
-export const MAX_SPAN_KM = 800;
 
 // Where a dataset records which survey a sample belongs to (in the sample comment written by its loader), the survey is part of the series.
 const SURVEY_SQL = `CASE s.source_system
@@ -57,14 +58,33 @@ export async function geostatOptions(): Promise<GeostatOptions> {
 }
 
 export type Bbox = [number, number, number, number]; // west, south, east, north
+
+/** Where the samples of one dataset, sample type and element are: their extent and a random set of up to 4,000 locations for the area-picker
+ *  map (from the wide table, which is fast to scan; the series step then applies the exact survey/method split). */
+export type Locations = { total: number; extent: Bbox | null; points: [number, number][] };
+export async function fetchLocations(q: { source: string; sampleType: string; element: string }): Promise<Locations> {
+  const [types, valid] = await Promise.all([allowedTypes(), validColumns()]);
+  if (!types.has(q.sampleType)) throw new Error("Only soil, till and lake-sediment samples can be gridded.");
+  if (!/^[A-Z][a-z]?$/.test(q.element)) throw new Error("Choose an element.");
+  const cols = ["_t", "_p"].map((s) => q.element.toLowerCase() + s).filter((c) => valid.has(c));
+  if (!cols.length) return { total: 0, extent: null, points: [] };
+  // Column names come from the whitelist above; values are bound parameters.
+  const has = cols.map((c) => `("${c}" IS NOT NULL OR '${c}' = ANY(bdl_codes))`).join(" OR ");
+  const where = `source_system = $1 AND coalesce(sample_type_name, 'Unknown') = $2 AND lat IS NOT NULL AND lon IS NOT NULL AND (${has})`;
+  return withClient(20000, async (c) => {
+    const ext = (await c.query(`SELECT count(*)::int n, min(lon) w, min(lat) s, max(lon) e, max(lat) n_ FROM geochem.sample_chemistry_wide WHERE ${where}`, [q.source, q.sampleType])).rows[0];
+    const pts = (await c.query(`SELECT lon, lat FROM geochem.sample_chemistry_wide WHERE ${where} ORDER BY random() LIMIT 4000`, [q.source, q.sampleType])).rows;
+    return {
+      total: ext.n,
+      extent: ext.n ? [Number(ext.w), Number(ext.s), Number(ext.e), Number(ext.n_)] : null,
+      points: pts.map((r) => [Number(Number(r.lon).toFixed(4)), Number(Number(r.lat).toFixed(4))] as [number, number]),
+    };
+  });
+}
 export type SeriesKey = { survey: string | null; method: string | null; fraction: string | null; unit: string | null };
 export type SeriesRequest = { source: string; sampleType: string; element: string; bbox: Bbox };
 export type Series = SeriesKey & { surveyDesc: string | null; samples: number; bdl: number; dlMin: number | null; dlMax: number | null };
 
-export function spanKm(b: Bbox): { ew: number; ns: number } {
-  const lat0 = (b[1] + b[3]) / 2;
-  return { ew: Math.abs(b[2] - b[0]) * 111.32 * Math.cos((lat0 * Math.PI) / 180), ns: Math.abs(b[3] - b[1]) * 110.574 };
-}
 
 export function parseSeriesRequest(body: unknown): SeriesRequest {
   const b = (body ?? {}) as Record<string, unknown>;

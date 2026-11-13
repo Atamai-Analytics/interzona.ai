@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import type { GeostatData, GeostatOptions, Series } from "@/lib/geostat/data";
+import type { GeostatData, GeostatOptions, Locations, Series } from "@/lib/geostat/data";
+import { MAX_SPAN_KM, spanKm } from "@/lib/geostat/limits";
 import {
   KdTree, MODEL_TYPES, autoFit, crossValidate, experimentalVariogram, interpolateGrid, makeProjection, medianSpacing, mergeColocated, quantile,
   type CvStats, type Grid, type Lag, type Method, type ModelType, type Pt, type VariogramModel,
@@ -14,6 +15,7 @@ import { datasetName } from "@/lib/geochem-methods";
 import { csvWithCredits } from "@/lib/csv";
 import { Check, Notice, Num, Select, btnGreen, btnRun, card, downloadSvgPng, downloadText, heading, input, label } from "@/components/multivariate/ui";
 import GridMap, { type MapSample } from "./GridMap";
+import AreaPicker from "./AreaPicker";
 import { CvChart, Histogram, VariogramChart } from "./Charts";
 import { gridSnapshotBase64 } from "./render";
 
@@ -92,6 +94,34 @@ export function GeostatApp() {
     const v = [box.w, box.s, box.e, box.n].map(Number);
     return [box.w, box.s, box.e, box.n].every((x) => x.trim() !== "") && v.every(Number.isFinite) ? v : null;
   };
+  const setBoxFrom = (b: [number, number, number, number]) => { setBox({ w: String(b[0]), s: String(b[1]), e: String(b[2]), n: String(b[3]) }); setSeries(null); setData(null); setResult(null); };
+  const boxNow = bbox() as [number, number, number, number] | null;
+  const boxSpan = boxNow ? spanKm(boxNow) : null;
+
+  // Where the chosen element was analysed, for the area-picker map. If all of it fits within the size limit, it becomes the area.
+  const [locs, setLocs] = useState<Locations | null>(null);
+  const pendingBoxRef = useRef<typeof box | null>(null);
+  useEffect(() => {
+    setLocs(null);
+    // A new dataset or element starts without an area, so the previous one is never used by mistake (the example sets its own).
+    if (!pendingBoxRef.current) setBox({ w: "", s: "", e: "", n: "" });
+    if (!dataset || !element) return;
+    let cancelled = false;
+    fetch("/api/geostat/locations", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ source: dataset.source, sampleType: dataset.sampleType, element }) })
+      .then(async (r) => { const j = await r.json(); if (!r.ok) throw new Error(j.error ?? "The sample locations could not be loaded."); return j as Locations; })
+      .then((l) => {
+        if (cancelled) return;
+        setLocs(l);
+        if (pendingBoxRef.current) { setBox(pendingBoxRef.current); pendingBoxRef.current = null; return; }
+        if (!l.extent) return;
+        const sp = spanKm(l.extent);
+        if (sp.ew <= MAX_SPAN_KM && sp.ns <= MAX_SPAN_KM) setBoxFrom(l.extent.map((v) => Number(v.toFixed(3))) as [number, number, number, number]);
+        else setBox({ w: "", s: "", e: "", n: "" });
+      })
+      .catch((e) => { if (!cancelled) setError(e instanceof Error ? e.message : String(e)); });
+    return () => { cancelled = true; };
+  }, [dataset, element]);
+  const locSpan = locs?.extent ? spanKm(locs.extent) : null;
 
   async function post<T>(url: string, body: unknown): Promise<T> {
     const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -103,7 +133,7 @@ export function GeostatApp() {
   async function findSeries() {
     const bb = bbox();
     if (!dataset || !element) { setError("Choose a dataset and an element."); return; }
-    if (!bb) { setError("Fill in all four edges of the area, in decimal degrees."); return; }
+    if (!bb) { setError("Choose the area first: zoom the map to the district you want and click “Use map view as the area” (or type the four edges)."); return; }
     setBusy("series"); setError(null); setSeries(null); setData(null); setResult(null); setText("");
     try {
       const r = await post<{ series: Series[] }>("/api/geostat/series", { source: dataset.source, sampleType: dataset.sampleType, element, bbox: bb });
@@ -385,7 +415,7 @@ export function GeostatApp() {
             <h2 className={heading}>1. Survey, element and area</h2>
             <button
               className="text-xs text-gray-400 underline hover:text-gray-200"
-              onClick={() => { setDsKey(`${EXAMPLE.source}|${EXAMPLE.sampleType}`); setElement(EXAMPLE.element); setBox(EXAMPLE.box); setSeries(null); setData(null); setResult(null); }}
+              onClick={() => { if (dsKey !== `${EXAMPLE.source}|${EXAMPLE.sampleType}` || element !== EXAMPLE.element) pendingBoxRef.current = EXAMPLE.box; setDsKey(`${EXAMPLE.source}|${EXAMPLE.sampleType}`); setElement(EXAMPLE.element); setBox(EXAMPLE.box); setSeries(null); setData(null); setResult(null); }}
             >
               Example: copper in Swedish till, Skellefteå district
             </button>
@@ -398,7 +428,7 @@ export function GeostatApp() {
               <div className="space-y-3">
                 <label className="block">
                   <span className={label}>Dataset and sample type (soil, till and lake sediment only)</span>
-                  <select className={input} value={dsKey} onChange={(e) => { setDsKey(e.target.value); setSeries(null); setData(null); setResult(null); }}>
+                  <select className={input} value={dsKey} onChange={(e) => { const v = e.target.value; setDsKey(v); if (!options?.datasets.find((d) => `${d.source}|${d.sampleType}` === v)?.elements.some((x) => x.symbol === element)) setElement(""); setSeries(null); setData(null); setResult(null); }}>
                     <option value="">Choose…</option>
                     {bySource.map(([source, list]) => (
                       <optgroup key={source} label={datasetName(source)}>
@@ -417,15 +447,32 @@ export function GeostatApp() {
                 <p className="text-[11px] text-gray-500">Stream sediments are not offered: each one stands for its upstream catchment, so they need catchment maps rather than kriging (planned).</p>
               </div>
               <div className="space-y-2">
-                <span className={label}>Area (decimal degrees; each side at most 800 km)</span>
-                <div className="grid grid-cols-4 gap-1.5">
-                  {(["w", "s", "e", "n"] as const).map((key) => (
-                    <label key={key} className="block">
-                      <span className={label}>{{ w: "West", s: "South", e: "East", n: "North" }[key]}</span>
-                      <input className={input} type="number" value={box[key]} onChange={(e) => { setBox({ ...box, [key]: e.target.value }); setSeries(null); }} />
-                    </label>
-                  ))}
-                </div>
+                <span className={label}>Area (each side at most {MAX_SPAN_KM} km)</span>
+                {!dataset || !element ? (
+                  <p className="text-xs text-gray-500">Choose a dataset and an element: a map of where it was analysed appears here, and you pick the area on it.</p>
+                ) : !locs ? (
+                  <p className="text-xs text-gray-400">Loading the sample locations…</p>
+                ) : (
+                  <>
+                    <p className="text-xs text-gray-400">
+                      {locs.total.toLocaleString()} samples{locSpan ? ` spread over ${Math.round(locSpan.ew)} × ${Math.round(locSpan.ns)} km` : ""}
+                      {locSpan && (locSpan.ew > MAX_SPAN_KM || locSpan.ns > MAX_SPAN_KM) ? ": too wide for one grid. Zoom the map to one district and click “Use map view as the area”." : ": all of them are in the area; zoom in and use the map view for a smaller one."}
+                    </p>
+                    <AreaPicker points={locs.points} extent={locs.extent} box={boxNow} onBox={setBoxFrom} />
+                  </>
+                )}
+                <details className="text-xs text-gray-400">
+                  <summary className="cursor-pointer">{boxNow ? `Area: ${boxNow.map((v) => v.toFixed(2)).join(", ")} (west, south, east, north)${boxSpan ? `, ${Math.round(boxSpan.ew)} × ${Math.round(boxSpan.ns)} km` : ""}` : "No area chosen yet"} · type coordinates</summary>
+                  <div className="mt-1 grid grid-cols-4 gap-1.5">
+                    {(["w", "s", "e", "n"] as const).map((key) => (
+                      <label key={key} className="block">
+                        <span className={label}>{{ w: "West", s: "South", e: "East", n: "North" }[key]}</span>
+                        <input className={input} type="number" value={box[key]} onChange={(e) => { setBox({ ...box, [key]: e.target.value }); setSeries(null); }} />
+                      </label>
+                    ))}
+                  </div>
+                </details>
+                {boxSpan && (boxSpan.ew > MAX_SPAN_KM || boxSpan.ns > MAX_SPAN_KM) && <p className="text-xs text-amber-300">This area is {Math.round(boxSpan.ew)} × {Math.round(boxSpan.ns)} km: make it smaller than {MAX_SPAN_KM} km a side.</p>}
                 <button className={btnGreen} disabled={busy !== null || !dataset || !element} onClick={findSeries}>
                   {busy === "series" ? "Searching…" : "Find surveys and methods"}
                 </button>

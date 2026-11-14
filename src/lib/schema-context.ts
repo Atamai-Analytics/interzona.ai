@@ -1105,9 +1105,9 @@ core.external_ids: external_id_id, entity_type ('OCCURRENCE' or 'SAMPLE'), entit
 core.data_sources: source_system (PK), publisher, dataset_name, licence, licence_url, attribution_required,
   attribution_text, is_loaded, licence_status, caveats, evidence_location, evidence_date.
 geochem.sample_occurrence_links: sample_id, occurrence_id, distance_m (integer metres), is_nearest (boolean). One row for every pair of a
-  geochemistry sample and an occurrence within 2,000 m (about 12.3M links): Tasmania 361,052 of 383,939 samples linked (281,613 within 500 m;
+  geochemistry sample and an occurrence within 2,000 m (about 13.2M links): Tasmania 361,052 of 383,939 samples linked (281,613 within 500 m;
   6.15M links because the drill core sits on dense clusters of state-survey workings, many named just 'Unnamed' - filter by commodity and
-  status), Victoria 101,491 (46,702 within 500 m; 1.44M links, now against the state-survey occurrences), USGS 159,967 samples linked (60,210 within 500 m), Swedish rock
+  status), Victoria 101,491 (46,702 within 500 m; 1.44M links, now against the state-survey occurrences), USGS 336,206 samples linked (105,922 within 500 m; 1.96M links; re-linked 14 Nov 2026 with the NGDB sediment, soil and heavy-mineral-concentrate samples), Swedish rock
   samples 113,129 (82,081 within 500 m; 1.43M links because SGU's occurrences are dense: many are small historical iron workings and some are
   quarries, so filter by commodity and status),
   the deposit-geochemistry compilation GLOBAL_DEPOSIT_GEOCHEM_GA 23,365 (9,663 within 500 m), Argentina 4,200, Greenland 284, Finland 181 (Greenland has almost no known occurrences nearby).

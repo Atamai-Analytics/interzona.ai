@@ -67,6 +67,7 @@ export const DATASET_NAMES: Record<string, string> = {
   SWEDEN_SGU_MARKGEOKEMI: "Sweden (SGU till, sediment, soil)",
   SWEDEN_SGU_BIOGEOKEMI: "Sweden (SGU stream plants, dry weight)",
   USA_USGS_NGDB: "USA (USGS NGDB)",
+  USA_NURE_HSSR: "USA (NURE stream sediments and soils, 1975-84)",
   SPAIN_IGME_GEOCHEMISTRY: "Spain (IGME, Li, Cu and W so far)",
   GERMANY_GFZ_ERZGEBIRGE: "Germany (GFZ Erzgebirge granites)",
 };

@@ -1,0 +1,31 @@
+{
+  "version": "2026-11-14",
+  "notes": "Fresh checks for the USGS NGDB heavy-mineral concentrates loaded 14 Nov 2026 (USA_USGS_NGDB, sample_type SED_HMC, created_by migration_usgs_ngdb_conc_20261114). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-ngdb-conc-alaska-count",
+      "cat": "geochem",
+      "q": "How many USGS heavy-mineral concentrate samples do you have from Alaska, and which concentrate fraction is most common?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples s JOIN geochem.sample_types t USING (sample_type_id) WHERE s.source_system = 'USA_USGS_NGDB' AND t.sample_type_code = 'SED_HMC' AND s.comments LIKE '%; AK, United States%'"
+      },
+      "expect": { "tools_any": ["run_sql"], "max_turns": 8 },
+      "judge": "Uses the USGS NGDB heavy-mineral concentrates (sample type SED_HMC) and gives about 43,700 Alaskan samples (truth value; a figure near 46,900 from the source file is acceptable if explained). Says the non-magnetic C3 fraction is the most common (about 35,600 in Alaska) and explains C1/C2/C3 as magnetic / weakly magnetic / non-magnetic. Credits the USGS National Geochemical Database. Does not mix in stream-sediment or rock sample counts as if they were concentrates."
+    },
+    {
+      "id": "fresh-ngdb-conc-tungsten",
+      "cat": "geochem",
+      "q": "Where do USGS heavy-mineral concentrates show the highest tungsten values in the western United States?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Queries tungsten (W) in USA_USGS_NGDB samples of type SED_HMC (heavy-mineral concentrates), names states or project areas with the highest values, and gives values with units. Says most concentrate values are semi-quantitative emission spectrography (coarse steps, many below detection or reported as '>' the upper limit) and that concentrate values are enriched and not comparable with bulk stream-sediment or soil values. Treats '<' values as below detection, not as measured values. Does not invent deposit names that are not in the data."
+    },
+    {
+      "id": "fresh-ngdb-conc-vs-sediment",
+      "cat": "geochem",
+      "q": "In the USGS data for Alaska, is gold higher in heavy-mineral concentrates or in stream sediments? Can I compare them directly?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses USA_USGS_NGDB Alaskan samples of both types (SED_HMC concentrates and SED_STREAM stream sediments) and reports gold for each with units, noting the large share of below-detection values. Clearly says the two are NOT directly comparable: concentrates are panned heavy fractions in which gold is enriched, so higher concentrate values do not mean more gold in the ground; comparisons should stay within one sample type (and concentrate fraction). Mentions the semi-quantitative / method differences."
+    }
+  ]
+}

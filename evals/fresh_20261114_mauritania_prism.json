@@ -1,0 +1,28 @@
+{
+  "version": "2026-11-14",
+  "notes": "Fresh checks for Mauritania PRISM-II loaded 14 Nov 2026: geochemistry MAURITANIA_USGS_PRISM and the national mineral deposits database (created_by migration_prism_mrt_deposits_20261114). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-prism-gold-anomalies",
+      "cat": "geochem",
+      "q": "Where are the strongest gold anomalies in Mauritanian soil and regolith samples?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses the Mauritania PRISM geochemistry (MAURITANIA_USGS_PRISM) soil / regolith samples and names the regions or areas with the highest Au (e.g. Tasiast-Tijirit), with values and units. Warns that these are compiled values (censored values replaced by half the detection limit, highest of several methods kept), so they suit anomaly screening rather than precise statistics, and leaves out or flags probable below-detection values. Credits the USGS / PRISM-II."
+    },
+    {
+      "id": "fresh-prism-copper-occurrences",
+      "cat": "occurrences",
+      "q": "How many copper occurrences are recorded in Mauritania and which are mines?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses Mauritanian occurrences (mostly the PRISM-II national mineral deposits database) and gives a copper count from a query (about 170). Identifies Guelb Moghrein (Akjoujt) as the active copper mine and says the status is as of 2012. Mentions that most records are occurrences ('indices'). Credits the USGS / PRISM-II. Does not invent tonnages."
+    },
+    {
+      "id": "fresh-prism-uranium",
+      "cat": "occurrences",
+      "q": "What uranium occurrences does Mauritania have?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses the Mauritanian occurrence records and reports roughly 90 uranium occurrences from the PRISM-II national mineral deposits database, naming some or summarising their settings (e.g. calcrete-hosted or granite-related, where comments say so), with the caveat that statuses date from 2012 and positions can be imprecise. Credits the USGS / PRISM-II. Does not invent resources."
+    }
+  ]
+}

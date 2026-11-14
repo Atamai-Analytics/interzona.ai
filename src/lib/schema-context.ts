@@ -311,6 +311,16 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   (110 in Norway), REE 25, Li 1. NO tonnage or grade. RULE for "mines" in Norway: count records with status PRODUCER / PAST_PRODUCER
   AND NGU records whose comments contain 'activity recorded: mining' or 'quarrying' (status UNKNOWN), report them separately, and credit NGU
   as well as MIN4EU / USGS whenever Norwegian occurrences are used; older USGS / MIN4EU 'producing' labels for Norway are often out of date.
+- MAURITANIA - national mineral deposits database (PRISM-II, USGS Open-File Report 2013-1280 chapter S; loaded 2026-11-14, created_by
+  migration_prism_mrt_deposits_20261114, external_ids 'PRISM_MRT_DEPOSITS'): 747 new occurrences (Mauritania now about 790) - 706
+  occurrences ('indices'), 24 mining projects (status EXPLORATION), 3 active mines as recorded by PRISM (PRODUCER: Tasiast Fosse Sud gold, the
+  Kedia d'Idjill and Rouessa iron mines), 3 recorded as abandoned (PAST_PRODUCER: Guelb Moghrein, Tazadit, Bou Naga). PRISM statuses are
+  OUT OF DATE in places: it lists the Guelb Moghrein copper-gold mine at Akjoujt as abandoned, although it has been worked by MCM (First
+  Quantum) since 2006 - for "which mines operate now" use facility_list (USGS Yearbook facilities) and say that the PRISM status is old;
+  commodities Cu 166, U 92, Fe 50, Au 49, Cr 31, Mn 31,
+  phosphate 29, baryte 19, Pb 19, Zn 17, plus Be, W, Ti, REE. 197 records have no main substance. Status is as of 2012 - say so. Descriptions
+  (host rock, age, deposit model, discovery, work done, mostly in French) are in comments; positions PRISM flagged as wrong or imprecise
+  have position_accuracy UNRELIABLE. Construction stone, peat, salt, oil and gems left out. Credit the USGS / PRISM-II.
 - AUSTRALIA (loaded 2026-11-08): about 131,000 active occurrences from the government surveys' own inventories, which replace the old thin
   USGS MRDS coverage (319 MRDS duplicates merged, MRDS row inactive; 861 other MRDS Australian points remain active, mostly sites the surveys
   do not list). Three sources,
@@ -724,7 +734,17 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   2018 (458), Hedmark 2019-21 (787), Møre og Romsdal 2021-22 (430), Rogaland and Agder 2023 (560), Sør-Norge 2025 (1,801), Tynset 2025
   (336). Finnmark and Rogaland/Agder analysed the <0.063 mm fraction, the rest <2 mm (in fraction): compare values within one survey.
   samples.comments start 'NGU survey <area> <year>; lab <lab>' (field year only, sample_date empty). Licence NLOD, credit "Contains data
-  under the Norwegian licence for Open Government data (NLOD) made available by the Geological Survey of Norway (NGU)") and Victoria, Australia (Geological Survey of Victoria geochemistry
+  under the Norwegian licence for Open Government data (NLOD) made available by the Geological Survey of Norway (NGU)") and Mauritania
+  (PRISM-I/II, 'MAURITANIA_USGS_PRISM', loaded 14 Nov 2026 from USGS Open-File Report 2013-1280: 29,620 samples - 7,524 soil, 7,232
+  regolith (SOIL_RESIDUAL), 6,400 stream sediment (including BLEG gold samples), 7,863 rock (grab, selective, outcrop, chip), 601 medium
+  not recorded - 375,853 results, 80 analytes, mostly Au, As, Ag and base metals; collected 1999-2004 by BGS and BRGM for the Mauritanian
+  government, analysed by ALS Chemex; regions in comments ('PRISM region Tasiast-Tijirit' 8,360, Nord-east 6,655, Southern Mauritanides
+  5,953, Nord-west 4,975, Central Mauritanides 2,223, Kifa-Nema 853). CAVEATS: these are the compilers' values - '<' results were REPLACED
+  by half the limit of reporting and '>' results by the upper limit, and where several methods measured an element the HIGHEST was kept
+  (the method per element is unknown). Values equal to half a known ALS limit are classified BELOW_DL_PROBABLE (17% of results, not used in
+  statistics; the limit is in lower_detection_limit); '>' replacements cannot be identified. The USGS report calls the data unsuitable for
+  multivariate statistics, so use it for anomaly screening and maps, not precise statistics. No sample dates. Credit "U.S. Geological Survey
+  Open-File Report 2013-1280 (PRISM-II), with the Ministry of Petroleum, Energy and Mines of Mauritania") and Victoria, Australia (Geological Survey of Victoria geochemistry
   collection, 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY', 156,331 samples, 778,219 active results, 75 analytes) and Tasmania, Australia
   (Mineral Resources Tasmania bulk data package, 'AUSTRALIA_TAS_MRT', 383,939 samples, 3.85M results, 106 analytes, plus 34,871 drill
   holes in the drilling schema) and Québec, Canada (SIGÉOM rock geochemistry, 'CANADA_QC_SIGEOM', 587,000 rock samples, 18.13M results,
@@ -1106,7 +1126,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   ARGENTINA_SEGEMAR (1,782,202 active), 55,098 in USA_USGS_NGDB (34,058,618 active; includes 13,643 + 6,251 exact duplicates deactivated by QC on 13 and 14 Nov 2026) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
   CANADA_NRCAN_CDOGS 27,089 (exact duplicates); CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
-  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR and NORWAY_NGU_GEOCHEMISTRY have none (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
+  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY and MAURITANIA_USGS_PRISM have none (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
 geochem.result_classifications: result_id, source_system, result_status (DETECTED, BELOW_DL_QUALIFIED,
   BELOW_DL_CERTAIN, BELOW_DL_PROBABLE, ABOVE_UDL, NULL_RESULT, SUSPECT, SENTINEL), dl_value, use_in_statistics.
   Complete for every source (join on result_id AND source_system). For statistics use
@@ -1248,7 +1268,7 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
 geochem.sample_chemistry_wide: one row per sample for ALL seventeen geochemical datasets (GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
-  GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 965,956 (rock, sediment, soil and heavy-mineral concentrates), USA_NURE_HSSR 386,075 (NURE stream/lake sediment and soil; total columns _t), NORWAY_NGU_GEOCHEMISTRY 10,764 (NGU soils and till, aqua regia: partial columns _p),
+  GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 965,956 (rock, sediment, soil and heavy-mineral concentrates), USA_NURE_HSSR 386,075 (NURE stream/lake sediment and soil; total columns _t), NORWAY_NGU_GEOCHEMISTRY 10,764 (NGU soils and till, aqua regia: partial columns _p), MAURITANIA_USGS_PRISM 29,620 (PRISM soils, regolith, stream sediment and rock; compiled values),
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 225 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/
   lithology_local, sample_date, lat, lon, geog, n_values, bdl_codes (text[] of analytes below detection)

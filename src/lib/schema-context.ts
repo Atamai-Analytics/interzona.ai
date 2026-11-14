@@ -386,8 +386,11 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   of a metal: facility_stage = 'Refinery' AND commodity_name = 'Lithium'; (5) owners are company names as published, use the
   share_pct only where present; (6) when the user asks WHICH facilities there are, list each one (name, state, stage, status, capacity or
   "unknown") in a compact table per stage, up to about 40 rows - the run_sql rows are not shown to the user as a table, so stage or status
-  totals alone do not answer the question; give the totals as well (within one stage only), and for more than about 40 list the largest and say
-  how many more there are; (7) a facility has ONE ROW PER METAL in facility_capacity (a platinum-group refinery has separate platinum,
+  totals alone do not answer the question (a count table plus a few example names is NOT a list: every facility line, including each
+  producing plant without a capacity figure, must appear by name; US lithium = 34 lines, so list all of them); give the totals as well
+  (within one stage only), and for more than about 40 list the largest and say how many more there are. For WHICH / HOW MANY questions
+  call the facility_list tool (country 'United States') and copy its count statements and stage totals word for word - hand-made
+  counts have contradicted their own tables; use run_sql only for what the tool cannot do (e.g. sums of capacity by stage and status); (7) a facility has ONE ROW PER METAL in facility_capacity (a platinum-group refinery has separate platinum,
   palladium, rhodium... rows: 32 rows for 16 US PGM refineries), so count facilities with COUNT(DISTINCT occurrence_id), get the status
   breakdown with COUNT(DISTINCT occurrence_id) ... GROUP BY status, and list one line per facility with its metals combined (string_agg) -
   never count or list the per-metal rows as facilities. Credit: U.S. Geological Survey (O'Brien and others, 2026), Mines, smelters, refineries, and recycling facilities

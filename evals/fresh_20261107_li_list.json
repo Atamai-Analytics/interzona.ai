@@ -7,7 +7,7 @@
       "id": "fresh-us-li-list-all",
       "cat": "fresh",
       "q": "List every US lithium facility in your data, with its stage, status and capacity.",
-      "expect": {"tools_any": ["run_sql"], "max_turns": 6},
+      "expect": {"tools_any": ["run_sql", "facility_list"], "max_turns": 6},
       "judge": "Lists all 34 USGS US lithium facility records individually (33 until 10 Nov 2026, when the Midland Basin Carbonate Facility in Howard County TX was placed and loaded) (one row each, name, stage such as mine / plant / refinery / recycling, status, capacity or 'not reported'), not only per-stage totals. May note that a site with both a mine and a plant appears twice. Must not add capacities across stages. Must not invent facilities or capacities."
     }
   ]

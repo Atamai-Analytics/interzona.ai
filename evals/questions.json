@@ -413,11 +413,12 @@
       "q": "Which US facilities mine or process lithium, and what is the total capacity I can add up?",
       "expect": {
         "tools_any": [
-          "run_sql"
+          "run_sql",
+          "facility_list"
         ],
         "max_turns": 4
       },
-      "judge": "Identifies the US lithium facilities by stage and status: either lists each one, or gives per-stage tables of counts and capacity by status that also NAME the producing facilities and the largest development ones (with 33 records either is fine; a facility with both a mine and a plant record may appear under each stage). It explains that capacities must not be added across stages of the same chain (a mine plus the plant that processes its output), separates operating from development or care-and-maintenance capacity, and treats facilities with no reported capacity as unknown rather than zero."
+      "judge": "Identifies the US lithium facilities by stage and status: either lists each one, or gives per-stage tables of counts and capacity by status that also NAME the producing facilities and the largest development ones (with 34 records - 33 until 10 Nov 2026, when the Midland Basin Carbonate Facility in Howard County TX was loaded; 7 mine lines and 27 plant lines, of which 3 are grouped as 'other processing plant', so a 7/24/3 or 7/27 split, or a smaller number of projects after merging mine and plant pairs, are all fine as long as the answer's own numbers add up - either form is fine; a facility with both a mine and a plant record may appear under each stage). It explains that capacities must not be added across stages of the same chain (a mine plus the plant that processes its output), separates operating from development or care-and-maintenance capacity, and treats facilities with no reported capacity as unknown rather than zero."
     },
     {
       "id": "occ-chile-li",

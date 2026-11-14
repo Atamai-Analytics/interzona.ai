@@ -1,0 +1,28 @@
+{
+  "version": "2026-11-14",
+  "notes": "Fresh checks for NGU Norway loaded 14 Nov 2026: soil geochemistry NORWAY_NGU_GEOCHEMISTRY and the mineral resources register (created_by migration_ngu_minres_20261114). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-ngu-soil-surveys",
+      "cat": "geochem",
+      "q": "What soil geochemistry do you have for Norway, and which survey area has the highest median nickel?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses NORWAY_NGU_GEOCHEMISTRY (NGU mineral-soil / till samples, about 10,764 samples, 13 surveys from 1980 to 2025) and reports median Ni by survey area with ppm units, naming the highest. Says the values are aqua regia (partial) digestions, that some surveys analysed the <0.063 mm fraction and others <2 mm, so comparisons between surveys need care. Credits NGU (NLOD). Does not invent surveys."
+    },
+    {
+      "id": "fresh-ngu-graphite",
+      "cat": "occurrences",
+      "q": "Which graphite occurrences in Norway are rated of national or international importance?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses Norwegian occurrences with graphite from the NGU mineral resources register and lists those whose NGU importance rating is national or international (e.g. Skaland / Trælen area on Senja, Jennestad, Vesterålen deposits if present in the data), with the total count of graphite occurrences. Explains that the importance rating is NGU's. Does not claim operating status or tonnages from the register (it has none). Credits NGU."
+    },
+    {
+      "id": "fresh-ngu-status-caveat",
+      "cat": "occurrences",
+      "q": "How many copper mines are there in Norway and which ones are still operating?",
+      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "judge": "Uses Norwegian copper occurrences (NGU register and MIN4EU) and gives counts from a query. States clearly that the NGU register records mining activity but not whether operations are current (status UNKNOWN), so it cannot say which are operating from this data alone; it may point to MIN4EU statuses or documents if present, saying they may be outdated. Does not invent operating mines. Credits NGU."
+    }
+  ]
+}

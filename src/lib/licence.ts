@@ -65,6 +65,7 @@ const CREDITS: [RegExp, string][] = [
   [/sweden_sgu/i, "Geological Survey of Sweden (SGU), CC0"],
   [/spain_igme|igme/i, "Source: © NC Geological Survey of Spain (IGME); FOREGS campaigns via IGME"],
   [/usa_usgs_ngdb/i, "U.S. Geological Survey, National Geochemical Database"],
+  [/norway_ngu|ngu_minres/i, "Contains data under the Norwegian licence for Open Government data (NLOD) made available by the Geological Survey of Norway (NGU)"],
   [/usa_nure_hssr/i, "U.S. Geological Survey, NURE HSSR data (Smith 1997, OFR 97-492), from the U.S. Department of Energy NURE program"],
   [/australia_vic|victoria/i, "Geological Survey of Victoria, State of Victoria (DEECA), CC BY 4.0"],
   [/australia_tas|tasmania|drilling\./i, "Mineral Resources Tasmania, Department of State Growth (State of Tasmania), bulk data package BDR2023_01, CC BY 3.0 AU"],

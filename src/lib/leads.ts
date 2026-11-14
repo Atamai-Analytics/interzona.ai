@@ -17,6 +17,7 @@ const SURVEYS: Record<string, string> = {
   SWEDEN_SGU_MARKGEOKEMI: "Sweden (SGU till, sediment, soil)",
   USA_USGS_NGDB: "USA (USGS)",
   USA_NURE_HSSR: "USA (NURE)",
+  NORWAY_NGU_GEOCHEMISTRY: "Norway (NGU)",
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",
   AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
   CANADA_QC_SIGEOM: "Québec, Canada (SIGÉOM rock)",

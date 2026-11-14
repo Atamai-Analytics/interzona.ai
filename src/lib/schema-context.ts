@@ -297,6 +297,20 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   older records. COUNTS: for "how many / which" in a country, run ONE query that returns count(*) OVER () AS total and count(*) OVER
   (PARTITION BY status) AS status_total next to the listed rows (filter on country_name and the commodity symbol, e.g. 'W' = ANY(commodities))
   and copy those totals; never count rows by hand or give a different number in the text. Credit MIN4EU / EGDI whenever these records are used.
+- NORWAY - NGU mineral resources register (loaded 2026-11-14): 5,926 new occurrences plus 1,381 existing ones (mostly MIN4EU, which
+  came from the same NGU database) given NGU facts, from NGU's own register 'Mineralressurser' (Geonorge download, data of 30 Mar 2026; NLOD,
+  credit "Contains data under the Norwegian licence for Open Government data (NLOD) made available by the Geological Survey of Norway (NGU)"),
+  created_by migration_ngu_minres_20261114, external_ids source 'NGU_MINRES'. Metals and industrial minerals only (natural stone left out);
+  Norway now has about 7,430 active occurrences. Kinds: deposits ('Forekomst', is_deposit, 108 new), prospects (status PROSPECT) and
+  registered occurrences ('Registrering', status OCCURRENCE - mostly small showings, trenches and old workings). The register has NO
+  operating status: records where NGU recorded mining or quarrying have status UNKNOWN (the activity is in comments, e.g. 'activity recorded:
+  mining (gruvedrift)'), so never call them producers or past producers from this data alone. comments also hold NGU's importance rating
+  ('importance (NGU): Internasjonal / Nasjonal / Regional betydning' - international / national / regional importance; use it for "major"
+  deposits), 'historically important', 'position not verified by NGU' (about 40% of registrations) and a fact-sheet URL. Commodities: Fe,
+  Cu, feldspar, pyrite (NGU 'Sulfider' = iron sulphides), limestone, quartz, Ti, Mo, Pb, Zn, Ag, Ni, Cr, mica, olivine, Au, graphite
+  (110 in Norway), REE 25, Li 1. NO tonnage or grade. RULE for "mines" in Norway: count records with status PRODUCER / PAST_PRODUCER
+  AND NGU records whose comments contain 'activity recorded: mining' or 'quarrying' (status UNKNOWN), report them separately, and credit NGU
+  as well as MIN4EU / USGS whenever Norwegian occurrences are used; older USGS / MIN4EU 'producing' labels for Norway are often out of date.
 - AUSTRALIA (loaded 2026-11-08): about 131,000 active occurrences from the government surveys' own inventories, which replace the old thin
   USGS MRDS coverage (319 MRDS duplicates merged, MRDS row inactive; 861 other MRDS Australian points remain active, mostly sites the surveys
   do not list). Three sources,
@@ -701,7 +715,16 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   8 Nov 2026 - leave sample_type_id 51 out of geological statistics) and the US NURE program (DOE National Uranium Resource
   Evaluation, Hydrogeochemical and Stream Sediment Reconnaissance, USGS reformatted release, 'USA_NURE_HSSR', loaded 13 Nov 2026:
   386,075 samples - 300,949 stream sediment, 46,553 soil, 29,558 lake/pond sediment, 7,885 other sediment, 1,130 rock - 13.01M
-  results, 54 analytes, 1975-1984, Alaska 65,500 and the western and southeastern states) and Victoria, Australia (Geological Survey of Victoria geochemistry
+  results, 54 analytes, 1975-1984, Alaska 65,500 and the western and southeastern states) and Norway (NGU, the Geological Survey of
+  Norway, 'NORWAY_NGU_GEOCHEMISTRY', loaded 14 Nov 2026: 10,764 mineral-soil samples - 9,406 SOIL_SAMPLE and 1,358 TILL_SAMPLE where NGU
+  records the soil class as moraine - 610,905 results, 65 elements including the REE (full REE only in Finnmark, Nordland-Troms,
+  Nord-Salten and Nordkinn), all ppm, ALL aqua regia digestion (PARTIAL: _p columns in the wide table) with ICP-AES/MS at ACME, ALS or
+  Bureau Veritas; 17% of values below detection (qualifier '<' with the limit). 13 surveys: Finnmark 1980-86 (1,144), Nordland-Troms 1986
+  (979), Nordkinn 2011 (808), Nord-Salten 2012 (877), Hattfjelldal 2013 (954), Nord-Trøndelag 2013 (753), Oppdal 2015 (877), Sør-Trøndelag
+  2018 (458), Hedmark 2019-21 (787), Møre og Romsdal 2021-22 (430), Rogaland and Agder 2023 (560), Sør-Norge 2025 (1,801), Tynset 2025
+  (336). Finnmark and Rogaland/Agder analysed the <0.063 mm fraction, the rest <2 mm (in fraction): compare values within one survey.
+  samples.comments start 'NGU survey <area> <year>; lab <lab>' (field year only, sample_date empty). Licence NLOD, credit "Contains data
+  under the Norwegian licence for Open Government data (NLOD) made available by the Geological Survey of Norway (NGU)") and Victoria, Australia (Geological Survey of Victoria geochemistry
   collection, 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY', 156,331 samples, 778,219 active results, 75 analytes) and Tasmania, Australia
   (Mineral Resources Tasmania bulk data package, 'AUSTRALIA_TAS_MRT', 383,939 samples, 3.85M results, 106 analytes, plus 34,871 drill
   holes in the drilling schema) and Québec, Canada (SIGÉOM rock geochemistry, 'CANADA_QC_SIGEOM', 587,000 rock samples, 18.13M results,
@@ -1083,7 +1106,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   ARGENTINA_SEGEMAR (1,782,202 active), 55,098 in USA_USGS_NGDB (34,058,618 active; includes 13,643 + 6,251 exact duplicates deactivated by QC on 13 and 14 Nov 2026) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
   CANADA_NRCAN_CDOGS 27,089 (exact duplicates); CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
-  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792 and USA_NURE_HSSR have none (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
+  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR and NORWAY_NGU_GEOCHEMISTRY have none (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
 geochem.result_classifications: result_id, source_system, result_status (DETECTED, BELOW_DL_QUALIFIED,
   BELOW_DL_CERTAIN, BELOW_DL_PROBABLE, ABOVE_UDL, NULL_RESULT, SUSPECT, SENTINEL), dl_value, use_in_statistics.
   Complete for every source (join on result_id AND source_system). For statistics use
@@ -1225,7 +1248,7 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
 geochem.sample_chemistry_wide: one row per sample for ALL seventeen geochemical datasets (GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
-  GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 965,956 (rock, sediment, soil and heavy-mineral concentrates), USA_NURE_HSSR 386,075 (NURE stream/lake sediment and soil; total columns _t),
+  GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 965,956 (rock, sediment, soil and heavy-mineral concentrates), USA_NURE_HSSR 386,075 (NURE stream/lake sediment and soil; total columns _t), NORWAY_NGU_GEOCHEMISTRY 10,764 (NGU soils and till, aqua regia: partial columns _p),
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 225 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/
   lithology_local, sample_date, lat, lon, geog, n_values, bdl_codes (text[] of analytes below detection)

@@ -26,6 +26,7 @@ const DATASET_NAMES: Record<string, string> = {
   USA_NURE_HSSR: "USA (NURE HSSR)",
   NORWAY_NGU_GEOCHEMISTRY: "Norway (NGU soils)",
   MAURITANIA_USGS_PRISM: "Mauritania (PRISM)",
+  AFGHANISTAN_USGS_BASELINE: "Afghanistan (USGS baselines)",
   SPAIN_IGME_GEOCHEMISTRY: "Spain (IGME, Li, Cu and W so far)",
 };
 const datasetName = (s: string) => DATASET_NAMES[s] ?? s;

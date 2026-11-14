@@ -19,6 +19,7 @@ const SURVEYS: Record<string, string> = {
   USA_NURE_HSSR: "USA (NURE)",
   NORWAY_NGU_GEOCHEMISTRY: "Norway (NGU)",
   MAURITANIA_USGS_PRISM: "Mauritania (PRISM)",
+  AFGHANISTAN_USGS_BASELINE: "Afghanistan (USGS)",
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",
   AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
   CANADA_QC_SIGEOM: "Québec, Canada (SIGÉOM rock)",

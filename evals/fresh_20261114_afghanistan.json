@@ -1,0 +1,28 @@
+{
+  "version": "2026-11-14",
+  "notes": "Fresh checks for the USGS Afghanistan pre-mining baselines loaded 14 Nov 2026 (AFGHANISTAN_USGS_BASELINE). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-afg-aynak-copper",
+      "cat": "geochem",
+      "q": "What copper values do the USGS samples around the Aynak deposit in Afghanistan show, by sample type?",
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Uses AFGHANISTAN_USGS_BASELINE samples whose comments mention Aynak and reports Cu by sample type (rock, sediment, soil, mine waste) with ppm units, e.g. counts, medians and maxima. Says these are USGS pre-mining environmental baseline samples from 2019-2020 around the deposit (not regional coverage). Credits the USGS. Does not mix in other deposits."
+    },
+    {
+      "id": "fresh-afg-coverage",
+      "cat": "geochem",
+      "q": "What geochemistry do you have for Afghanistan?",
+      "expect": {
+        "max_turns": 8
+      },
+      "judge": "Says the data are about 303 USGS baseline samples (rock, sediment, soil, mine waste) around four deposits only - Aynak and Balkhab copper, Hajigak and Nuqra Khana iron - from 2019-2020, analysed for about 60 elements, and that there is no country-wide survey in the database. Credits the USGS. Does not claim regional coverage."
+    }
+  ]
+}

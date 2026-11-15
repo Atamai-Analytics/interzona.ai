@@ -854,6 +854,16 @@ export default function Home() {
             Geostatistics
           </Link>
         )}
+        {who && !(who.role === "guest" && who.ended) && (
+          <Link
+            href="/tools/coverage"
+            className="shrink-0 md:self-center flex items-center gap-1.5 rounded-lg border border-teal-600 bg-teal-900/30 px-2.5 py-1.5 text-xs md:text-sm font-medium text-teal-100 hover:bg-teal-800/50"
+            title="World map of what the database holds: samples, analyses, occurrences, deposits, drill holes and documents by country"
+          >
+            <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.3"><circle cx="8" cy="8" r="6.5" /><path d="M1.5 8h13M8 1.5c2 2 2.6 4.2 2.6 6.5S10 12.5 8 14.5M8 1.5C6 3.5 5.4 5.7 5.4 8S6 12.5 8 14.5" /></svg>
+            Coverage
+          </Link>
+        )}
         {who && (
           <div className="order-last md:order-none w-full md:w-auto md:ml-auto shrink-0 md:self-start text-left md:text-right text-xs text-gray-400 flex flex-wrap items-baseline gap-x-3 gap-y-0 md:block">
             {who.role === "guest" ? (

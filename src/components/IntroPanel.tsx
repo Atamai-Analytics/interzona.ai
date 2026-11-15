@@ -96,12 +96,13 @@ export function IntroPanel() {
 
       <div className="rounded-lg border border-emerald-700 bg-emerald-950/40 p-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-emerald-400">Explore the data yourself</p>
-        <div className="mt-2 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-2 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {[
             { href: "/tools/geochemistry", title: "Geochemistry", text: "Pick samples and run classification, alteration, fertility and rare-earth diagrams, with an AI reading of each chart." },
             { href: "/tools/intercepts", title: "Drill intercepts", text: "Rank reported and calculated drill intercepts by element, grade and length, on a map." },
             { href: "/tools/multivariate", title: "Multivariate", text: "Correlation, PCA, clustering, UMAP and t-SNE on database samples or your own CSV, with CLR transforms and downloads." },
             { href: "/tools/geostatistics", title: "Geostatistics", text: "Krige or IDW-grid one soil, till or lake-sediment survey, or map the chance of exceeding a threshold with indicator kriging. GeoTIFF download." },
+            { href: "/tools/coverage", title: "World coverage", text: "A world map of what the database holds by country: samples, analyses, occurrences, deposits, drill holes and documents." },
           ].map((t) => (
             <Link key={t.href} href={t.href} className="group block rounded-md border border-emerald-800/60 p-3 hover:border-emerald-500 hover:bg-emerald-900/40">
               <p className="text-sm font-semibold text-gray-100">{t.title} <span className="inline-block text-emerald-400 transition-transform group-hover:translate-x-0.5">→</span></p>

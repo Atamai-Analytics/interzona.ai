@@ -23,12 +23,13 @@ const SURVEY_SQL = `CASE s.source_system
     WHEN 'USA_USGS_NGDB' THEN substring(s.comments from 'project [^;]+')
     WHEN 'USA_NURE_HSSR' THEN substring(s.comments from 'NURE quad [^;]+; methods [^;]+')
     WHEN 'EUROPE_GEMAS' THEN substring(s.comments from 'GEMAS (?:Ap|Gr)')
+    WHEN 'IRELAND_GSI_TELLUS' THEN substring(s.comments from 'GSI Tellus [^;]+')
     WHEN 'AFGHANISTAN_USGS_BASELINE' THEN substring(s.comments from 'USGS baseline [^;]+')
     WHEN 'MAURITANIA_USGS_PRISM' THEN substring(s.comments from 'PRISM region [^;]+; origin [^;]+')
     WHEN 'NORWAY_NGU_GEOCHEMISTRY' THEN regexp_replace(substring(s.comments from 'NGU survey [^;]+; lab [^;]+'), ' ([0-9]{4}|year unknown);', ';')
     ELSE NULL END`;
 const SURVEY_DESC_SQL = `CASE s.source_system WHEN 'CANADA_NRCAN_CDOGS' THEN nullif(split_part(s.comments, '; ', 2), '') ELSE NULL END`;
-export const SURVEY_DATASETS = new Set(["CANADA_NRCAN_CDOGS", "CANADA_QC_SIGEOM_SED", "USA_USGS_NGDB", "USA_NURE_HSSR", "NORWAY_NGU_GEOCHEMISTRY", "MAURITANIA_USGS_PRISM", "AFGHANISTAN_USGS_BASELINE", "EUROPE_GEMAS"]);
+export const SURVEY_DATASETS = new Set(["CANADA_NRCAN_CDOGS", "CANADA_QC_SIGEOM_SED", "USA_USGS_NGDB", "USA_NURE_HSSR", "NORWAY_NGU_GEOCHEMISTRY", "MAURITANIA_USGS_PRISM", "AFGHANISTAN_USGS_BASELINE", "EUROPE_GEMAS", "IRELAND_GSI_TELLUS"]);
 
 export type GeostatDataset = { source: string; sampleType: string; n: number; elements: { symbol: string; n: number }[]; catchments?: boolean };
 export type GeostatOptions = { datasets: GeostatDataset[] };

@@ -21,6 +21,8 @@ const SURVEYS: Record<string, string> = {
   MAURITANIA_USGS_PRISM: "Mauritania (PRISM)",
   AFGHANISTAN_USGS_BASELINE: "Afghanistan (USGS)",
   EUROPE_GEMAS: "Europe (GEMAS)",
+  IRELAND_GSI_TELLUS: "Ireland (GSI Tellus)",
+  NI_GSNI_TELLUS: "Northern Ireland (GSNI Tellus)",
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",
   AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
   CANADA_QC_SIGEOM: "Québec, Canada (SIGÉOM rock)",

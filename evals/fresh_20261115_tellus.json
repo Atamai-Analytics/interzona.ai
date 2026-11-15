@@ -1,0 +1,38 @@
+{
+  "version": "2026-11-15",
+  "notes": "Fresh checks for Tellus Ireland (IRELAND_GSI_TELLUS) and Northern Ireland (NI_GSNI_TELLUS) loaded 15 Nov 2026. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-tellus-what",
+      "cat": "geochem",
+      "q": "What geochemistry do you have for Ireland and Northern Ireland?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Says the data are the Tellus surveys: GSI Tellus shallow and deeper topsoils, stream sediments and an SE Ireland rock compilation for the Republic of Ireland, and GSNI Tellus soils for Northern Ireland, with sample counts of the right order (tens of thousands; about 34,000 GSI and 13,700 GSNI samples). Mentions aqua regia (partial) and XRF (total) analyses and that below-detection values were reported as half the limit and are flagged. Credits Geological Survey Ireland (CC BY 4.0) and the Geological Survey of Northern Ireland (UK Open Government Licence). Does not claim the whole Republic is covered."
+    },
+    {
+      "id": "fresh-tellus-zinc-lead",
+      "cat": "geochem",
+      "q": "Where are the highest zinc and lead values in Irish stream sediments?",
+      "expect": {
+        "tools_any": [
+          "run_sql",
+          "find_geochemical_anomalies"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Uses IRELAND_GSI_TELLUS stream-sediment (SED_STREAM) XRF Zn and Pb, gives the highest values or anomalous areas with ppm units and locations (counties, coordinates or nearby known deposits such as the Irish Zn-Pb districts where the data support it). Says the stream-sediment survey covers only part of Ireland (the Border, north-west and south-east survey areas). Credits GSI Tellus. Does not invent deposits or values."
+    },
+    {
+      "id": "fresh-tellus-ni-gold",
+      "cat": "geochem",
+      "q": "Is there gold in the Northern Ireland soil data, and where is it highest?",
+      "expect": {
+        "max_turns": 12
+      },
+      "judge": "Says plainly whether Au was determined in NI_GSNI_TELLUS (it was not; answering from the dataset notes without a query is acceptable) (if not present in the data, says so rather than inventing values) and, if present, where the highest values are. May point to the Sperrin Mountains / Curraghinalt area only if the data or catalogued occurrences support it. Credits the Geological Survey of Northern Ireland (OGL v3)."
+    }
+  ]
+}

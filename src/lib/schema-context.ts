@@ -769,7 +769,22 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   report by the full name: substring(comments from 'country ([^;]+)').
   GEMAS reported values below detection as half the limit: those are classified BELOW_DL_PROBABLE with an inferred limit (15% of
   results), not used in statistics. Use it for continental-scale patterns and regional anomalies, not for local targeting. Licence CC BY 4.0,
-  credit "GEMAS project (EuroGeoSurveys / Eurometaux; Reimann et al. 2014), via EGDI, CC BY 4.0") and Victoria, Australia (Geological Survey of Victoria geochemistry
+  credit "GEMAS project (EuroGeoSurveys / Eurometaux; Reimann et al. 2014), via EGDI, CC BY 4.0") and IRELAND (Tellus, loaded 15 Nov 2026:
+  'IRELAND_GSI_TELLUS' = Geological Survey Ireland Tellus, 33,788 samples / 2.45M results: 13,618 shallow topsoils 5-20 cm (SOIL_A) and
+  10,797 deeper topsoils 35-50 cm (SOIL_B), <2 mm, aqua regia ICP (package GSI_TELLUS_ICPMS_AR, partial, ~55 elements incl. Au, Pd, Pt, Li,
+  REE) plus XRF (GSI_TELLUS_XRFS, total) on the Border/West blocks and LOI; 8,855 stream sediments <150 um (SED_STREAM; XRF plus fire-assay
+  Au, Pd, Pt in ppb, GSI_TELLUS_SED_FA; stream sediments cover only the West, Border and East/South-East - not the central
+  Midlands or the south-west - so SAY this partial coverage whenever you rank or map them); 518 SE Ireland rock analyses compiled from published papers (XRF, INAA, AAS). Covers the
+  Border, West, North Midlands, Dublin and South-East survey blocks, 2011-2022 - NOT the south-west (no Cork, Kerry or Limerick samples).
+  The survey block is in the comment: substring(comments from 'GSI Tellus [^;]+'); compare within a block (two laboratories, SGS for the
+  58xxxx Border samples and ALS otherwise, with no inter-laboratory levelling). Non-accredited readings below the accredited limit for B,
+  Ta, Au, Pd, Pt, Re are a separate lower-priority package GSI_TELLUS_AR_BLD. 'NI_GSNI_TELLUS' = Geological Survey of Northern Ireland
+  Tellus soils, all of Northern Ireland, 2004-2006: 6,876 shallow (SOIL_A) and 6,867 deeper (SOIL_B) soils, 957,416 results: aqua regia
+  ICP (no Au, Pt or Pd), XRF on shallow soils, LOI. Both reported values below detection as half the limit: flagged BELOW_DL_PROBABLE
+  (GSI with its published limits, GSNI with inferred limits) and not used in statistics; values capped at the upper limit are ABOVE_UDL.
+  No per-sample dates; pH and stream waters not loaded. Credits: "Contains Irish Public Sector Data (Geological Survey Ireland) licensed
+  under a Creative Commons Attribution 4.0 International (CC BY 4.0) licence" and "Contains UK public sector information (Geological
+  Survey of Northern Ireland) licensed under the UK Open Government Licence v3.0") and Victoria, Australia (Geological Survey of Victoria geochemistry
   collection, 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY', 156,331 samples, 778,219 active results, 75 analytes) and Tasmania, Australia
   (Mineral Resources Tasmania bulk data package, 'AUSTRALIA_TAS_MRT', 383,939 samples, 3.85M results, 106 analytes, plus 34,871 drill
   holes in the drilling schema) and Québec, Canada (SIGÉOM rock geochemistry, 'CANADA_QC_SIGEOM', 587,000 rock samples, 18.13M results,
@@ -1151,7 +1166,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   ARGENTINA_SEGEMAR (1,782,202 active), 55,098 in USA_USGS_NGDB (34,058,618 active; includes 13,643 + 6,251 exact duplicates deactivated by QC on 13 and 14 Nov 2026) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
   CANADA_NRCAN_CDOGS 27,089 (exact duplicates); CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
-  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY, MAURITANIA_USGS_PRISM, AFGHANISTAN_USGS_BASELINE and EUROPE_GEMAS have none (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
+  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY, MAURITANIA_USGS_PRISM, AFGHANISTAN_USGS_BASELINE, EUROPE_GEMAS, IRELAND_GSI_TELLUS and NI_GSNI_TELLUS have none (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
 geochem.result_classifications: result_id, source_system, result_status (DETECTED, BELOW_DL_QUALIFIED,
   BELOW_DL_CERTAIN, BELOW_DL_PROBABLE, ABOVE_UDL, NULL_RESULT, SUSPECT, SENTINEL), dl_value, use_in_statistics.
   Complete for every source (join on result_id AND source_system). For statistics use
@@ -1292,7 +1307,7 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
-geochem.sample_chemistry_wide: one row per sample for ALL seventeen geochemical datasets (GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL nineteen geochemical datasets (IRELAND_GSI_TELLUS 33,788 (Tellus topsoils, stream sediments, SE rocks; aqua regia _p and XRF _t); NI_GSNI_TELLUS 13,743 (Northern Ireland Tellus soils); GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 965,956 (rock, sediment, soil and heavy-mineral concentrates), USA_NURE_HSSR 386,075 (NURE stream/lake sediment and soil; total columns _t), NORWAY_NGU_GEOCHEMISTRY 10,764 (NGU soils and till, aqua regia: partial columns _p), MAURITANIA_USGS_PRISM 29,620 (PRISM soils, regolith, stream sediment and rock; compiled values), AFGHANISTAN_USGS_BASELINE 303 (rock, sediment, soil and mine waste around Aynak, Balkhab, Hajigak and Nuqra Khana), EUROPE_GEMAS 4,131 (European agricultural and grazing-land soils, 1 site per 2,500 km2),
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 225 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/

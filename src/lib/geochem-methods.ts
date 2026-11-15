@@ -72,6 +72,8 @@ export const DATASET_NAMES: Record<string, string> = {
   MAURITANIA_USGS_PRISM: "Mauritania (PRISM-I/II soils, regolith, stream sediment and rock, 1999-2004)",
   AFGHANISTAN_USGS_BASELINE: "Afghanistan (USGS deposit baselines: Aynak, Balkhab, Hajigak, Nuqra Khana, 2019-20)",
   EUROPE_GEMAS: "Europe (GEMAS agricultural and grazing-land soils, 2008-09)",
+  IRELAND_GSI_TELLUS: "Ireland (GSI Tellus topsoils, stream sediments and SE Ireland rocks, 2011-22)",
+  NI_GSNI_TELLUS: "Northern Ireland (GSNI Tellus soils, 2004-06)",
   SPAIN_IGME_GEOCHEMISTRY: "Spain (IGME, Li, Cu and W so far)",
   GERMANY_GFZ_ERZGEBIRGE: "Germany (GFZ Erzgebirge granites)",
 };

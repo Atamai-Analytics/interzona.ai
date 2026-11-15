@@ -65,6 +65,7 @@ const CREDITS: [RegExp, string][] = [
   [/sweden_sgu/i, "Geological Survey of Sweden (SGU), CC0"],
   [/spain_igme|igme/i, "Source: © NC Geological Survey of Spain (IGME); FOREGS campaigns via IGME"],
   [/usa_usgs_ngdb/i, "U.S. Geological Survey, National Geochemical Database"],
+  [/europe_gemas|gemas/i, "GEMAS project (EuroGeoSurveys / Eurometaux; Reimann et al. 2014), via EGDI, CC BY 4.0"],
   [/afghanistan_usgs_baseline/i, "U.S. Geological Survey pre-mining environmental baseline data releases (Aynak, Balkhab, Hajigak, Nuqra Khana), public domain"],
   [/mauritania_usgs_prism|prism_mrt/i, "U.S. Geological Survey Open-File Report 2013-1280 (PRISM-II), with the Ministry of Petroleum, Energy and Mines of Mauritania"],
   [/norway_ngu|ngu_minres/i, "Contains data under the Norwegian licence for Open Government data (NLOD) made available by the Geological Survey of Norway (NGU)"],

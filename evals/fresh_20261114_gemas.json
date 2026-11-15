@@ -1,21 +1,40 @@
 {
   "version": "2026-11-14",
-  "notes": "Fresh checks for GEMAS (EUROPE_GEMAS) loaded 14 Nov 2026. Not part of the gate.",
+  "notes": "Fresh checks for GEMAS (EUROPE_GEMAS) and the Czech CGS deposit register loaded 14 Nov 2026. Not part of the gate.",
   "ids": [],
   "questions": [
     {
       "id": "fresh-gemas-ukraine-poland",
       "cat": "geochem",
       "q": "What soil geochemistry do you have for Ukraine and Poland?",
-      "expect": { "max_turns": 10 },
+      "expect": {
+        "max_turns": 10
+      },
       "judge": "Says the data for Ukraine and Poland are GEMAS agricultural and grazing-land soil samples (about 158 and 129 agricultural sites respectively, plus grazing-land samples), at one site per 2,500 km2, sampled 2008-2009, analysed by aqua regia, XRF and MMI. Notes this is low-density, continental-scale data and that there is no national survey for these countries in the database. Credits GEMAS / EuroGeoSurveys (CC BY 4.0). Does not invent other datasets."
     },
     {
       "id": "fresh-gemas-lithium-europe",
       "cat": "geochem",
       "q": "Which European countries have the highest lithium in agricultural soils?",
-      "expect": { "tools_any": ["run_sql"], "max_turns": 10 },
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 10
+      },
       "judge": "Uses EUROPE_GEMAS agricultural (Ap) soil aqua regia Li grouped by country, gives medians or high values with mg/kg (ppm) units and names the top countries. Says aqua regia is a partial extraction and that GEMAS is low density (1 site per 2,500 km2), so this shows broad patterns, not deposits. Credits GEMAS. Does not mix in other surveys without saying so."
+    },
+    {
+      "id": "fresh-cgs-czech-lithium",
+      "cat": "occurrences",
+      "q": "Which lithium deposits are recorded in the Czech Republic?",
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Lists Czech lithium deposits from the data, including Cinovec (several parts) and Krasno / Horni Slavkov, with their associated Sn, W, Cs, Rb and Nb, and the register status (e.g. former mining, prognostic resource, tailings). Says the Czech Geological Survey register is an April 2025 version and credits the Czech Geological Survey. Does not invent tonnages or company plans not in the data."
     }
   ]
 }

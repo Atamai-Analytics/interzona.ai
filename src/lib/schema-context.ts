@@ -311,6 +311,13 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   (110 in Norway), REE 25, Li 1. NO tonnage or grade. RULE for "mines" in Norway: count records with status PRODUCER / PAST_PRODUCER
   AND NGU records whose comments contain 'activity recorded: mining' or 'quarrying' (status UNKNOWN), report them separately, and credit NGU
   as well as MIN4EU / USGS whenever Norwegian occurrences are used; older USGS / MIN4EU 'producing' labels for Norway are often out of date.
+- CZECHIA - Czech Geological Survey register of reserved deposits and approved prognostic resources (loaded 2026-11-14, created_by
+  migration_cgs_deposits_20261114, external_ids 'CGS_DEPOSITS'; CC BY 4.0, credit "(cc) Czech Geological Survey"): metals and industrial
+  minerals only - 168 new occurrences plus 213 existing (mostly MIN4EU) given CGS facts. It is the April 2025 version of a weekly-updated
+  register (the CGS download server was unreachable; Internet Archive copy) - say so for current status. Status: current mining -> PRODUCER,
+  former -> PAST_PRODUCER, not yet mined -> UNKNOWN, approved prognostic resources -> PROSPECT. Includes the Cinovec and Krasno - Horni Slavkov
+  Sn-W-Li-Cs-Rb-Nb deposits and tailings, uranium, gold, graphite, fluorite-baryte, kaolin, feldspar, bentonite and silica sands. comments hold
+  the Czech raw-material text ('raw material: ...'), mining type, operator and the CGS registry link.
 - MAURITANIA - national mineral deposits database (PRISM-II, USGS Open-File Report 2013-1280 chapter S; loaded 2026-11-14, created_by
   migration_prism_mrt_deposits_20261114, external_ids 'PRISM_MRT_DEPOSITS'): 747 new occurrences (Mauritania now about 790) - 706
   occurrences ('indices'), 24 mining projects (status EXPLORATION), 3 active mines as recorded by PRISM (PRODUCER: Tasiast Fosse Sud gold, the

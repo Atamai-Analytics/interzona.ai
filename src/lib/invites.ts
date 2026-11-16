@@ -16,7 +16,10 @@ export type Invite = {
   revoked: boolean;
 };
 export type InviteStats = { questions: number; units: number; lastSeen: number | null; up: number; down: number };
-export type InviteStatus = "active" | "expired" | "revoked";
+export type { InviteStatus } from "@/lib/invite-state";
+export { inviteStatus } from "@/lib/invite-state";
+import type { InviteStatus } from "@/lib/invite-state";
+import { inviteStatus } from "@/lib/invite-state";
 
 const sha = (s: string) => crypto.createHash("sha256").update(s).digest("hex");
 const now = () => Math.floor(Date.now() / 1000);
@@ -28,8 +31,6 @@ const parse = (raw: unknown): Invite | null => {
     return null;
   }
 };
-
-export const inviteStatus = (i: Invite): InviteStatus => (i.revoked ? "revoked" : i.expires < now() ? "expired" : "active");
 
 export async function createInvite(input: { name: string; note?: string; days?: number; dailyLimit?: number }): Promise<{ invite: Invite; token: string }> {
   const name = input.name.trim().slice(0, 80);

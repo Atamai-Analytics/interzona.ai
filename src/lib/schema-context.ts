@@ -195,7 +195,7 @@ core.resource_estimates: occurrence_id, commodity_id, classification (Indicated/
   contained_metal_unit (often NULL — only published contained metal is stored; derived values sit in
   the occurrence comments; EXCEPTION: the Geoscience Australia rows below have contained metal calculated by Interzona from
   tonnage x grade, and their comments say so), cutoff_grade + cutoff_grade_unit, competent_person, source_document_id,
-  source_system (NULL for the hand-loaded rows; 'AUSTRALIA_GA_OZMIN_RESOURCES' for the Geoscience Australia rows), zone_name
+  source_system (NULL for the hand-loaded rows; 'AUSTRALIA_GA_OZMIN_RESOURCES' for the Geoscience Australia rows; 'YUKON_MINERAL_DEPOSITS' for Yukon, combined categories), zone_name
   (the ore zone or orebody the row is for), comments (source, reference, whether resources include reserves).
   Grade units differ by row (for example '% TREO', 'ppm Nd2O3', 'g/t') — read grade_unit before
   comparing rows, and never add rows across classifications without saying so.
@@ -534,6 +534,24 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   the location method and caveats — read it before quoting figures or coordinates for a specific
   occurrence, and say when a location is approximate.
 
+- YUKON (loaded 2026-11-16): Yukon MINFILE, the Yukon Geological Survey's occurrence register (Open Government Licence - Yukon, credit
+  "Yukon Geological Survey, Yukon MINFILE. Contains information licensed under the Open Government Licence - Yukon."), 2,649 occurrences
+  (created_by migration_yukon_minfile_20261116, external_ids source 'YUKON_MINFILE' = MINFILE number such as '105J 017', jurisdiction Yukon):
+  292 MINFILE 'Deposit' records (is_deposit; status UNKNOWN because MINFILE's producer flag marks every deposit, including never-mined ones
+  such as Mactung, so it says nothing about production), 1,094 prospects (PROSPECT), 929 showings (OCCURRENCE), 334 unknown. The 574
+  MINFILE 'Anomaly' records (geochemical/geophysical anomalies) were NOT loaded. 20 old USGS MRDS duplicates were merged into the MINFILE
+  records, keeping MRDS's mine history where MINFILE has none: Faro, Ketza River, Barite Mountain, Wellgreen, Mount Nansen (Brown-McDade)
+  and Whitehorse Copper (Little Chief) are PAST_PRODUCER. Current or recent mines (Keno Hill, Eagle, Minto) are NOT flagged as producers -
+  use documents or the web for their present status. MINFILE deposit type is in mineralization_style (occurrence_type_id set for clear
+  matches: MVT zinc-lead, skarns, vein polymetallic, U-M Ni-Cu-PGE); comments hold the MINFILE number, status, type, aliases, NTS sheet and
+  the YGS record link (data.geology.gov.yk.ca/Occurrence/<id>).
+  YUKON RESOURCES (source_system 'YUKON_MINERAL_DEPOSITS'): 407 resource_estimates rows for 181 zones of about 80 properties from the YGS
+  mineral deposits inventory (statements to 2024; NI 43-101, JORC or 'Historic estimate'), one row per zone and commodity with tonnage (t),
+  average grade and contained metal (Au, Ag, Pt, Pd in koz; base metals and WO3 in t, converted from YGS's pounds). YGS SUMMED the
+  categories of each statement: classification shows the combination (e.g. 'Indicated+Inferred', 'Combined (all categories)', or
+  'Resource, category not stated'), so these are total geological resources, not a single category - say so and give the effective_date;
+  comments link the source report. Examples: Casino 3.9 billion t at 0.125% Cu (2022), Mactung 53.7 Mt at 0.69% WO3 (2023), Kudz Ze Kayah
+  ABM 14.9 Mt at 6.0% Zn (2020).
 - AUSTRALIAN RESOURCES (loaded 2026-11-08, source_system 'AUSTRALIA_GA_OZMIN_RESOURCES', created_by migration_ga_resources_20261108):
   16,459 rows for 2,748 Australian occurrences from Geoscience Australia's OZMIN ore reserves and mineral resources (CC BY 4.0; credit
   Geoscience Australia). GA compiles them from company reports; only the LATEST statement GA holds for each deposit zone is loaded (one row
@@ -1059,9 +1077,9 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   The comment names the original survey ('original survey GSC OF 2175' etc.), the ICP-MS reanalysis Open File, the NTS sheet and the survey
   year (no sample dates). Negative source values and zeros in the old columns are BELOW_DL_QUALIFIED (zeros get the column's lowest
   reported value as the limit). Compare like with like (one method; ideally one original survey).
-  The Yukon occurrence catalogue is THIN (Yukon MINFILE is not loaded; only MRDS and NRCan project points, so just 102 Yukon samples lie
-  within 2 km of a catalogued occurrence): when screening Yukon, say that a 'new lead' may simply be a known Yukon occurrence that is not
-  in the database.
+  Yukon occurrences come from Yukon MINFILE (loaded 16 Nov 2026, see YUKON above): 1,963 of these stream samples lie within 2 km of a
+  MINFILE occurrence (geochem.sample_occurrence_links). MINFILE 'Anomaly' records were not loaded, so a screen's 'new lead' can still be
+  a known MINFILE geochemical anomaly - check the YGS record if it matters.
   SWEDISH TILL, SEDIMENT AND SOIL ('SWEDEN_SGU_MARKGEOKEMI', CC0, credit Geological Survey of Sweden (SGU)): 61,290 samples from SGU's regional
   sampling 1983-2024 and the older NSG/SGAB state exploration surveys: till 58,208 (TILL_SAMPLE, mostly the <0.063 mm fine fraction), sediment
   2,549, surface soil 533 (<2 mm); all sample_context 'SURFACE'. One sample per SGU site id with results from several methods: packages

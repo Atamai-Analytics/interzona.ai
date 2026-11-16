@@ -1,6 +1,6 @@
 {
   "version": "2026-11-16",
-  "notes": "Fresh checks for the Yukon Geological Survey RGS stream sediments (YUKON_YGS_RGS) loaded 16 Nov 2026, which superseded ~28,900 CDoGS Yukon copies. Not part of the gate.",
+  "notes": "Fresh checks for the Yukon Geological Survey RGS stream sediments (YUKON_YGS_RGS) loaded 16 Nov 2026, which superseded ~28,900 CDoGS Yukon copies. Not part of the gate. Updated after the Yukon MINFILE + resources load (16 Nov 2026).",
   "ids": [],
   "questions": [
     {
@@ -35,7 +35,19 @@
         ],
         "max_turns": 12
       },
-      "judge": "Runs the anomaly screen on the Yukon stream sediments (YUKON_YGS_RGS) for W, reports anomalous cells or samples with locations and values, and groups them into new leads versus those near known occurrences. Should say the Yukon occurrence catalogue in the database is thin (few catalogued occurrences), so 'new lead' may just mean an occurrence that is not loaded. Credits the Yukon Geological Survey. Does not invent values."
+      "judge": "Runs the anomaly screen on the Yukon stream sediments (YUKON_YGS_RGS) for W, reports anomalous cells or samples with locations and values, and groups them into new leads versus those near known occurrences (Yukon MINFILE occurrences such as Mactung, Cantung-area or other tungsten skarns may appear as known). Credits the Yukon Geological Survey. Does not invent values."
+    },
+    {
+      "id": "fresh-yukon-resources",
+      "cat": "deposits",
+      "q": "What are the largest copper resources in the Yukon?",
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Uses the Yukon resource estimates (YUKON_MINERAL_DEPOSITS) and names Casino as the largest (about 3.9 billion t at about 0.125% Cu, roughly 4.9 Mt contained copper, 2022 NI 43-101), with other copper deposits and their tonnage, grade and date. Says the YGS figures combine categories (e.g. measured, indicated and inferred together) rather than being a single category, and credits the Yukon Geological Survey. Does not invent figures."
     }
   ]
 }

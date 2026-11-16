@@ -2157,8 +2157,10 @@ EITI - extractive-sector PAYMENTS, REVENUES and PRODUCTION disclosed by EITI imp
   revenues are two sides of the same flows (company-reported vs government-reported) - never add them together, say which side you used;
   quote USD from the *_usd columns and say "converted by EITI", or the local currency with its code; a company's total is the sum of its
   payment rows for that country and year (several revenue streams and government entities); figures are as disclosed in EITI reports and
-  may be revised. Licence: the EITI database invites reuse but states no formal licence (we have asked EITI to confirm) - always credit
-  "Extractive Industries Transparency Initiative (EITI), EITI database" and the reporting country. Example (top payers in Zambia's
+  may be revised. Licence: CC BY 4.0 - the EITI International Secretariat confirmed on 16 Nov 2026 that the database follows CC BY 4.0
+  (commercial reuse with attribution) with no national restrictions. Always credit "Extractive Industries Transparency Initiative (EITI),
+  EITI database, eiti.org" and the reporting country and year; for production and exports also give the source column (Summary Data or
+  Validation). Data as downloaded 12 Nov 2026 (EITI updates the database quarterly). Example (top payers in Zambia's
   mining sector, 2022): SELECT company_name, round(sum(payment_value_usd)/1e6, 1) AS usd_million FROM markets.eiti_payments WHERE
   country_name = 'Zambia' AND year = 2022 GROUP BY 1 ORDER BY 2 DESC NULLS LAST LIMIT 10.
 `,

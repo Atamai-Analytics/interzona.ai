@@ -1,0 +1,40 @@
+{
+  "version": "2026-11-16",
+  "notes": "Fresh checks for the USGS Alaska Geochemical Database (AGDB3) samples loaded 16 Nov 2026 as ALASKA_AGDB3 (only samples not already in USA_USGS_NGDB / USA_NURE_HSSR). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-alaska-what",
+      "cat": "geochem",
+      "q": "What geochemistry do you have for Alaska, and from which surveys?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Describes Alaska coverage as three non-overlapping sources: the USGS National Geochemical Database (USA_USGS_NGDB), NURE stream sediments (USA_NURE_HSSR) and the USGS Alaska Geochemical Database AGDB3 additions (ALASKA_AGDB3, about 86,000 samples from the Alaska state survey DGGS, the US Bureau of Mines, BLM and other USGS projects). Gives sample counts from the data or the notes and credits USGS (public domain; Granitto and others 2019 for AGDB3). Must not double count samples across the sources."
+    },
+    {
+      "id": "fresh-alaska-dggs",
+      "cat": "geochem",
+      "q": "How many Alaska Division of Geological & Geophysical Surveys (DGGS) samples are in the database, and what kinds of samples are they?",
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Queries ALASKA_AGDB3 samples whose comments name agency DGGS and gives the count (roughly 25,000-30,000) with a breakdown by sample type (rocks, stream sediments, concentrates, soils), from the data. Credits USGS AGDB3 (Granitto and others 2019). Does not invent counts."
+    },
+    {
+      "id": "fresh-alaska-tin",
+      "cat": "geochem",
+      "q": "Where are the highest tin values in Alaska rock samples collected by the US Bureau of Mines?",
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Uses ALASKA_AGDB3 rock samples with agency USBM and tin results, lists the highest values with units, locations (coordinates or quadrangle / place) and the method, and notes that methods differ (compare like with like). Credits USGS AGDB3. Does not invent values."
+    }
+  ]
+}

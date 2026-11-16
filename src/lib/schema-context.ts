@@ -875,6 +875,22 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   answer) ONLY (geochem.samples also holds 2,519 age-only points, source_system
   'SWEDEN_SGU_BEDROCK_AGE', and 1,053 bare sample points from the Wu zircon database, source_system
   'GLOBAL_ZIRCON_WU', none of which has results; do not count them as geochemical samples).
+  ALASKA ('ALASKA_AGDB3', US public domain; credit "Granitto and others, 2019, Alaska Geochemical Database Version 3.0 (AGDB3), U.S.
+  Geological Survey data release, doi 10.5066/P98NHRAD"; loaded 16 Nov 2026): the Alaska samples of USGS's AGDB3 that were NOT already
+  loaded through USA_USGS_NGDB or USA_NURE_HSSR - 86,274 samples, about 2.8M results, collected 1938-2017 by the Alaska Division of Geological
+  & Geophysical Surveys (DGGS), the US Bureau of Mines (USBM), the Bureau of Land Management (BLM) and USGS projects missing from the NGDB
+  release (samples.comments: 'USGS Alaska Geochemical Database (AGDB3) id <n>; agency <DGGS|USBM|USGS|USBLM...>; ...', with project,
+  quadrangle and publication). Mostly rocks (outcrop 38,986, other rock, float, drill core), stream sediments 16,438, heavy-mineral
+  concentrates 7,182, soils. So ALL Alaska geochemistry = USA_USGS_NGDB + USA_NURE_HSSR + ALASKA_AGDB3 (no sample is in two of them).
+  Packages 'AGDB3-<USGS method>' use the same USGS method codes as NGDB (ES_SQ semi-quantitative emission spectrography is the oldest and
+  lowest priority; MS_HF / MS_Fuse ICP-MS, AES_HF, NA_LC INAA, WDX XRF, AA_* atomic absorption, FA_* fire assay); result_comment holds the
+  USGS method and AGDB3 best-value rank. Below-detection values are BELOW_DL_QUALIFIED. When you list AGDB3 values, give each value's
+  method (from the package, e.g. 'semi-quantitative emission spectrography' for AGDB3-ES_SQ, XRF, AAS) because the same element was measured
+  very differently over the decades, and compare values only within one method. sample_chemistry_wide has no method, so for AGDB3
+  value lists query geochem.analytical_results (source_system 'ALASKA_AGDB3', analyte_symbol, value, unit_code, method_name = the package
+  'USGS AGDB3 <method>', result_comment) joined to geochem.samples for position and agency. Many methods and decades: compare one method /
+  one agency or project at a time. Mineral separates and oxalic-acid leachates were not loaded. 40,050 of these samples lie within 2 km
+  of a catalogued occurrence (geochem.sample_occurrence_links).
   NURE HSSR ('USA_NURE_HSSR', US public domain; credit "U.S. Geological Survey, NURE HSSR data (Smith 1997, OFR 97-492), from the
   U.S. Department of Energy NURE program"): one sediment/soil value per element per sample from four DOE laboratories, each with its own
   methods - Los Alamos (analytical_results.laboratory 'LASL', 177,122 samples), Savannah River west/east ('SRLW' 77,847, 'SRLE' 75,542), Oak
@@ -1224,7 +1240,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   ARGENTINA_SEGEMAR (1,782,202 active), 55,098 in USA_USGS_NGDB (34,058,618 active; includes 13,643 + 6,251 exact duplicates deactivated by QC on 13 and 14 Nov 2026) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
   CANADA_NRCAN_CDOGS 27,089 (exact duplicates); CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
-  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY, MAURITANIA_USGS_PRISM, AFGHANISTAN_USGS_BASELINE, EUROPE_GEMAS, IRELAND_GSI_TELLUS, NI_GSNI_TELLUS, IRELAND_GSI_MPM_HISTORIC and YUKON_YGS_RGS have none (Yukon: 11,114 repeated F and Au results inactive) (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
+  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY, MAURITANIA_USGS_PRISM, AFGHANISTAN_USGS_BASELINE, EUROPE_GEMAS, IRELAND_GSI_TELLUS, NI_GSNI_TELLUS, IRELAND_GSI_MPM_HISTORIC and YUKON_YGS_RGS have none (Yukon: 11,114 repeated F and Au results inactive); ALASKA_AGDB3: 1,818 exact duplicates inactive, 120 impossible values SUSPECT (mostly ppm values labelled % in the source, and 1-7 % Th in placer concentrates) (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
 geochem.result_classifications: result_id, source_system, result_status (DETECTED, BELOW_DL_QUALIFIED,
   BELOW_DL_CERTAIN, BELOW_DL_PROBABLE, ABOVE_UDL, NULL_RESULT, SUSPECT, SENTINEL), dl_value, use_in_statistics.
   Complete for every source (join on result_id AND source_system). For statistics use
@@ -1365,7 +1381,7 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
-geochem.sample_chemistry_wide: one row per sample for ALL twenty-one geochemical datasets (YUKON_YGS_RGS 31,276 (Yukon stream sediments; aqua regia ICP-MS _p for 24,349, INAA / fire assay / DNC _t); IRELAND_GSI_MPM_HISTORIC 352,605 (NW Midlands historic soils, mostly cu_p, pb_p, zn_p); IRELAND_GSI_TELLUS 33,788 (Tellus topsoils, stream sediments, SE rocks; aqua regia _p and XRF _t); NI_GSNI_TELLUS 13,743 (Northern Ireland Tellus soils); GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL twenty-two geochemical datasets (ALASKA_AGDB3 86,274 (Alaska DGGS / USBM / BLM / extra USGS samples, mostly rocks; many methods); YUKON_YGS_RGS 31,276 (Yukon stream sediments; aqua regia ICP-MS _p for 24,349, INAA / fire assay / DNC _t); IRELAND_GSI_MPM_HISTORIC 352,605 (NW Midlands historic soils, mostly cu_p, pb_p, zn_p); IRELAND_GSI_TELLUS 33,788 (Tellus topsoils, stream sediments, SE rocks; aqua regia _p and XRF _t); NI_GSNI_TELLUS 13,743 (Northern Ireland Tellus soils); GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 965,956 (rock, sediment, soil and heavy-mineral concentrates), USA_NURE_HSSR 386,075 (NURE stream/lake sediment and soil; total columns _t), NORWAY_NGU_GEOCHEMISTRY 10,764 (NGU soils and till, aqua regia: partial columns _p), MAURITANIA_USGS_PRISM 29,620 (PRISM soils, regolith, stream sediment and rock; compiled values), AFGHANISTAN_USGS_BASELINE 303 (rock, sediment, soil and mine waste around Aynak, Balkhab, Hajigak and Nuqra Khana), EUROPE_GEMAS 4,131 (European agricultural and grazing-land soils, 1 site per 2,500 km2),
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 204,976 active (233,875 loaded; 28,899 Yukon copies inactive); 225 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/

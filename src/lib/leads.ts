@@ -23,6 +23,7 @@ const SURVEYS: Record<string, string> = {
   EUROPE_GEMAS: "Europe (GEMAS)",
   IRELAND_GSI_TELLUS: "Ireland (GSI Tellus)",
   NI_GSNI_TELLUS: "Northern Ireland (GSNI Tellus)",
+  ALASKA_AGDB3: "Alaska (USGS AGDB3, non-NGDB samples)",
   YUKON_YGS_RGS: "Yukon (YGS regional stream sediments)",
   IRELAND_GSI_MPM_HISTORIC: "Ireland NW Midlands (GSI MPM historic soils)",
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",

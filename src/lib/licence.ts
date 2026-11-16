@@ -65,6 +65,7 @@ const CREDITS: [RegExp, string][] = [
   [/sweden_sgu/i, "Geological Survey of Sweden (SGU), CC0"],
   [/spain_igme|igme/i, "Source: © NC Geological Survey of Spain (IGME); FOREGS campaigns via IGME"],
   [/usa_usgs_ngdb/i, "U.S. Geological Survey, National Geochemical Database"],
+  [/alaska_agdb3|agdb3/i, "Granitto and others, 2019, Alaska Geochemical Database Version 3.0 (AGDB3), U.S. Geological Survey data release, doi 10.5066/P98NHRAD (public domain)"],
   [/yukon_minfile|yukon_mineral_deposits|minfile/i, "Yukon Geological Survey (Yukon MINFILE and mineral deposits inventory). Contains information licensed under the Open Government Licence - Yukon"],
   [/yukon_ygs_rgs|ygs_rgs/i, "Yukon Geological Survey, 2020. Regional Geochemical Surveys (RGS). Contains information licensed under the Open Government Licence - Yukon"],
   [/ireland_gsi_mpm_historic|gsi_mpm/i, "Contains Irish Public Sector Data (Geological Survey Ireland) licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) licence"],

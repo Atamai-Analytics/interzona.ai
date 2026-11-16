@@ -74,6 +74,7 @@ export const DATASET_NAMES: Record<string, string> = {
   EUROPE_GEMAS: "Europe (GEMAS agricultural and grazing-land soils, 2008-09)",
   IRELAND_GSI_TELLUS: "Ireland (GSI Tellus topsoils, stream sediments and SE Ireland rocks, 2011-22)",
   NI_GSNI_TELLUS: "Northern Ireland (GSNI Tellus soils, 2004-06)",
+  ALASKA_AGDB3: "Alaska (USGS AGDB3: DGGS, Bureau of Mines, BLM and other samples not in the NGDB, 1938-2017)",
   YUKON_YGS_RGS: "Yukon (YGS regional stream sediments, 1976-2006, with ICP-MS reanalysis)",
   IRELAND_GSI_MPM_HISTORIC: "Ireland NW Midlands (GSI MPM historic company soil surveys, 1960s-2016, mostly Cu-Pb-Zn)",
   SPAIN_IGME_GEOCHEMISTRY: "Spain (IGME, Li, Cu and W so far)",

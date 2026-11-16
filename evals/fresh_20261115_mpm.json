@@ -1,0 +1,41 @@
+{
+  "version": "2026-11-15",
+  "notes": "Fresh checks for the GSI MPM historic soils of the NW Midlands, Ireland (IRELAND_GSI_MPM_HISTORIC) loaded 15 Nov 2026. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-mpm-what",
+      "cat": "geochem",
+      "q": "What historic soil geochemistry do you have for the Irish Midlands?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Describes IRELAND_GSI_MPM_HISTORIC: about 350,000 soil samples in the NW Midlands (Mayo, Roscommon, Galway, Leitrim, Longford, Westmeath, Offaly area), compiled by Geological Survey Ireland's Mineral Prospectivity Mapping project from exploration-company surveys of the 1960s to 2016, mostly Cu, Pb and Zn digitised from old maps (GSI, Vedanta VEIL and GSRO compilations), with some modern multi-element and portable XRF results. Says laboratories, methods and detection limits are mostly unknown so values should be compared within a survey. Credits Geological Survey Ireland (CC BY 4.0). May also mention Tellus as the modern national survey."
+    },
+    {
+      "id": "fresh-mpm-zinc",
+      "cat": "geochem",
+      "q": "Where are the strongest zinc-in-soil anomalies in the NW Midlands historic soil data?",
+      "expect": {
+        "tools_any": [
+          "run_sql",
+          "find_geochemical_anomalies"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Uses IRELAND_GSI_MPM_HISTORIC Zn values (ppm), gives the highest values or anomalous clusters with locations (coordinates, counties or towns) and, where possible, the company or survey that collected them. Warns that the surveys are historic, of different eras and laboratories and not levelled, so anomalies are best judged within one survey. Credits Geological Survey Ireland (CC BY 4.0). Does not invent deposits or values."
+    },
+    {
+      "id": "fresh-mpm-companies",
+      "cat": "geochem",
+      "q": "Which exploration companies collected the historic soil samples in the NW Midlands of Ireland, and how many samples each?",
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Queries IRELAND_GSI_MPM_HISTORIC sample comments for the company or licensee and lists the main ones with counts (for example Irish Base Metals, Teck Ireland, Vestor Explorations, Gortdrum Mines, Boliden Tara, ASARCO, Amoco; spelling variants may be merged or listed separately). Counts must come from the data, total about 350,000. Credits Geological Survey Ireland."
+    }
+  ]
+}

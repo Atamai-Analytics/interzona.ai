@@ -65,6 +65,7 @@ const CREDITS: [RegExp, string][] = [
   [/sweden_sgu/i, "Geological Survey of Sweden (SGU), CC0"],
   [/spain_igme|igme/i, "Source: © NC Geological Survey of Spain (IGME); FOREGS campaigns via IGME"],
   [/usa_usgs_ngdb/i, "U.S. Geological Survey, National Geochemical Database"],
+  [/ireland_gsi_mpm_historic|gsi_mpm/i, "Contains Irish Public Sector Data (Geological Survey Ireland) licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) licence"],
   [/ireland_gsi_tellus|gsi_tellus/i, "Contains Irish Public Sector Data (Geological Survey Ireland) licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) licence"],
   [/ni_gsni_tellus|gsni_tellus/i, "Contains UK public sector information (Geological Survey of Northern Ireland) licensed under the UK Open Government Licence v3.0"],
   [/europe_gemas|gemas/i, "GEMAS project (EuroGeoSurveys / Eurometaux; Reimann et al. 2014), via EGDI, CC BY 4.0"],

@@ -23,6 +23,7 @@ const SURVEYS: Record<string, string> = {
   EUROPE_GEMAS: "Europe (GEMAS)",
   IRELAND_GSI_TELLUS: "Ireland (GSI Tellus)",
   NI_GSNI_TELLUS: "Northern Ireland (GSNI Tellus)",
+  IRELAND_GSI_MPM_HISTORIC: "Ireland NW Midlands (GSI MPM historic soils)",
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",
   AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
   CANADA_QC_SIGEOM: "Québec, Canada (SIGÉOM rock)",

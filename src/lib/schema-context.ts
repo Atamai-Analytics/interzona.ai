@@ -784,7 +784,22 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   (GSI with its published limits, GSNI with inferred limits) and not used in statistics; values capped at the upper limit are ABOVE_UDL.
   No per-sample dates; pH and stream waters not loaded. Credits: "Contains Irish Public Sector Data (Geological Survey Ireland) licensed
   under a Creative Commons Attribution 4.0 International (CC BY 4.0) licence" and "Contains UK public sector information (Geological
-  Survey of Northern Ireland) licensed under the UK Open Government Licence v3.0") and Victoria, Australia (Geological Survey of Victoria geochemistry
+  Survey of Northern Ireland) licensed under the UK Open Government Licence v3.0") and the NW MIDLANDS OF IRELAND (historic soils, loaded
+  15 Nov 2026: 'IRELAND_GSI_MPM_HISTORIC' = Geological Survey Ireland Mineral Prospectivity Mapping (MPM) project compilation, 352,605 soil
+  samples / 1.36M results in Mayo, Roscommon, Galway, Leitrim, Longford, Westmeath and Offaly (lat 53.2-54.3, lon -9.5 to -7.1).
+  Three compilations, named in the comment ('(GSI compilation', '(Vedanta VEIL compilation', '(GSRO compilation'): GSI 138,821 samples
+  digitised from 276 scanned exploration-company maps of the 1960s-2000s (16,302 deep-overburden power-auger samples SOIL_MAUG, the rest
+  shallow soils; Cu, Pb, Zn, a few Ag, Ba, Mn; package MPM_GSI_HIST); Vedanta VEIL 151,016 shallow soils from 1965-1995 company maps
+  (Cu, Pb, Zn, a few Hg in ppb and F; MPM_VEIL_HIST); GSRO 62,768 samples reported by licensees 2009-2016: 53,436 legacy Cu-Pb-Zn
+  (MPM_GSRO_LEGACY) and 8,791 modern multi-element results (MPM_GSRO_LAB, 65 elements, ICP aqua regia or not stated) plus 541 portable
+  XRF samples (MPM_GSRO_PXRF; censored pXRF readings flagged BELOW_DL_PROBABLE). Laboratories, methods and detection limits are mostly
+  NOT recorded and surveys are not levelled: compare values within one company survey - the company or licensee is in the comment:
+  substring(comments from '(?:licensee|company) [^;]+'), with year/period and the map name. Main companies: Irish Base Metals, Teck
+  Ireland, Vestor Explorations, Gortdrum Mines, Boliden Tara, ASARCO, Amoco. Typical medians Cu 15, Zn 53 ppm. Values given as '<x' or
+  coded below detection (-999, limit unknown, qualifier ND) are BELOW_DL_QUALIFIED; '>x' ABOVE_UDL; illegible map values skipped.
+  GSI warns the GSRO part has little provenance (treat with caution). No per-sample dates. Licence CC BY 4.0, credit "Contains Irish
+  Public Sector Data (Geological Survey Ireland) licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) licence")
+  and Victoria, Australia (Geological Survey of Victoria geochemistry
   collection, 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY', 156,331 samples, 778,219 active results, 75 analytes) and Tasmania, Australia
   (Mineral Resources Tasmania bulk data package, 'AUSTRALIA_TAS_MRT', 383,939 samples, 3.85M results, 106 analytes, plus 34,871 drill
   holes in the drilling schema) and Québec, Canada (SIGÉOM rock geochemistry, 'CANADA_QC_SIGEOM', 587,000 rock samples, 18.13M results,
@@ -1166,7 +1181,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   ARGENTINA_SEGEMAR (1,782,202 active), 55,098 in USA_USGS_NGDB (34,058,618 active; includes 13,643 + 6,251 exact duplicates deactivated by QC on 13 and 14 Nov 2026) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
   CANADA_NRCAN_CDOGS 27,089 (exact duplicates); CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
-  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY, MAURITANIA_USGS_PRISM, AFGHANISTAN_USGS_BASELINE, EUROPE_GEMAS, IRELAND_GSI_TELLUS and NI_GSNI_TELLUS have none (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
+  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY, MAURITANIA_USGS_PRISM, AFGHANISTAN_USGS_BASELINE, EUROPE_GEMAS, IRELAND_GSI_TELLUS, NI_GSNI_TELLUS and IRELAND_GSI_MPM_HISTORIC have none (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
 geochem.result_classifications: result_id, source_system, result_status (DETECTED, BELOW_DL_QUALIFIED,
   BELOW_DL_CERTAIN, BELOW_DL_PROBABLE, ABOVE_UDL, NULL_RESULT, SUSPECT, SENTINEL), dl_value, use_in_statistics.
   Complete for every source (join on result_id AND source_system). For statistics use
@@ -1307,7 +1322,7 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
-geochem.sample_chemistry_wide: one row per sample for ALL nineteen geochemical datasets (IRELAND_GSI_TELLUS 33,788 (Tellus topsoils, stream sediments, SE rocks; aqua regia _p and XRF _t); NI_GSNI_TELLUS 13,743 (Northern Ireland Tellus soils); GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL twenty geochemical datasets (IRELAND_GSI_MPM_HISTORIC 352,605 (NW Midlands historic soils, mostly cu_p, pb_p, zn_p); IRELAND_GSI_TELLUS 33,788 (Tellus topsoils, stream sediments, SE rocks; aqua regia _p and XRF _t); NI_GSNI_TELLUS 13,743 (Northern Ireland Tellus soils); GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 965,956 (rock, sediment, soil and heavy-mineral concentrates), USA_NURE_HSSR 386,075 (NURE stream/lake sediment and soil; total columns _t), NORWAY_NGU_GEOCHEMISTRY 10,764 (NGU soils and till, aqua regia: partial columns _p), MAURITANIA_USGS_PRISM 29,620 (PRISM soils, regolith, stream sediment and rock; compiled values), AFGHANISTAN_USGS_BASELINE 303 (rock, sediment, soil and mine waste around Aynak, Balkhab, Hajigak and Nuqra Khana), EUROPE_GEMAS 4,131 (European agricultural and grazing-land soils, 1 site per 2,500 km2),
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 225 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/

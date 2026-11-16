@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { card, downloadText, heading } from "@/components/multivariate/ui";
 import { datasetName } from "@/lib/geochem-methods";
+import { capRows } from "@/lib/csv";
 
 // World coverage map (/tools/coverage): countries shaded by how many samples, analyses, occurrences, deposits, drill holes or library
 // documents the database holds there. Counts come from /api/country-coverage (core.country_coverage, rebuilt by
@@ -140,14 +141,15 @@ export function CoverageApp() {
   const downloadCsv = () => {
     const head = ["country", "adm0_a3", ...METRICS.map((m) => m.key), "sample_sources"];
     const q = (s: string) => (/[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s);
-    const lines = (rows ?? []).map((r) => [r.name, r.a3, ...METRICS.map((m) => String(r[m.key])), r.sample_sources ?? ""].map(q).join(","));
-    downloadText("interzona_country_coverage.csv", [head.join(","), ...lines].join("\n") + "\n");
+    const capped = capRows(rows ?? []);
+    const lines = capped.rows.map((r) => [r.name, r.a3, ...METRICS.map((m) => String(r[m.key])), r.sample_sources ?? ""].map(q).join(","));
+    downloadText("interzona_country_coverage.csv", [head.join(","), ...lines, ...(capped.note ? ["", q(capped.note)] : [])].join("\n") + "\n");
   };
 
   return (
     <div className="min-h-dvh bg-gray-950 text-gray-100">
       <header className="flex flex-wrap items-center gap-3 border-b border-gray-800 px-4 py-3">
-        <Link href="/" className="text-sm text-gray-400 hover:text-gray-200">← Assistant</Link>
+        <Link href="/" className="text-sm text-gray-400 hover:text-gray-200">← Platform</Link>
         <h1 className="text-lg font-semibold">World coverage</h1>
         <p className="text-xs text-gray-400">What the database holds, country by country.</p>
         <div className="ml-auto flex gap-3 text-xs">

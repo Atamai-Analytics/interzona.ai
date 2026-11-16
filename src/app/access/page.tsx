@@ -22,7 +22,7 @@ export default async function Access({ searchParams }: { searchParams: Promise<{
       <div className="w-full max-w-sm">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/interzona-mark.png" alt="Interzona" width={56} height={56} className="mb-4 h-14 w-14" />
-        <h1 className="text-lg font-semibold">Interzona Critical Minerals AI Assistant</h1>
+        <h1 className="text-lg font-semibold">Interzona Critical Minerals AI Platform</h1>
         {notice ? (
           <p className="mt-3 rounded-md border border-amber-700/60 bg-amber-950/40 p-3 text-sm text-amber-200">{notice}</p>
         ) : (

@@ -13,7 +13,7 @@ export default function Activity() {
           <h1 className="text-lg font-semibold">Activity</h1>
           <div className="flex gap-4 text-xs text-gray-400">
             <Link href="/" className="underline">
-              Assistant
+              Platform
             </Link>
             <Link href="/admin/invites" className="underline">
               Invitations

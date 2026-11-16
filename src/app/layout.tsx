@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Interzona | Critical Minerals AI Assistant",
-  description: "Interzona Critical Minerals AI Assistant: geochemistry, deposits and documents.",
+  title: "Interzona | Critical Minerals AI Platform",
+  description: "Interzona Critical Minerals AI Platform: geochemistry, deposits and documents.",
 };
 
 export default function RootLayout({

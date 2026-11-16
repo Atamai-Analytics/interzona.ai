@@ -164,7 +164,7 @@ export function MultivariateApp() {
           <h1 className="text-lg font-semibold leading-tight">Multivariate tools</h1>
           <p className="text-xs text-gray-400">Correlation, PCA, clustering, maps, UMAP and t-SNE on a CSV or a sample dataset. It runs in your browser; your data is not sent to the server.</p>
         </div>
-        <Link href="/" className="shrink-0 text-xs text-gray-300 underline">← Assistant</Link>
+        <Link href="/" className="shrink-0 text-xs text-gray-300 underline">← Platform</Link>
       </header>
 
       <nav className="flex gap-1 overflow-x-auto border-b border-gray-800 px-4">

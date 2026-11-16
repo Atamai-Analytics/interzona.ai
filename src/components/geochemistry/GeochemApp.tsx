@@ -161,7 +161,7 @@ export function GeochemApp() {
   return (
     <div className="min-h-dvh bg-gray-950 text-gray-100">
       <header className="flex flex-wrap items-center gap-3 border-b border-gray-800 px-4 py-3 print:hidden">
-        <Link href="/" className="text-sm text-gray-400 hover:text-gray-200">← Assistant</Link>
+        <Link href="/" className="text-sm text-gray-400 hover:text-gray-200">← Platform</Link>
         <h1 className="text-lg font-semibold">Geochemistry</h1>
         <p className="text-xs text-gray-400">Choose samples, choose diagrams and indices, and get an interpretation. Classification diagrams assume fresh igneous rocks.</p>
         <div className="ml-auto flex gap-3 text-xs">

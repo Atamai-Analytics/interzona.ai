@@ -575,7 +575,7 @@ export function GeostatApp() {
   return (
     <div className="min-h-dvh bg-gray-950 text-gray-100">
       <header className="flex flex-wrap items-center gap-3 border-b border-gray-800 px-4 py-3">
-        <Link href="/" className="text-sm text-gray-400 hover:text-gray-200">← Assistant</Link>
+        <Link href="/" className="text-sm text-gray-400 hover:text-gray-200">← Platform</Link>
         <h1 className="text-lg font-semibold">Geostatistics</h1>
         <p className="text-xs text-gray-400">Grid one survey of soil, till or lake-sediment samples by kriging or inverse distance, with the variogram, error map and cross-validation.</p>
         <div className="ml-auto flex gap-3 text-xs">

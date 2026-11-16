@@ -54,7 +54,7 @@ function assistantMarkdown(m: Message): string {
 
 export function toMarkdown(c: Conversation): string {
   const when = new Date(c.updatedAt).toLocaleString("en-GB", { dateStyle: "long", timeStyle: "short" });
-  const out: string[] = [`# ${c.title}`, "", `_Critical Minerals AI Assistant · ${when}_`, ""];
+  const out: string[] = [`# ${c.title}`, "", `_Critical Minerals AI Platform · ${when}_`, ""];
   for (const m of c.messages) {
     if (m.role === "user") out.push("## Question", "", m.content.trim(), "");
     else out.push("## Answer", "", assistantMarkdown(m), "");

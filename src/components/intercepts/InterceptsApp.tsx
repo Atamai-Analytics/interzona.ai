@@ -301,7 +301,7 @@ export function InterceptsApp() {
           <p className="text-xs text-gray-400">Significant intercepts from downhole assays: cut-off grade, minimum width, internal dilution, &quot;including&quot; and metal equivalent. It calculates in your browser; an uploaded file is not sent to the server.</p>
         </div>
         <Link href="/tools/multivariate" className="hidden shrink-0 text-xs text-gray-300 underline sm:block">Multivariate tools</Link>
-        <Link href="/" className="shrink-0 text-xs text-gray-300 underline">← Assistant</Link>
+        <Link href="/" className="shrink-0 text-xs text-gray-300 underline">← Platform</Link>
       </header>
 
       <main className="space-y-4 p-4">

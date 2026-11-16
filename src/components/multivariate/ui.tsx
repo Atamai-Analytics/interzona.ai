@@ -2,7 +2,7 @@
 
 // Small form controls, the data grid and the data policy (credits and the GEUS lock) shared by the Multivariate tools tabs.
 import { createContext, useContext } from "react";
-import { csvWithCredits } from "@/lib/csv";
+import { capRows, csvWithCredits } from "@/lib/csv";
 import { toCsv, type Cell } from "@/lib/dimred/math";
 
 /** Who to credit for the loaded data, and whether its sample-level values are locked (Greenland/GEUS: plots and statistics only). */
@@ -13,7 +13,11 @@ export const LOCKED_NOTE = "Switched off for this selection: it includes Greenla
 
 /** CSV download; database extracts carry the publishers' credits, as their licences require. */
 export function downloadCsv(name: string, columns: string[], rows: Cell[][], credits: string[]) {
-  downloadText(name, credits.length ? csvWithCredits(columns, rows, credits) : toCsv(columns, rows));
+  if (credits.length) return downloadText(name, csvWithCredits(columns, rows, credits));
+  const capped = capRows(rows); // csvWithCredits caps its own rows
+  downloadText(name, toCsv(columns, capped.rows) + (capped.note ? `
+"${capped.note}"
+` : ""));
 }
 
 /** Small credit line for charts drawn from database extracts (also printed into their PNGs). */

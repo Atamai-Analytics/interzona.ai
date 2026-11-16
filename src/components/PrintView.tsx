@@ -49,7 +49,7 @@ export function PrintView({ conv }: { conv: Conversation }) {
   return (
     <div className="bg-white p-6 text-sm leading-relaxed text-black [&_table]:my-2 [&_table]:border-collapse [&_td]:border [&_td]:border-gray-400 [&_td]:px-2 [&_td]:py-1 [&_th]:border [&_th]:border-gray-400 [&_th]:bg-gray-100 [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-2 [&_h1]:mb-1 [&_h1]:text-xl [&_h1]:font-semibold [&_h2]:mt-3 [&_h2]:font-semibold [&_h3]:mt-2 [&_h3]:font-semibold">
       <h1>{conv.title}</h1>
-      <p className="text-xs text-gray-500">Critical Minerals AI Assistant · {when}</p>
+      <p className="text-xs text-gray-500">Critical Minerals AI Platform · {when}</p>
       {conv.messages.map((m, i) =>
         m.role === "user" ? (
           <div key={i} className="mt-4 break-inside-avoid rounded border border-gray-300 bg-gray-50 px-3 py-2">

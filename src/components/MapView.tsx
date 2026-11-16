@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { MapData } from "@/lib/types";
 import { addBaseLayer } from "@/lib/leafletBase";
 import "leaflet/dist/leaflet.css";
-import { csvWithCredits } from "@/lib/csv";
+import { MAX_EXPORT_ROWS, csvWithCredits } from "@/lib/csv";
 
 // Group colours: the three anomaly classes get fixed, meaningful colours; any other group takes the next palette colour.
 const FIXED: Record<string, string> = {
@@ -111,7 +111,7 @@ export default function MapView({ map, credits = [], light = false }: { map: Map
       </div>
       {map.note && <p className={`mt-1 max-w-[640px] text-[11px] ${t.note}`}>{map.note}</p>}
       <button onClick={download} className={`mt-2 rounded border px-2 py-1 text-xs ${t.btn}`}>
-        ⬇ Download places (CSV, {map.points.length} rows)
+        ⬇ Download places (CSV, {map.points.length > MAX_EXPORT_ROWS ? `first ${MAX_EXPORT_ROWS} of ${map.points.length}` : map.points.length} rows)
       </button>
     </div>
   );

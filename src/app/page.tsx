@@ -11,7 +11,7 @@ import { chartLayout, fmtValue, SERIES_COLORS, W, H } from "@/lib/chart";
 import { deleteConversation, exportAll, getConversation, importAll, listConversations, renameConversation, saveConversation } from "@/lib/store";
 import { downloadText, slug, toMarkdown } from "@/lib/export";
 import { DEMO_CARDS } from "@/lib/demo-cards";
-import { csvWithCredits } from "@/lib/csv";
+import { MAX_EXPORT_ROWS, csvWithCredits } from "@/lib/csv";
 import { IntroPanel } from "@/components/IntroPanel";
 import { FeedbackBar } from "@/components/FeedbackBar";
 import { ShareAnswer } from "@/components/ShareAnswer";
@@ -173,7 +173,7 @@ function DatasetView({ ds, credits }: { ds: Dataset; credits: string[] }) {
         onClick={() => downloadCsv(ds.title, ds.columns, ds.rows, credits)}
         className="mt-2 rounded border border-gray-600 px-2 py-1 text-xs text-gray-300 hover:border-blue-500 hover:text-white"
       >
-        ⬇ Download {ds.chart ? "data" : "table"} (CSV, {ds.rows.length.toLocaleString("en-US")} rows)
+        ⬇ Download {ds.chart ? "data" : "table"} (CSV, {ds.rows.length > MAX_EXPORT_ROWS ? `first ${MAX_EXPORT_ROWS} of ${ds.rows.length.toLocaleString("en-US")}` : ds.rows.length.toLocaleString("en-US")} rows)
       </button>
     </div>
   );
@@ -809,7 +809,7 @@ export default function Home() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/interzona-mark.png" alt="Interzona" width={56} height={56} className="h-9 w-9 md:h-14 md:w-14 shrink-0 select-none" />
         <div className="min-w-0 flex-1">
-          <h1 className="text-base md:text-xl font-semibold leading-tight">Critical Minerals AI Assistant</h1>
+          <h1 className="text-base md:text-xl font-semibold leading-tight">Critical Minerals AI Platform</h1>
           <p className="hidden md:block text-xs text-gray-400">
             Ask about mineral deposits, geochemistry and exploration targets, company financials, commodity prices and exchange rates, and the research, policy and industry literature — with analyses, charts and sources.
           </p>

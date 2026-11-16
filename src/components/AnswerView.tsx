@@ -139,7 +139,7 @@ export function AnswerView({ a }: { a: SharedAnswer }) {
       <header className="flex flex-col md:flex-row md:items-end justify-between gap-2 md:gap-4 border-b-2 border-gray-900 pb-2">
         <h1 className="text-xl font-semibold tracking-tight">Shared answer</h1>
         <div className="md:text-right text-[11px] text-gray-500">
-          <div className="font-semibold text-gray-700">Interzona · Critical Minerals AI Assistant</div>
+          <div className="font-semibold text-gray-700">Interzona · Critical Minerals AI Platform</div>
           <div>Answered {made}</div>
           {a.sharedUntil && <div>Shared link valid until {a.sharedUntil}</div>}
         </div>

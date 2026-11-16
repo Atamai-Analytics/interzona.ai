@@ -1,0 +1,41 @@
+{
+  "version": "2026-11-16",
+  "notes": "Fresh checks for the Yukon Geological Survey RGS stream sediments (YUKON_YGS_RGS) loaded 16 Nov 2026, which superseded ~28,900 CDoGS Yukon copies. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-yukon-what",
+      "cat": "geochem",
+      "q": "What stream sediment geochemistry do you have for the Yukon?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Describes the Yukon Geological Survey regional stream-sediment compilation (YUKON_YGS_RGS): about 31,000 stream sediments collected 1976-2006 across Yukon, with original AAS / INAA / fire-assay results and an aqua regia ICP-MS reanalysis of about 24,000 samples (around 50 elements). Mentions that aqua regia is a partial digestion or that methods should be compared like with like. Credits the Yukon Geological Survey / Open Government Licence - Yukon. Must not describe the Yukon stream data only as CDoGS or double-count CDoGS and YGS samples."
+    },
+    {
+      "id": "fresh-yukon-lithium",
+      "cat": "geochem",
+      "q": "Where are the highest lithium values in Yukon stream sediments?",
+      "expect": {
+        "tools_any": [
+          "run_sql",
+          "find_geochemical_anomalies"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Uses YUKON_YGS_RGS lithium (ICP-MS, ppm; the maximum in the data is about 106 ppm) and lists the highest values or anomalous clusters with locations (coordinates, NTS sheets or place names) and sample counts from the data. Notes the values are aqua regia (partial) ICP-MS on stream sediments. Credits the Yukon Geological Survey. Does not invent deposits or values above the data."
+    },
+    {
+      "id": "fresh-yukon-tungsten",
+      "cat": "geochem",
+      "q": "Run an anomaly screen for tungsten in Yukon stream sediments. Are there new leads away from known occurrences?",
+      "expect": {
+        "tools_any": [
+          "find_geochemical_anomalies"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Runs the anomaly screen on the Yukon stream sediments (YUKON_YGS_RGS) for W, reports anomalous cells or samples with locations and values, and groups them into new leads versus those near known occurrences. Should say the Yukon occurrence catalogue in the database is thin (few catalogued occurrences), so 'new lead' may just mean an occurrence that is not loaded. Credits the Yukon Geological Survey. Does not invent values."
+    }
+  ]
+}

@@ -813,7 +813,7 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   plus 190,035 diamond drill holes with 1.15M log intervals and 337,966 reported mineralised intercepts) and Saskatchewan, Canada
   ('CANADA_SK_SGS', 19,739 till and lake-sediment samples, 567,594 results, plus 33,490 drill-hole collars) and Québec sediment, soil and till
   (SIGÉOM, 'CANADA_QC_SIGEOM_SED', 522,453 samples, 20.52M results) and federal Canadian surveys across all provinces and territories
-  (Natural Resources Canada CDoGS, 'CANADA_NRCAN_CDOGS', 233,875 samples, 8.42M results) and Athabasca Basin uranium drill core (GSC Open
+  (Natural Resources Canada CDoGS, 'CANADA_NRCAN_CDOGS', 233,875 samples (204,976 active), 8.42M results; Yukon stream sediments in 'YUKON_YGS_RGS', 31,276) and Athabasca Basin uranium drill core (GSC Open
   File 7792, 'CANADA_ATHABASCA_OF7792', 40,373 samples, 1.84M results) and Swedish till, sediment and soil (SGU regional sampling,
   'SWEDEN_SGU_MARKGEOKEMI', 61,290 samples, 2.98M active results) and Swedish stream plants (SGU biogeochemistry, 'SWEDEN_SGU_BIOGEOKEMI',
   37,423 samples, 1.05M results) and Germany (GFZ Erzgebirge-Vogtland granites, 'GERMANY_GFZ_ERZGEBIRGE', loaded 10 Nov 2026: 309 whole-rock
@@ -1030,10 +1030,10 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   CANADA-WIDE FEDERAL SURVEYS ('CANADA_NRCAN_CDOGS', Open Government Licence - Canada, credit Natural Resources Canada, Geological Survey of
   Canada, Canadian Database of Geochemical Surveys (CDoGS)): 233,875 samples, 8.42M results from 1970s-2010s Geological Survey of Canada surveys,
   mostly the National Geochemical Reconnaissance (NGR): stream sediment 87,212, lake sediment 85,455, till 44,734, rock 7,529, soil 6,103,
-  other Quaternary sediment 2,008, heavy-mineral concentrates 523, drill core 311 (these add up to 233,875). By survey province (approximate): Yukon about 38,000 (almost all stream
-  sediment), British Columbia about 35,000 (stream sediment, some till), Manitoba about 27,000 (lake sediment, till), Newfoundland and
+  other Quaternary sediment 2,008, heavy-mineral concentrates 523, drill core 311 (these add up to 233,875; 28,899 Yukon stream sediments are now inactive, see YUKON below). By survey province (approximate): Yukon about 38,000 (almost all stream
+  sediment, now mostly superseded by YUKON_YGS_RGS), British Columbia about 35,000 (stream sediment, some till), Manitoba about 27,000 (lake sediment, till), Newfoundland and
   Labrador about 24,000 (lake sediment), Ontario about 22,000 (lake sediment), New Brunswick about 22,000 (stream sediment, till), Nunavut
-  about 21,000 (till, lake sediment), Northwest Territories, Alberta and border surveys the rest. This is the ONLY geochemistry for BC, Yukon,
+  about 21,000 (till, lake sediment), Northwest Territories, Alberta and border surveys the rest. This is the ONLY geochemistry for BC,
   Ontario, Newfoundland and Labrador, Manitoba, New Brunswick, Nunavut and the NWT: the provincial databases (BC RGS / MINFILE, Ontario OGS,
   NL, Nunavut) are NOT loaded. Only federal surveys are loaded (CDoGS surveys run by provincial agencies, companies or the USGS are left
   out), and samples already loaded through Saskatchewan's GeoAtlas or Québec SIGÉOM were skipped. Left out: water, soil gas, vegetation, lab
@@ -1045,6 +1045,23 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   sediments include DC-arc emission spectrography (CDOGS-DCARC-*, semi-quantitative, lowest priority) and portable XRF (CDOGS-PXRF-*).
   analytical_results.method_name is the CDoGS technique and digestion, result_comment the CDoGS method id. Result QC: 27,089 exact
   duplicates inactive; 773 impossible values (mostly Al reported at 55-91 %, i.e. mislabelled Al2O3) and 39 low oxide totals SUSPECT.
+  YUKON STREAM SEDIMENTS: since 16 Nov 2026 the ~28,900 CDoGS Yukon NGR stream-sediment samples that are also in the Yukon Geological Survey
+  compilation are INACTIVE (is_active = false) and the Yukon source below is used instead; CDoGS field duplicates, heavy-mineral fractions and
+  other Yukon CDoGS sample types stay active. For Yukon stream sediments use 'YUKON_YGS_RGS'.
+  YUKON ('YUKON_YGS_RGS', Open Government Licence - Yukon, credit "Yukon Geological Survey, 2020. Regional Geochemical Surveys (RGS).
+  Contains information licensed under the Open Government Licence - Yukon."): the Yukon Geological Survey regional stream-sediment
+  compilation (Nov 2020), 31,276 stream sediments (SED_STREAM, -80 mesh <0.177 mm) collected 1976-2006 across all of Yukon, one sample
+  per site. Packages: YGS_RGS_ICPMS = aqua regia ICP-MS REANALYSIS of 24,349 archived samples (2011-2016, ~53 elements incl. Li, Be, Nb,
+  Ta, Ge, In, Re, Te, Pd, Pt, REE; PARTIAL, _p; Al, Ba, Cr, Fe, P, Sn, Ti, Y, Zr under-reported by aqua regia, Au by ICP-MS imprecise);
+  YGS_RGS_INAA (INAA / FA-NA, TOTAL _t: Au, As, Sb, W, REE, Th, U, Ba, Cs, Hf, Ta and others); YGS_RGS_FAAAS (Au fire assay AAS, total);
+  YGS_RGS_DNC (U delayed neutron counting); YGS_RGS_FUS (F fusion-ISE, W colorimetric, Sn fusion); YGS_RGS_AAS (original 1976-2000s AAS
+  after Lefort aqua regia / hot nitric, partial, superseded by ICP-MS where both exist) and YGS_RGS_HGAAS (As, Sb hydride, Hg cold vapour).
+  The comment names the original survey ('original survey GSC OF 2175' etc.), the ICP-MS reanalysis Open File, the NTS sheet and the survey
+  year (no sample dates). Negative source values and zeros in the old columns are BELOW_DL_QUALIFIED (zeros get the column's lowest
+  reported value as the limit). Compare like with like (one method; ideally one original survey).
+  The Yukon occurrence catalogue is THIN (Yukon MINFILE is not loaded; only MRDS and NRCan project points, so just 102 Yukon samples lie
+  within 2 km of a catalogued occurrence): when screening Yukon, say that a 'new lead' may simply be a known Yukon occurrence that is not
+  in the database.
   SWEDISH TILL, SEDIMENT AND SOIL ('SWEDEN_SGU_MARKGEOKEMI', CC0, credit Geological Survey of Sweden (SGU)): 61,290 samples from SGU's regional
   sampling 1983-2024 and the older NSG/SGAB state exploration surveys: till 58,208 (TILL_SAMPLE, mostly the <0.063 mm fine fraction), sediment
   2,549, surface soil 533 (<2 mm); all sample_context 'SURFACE'. One sample per SGU site id with results from several methods: packages
@@ -1076,7 +1093,8 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   cite Wu, Fang and Ji 2023; AUSTRALIA_VIC_GSV_GEOCHEMISTRY, CC BY 4.0, credit State of Victoria / DEECA;
   AUSTRALIA_TAS_MRT (samples, results and the drill holes), CC BY 3.0 AU, credit Mineral Resources Tasmania / State of Tasmania;
   CANADA_NRCAN_CDOGS (federal geochemical surveys), Open Government Licence - Canada, credit Natural Resources Canada, Geological Survey of
-  Canada (CDoGS); CANADA_ATHABASCA_OF7792 (Athabasca uranium drill core), Open Government Licence - Canada, credit Wright, Potter and Comeau
+  Canada (CDoGS); YUKON_YGS_RGS (Yukon stream sediments), Open Government Licence - Yukon, credit "Yukon Geological Survey, 2020.
+  Contains information licensed under the Open Government Licence - Yukon."; CANADA_ATHABASCA_OF7792 (Athabasca uranium drill core), Open Government Licence - Canada, credit Wright, Potter and Comeau
   (2015), Geological Survey of Canada Open File 7792;
   CANADA_QC_SIGEOM (rock samples, results, drill holes, logs, intercepts) and CANADA_QC_SIGEOM_SED (sediment, soil, till), CC BY 4.0, credit Ministère des Ressources naturelles et des Forêts,
   Québec (SIGÉOM); CANADA_SK_SGS (till and lake-sediment samples and the Saskatchewan drill holes), Government of Saskatchewan Standard
@@ -1188,7 +1206,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   ARGENTINA_SEGEMAR (1,782,202 active), 55,098 in USA_USGS_NGDB (34,058,618 active; includes 13,643 + 6,251 exact duplicates deactivated by QC on 13 and 14 Nov 2026) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
   CANADA_NRCAN_CDOGS 27,089 (exact duplicates); CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
-  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY, MAURITANIA_USGS_PRISM, AFGHANISTAN_USGS_BASELINE, EUROPE_GEMAS, IRELAND_GSI_TELLUS, NI_GSNI_TELLUS and IRELAND_GSI_MPM_HISTORIC have none (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
+  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY, MAURITANIA_USGS_PRISM, AFGHANISTAN_USGS_BASELINE, EUROPE_GEMAS, IRELAND_GSI_TELLUS, NI_GSNI_TELLUS, IRELAND_GSI_MPM_HISTORIC and YUKON_YGS_RGS have none (Yukon: 11,114 repeated F and Au results inactive) (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
 geochem.result_classifications: result_id, source_system, result_status (DETECTED, BELOW_DL_QUALIFIED,
   BELOW_DL_CERTAIN, BELOW_DL_PROBABLE, ABOVE_UDL, NULL_RESULT, SUSPECT, SENTINEL), dl_value, use_in_statistics.
   Complete for every source (join on result_id AND source_system). For statistics use
@@ -1329,9 +1347,9 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
-geochem.sample_chemistry_wide: one row per sample for ALL twenty geochemical datasets (IRELAND_GSI_MPM_HISTORIC 352,605 (NW Midlands historic soils, mostly cu_p, pb_p, zn_p); IRELAND_GSI_TELLUS 33,788 (Tellus topsoils, stream sediments, SE rocks; aqua regia _p and XRF _t); NI_GSNI_TELLUS 13,743 (Northern Ireland Tellus soils); GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL twenty-one geochemical datasets (YUKON_YGS_RGS 31,276 (Yukon stream sediments; aqua regia ICP-MS _p for 24,349, INAA / fire assay / DNC _t); IRELAND_GSI_MPM_HISTORIC 352,605 (NW Midlands historic soils, mostly cu_p, pb_p, zn_p); IRELAND_GSI_TELLUS 33,788 (Tellus topsoils, stream sediments, SE rocks; aqua regia _p and XRF _t); NI_GSNI_TELLUS 13,743 (Northern Ireland Tellus soils); GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 965,956 (rock, sediment, soil and heavy-mineral concentrates), USA_NURE_HSSR 386,075 (NURE stream/lake sediment and soil; total columns _t), NORWAY_NGU_GEOCHEMISTRY 10,764 (NGU soils and till, aqua regia: partial columns _p), MAURITANIA_USGS_PRISM 29,620 (PRISM soils, regolith, stream sediment and rock; compiled values), AFGHANISTAN_USGS_BASELINE 303 (rock, sediment, soil and mine waste around Aynak, Balkhab, Hajigak and Nuqra Khana), EUROPE_GEMAS 4,131 (European agricultural and grazing-land soils, 1 site per 2,500 km2),
-  AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 233,875; 225 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
+  AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 204,976 active (233,875 loaded; 28,899 Yukon copies inactive); 225 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/
   lithology_local, sample_date, lat, lon, geog, n_values, bdl_codes (text[] of analytes below detection)
   plus one column per analyte AND basis: <analyte_code>_t = total or no-digestion method (XRF, fusion

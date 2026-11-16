@@ -30,6 +30,7 @@ const DATASET_NAMES: Record<string, string> = {
   EUROPE_GEMAS: "Europe (GEMAS soils)",
   IRELAND_GSI_TELLUS: "Ireland (GSI Tellus soils, stream sediment, rock)",
   NI_GSNI_TELLUS: "Northern Ireland (GSNI Tellus soils)",
+  YUKON_YGS_RGS: "Yukon (YGS regional stream sediments)",
   IRELAND_GSI_MPM_HISTORIC: "Ireland NW Midlands (GSI MPM historic soils, mostly Cu-Pb-Zn)",
   SPAIN_IGME_GEOCHEMISTRY: "Spain (IGME, Li, Cu and W so far)",
 };

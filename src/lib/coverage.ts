@@ -44,7 +44,7 @@ export async function getCoverage(): Promise<Coverage> {
     const a = await one(`select
         (select count(*) from core.occurrences where is_active) occurrences,
         (select count(distinct country_name) from core.occurrences where is_active and country_name is not null) countries,
-        (select count(*) from geochem.samples) samples,
+        (select count(*) from geochem.samples where is_active) samples,
         (select count(*) from docs.documents) documents,
         (select count(*) from core.projects) projects,
         (select count(*) from core.projects p left join core.occurrences o on o.occurrence_id = p.occurrence_id and o.is_active

@@ -57,6 +57,7 @@ export const DATASET_NAMES: Record<string, string> = {
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",
   AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
   AUSTRALIA_SA_SARIG: "South Australia (SARIG surface samples: soil, calcrete, rock, stream sediment; mostly company exploration)",
+  AUSTRALIA_NSW_GSNSW: "New South Wales (GSNSW surface samples: soil, stream sediment, rock, rock chips; mostly company exploration, no dates)",
   CANADA_QC_SIGEOM: "Québec, Canada (SIGÉOM rock)",
   CANADA_QC_SIGEOM_SED: "Québec, Canada (SIGÉOM sediment, soil, till)",
   CANADA_NRCAN_CDOGS: "Canada (NRCan CDoGS federal surveys)",

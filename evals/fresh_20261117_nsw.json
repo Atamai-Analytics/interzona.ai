@@ -1,0 +1,41 @@
+{
+  "version": "2026-11-17",
+  "notes": "Fresh checks for the New South Wales GSNSW surface samples (AUSTRALIA_NSW_GSNSW) rebuilt from source and loaded 17 Nov 2026. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-nsw-what",
+      "cat": "geochem",
+      "q": "What geochemistry do you have for New South Wales?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Describes the GSNSW surface samples (AUSTRALIA_NSW_GSNSW): about 1.87 million surface samples (soil, stream sediment, rock, rock chips, lag) with about 17 million results, mostly exploration-company data released through the Geological Survey of NSW, with no sample dates, and says methods are mixed / many are generic or unknown. Credits the State of New South Wales (Geological Survey of NSW), CC BY 4.0. May mention other sources with NSW samples. Does not invent counts."
+    },
+    {
+      "id": "fresh-nsw-copper-streams",
+      "cat": "geochem",
+      "q": "Where are the highest copper values in New South Wales stream sediment samples?",
+      "expect": {
+        "tools_any": [
+          "run_sql",
+          "find_geochemical_anomalies"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Uses AUSTRALIA_NSW_GSNSW stream-sediment samples, gives the highest Cu values with units and locations (coordinates or place / region names) and ideally the method or report, from the data. Notes that methods differ (compare like with like; some methods are unknown) and does not mix stream sediments with soils or rocks. Credits the Geological Survey of NSW. Does not invent values."
+    },
+    {
+      "id": "fresh-nsw-reports",
+      "cat": "geochem",
+      "q": "Which GSNSW company reports contributed the most surface geochemistry samples in New South Wales?",
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Queries AUSTRALIA_NSW_GSNSW sample comments ('GSNSW report (RPT_ID) <n>') and lists the top reports by sample count from the data (the largest is report 424 with about 28,000 samples; counts must be plausible and sum to no more than about 1.87 million). May say company names are not stored. Credits the Geological Survey of NSW. Does not invent report numbers or counts."
+    }
+  ]
+}

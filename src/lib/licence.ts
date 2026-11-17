@@ -77,6 +77,7 @@ const CREDITS: [RegExp, string][] = [
   [/norway_ngu|ngu_minres/i, "Contains data under the Norwegian licence for Open Government data (NLOD) made available by the Geological Survey of Norway (NGU)"],
   [/usa_nure_hssr/i, "U.S. Geological Survey, NURE HSSR data (Smith 1997, OFR 97-492), from the U.S. Department of Energy NURE program"],
   [/australia_vic|victoria/i, "Geological Survey of Victoria, State of Victoria (DEECA), CC BY 4.0"],
+  [/australia_nsw_gsnsw|gsnsw/i, "(c) State of New South Wales (Geological Survey of NSW), licensed under CC BY 4.0"],
   [/australia_sa_sarig|sarig/i, "Contains SARIG data (Geological Survey of South Australia, Department for Energy and Mining), Government of South Australia, licensed under CC BY 4.0"],
   [/australia_tas|tasmania|drilling\./i, "Mineral Resources Tasmania, Department of State Growth (State of Tasmania), bulk data package BDR2023_01, CC BY 3.0 AU"],
   [/global_deposit_geochem_ga|sample_deposit_context/i, "Geoscience Australia / Critical Minerals Mapping Initiative with the Geological Survey of Canada and the USGS, Critical Minerals in Ores - geochemistry database (CC BY 4.0)"],

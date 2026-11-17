@@ -1,0 +1,41 @@
+{
+  "version": "2026-11-16",
+  "notes": "Fresh checks for the South Australia SARIG surface samples (AUSTRALIA_SA_SARIG, phase 1: surface lab assays only) loaded 16 Nov 2026. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-sa-what",
+      "cat": "geochem",
+      "q": "What geochemistry do you have for South Australia?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Describes the SARIG surface samples (AUSTRALIA_SA_SARIG): about 480,000 surface samples with laboratory assays (soil including calcrete, rock, stream sediment, lag, vegetation), about 8 million results, mostly exploration-company data from the 1960s-2020s, and says drill-hole samples are not loaded yet. Credits the Geological Survey of South Australia / SARIG (CC BY 4.0). May mention other sources with SA samples. Does not invent counts."
+    },
+    {
+      "id": "fresh-sa-calcrete-gold",
+      "cat": "geochem",
+      "q": "Where are the highest gold values in South Australian calcrete samples?",
+      "expect": {
+        "tools_any": [
+          "run_sql",
+          "find_geochemical_anomalies"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Uses AUSTRALIA_SA_SARIG samples whose sample_type_local marks calcrete, gives the highest Au values (ppb or ppm, with units) with locations (coordinates or place / region names) and ideally the company or method, from the data. Notes that methods / labs differ (compare like with like) and that calcrete gold values are low-level (ppb) anomaly indicators. Credits SARIG / Geological Survey of South Australia. Does not invent values."
+    },
+    {
+      "id": "fresh-sa-companies",
+      "cat": "geochem",
+      "q": "Which exploration companies collected the most surface geochemistry samples in South Australia?",
+      "expect": {
+        "tools_any": [
+          "run_sql"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Queries AUSTRALIA_SA_SARIG sample comments ('collected by <company>') and lists the top companies with sample counts from the data (counts must be plausible and sum to no more than about 480,000). Credits SARIG / Geological Survey of South Australia. Does not invent companies or counts."
+    }
+  ]
+}

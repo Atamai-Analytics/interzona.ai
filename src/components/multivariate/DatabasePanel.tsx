@@ -12,6 +12,7 @@ const DATASET_NAMES: Record<string, string> = {
   ARGENTINA_SEGEMAR: "Argentina (SEGEMAR)",
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",
   AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
+  AUSTRALIA_SA_SARIG: "South Australia (SARIG surface samples)",
   CANADA_QC_SIGEOM: "Québec, Canada (SIGÉOM rock)",
   CANADA_QC_SIGEOM_SED: "Québec, Canada (SIGÉOM sediment, soil, till)",
   CANADA_NRCAN_CDOGS: "Canada (NRCan CDoGS federal surveys)",

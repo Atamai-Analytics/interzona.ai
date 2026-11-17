@@ -28,6 +28,7 @@ const SURVEYS: Record<string, string> = {
   IRELAND_GSI_MPM_HISTORIC: "Ireland NW Midlands (GSI MPM historic soils)",
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY: "Victoria, Australia (GSV)",
   AUSTRALIA_TAS_MRT: "Tasmania, Australia (MRT)",
+  AUSTRALIA_SA_SARIG: "South Australia (SARIG surface samples)",
   CANADA_QC_SIGEOM: "Québec, Canada (SIGÉOM rock)",
   CANADA_QC_SIGEOM_SED: "Québec, Canada (SIGÉOM sediment, soil, till)",
   CANADA_NRCAN_CDOGS: "Canada (NRCan CDoGS federal surveys)",

@@ -827,7 +827,8 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   and Victoria, Australia (Geological Survey of Victoria geochemistry
   collection, 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY', 156,331 samples, 778,219 active results, 75 analytes) and Tasmania, Australia
   (Mineral Resources Tasmania bulk data package, 'AUSTRALIA_TAS_MRT', 383,939 samples, 3.85M results, 106 analytes, plus 34,871 drill
-  holes in the drilling schema) and Québec, Canada (SIGÉOM rock geochemistry, 'CANADA_QC_SIGEOM', 587,000 rock samples, 18.13M results,
+  holes in the drilling schema) and South Australia (SARIG, 'AUSTRALIA_SA_SARIG', loaded 16 Nov 2026: surface samples with laboratory
+  assays only - see SOUTH AUSTRALIA below) and Québec, Canada (SIGÉOM rock geochemistry, 'CANADA_QC_SIGEOM', 587,000 rock samples, 18.13M results,
   plus 190,035 diamond drill holes with 1.15M log intervals and 337,966 reported mineralised intercepts) and Saskatchewan, Canada
   ('CANADA_SK_SGS', 19,739 till and lake-sediment samples, 567,594 results, plus 33,490 drill-hole collars) and Québec sediment, soil and till
   (SIGÉOM, 'CANADA_QC_SIGEOM_SED', 522,453 samples, 20.52M results) and federal Canadian surveys across all provinces and territories
@@ -875,6 +876,19 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   answer) ONLY (geochem.samples also holds 2,519 age-only points, source_system
   'SWEDEN_SGU_BEDROCK_AGE', and 1,053 bare sample points from the Wu zircon database, source_system
   'GLOBAL_ZIRCON_WU', none of which has results; do not count them as geochemical samples).
+  SOUTH AUSTRALIA ('AUSTRALIA_SA_SARIG', CC BY 4.0, credit "Contains SARIG data (Geological Survey of South Australia, Department for
+  Energy and Mining), Government of South Australia, licensed under CC BY 4.0"; loaded 16 Nov 2026): the SURFACE samples of SARIG's
+  rock-sample chemistry export (July 2025) that have LABORATORY assays - 480,928 samples, about 8.0M results, 1960s-2020s, mostly
+  exploration-company data submitted to the state (company in comments: 'collected by <company>'). Media (sample_type_local says which):
+  soil ~395,000 (SOIL_SAMPLE; includes CALCRETE - pedogenic carbonate, the standard South Australian gold / regolith sampling medium,
+  sample_type_local 'SARIG calcrete ...' - and loam / BLEG soils), rock 32,000 (ROCK_SAMPLE / outcrop / float), stream sediment 26,905,
+  lag and gravel 12,000 (SEDIMENT_SAMPLE), vegetation 7,601 (VEGETATION_SAMPLE, plant tissue - compare only with plants), auger,
+  channel, trench, lake sediment. DRILL-HOLE samples (~54M results) are NOT loaded yet, and company portable / handheld XRF readings were
+  left out. Packages 'SA-<digestion>-<finish>' group the many laboratory method codes by family (AR aqua regia, 4A four-acid, 3A
+  three/two-acid, FUS fusion, FA fire assay, MMI, TL TerraLeach, CN cyanide/BLEG, ENZ enzyme, WATER, MW microwave, NONE e.g. XRF, UNK
+  method not recorded); analytical_results.laboratory = the lab (AMDEL, ALS, Genalysis ...), result_comment = 'SARIG method <code>:
+  <description>'. Partial leaches (MMI, TerraLeach, enzyme, BLEG) give very different numbers from total methods: never mix families,
+  and compare within one company survey where possible. Below-detection '<x' values are BELOW_DL_QUALIFIED.
   ALASKA ('ALASKA_AGDB3', US public domain; credit "Granitto and others, 2019, Alaska Geochemical Database Version 3.0 (AGDB3), U.S.
   Geological Survey data release, doi 10.5066/P98NHRAD"; loaded 16 Nov 2026): the Alaska samples of USGS's AGDB3 that were NOT already
   loaded through USA_USGS_NGDB or USA_NURE_HSSR - 86,274 samples, about 2.8M results, collected 1938-2017 by the Alaska Division of Geological

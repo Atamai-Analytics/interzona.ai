@@ -6,7 +6,7 @@ import { ELEMENTS, PRICE_UNITS, buildSegments, compositeHole, fromPpm, gxlLabel,
 // Drill intercepts: find and rank them.
 //  - REPORTED: the mineralised intercepts the source itself reported (drilling.intercepts; Québec SIGÉOM only so far), converted to one reporting form per element
 //    (e.g. lithium always as % Li2O, gold as g/t) so they can be ranked together, then ranked by grade x length (or grade, or length).
-//  - COMPOSITE: significant intercepts calculated from the analysed downhole sample intervals (Tasmania MRT, Athabasca OF 7792), with the method of the
+//  - COMPOSITE: significant intercepts calculated from the analysed downhole sample intervals (Tasmania MRT, South Australia SARIG, Athabasca OF 7792, SGU Sweden), with the method of the
 //    Grade-Width Intercepts (OGWI) Shiny app: intervals at or above a cut-off grade are joined across low-grade or unsampled core as long as each run of
 //    internal dilution is no longer than a set length and the whole composite stays at or above the cut-off; composites shorter than a minimum width are dropped.
 //    Grades are length-weighted. Below-detection and unsampled core count as zero grade (conservative). Optional metal equivalent from prices and recoveries.
@@ -15,10 +15,11 @@ import { ELEMENTS, PRICE_UNITS, buildSegments, compositeHole, fromPpm, gxlLabel,
 type Out = { content: string; evidence?: Evidence[]; datasets?: Dataset[]; maps?: MapData[] };
 
 
-export const INTERCEPT_SOURCES = { reported: ["CANADA_QC_SIGEOM"], composite: ["AUSTRALIA_TAS_MRT", "CANADA_ATHABASCA_OF7792", "SWEDEN_SGU_LITHOGEOCHEMISTRY"] };
+export const INTERCEPT_SOURCES = { reported: ["CANADA_QC_SIGEOM"], composite: ["AUSTRALIA_TAS_MRT", "AUSTRALIA_SA_SARIG", "CANADA_ATHABASCA_OF7792", "SWEDEN_SGU_LITHOGEOCHEMISTRY"] };
 export const SOURCE_LABEL: Record<string, string> = {
   CANADA_QC_SIGEOM: "SIGÉOM (Québec Ministère des Ressources naturelles et des Forêts)",
   AUSTRALIA_TAS_MRT: "Mineral Resources Tasmania",
+  AUSTRALIA_SA_SARIG: "Geological Survey of South Australia (SARIG drill-hole assays)",
   CANADA_ATHABASCA_OF7792: "Geological Survey of Canada Open File 7792 (Athabasca)",
   SWEDEN_SGU_LITHOGEOCHEMISTRY: "Geological Survey of Sweden (SGU) lithogeochemistry, drill core",
 };

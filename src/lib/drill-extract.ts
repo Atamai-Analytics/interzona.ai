@@ -3,7 +3,7 @@ import { creditsForSource } from "@/lib/licence";
 import { ELEMENTS, fromPpm, resolveElement } from "@/lib/composite";
 import { INTERCEPT_SOURCES, SOURCE_LABEL, gradeSql } from "@/lib/intercepts";
 
-// Server side of the Drill intercepts page: find drill holes that have downhole assay intervals for an element (Tasmania MRT, Athabasca OF 7792)
+// Server side of the Drill intercepts page: find drill holes that have downhole assay intervals for an element (Tasmania MRT, South Australia SARIG, Athabasca OF 7792, SGU Sweden)
 // and load their intervals. The compositing itself runs in the browser (src/lib/composite.ts). Read-only role; every value that reaches SQL is a
 // whitelisted code, a number or an escaped search string.
 

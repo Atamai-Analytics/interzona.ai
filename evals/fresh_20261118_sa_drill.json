@@ -1,0 +1,40 @@
+{
+  "version": "2026-11-18",
+  "notes": "Fresh checks for the South Australia SARIG drill holes (AUSTRALIA_SA_SARIG phase 2, loaded 18 Nov 2026) and SA in drill_intercepts composite mode. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-sa-drill-what",
+      "cat": "drilling",
+      "q": "What drill hole data do you have for South Australia?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Says there are about 100,000 SARIG drill holes (100,578) with about 2.4 million assayed downhole intervals (about 50 million results), from SARIG (Geological Survey of South Australia). Mentions at least one limitation: positions are the first sampled interval (no collar table), no total depth / dates / surveys / logs / reported intercepts on the holes. Does not invent counts."
+    },
+    {
+      "id": "fresh-sa-cu-intercepts",
+      "cat": "drilling",
+      "q": "What are the best copper intercepts in South Australian drill holes above 1% Cu?",
+      "expect": {
+        "tools_any": [
+          "drill_intercepts"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Calls drill_intercepts in composite mode for AUSTRALIA_SA_SARIG (or all composite sources, clearly picking out South Australian holes) with a 1% Cu cut-off, and lists ranked intercepts with hole names, from-to depths or lengths and grades in % Cu (locations may be given in the table or on the map). States the parameters (cut-off, minimum width, internal dilution). Credits SARIG / Geological Survey of South Australia. Does not invent intercepts."
+    },
+    {
+      "id": "fresh-sa-au-intercepts-gawler",
+      "cat": "drilling",
+      "q": "Calculate gold intercepts above 1 g/t in South Australian drill holes and show the top 10.",
+      "expect": {
+        "tools_any": [
+          "drill_intercepts"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Calls drill_intercepts in composite mode for South Australia with a 1 g/t Au cut-off and lists up to 10 ranked intercepts with hole names, lengths and grades in g/t Au from the tool output (locations may be given in the table or on the map). The top intercepts must not be 100 m+ at tens of g/t Au from the Helix Resources LRC or OZ Minerals 2009-11 holes (source ppb-as-ppm errors fixed 18 Nov 2026). States the parameters used. If exceptional grades were left out of the ranking, says so. Does not invent intercepts."
+    }
+  ]
+}

@@ -828,7 +828,7 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   collection, 'AUSTRALIA_VIC_GSV_GEOCHEMISTRY', 156,331 samples, 778,219 active results, 75 analytes) and Tasmania, Australia
   (Mineral Resources Tasmania bulk data package, 'AUSTRALIA_TAS_MRT', 383,939 samples, 3.85M results, 106 analytes, plus 34,871 drill
   holes in the drilling schema) and South Australia (SARIG, 'AUSTRALIA_SA_SARIG', loaded 16 Nov 2026: surface samples with laboratory
-  assays only - see SOUTH AUSTRALIA below) and New South Wales (GSNSW, 'AUSTRALIA_NSW_GSNSW', loaded 17 Nov 2026: 1.87M surface
+  assays, plus from 18 Nov 2026 100,578 drill holes with 2.40M assayed downhole intervals - see SOUTH AUSTRALIA below) and New South Wales (GSNSW, 'AUSTRALIA_NSW_GSNSW', loaded 17 Nov 2026: 1.87M surface
   samples, 17.2M active results - see NEW SOUTH WALES below) and Québec, Canada (SIGÉOM rock geochemistry, 'CANADA_QC_SIGEOM', 587,000 rock samples, 18.13M results,
   plus 190,035 diamond drill holes with 1.15M log intervals and 337,966 reported mineralised intercepts) and Saskatchewan, Canada
   ('CANADA_SK_SGS', 19,739 till and lake-sediment samples, 567,594 results, plus 33,490 drill-hole collars) and Québec sediment, soil and till
@@ -884,11 +884,24 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   soil ~395,000 (SOIL_SAMPLE; includes CALCRETE - pedogenic carbonate, the standard South Australian gold / regolith sampling medium,
   sample_type_local 'SARIG calcrete ...' - and loam / BLEG soils), rock 32,000 (ROCK_SAMPLE / outcrop / float), stream sediment 26,905,
   lag and gravel 12,000 (SEDIMENT_SAMPLE), vegetation 7,601 (VEGETATION_SAMPLE, plant tissue - compare only with plants), auger,
-  channel, trench, lake sediment. DRILL-HOLE samples (~54M results) are NOT loaded yet, and company portable / handheld XRF readings were
-  left out. Packages 'SA-<digestion>-<finish>' group the many laboratory method codes by family (AR aqua regia, 4A four-acid, 3A
+  channel, trench, lake sediment. DRILL HOLES (loaded 18 Nov 2026, tag migration_sa_sarig_drill_20261118): 100,578 holes in
+  drilling.drillholes (source_hole_id = SARIG drillhole number, hole_name as published e.g. 'TRC 112') with 2,402,223 downhole interval
+  samples (sample_context 'DRILLHOLE_INTERVAL', drillhole_id, depth_from_m / depth_to_m; median interval 1 m) and 50.36M active results.
+  Sample types: drill cuttings / RC chips 1,345,229 (CHIPS_SAMPLE), core 485,142 (CORE_SAMPLE), half core 320,223 (CORE_HALF), quarter core
+  15,139, drilled interval of unspecified type / composites / pulps 228,722 (DRILL_SAMPLE), auger 4,687, aircore 2,184. SARIG publishes no
+  collar table in this export: the hole's lat / lon is the position of its FIRST sampled interval, total_depth_m is NULL (comments give
+  the deepest sampled interval), no dates on the hole (sample dates are on the samples), no surveys (treat holes as vertical), no logs, no
+  reported intercepts and no occurrence links on the holes - use a distance search for 'drilling at deposit X'. Most drill results are
+  total methods (four-acid ICP-MS 16.8M, four-acid ICP-OES 5.1M, fusion ICP-MS / XRF / ICP-OES 12.3M, XRF 3.6M). Company portable /
+  handheld XRF readings, SARIG log-derived values, duplicates and standards were left out. Packages 'SA-<digestion>-<finish>' group the many laboratory method codes by family (AR aqua regia, 4A four-acid, 3A
   three/two-acid, FUS fusion, FA fire assay, MMI, TL TerraLeach, CN cyanide/BLEG, ENZ enzyme, WATER, MW microwave, NONE e.g. XRF, UNK
-  method not recorded); analytical_results.laboratory = the lab (AMDEL, ALS, Genalysis ...), result_comment = 'SARIG method <code>:
-  <description>'. Partial leaches (MMI, TerraLeach, enzyme, BLEG) give very different numbers from total methods: never mix families,
+  method not recorded); the laboratory name is NOT kept (analytical_results.laboratory shows 'Unknown'), result_comment = 'SARIG method <code>:
+  <description>'. Method families follow the method's own description (18 Nov 2026 fix: 4AB/MS is four-acid; Au-TL43, Au-ST43/44 and
+  other aqua-regia gold methods are aqua regia, not fire assay). In sample_chemistry_wide Au, Pt and Pd come from a fire-assay package
+  first when the sample has one. Source unit fixes (18 Nov 2026): gold published as ppm that is really ppb is stored as ppb - 5,653 B/AAS results in 47 Helix
+  Resources holes (LRC..., whole numbers about 1,000x the other gold method on the same intervals) and 36,428 FA2 fire-assay results in
+  124 OZ Minerals holes of 2009-2011 (whole numbers, '<1' detection limit). Very high SA drill grades can still be
+  source errors: check the hole's other methods before quoting them. Partial leaches (MMI, TerraLeach, enzyme, BLEG) give very different numbers from total methods: never mix families,
   and compare within one company survey where possible. Below-detection '<x' values are BELOW_DL_QUALIFIED. 190,444 of these samples
   lie within 2 km of a catalogued occurrence (geochem.sample_occurrence_links).
   NEW SOUTH WALES ('AUSTRALIA_NSW_GSNSW', CC BY 4.0, credit "(c) State of New South Wales (Geological Survey of NSW), licensed under
@@ -1205,7 +1218,8 @@ geochem.samples: sample_id (PK), occurrence_id (nullable), sample_type_id (join 
   way to filter by region when occurrence_id isn't populated), lat, lon, geom, geog, sample_context ('SURFACE',
   'DRILLHOLE_INTERVAL' for drill samples with depths, 'DRILLHOLE_POINT' for drill samples without), drillhole_id
   (-> drilling.drillholes), depth_from_m, depth_to_m.
-drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed samples; CANADA_QC_SIGEOM 190,035 diamond holes; CANADA_SK_SGS
+drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed samples; AUSTRALIA_SA_SARIG 100,578 holes, all with assayed
+  intervals but positioned at the first sampled interval, no depth / date / surveys (see SOUTH AUSTRALIA); CANADA_QC_SIGEOM 190,035 diamond holes; CANADA_SK_SGS
   33,490 collars, about 1,040 of them with Athabasca core assays; CANADA_ATHABASCA_OF7792 245 further Athabasca holes; SWEDEN_SGU_BORRHAL 27,343
   Swedish collars 1899-2022, about 3.3 million m, CC0, credit SGU, with no logs or reported intercepts and no occurrence links; about 1,576 of
   them carry assayed core from SGU's lithogeochemistry (SWEDEN_SGU_LITHOGEOCHEMISTRY samples with this drillhole_id, 1,521 with from-to sections); company = previous owner
@@ -1227,12 +1241,12 @@ drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed sample
   intercepts and NO logs, and assays ONLY where the Athabasca compilation sampled them (about 1,040 holes, 2000-2011 assessment work: check
   for geochem.samples with that drillhole_id and source_system 'CANADA_ATHABASCA_OF7792' before offering assays, and never offer assays for
   a hole that has none); CANADA_ATHABASCA_OF7792 holes have core assays but no logs or intercepts; drilling.intercepts holds Québec
-  (CANADA_QC_SIGEOM) only; analysed downhole samples exist for Tasmania (AUSTRALIA_TAS_MRT), Québec, the Athabasca holes and about 1,500 Swedish SGU holes
+  (CANADA_QC_SIGEOM) only; analysed downhole samples exist for Tasmania (AUSTRALIA_TAS_MRT), South Australia (AUSTRALIA_SA_SARIG, about 98,000 holes with intervals in the wide table), Québec, the Athabasca holes and about 1,500 Swedish SGU holes
   (SWEDEN_SGU_LITHOGEOCHEMISTRY samples; drill_intercepts composites them - mostly exploration-company mineralisation sampling, so sections
   are selective, not continuous). When presenting
   drill holes name the publisher: Saskatchewan Mining and Petroleum GeoAtlas (Saskatchewan Geological Survey) for the collars and the
-  Geological Survey of Canada (Open File 7792) for Athabasca core assays, SIGÉOM (Québec Ministère des Ressources naturelles et des Forêts)
-  or Mineral Resources Tasmania. drilling.surveys: drillhole_id,
+  Geological Survey of Canada (Open File 7792) for Athabasca core assays, SIGÉOM (Québec Ministère des Ressources naturelles et des Forêts),
+  Mineral Resources Tasmania or SARIG (Geological Survey of South Australia). drilling.surveys: drillhole_id,
   depth_m, azimuth_deg, dip_deg, azimuth_reference (TRUE / MAGNETIC). Drill samples sit at the collar position (no desurveyed
   coordinates at depth yet). Downhole LITHOLOGY LOGS are geochem.lithology_observations rows with drillhole_id, depth_from_m and
   depth_to_m (Tasmania: 23,419 intervals on 34,871 holes, 18,183 of them log-only, i.e. not an analysed sample); sample_id is set only when the interval is an analysed sample. drilling.interval_qc flags interval
@@ -1246,7 +1260,7 @@ drilling.drillholes (AUSTRALIA_TAS_MRT 34,871 holes, 10,976 with analysed sample
   are gold; Au grades are mostly ppb. To FIND OR RANK intercepts (best X intercepts in Québec / near a place / at a deposit, intercepts above a grade or a
   grade x length, 'what did drilling at X hit') call drill_intercepts, not SQL: it converts element and oxide forms and ppb / ppm / % to one unit (Li as % Li2O,
   Au as g/t ...), drops impossible rows (over 100 %, longer than the hole), leaves exceptional grades (usually source errors, e.g. 50,000 g/t Au) out of the
-  ranking and lists them, and gives a map and a download. For Tasmania and Athabasca holes it CALCULATES intercepts from the downhole assays (mode 'composite':
+  ranking and lists them, and gives a map and a download. For Tasmania, South Australia, Athabasca and Swedish holes it CALCULATES intercepts from the downhole assays (mode 'composite':
   cut-off, minimum width, maximum internal dilution, optional 'including' and metal equivalent); Québec assays have no from-to depths, so Québec has reported
   intercepts only. State the mode and the parameters used. Use SQL on drilling.intercepts only for what the tool does not do (counts by year or area, etc.;
   compare grades only within one unit_code). ALWAYS filter
@@ -1272,7 +1286,7 @@ geochem.analytical_results: result_id (PK), sample_id, occurrence_id, package_id
   ARGENTINA_SEGEMAR (1,782,202 active), 55,098 in USA_USGS_NGDB (34,058,618 active; includes 13,643 + 6,251 exact duplicates deactivated by QC on 13 and 14 Nov 2026) and 20,037 in
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY (778,219 active);
   CANADA_NRCAN_CDOGS 27,089 (exact duplicates); CANADA_QC_SIGEOM has 66,551 inactive (exact duplicates under two equivalent SIGÉOM method codes) and CANADA_QC_SIGEOM_SED none (45 impossible values and low totals are SUSPECT in result_classifications instead);
-  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY, MAURITANIA_USGS_PRISM, AFGHANISTAN_USGS_BASELINE, EUROPE_GEMAS, IRELAND_GSI_TELLUS, NI_GSNI_TELLUS, IRELAND_GSI_MPM_HISTORIC and YUKON_YGS_RGS have none (Yukon: 11,114 repeated F and Au results inactive); AUSTRALIA_SA_SARIG: 14,786 exact duplicates inactive, 283 impossible values SUSPECT (source unit errors such as Tl 1-100 %, Si reported for SiO2); AUSTRALIA_NSW_GSNSW: 491,141 exact duplicates inactive, 9,190 impossible values SUSPECT; ALASKA_AGDB3: 1,818 exact duplicates inactive, 120 impossible values SUSPECT (mostly ppm values labelled % in the source, and 1-7 % Th in placer concentrates) (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
+  FINLAND_GTK_ROCK, SWEDEN_SGU_LITHOGEOCHEMISTRY, AUSTRALIA_TAS_MRT, CANADA_SK_SGS, CANADA_ATHABASCA_OF7792, USA_NURE_HSSR, NORWAY_NGU_GEOCHEMISTRY, MAURITANIA_USGS_PRISM, AFGHANISTAN_USGS_BASELINE, EUROPE_GEMAS, IRELAND_GSI_TELLUS, NI_GSNI_TELLUS, IRELAND_GSI_MPM_HISTORIC and YUKON_YGS_RGS have none (Yukon: 11,114 repeated F and Au results inactive); AUSTRALIA_SA_SARIG: 81,913 exact duplicates inactive (67,127 of them drill), 1,539 impossible values SUSPECT (source unit errors such as Tl 1-100 %, Si reported for SiO2); AUSTRALIA_NSW_GSNSW: 491,141 exact duplicates inactive, 9,190 impossible values SUSPECT; ALASKA_AGDB3: 1,818 exact duplicates inactive, 120 impossible values SUSPECT (mostly ppm values labelled % in the source, and 1-7 % Th in placer concentrates) (NURE: 5 impossible values SUSPECT) (Tasmanian impossible values are SUSPECT in result_classifications instead; Athabasca has 9 SUSPECT, Ga and Be).
 geochem.result_classifications: result_id, source_system, result_status (DETECTED, BELOW_DL_QUALIFIED,
   BELOW_DL_CERTAIN, BELOW_DL_PROBABLE, ABOVE_UDL, NULL_RESULT, SUSPECT, SENTINEL), dl_value, use_in_statistics.
   Complete for every source (join on result_id AND source_system). For statistics use
@@ -1413,7 +1427,7 @@ SCREEN TRACK RECORD (back-test, run 6 Nov 2026 on all 11 surveys; use it when as
   are uncertain; Cu and Mo about 1x. Argentina: Cu 1.5x, Zn 1.8x, W 2.6x better than chance; Li 0 of 17 flagged cells hit (too few to judge,
   not proof of failure); REE, Ni, Sn, Mo, U unclear. Finland rock: few flagged cells, nothing clear; Mo 0 of 14 (too few to judge). Victoria: not testable (too few catalogued occurrences near the samples).
   Full results: evals/backtest/screen_backtest_2026-11-06.json in the app repository (not something to show users).
-geochem.sample_chemistry_wide: one row per sample for ALL twenty-four geochemical datasets (AUSTRALIA_NSW_GSNSW 1,871,774 (New South Wales surface soils, stream sediments, rocks; mixed methods, many generic / method-unknown packages); AUSTRALIA_SA_SARIG 480,928 (South Australia surface soils incl. calcrete, rocks, stream sediments; mostly partial aqua regia / ICP _p); ALASKA_AGDB3 86,274 (Alaska DGGS / USBM / BLM / extra USGS samples, mostly rocks; many methods); YUKON_YGS_RGS 31,276 (Yukon stream sediments; aqua regia ICP-MS _p for 24,349, INAA / fire assay / DNC _t); IRELAND_GSI_MPM_HISTORIC 352,605 (NW Midlands historic soils, mostly cu_p, pb_p, zn_p); IRELAND_GSI_TELLUS 33,788 (Tellus topsoils, stream sediments, SE rocks; aqua regia _p and XRF _t); NI_GSNI_TELLUS 13,743 (Northern Ireland Tellus soils); GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
+geochem.sample_chemistry_wide: one row per sample for ALL twenty-four geochemical datasets (AUSTRALIA_NSW_GSNSW 1,871,774 (New South Wales surface soils, stream sediments, rocks; mixed methods, many generic / method-unknown packages); AUSTRALIA_SA_SARIG 2,883,151 (480,928 South Australia surface soils incl. calcrete, rocks, stream sediments - mostly partial aqua regia / ICP _p - plus 2,402,223 drill-hole intervals with drillhole_id and depths, mostly four-acid / fusion / XRF _t; Au, Pt, Pd from fire assay first); ALASKA_AGDB3 86,274 (Alaska DGGS / USBM / BLM / extra USGS samples, mostly rocks; many methods); YUKON_YGS_RGS 31,276 (Yukon stream sediments; aqua regia ICP-MS _p for 24,349, INAA / fire assay / DNC _t); IRELAND_GSI_MPM_HISTORIC 352,605 (NW Midlands historic soils, mostly cu_p, pb_p, zn_p); IRELAND_GSI_TELLUS 33,788 (Tellus topsoils, stream sediments, SE rocks; aqua regia _p and XRF _t); NI_GSNI_TELLUS 13,743 (Northern Ireland Tellus soils); GERMANY_GFZ_ERZGEBIRGE 309; SPAIN_IGME_GEOCHEMISTRY 99,874, Li, Cu and W only (li_t, cu_t, w_t; the 86 water samples have no values); CANADA_ATHABASCA_OF7792 40,373; ARGENTINA_SEGEMAR 37,838 rows,
   GREENLAND_GEUS 49,397, FINLAND_GTK_ROCK 6,544, SWEDEN_SGU_LITHOGEOCHEMISTRY 139,163, SWEDEN_SGU_MARKGEOKEMI 61,290, SWEDEN_SGU_BIOGEOKEMI 37,423 (plants, dry weight), USA_USGS_NGDB 965,956 (rock, sediment, soil and heavy-mineral concentrates), USA_NURE_HSSR 386,075 (NURE stream/lake sediment and soil; total columns _t), NORWAY_NGU_GEOCHEMISTRY 10,764 (NGU soils and till, aqua regia: partial columns _p), MAURITANIA_USGS_PRISM 29,620 (PRISM soils, regolith, stream sediment and rock; compiled values), AFGHANISTAN_USGS_BASELINE 303 (rock, sediment, soil and mine waste around Aynak, Balkhab, Hajigak and Nuqra Khana), EUROPE_GEMAS 4,131 (European agricultural and grazing-land soils, 1 site per 2,500 km2),
   AUSTRALIA_VIC_GSV_GEOCHEMISTRY 156,331, AUSTRALIA_TAS_MRT 383,939, CANADA_QC_SIGEOM 587,000, CANADA_QC_SIGEOM_SED 522,453, CANADA_SK_SGS 19,739, CANADA_NRCAN_CDOGS 204,976 active (233,875 loaded; 28,899 Yukon copies inactive); 225 analyte columns): sample_id, sample_context, drillhole_id, depth_from_m, depth_to_m,
   source_system, occurrence_id, sample_type_name, lithology_code/lithology_name/lithology_category/

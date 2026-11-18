@@ -16,7 +16,7 @@ const InterceptMap = dynamic(() => import("./InterceptMap"), { ssr: false });
 
 // Drill intercepts: browser rewrite of the old R Shiny app "Grade Width Intercepts" (OGWI). Significant intercepts are calculated from downhole
 // assay intervals with a cut-off grade, a minimum width and a maximum internal dilution (length-weighted), with an optional higher-grade 'including'
-// part and an optional metal equivalent. Data come from the Interzona database (Tasmania MRT, Athabasca OF 7792) or a CSV the user uploads; the
+// part and an optional metal equivalent. Data come from the Interzona database (Tasmania MRT, South Australia SARIG, Athabasca OF 7792, SGU Sweden) or a CSV the user uploads; the
 // calculation runs in the browser (the same code as the assistant's tool), so an uploaded file never leaves the computer.
 
 type Hole = { id: string; name: string; prospect: string | null; company: string | null; lat: number | null; lon: number | null; year: number | null; intervals: Interval[]; partial: number };
@@ -25,9 +25,9 @@ type DbHole = { id: number; name: string; source: string; prospect: string | nul
 
 const EL_KEYS = Object.keys(ELEMENTS);
 const EL_LABELS: Record<string, string> = Object.fromEntries(EL_KEYS.map((k) => [k, `${ELEMENTS[k].name} (${unitLabel(ELEMENTS[k])})`]));
-const SOURCES = ["", "AUSTRALIA_TAS_MRT", "CANADA_ATHABASCA_OF7792", "SWEDEN_SGU_LITHOGEOCHEMISTRY"] as const;
-const SOURCE_LABELS: Record<string, string> = { "": "Tasmania, Athabasca and Sweden", AUSTRALIA_TAS_MRT: "Tasmania (Mineral Resources Tasmania)", CANADA_ATHABASCA_OF7792: "Athabasca (GSC Open File 7792)", SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden (SGU drill core)" };
-const SHORT_SOURCE: Record<string, string> = { AUSTRALIA_TAS_MRT: "Tasmania", CANADA_ATHABASCA_OF7792: "Athabasca", SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden" };
+const SOURCES = ["", "AUSTRALIA_TAS_MRT", "AUSTRALIA_SA_SARIG", "CANADA_ATHABASCA_OF7792", "SWEDEN_SGU_LITHOGEOCHEMISTRY"] as const;
+const SOURCE_LABELS: Record<string, string> = { "": "Tasmania, South Australia, Athabasca and Sweden", AUSTRALIA_TAS_MRT: "Tasmania (Mineral Resources Tasmania)", AUSTRALIA_SA_SARIG: "South Australia (SARIG drill holes)", CANADA_ATHABASCA_OF7792: "Athabasca (GSC Open File 7792)", SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden (SGU drill core)" };
+const SHORT_SOURCE: Record<string, string> = { AUSTRALIA_TAS_MRT: "Tasmania", AUSTRALIA_SA_SARIG: "South Australia", CANADA_ATHABASCA_OF7792: "Athabasca", SWEDEN_SGU_LITHOGEOCHEMISTRY: "Sweden" };
 const IN_UNITS = ["ppm", "g/t", "ppb", "%"] as const;
 const PRICE_U = Object.keys(PRICE_UNITS);
 const RANKS = ["grade_x_length", "grade", "length"] as const;
@@ -332,7 +332,7 @@ export function InterceptsApp() {
                   <button className={btnGreen} disabled={busy} onClick={findHoles}>Find holes</button>
                 </div>
                 <p className="text-[11px] text-gray-500">
-                  Tasmania, Athabasca and about 1,500 Swedish holes have assays with from-to depths (Swedish sections are mostly selective sampling of mineralised core). Québec holes have reported intercepts only; ask the assistant for those.
+                  Tasmania, South Australia (about 98,000 SARIG holes; collar = first sampled interval, no surveys), Athabasca and about 1,500 Swedish holes have assays with from-to depths (Swedish sections are mostly selective sampling of mineralised core). Québec holes have reported intercepts only; ask the assistant for those.
                 </p>
                 {found && (
                   <div className="space-y-2">

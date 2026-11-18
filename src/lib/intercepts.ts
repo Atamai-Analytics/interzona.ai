@@ -222,25 +222,27 @@ async function wideColumns(): Promise<Set<string>> {
 /** SQL giving the element's grade in ppm (total digestion first, then partial), its basis, and whether it was assayed but below detection. */
 export async function gradeSql(el: string, d: ElDef, alias: string) {
   const cols = await wideColumns();
-  const parts: { sql: string; basis: string }[] = [];
+  // col + factor: the wide column and what turns it into ppm of the element (used with drilling.hole_grade_max for per-hole upper bounds)
+  const parts: { sql: string; basis: string; col: string; factor: number }[] = [];
   const bdl: string[] = [];
   for (const basis of ["t", "p"]) {
     const ec = `${el.toLowerCase()}_${basis}`;
     if (cols.has(ec)) {
-      parts.push({ sql: `${alias}.${ec}`, basis: basis === "t" ? "total" : "partial" });
+      parts.push({ sql: `${alias}.${ec}`, basis: basis === "t" ? "total" : "partial", col: ec, factor: 1 });
       bdl.push(ec);
     }
     for (const o of d.oxides) {
       const oc = `${o.code}_${basis}`;
       if (cols.has(oc)) {
-        parts.push({ sql: `${alias}.${oc} * 10000.0 * ${o.elFrac}`, basis: basis === "t" ? "total" : "partial" });
+        parts.push({ sql: `${alias}.${oc} * 10000.0 * ${o.elFrac}`, basis: basis === "t" ? "total" : "partial", col: oc, factor: 10000 * o.elFrac });
         bdl.push(oc);
       }
     }
   }
-  if (el === "C" && cols.has("c_noncarb_pct")) parts.unshift({ sql: `${alias}.c_noncarb_pct * 10000.0`, basis: "total" });
+  if (el === "C" && cols.has("c_noncarb_pct")) parts.unshift({ sql: `${alias}.c_noncarb_pct * 10000.0`, basis: "total", col: "c_noncarb_pct", factor: 10000 });
   if (!parts.length) return null;
   return {
+    parts: parts.map((p) => ({ col: p.col, factor: p.factor })),
     value: `coalesce(${parts.map((p) => p.sql).join(", ")})`,
     basis: `CASE ${parts.map((p) => `WHEN ${p.sql} IS NOT NULL THEN '${p.basis}'`).join(" ")} END`,
     bdl: bdl.length ? `coalesce(${alias}.bdl_codes && ARRAY[${bdl.map(q).join(", ")}]::text[], false)` : "false",
@@ -283,18 +285,48 @@ async function composite(input: Record<string, unknown>, el: string, d: ElDef, a
   }
   const cutPpm = toPpm(d, cutoff);
   const eqSql = g2 ? `coalesce(${g1.value}, 0) + coalesce(${g2.value}, 0) * ${eq!.ratio}` : g1.value;
-  const holeLimit = 1000;
-  const reaching = `SELECT h.drillhole_id FROM drilling.drillholes h LEFT JOIN core.occurrences o ON o.occurrence_id = h.occurrence_id
-     JOIN geochem.sample_chemistry_wide w ON w.drillhole_id = h.drillhole_id
-     WHERE ${area.where.join(" AND ")} AND w.source_system IN (${sources.map(q).join(", ")}) AND w.depth_to_m > w.depth_from_m
-     GROUP BY h.drillhole_id HAVING max(${eqSql}) >= ${cutPpm}`;
-  const holes = `${reaching} ORDER BY max(${eqSql}) DESC LIMIT ${holeLimit}`;
-  const [samples, holeInfo, cand, reach] = await Promise.all([
+  const holeLimit = 1000, sampleCap = 200000;
+  const srcList = sources.map(q).join(", ");
+  // 1. Candidates from the per-hole summary (drilling.hole_grade_max, build_hole_grade_summary.py): a hole can only reach the cut-off if the
+  //    largest of its column maxima (plus the secondary element's, for an equivalent) does - an upper bound, so no hole is missed.
+  const ub = (g: NonNullable<typeof g1>) => `max(CASE m.col ${g.parts.map((p) => `WHEN ${q(p.col)} THEN m.max_value * ${p.factor}`).join(" ")} END)`;
+  const allCols = [...g1.parts, ...(g2 ? g2.parts : [])].map((p) => q(p.col)).join(", ");
+  const ubSql = g2 ? `coalesce(${ub(g1)}, 0) + coalesce(${ub(g2)}, 0) * ${eq!.ratio}` : ub(g1);
+  const candidates = `SELECT m.drillhole_id FROM drilling.hole_grade_max m WHERE m.source_system IN (${srcList}) AND m.col IN (${allCols})
+     GROUP BY m.drillhole_id HAVING ${ubSql} >= ${cutPpm}`;
+  const g1Cols = g1.parts.map((p) => q(p.col)).join(", ");
+  // 2. Exact per-hole maximum, only for the candidates in the area; 3. how many holes in the area have the element assayed at all.
+  const [reach, cand] = await Promise.all([
+    runReadOnlyQuery(
+      `SELECT h.drillhole_id, max(${eqSql}) AS mx, max(c.n_intervals) AS n FROM drilling.drillholes h LEFT JOIN core.occurrences o ON o.occurrence_id = h.occurrence_id
+         JOIN geochem.sample_chemistry_wide w ON w.drillhole_id = h.drillhole_id
+         LEFT JOIN drilling.hole_sample_count c ON c.drillhole_id = h.drillhole_id AND c.source_system = w.source_system
+       WHERE ${area.where.join(" AND ")} AND h.drillhole_id IN (${candidates}) AND w.source_system IN (${srcList}) AND w.depth_to_m > w.depth_from_m
+       GROUP BY h.drillhole_id HAVING max(${eqSql}) >= ${cutPpm} ORDER BY max(${eqSql}) DESC`,
+      50000,
+    ),
+    runReadOnlyQuery(
+      `SELECT count(DISTINCT h.drillhole_id) AS n FROM drilling.drillholes h LEFT JOIN core.occurrences o ON o.occurrence_id = h.occurrence_id
+       JOIN drilling.hole_grade_max m ON m.drillhole_id = h.drillhole_id WHERE ${area.where.join(" AND ")} AND m.source_system IN (${srcList})
+       AND m.col IN (${g1Cols}) AND m.n_assayed > 0`,
+      1,
+    ),
+  ]);
+  // Highest-grade holes first, up to 1,000 holes and 200,000 intervals so no chosen hole is cut short.
+  const chosen: number[] = [];
+  let nInt = 0;
+  for (const row of reach.rows) {
+    const n = Number(row.n ?? 0);
+    if (chosen.length >= holeLimit || (chosen.length > 0 && nInt + n > sampleCap)) break;
+    chosen.push(Number(row.drillhole_id)); nInt += n;
+  }
+  const holes = chosen.length ? chosen.join(", ") : "NULL";
+  const [samples, holeInfo] = await Promise.all([
     runReadOnlyQuery(
       `SELECT w.drillhole_id, w.source_system AS ssrc, w.sample_id, w.depth_from_m::float AS f, w.depth_to_m::float AS t, ${g1.value} AS g, ${g1.basis} AS basis, ${g1.bdl} AS bdl
          ${g2 ? `, ${g2.value} AS g2, ${g2.bdl} AS bdl2` : ""}
-       FROM geochem.sample_chemistry_wide w WHERE w.drillhole_id IN (${holes}) AND w.source_system IN (${sources.map(q).join(", ")})`,
-      200000,
+       FROM geochem.sample_chemistry_wide w WHERE w.drillhole_id IN (${holes}) AND w.source_system IN (${srcList})`,
+      sampleCap + 50000,
     ),
     runReadOnlyQuery(
       `SELECT h.drillhole_id, h.hole_name, h.source_hole_id, h.source_system, h.company, h.prospect, o.name AS occurrence, h.lat, h.lon, h.total_depth_m,
@@ -302,14 +334,8 @@ async function composite(input: Record<string, unknown>, el: string, d: ElDef, a
        FROM drilling.drillholes h LEFT JOIN core.occurrences o ON o.occurrence_id = h.occurrence_id WHERE h.drillhole_id IN (${holes})`,
       holeLimit,
     ),
-    runReadOnlyQuery(
-      `SELECT count(DISTINCT h.drillhole_id) AS n FROM drilling.drillholes h LEFT JOIN core.occurrences o ON o.occurrence_id = h.occurrence_id
-       JOIN geochem.sample_chemistry_wide w ON w.drillhole_id = h.drillhole_id WHERE ${area.where.join(" AND ")} AND w.source_system IN (${sources.map(q).join(", ")})
-       AND w.depth_to_m > w.depth_from_m AND (${g1.value} IS NOT NULL OR ${g1.bdl})`,
-      1,
-    ),
-    runReadOnlyQuery(`SELECT count(*) AS n FROM (${reaching}) x`, 1),
   ]);
+  const nReach = reach.truncated ? `more than ${reach.rows.length}` : String(reach.rows.length);
   const info = new Map(holeInfo.rows.map((h) => [Number(h.drillhole_id), h]));
   const byHole = new Map<number, Record<string, unknown>[]>();
   for (const s of samples.rows) {
@@ -387,9 +413,9 @@ async function composite(input: Record<string, unknown>, el: string, d: ElDef, a
     parameters: { cutoff: `${cutoff} ${u}${eq ? " equivalent" : ""}`, min_width_m: minWidth, max_internal_dilution_m: maxDil, including_cutoff: incl ?? null, equivalent: eq?.text ?? null },
     area: area.note.length ? area.note : ["all holes with assays in these sources"],
     holes_with_assays_in_area: Number(cand.rows[0]?.n ?? 0),
-    holes_with_an_assay_at_or_above_cutoff: Number(reach.rows[0]?.n ?? 0),
+    holes_with_an_assay_at_or_above_cutoff: reach.truncated ? nReach : reach.rows.length,
     holes_composited: byHole.size,
-    holes_note: Number(reach.rows[0]?.n ?? 0) > byHole.size ? `Only the ${byHole.size} holes with the highest single assays were composited (of ${reach.rows[0]?.n} reaching the cut-off); narrow the area to see all.` : "Every hole reaching the cut-off was composited.",
+    holes_note: reach.rows.length > byHole.size ? `Only the ${byHole.size} holes with the highest single assays were composited (of ${nReach} reaching the cut-off; limits 1,000 holes and 200,000 intervals); narrow the area to see all.` : "Every hole reaching the cut-off was composited.",
     holes_with_an_intercept: holesWithHits,
     intercepts_found: hits.length,
     overlapping_sample_intervals_skipped: overlapsDropped,

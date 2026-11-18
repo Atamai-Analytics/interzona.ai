@@ -39,17 +39,20 @@ export async function findHoles(params: { element?: unknown; source?: unknown; q
     where.push(`h.lon BETWEEN ${Math.min(w, e)} AND ${Math.max(w, e)} AND h.lat BETWEEN ${Math.min(s, n)} AND ${Math.max(s, n)}`);
   }
   const LIMIT = 500;
+  // From the per-hole summary (drilling.hole_grade_max, build_hole_grade_summary.py) instead of scanning every interval: 'assayed' = the most
+  // intervals assayed in any one of the element's columns, max_ppm = the highest column maximum converted to ppm (the true maximum unless one
+  // interval carries both a total and a higher partial value).
+  const maxPpm = `max(CASE m.col ${g.parts.map((p) => `WHEN ${q(p.col)} THEN m.max_value * ${p.factor}`).join(" ")} END)`;
   const res = await runReadOnlyQuery(
-    `SELECT h.drillhole_id AS id, coalesce(h.hole_name, h.source_hole_id) AS name, min(w.source_system) AS source, nullif(concat_ws(' / ', o.name, h.prospect), '') AS prospect,
+    `SELECT h.drillhole_id AS id, coalesce(h.hole_name, h.source_hole_id) AS name, min(m.source_system) AS source, nullif(concat_ws(' / ', o.name, h.prospect), '') AS prospect,
        h.company, h.lat, h.lon, h.total_depth_m AS depth, extract(year FROM h.date_drilled)::int AS year,
-       count(*) FILTER (WHERE ${g.value} IS NOT NULL OR ${g.bdl}) AS assayed, max(${g.value}) AS max_ppm
-     FROM drilling.drillholes h JOIN geochem.sample_chemistry_wide w ON w.drillhole_id = h.drillhole_id
-       AND w.source_system IN (${sources.map(q).join(", ")}) AND w.depth_to_m > w.depth_from_m
+       max(m.n_assayed) AS assayed, ${maxPpm} AS max_ppm
+     FROM drilling.drillholes h JOIN drilling.hole_grade_max m ON m.drillhole_id = h.drillhole_id
+       AND m.source_system IN (${sources.map(q).join(", ")}) AND m.col IN (${g.parts.map((p) => q(p.col)).join(", ")}) AND m.n_assayed > 0
      LEFT JOIN core.occurrences o ON o.occurrence_id = h.occurrence_id
      WHERE ${where.join(" AND ")}
      GROUP BY h.drillhole_id, h.hole_name, h.source_hole_id, o.name, h.prospect, h.company, h.lat, h.lon, h.total_depth_m, h.date_drilled
-     HAVING count(*) FILTER (WHERE ${g.value} IS NOT NULL OR ${g.bdl}) > 0
-     ORDER BY max(${g.value}) DESC NULLS LAST`,
+     ORDER BY ${maxPpm} DESC NULLS LAST`,
     LIMIT,
   );
   const unit = d.unit === "g/t" ? `g/t ${d.reportAs}` : `${d.unit} ${d.reportAs}`;

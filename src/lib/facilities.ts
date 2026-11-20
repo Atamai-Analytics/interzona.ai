@@ -62,6 +62,10 @@ export async function facilityList(input: Record<string, unknown>): Promise<Out>
   const sitesBy = (pred: (r: FRow) => boolean) => new Set(rows.filter(pred).map((r) => r.occurrence_id)).size;
   statements.push(`Distinct sites by stage (use these when the question asks how many plants, mines or facilities there are): ${stages.map((s) => `${s} ${sitesBy((r) => r.stage_group === s)}`).join("; ")}; all processing stages together (everything except mines and brine operations) ${sitesBy((r) => !["Mine", "Brine operation"].includes(r.stage_group))} sites. A site with both a mine and a plant counts under each of its stages, so these per-stage site counts add up to more than the ${sites} distinct sites - never add them together.`);
   statements.push(`By stage: ${stages.map((s) => { const m = stg.get(s)!; const t = [...m.values()].reduce((a, b) => a + b, 0); const parts = [...m.entries()].sort((a, b) => b[0].localeCompare(a[0])).map(([l, n]) => `${n} ${l.split(" - ")[0]}`); return `${s} ${t}${m.size > 1 ? ` (${parts.join(", ")})` : ` (${parts[0]})`}`; }).join("; ")}.`);
+  // By status as published (20 Nov 2026: a PGM refinery answer said "10 assumed active, 2 inactive, 1 in development" for 14 lines).
+  const sts = new Map<string, number>();
+  for (const r of rows) { const s = (r.status ?? "").trim() || "status not given"; sts.set(s, (sts.get(s) ?? 0) + 1); }
+  statements.push(`By status (as published): ${[...sts.entries()].sort((a, b) => b[1] - a[1]).map(([s, n]) => `${s} ${n}`).join("; ")} - these add up to ${total} lines.`);
   // 2024 names are location text: a line can be named "... Smelter" while it is the mine line
   const misnamed = rows.filter((r) => (/\b(smelter|refinery|plant|concentrator)\b/i.test(r.name) && r.stage_group === "Mine") || (/\bmine\b/i.test(r.name) && r.stage_group !== "Mine"));
   if (misnamed.length) statements.push(`Names follow USGS's location text, not the stage: ${misnamed.slice(0, 6).map((r) => `'${r.name}' is a ${r.stage_group.toLowerCase()} line`).join("; ")}. Use the Stage column, not the name, to say what each line is.`);

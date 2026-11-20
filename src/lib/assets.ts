@@ -155,15 +155,38 @@ export async function companyAssets(input: Record<string, unknown>): Promise<Too
     ...(fromCatalogue ? [{ kind: "data", label: "Mineral occurrence catalogue (positions)", detail: `${fromCatalogue} positions` } as Evidence] : []),
     ...[...credits].map((label) => ({ kind: "data", label, detail: "asset positions" }) as Evidence),
   ];
+  // Counts worked out here so the answer does not have to tally a long list itself (20 Nov 2026: a Rio Tinto answer listed Robe Valley and
+  // West Angelas on one line, counted 36 instead of 37 annual-report assets and then invented a 12th "other" asset to make 48).
+  const bySource = new Map<string, { assets: number; with_stated_interest: number; with_position: number }>();
+  for (const a of assets) {
+    const key = String(a.record_source).replace(/, p\. .*$/, "");
+    const s = bySource.get(key) ?? { assets: 0, with_stated_interest: 0, with_position: 0 };
+    s.assets++;
+    if (a.interest_pct !== null && a.interest_pct !== undefined) s.with_stated_interest++;
+    if (a.has_position) s.with_position++;
+    bySource.set(key, s);
+  }
+  const withInterest = assets.filter((a) => a.interest_pct !== null && a.interest_pct !== undefined).length;
+  const counts = {
+    total_assets: assets.length,
+    with_position: points.length,
+    without_position: unplaced.length,
+    with_stated_interest: withInterest,
+    without_stated_interest: assets.length - withInterest,
+    by_record_source: [...bySource.entries()].sort((a, b) => b[1].assets - a[1].assets).map(([record_source, s]) => ({ record_source, ...s })),
+  };
   return {
     content: JSON.stringify({
+      counts,
       assets,
       positions_available: points.length,
       assets_without_position: unplaced,
       not_found: unresolved,
       caveats: [
+        "When giving totals (assets, placed / not placed, per source, with / without a stated interest), quote the numbers in counts; do not recount the list, and keep any per-source breakdown equal to counts.by_record_source.",
         "Each asset's record_source names the document it comes from (a company report, the Austrade Prospectus or the EU CRMA strategic-project list); cite that, not \"the annual report\", when saying what is or is not stated. Interests are the company's share as recorded there for the year shown; a blank interest means the share is not stated in the data.",
         "Describe only the assets listed here; do not add other sites or owners from general knowledge. If the user may expect an asset that is missing, say it is not in the records instead of naming it.",
+        "These are the company asset records only. The USGS facility lists (facility_list tool) can name further plants, mines or smelters with this company as an owner, so say 'in the asset records', not 'the only assets in our records' or 'nothing else is recorded'.",
         "Only assets with a catalogue entry or a recorded position can be placed on a map; many processing plants, smelters and in-situ uranium operations have neither. Say how many assets could not be placed.",
         ...(approximate ? [`${approximate} mapped asset(s) are placed only at the town or city named for the site (position_precision "town" or "city"); say so if their exact location matters.`] : []),
         "The data list assets and stakes but not output or size, so do not call an asset the biggest or most important without another source.",

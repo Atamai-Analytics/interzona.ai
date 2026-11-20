@@ -2220,7 +2220,9 @@ CURRENT run_financial_model SCRIPTS:
   THIS SCRIPT NEVER TOUCHES THE DATABASE. financials.* in this schema is company-level statements
   only (balance_sheet/income_statement/cash_flow/statement_items/operating_metrics, about 29 companies,
   10 or more years for roughly a dozen of them; see the financials coverage note) —
-  there is NO mine-plan, capex, opex, recovery, or project-economics data anywhere in interzona_cm.
+  there are NO year-by-year mine plans in interzona_cm. Headline study economics (NPV, IRR, initial capex, some opex and price
+  assumptions) exist only for some named projects - see FEASIBILITY ECONOMICS (fs_* facts, e.g. Dumont, Hautalampi, Keliber, Aguablanca) -
+  so do not say the database has no capex or project-economics data; say it has none for an unnamed new project.
   CRITICAL RULE: NEVER invent plausible-sounding tons/grade/price/cost numbers yourself to "fill
   in" a scenario. If the user hasn't supplied real assumptions, ASK for them (recovered units per
   year, commodity price, operating costs per year, capital costs per year, tax rate, discount

@@ -65,7 +65,7 @@
         ],
         "max_turns": 4
       },
-      "judge": "Names only the two assets in the records (the Australian Antimony Metal Refining Project and the Australian Germanium Recovery Project), cites the Austrade Prospectus as their source, and says both are placed only at the nearest town. Does NOT add other sites, mines or owners from general knowledge (quoting the owner as recorded, 'Nyrstar Australia (Trafigura Control Holdings Pte. Ltd (Singapore))', is fine). UPDATE 11 Nov 2026: the USGS 2024 Minerals Yearbook facilities table also records Nyrstar N.V. as owner of the Hobart zinc smelter; naming it (with that source) is correct. Still fail any site or owner not in the records (general knowledge)."
+      "judge": "Names only the two assets in the records (the Australian Antimony Metal Refining Project and the Australian Germanium Recovery Project), cites the Austrade Prospectus as their source, and says both are placed only at the nearest town. Does NOT add other sites, mines or owners from general knowledge (quoting the owner as recorded, 'Nyrstar Australia (Trafigura Control Holdings Pte. Ltd (Singapore))', is fine). UPDATE 11 Nov 2026: the USGS 2024 Minerals Yearbook facilities table also records Nyrstar N.V. as owner of the Hobart zinc smelter; naming it (with that source) is correct but NOT required - do not fail an answer for leaving it out, only for a claim that nothing else at all is recorded for Nyrstar. Still fail any site or owner not in the records (general knowledge)."
     },
     {
       "id": "gate-table-count",

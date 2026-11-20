@@ -34,7 +34,7 @@
         ],
         "max_turns": 10
       },
-      "judge": "Calls drill_intercepts in composite mode for South Australia with a 1 g/t Au cut-off and lists up to 10 ranked intercepts with hole names, lengths and grades in g/t Au from the tool output (locations may be given in the table or on the map). The top intercepts must not be 100 m+ at tens of g/t Au from the Helix Resources LRC or OZ Minerals 2009-11 holes (source ppb-as-ppm errors fixed 18 Nov 2026). States the parameters used. If exceptional grades were left out of the ranking, says so. Does not invent intercepts."
+      "judge": "Calls drill_intercepts in composite mode for South Australia with a 1 g/t Au cut-off and lists up to 10 ranked intercepts with hole names, lengths and grades in g/t Au from the tool output (locations may be given in the table or on the map). The top intercepts must not be 100 m+ at tens of g/t Au from the Helix Resources LRC or OZ Minerals 2009-11 holes (source ppb-as-ppm errors fixed 18 Nov 2026), nor tens of g/t over 30 m+ in the Kelaray KTRC/KTDD holes near Kanmantoo (non-gold FA50 values marked SUSPECT 20 Nov 2026). States the parameters used. If exceptional grades were left out of the ranking, says so. Does not invent intercepts."
     }
   ]
 }

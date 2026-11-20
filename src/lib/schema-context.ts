@@ -900,7 +900,10 @@ DATA COVERAGE CAVEATS for geochemical samples — mention these when relevant:
   other aqua-regia gold methods are aqua regia, not fire assay). In sample_chemistry_wide Au, Pt and Pd come from a fire-assay package
   first when the sample has one. Source unit fixes (18 Nov 2026): gold published as ppm that is really ppb is stored as ppb - 5,653 B/AAS results in 47 Helix
   Resources holes (LRC..., whole numbers about 1,000x the other gold method on the same intervals) and 36,428 FA2 fire-assay results in
-  124 OZ Minerals holes of 2009-2011 (whole numbers, '<1' detection limit). Very high SA drill grades can still be
+  124 OZ Minerals holes of 2009-2011 (whole numbers, '<1' detection limit). SUSPECT (left out of the wide table and intercepts): 328 gold
+  results in 14 hole x method groups with whole-number 'ppm' gold (Hillgrove B/ETA, Minotaur, Hindmarsh, Dominion), and 212 Kelaray Pty Ltd
+  FA50/AAS gold values >= 5 ppm in 15 holes near Kanmantoo (KTRC 19-32, KTDD122, KTDD131: 10-100x the FA25 fire assay on the same intervals,
+  no link to Cu, clustered near 10/20/30/40/50 - not gold; Kelaray values < 5 ppm are kept). Very high SA drill grades can still be
   source errors: check the hole's other methods before quoting them. Partial leaches (MMI, TerraLeach, enzyme, BLEG) give very different numbers from total methods: never mix families,
   and compare within one company survey where possible. Below-detection '<x' values are BELOW_DL_QUALIFIED. 190,444 of these samples
   lie within 2 km of a catalogued occurrence (geochem.sample_occurrence_links).

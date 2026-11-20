@@ -9,6 +9,7 @@ import { supplyConcentration } from "@/lib/supply";
 import { tradeComparison } from "@/lib/trade";
 import { facilityList } from "@/lib/facilities";
 import { supplyDisruption } from "@/lib/disruption";
+import { supplyRisk } from "@/lib/risk";
 
 // Sources whose licence requires a credit in every answer that uses them. If the final answer does not mention the source, the
 // credit line is appended (models forget it now and then even when told to).
@@ -363,6 +364,25 @@ const tools: Anthropic.ToolUnion[] = [
         cut_pct: { type: "number", description: "Percentage of the country's supply cut, 1-100 (default 100 = full stop)." },
       },
       required: ["commodity", "country"],
+    },
+  },
+  {
+    name: "supply_risk",
+    description:
+      "GEOPOLITICAL SUPPLY RISK of critical minerals by stage, from recorded behaviour: how concentrated production is (USGS 2025 shares, HHI) and how much of it comes from producers with EXPORT CONTROLS in force in 2024 " +
+      "(bans, quotas, licensing, from the OECD export-restriction inventory; bans/quotas shown separately because licensing can be a routine permit or a de facto ban), with a single ranking number, the restriction-weighted HHI " +
+      "(concentration counted over controlled producers only). Optional importer view (e.g. EU, United States, Japan): share of that importer's 2022-2024 imports of the stage's products coming from exporters with controls in force, plus EU import reliance and recycling rates (EU RMIS). " +
+      "USE THIS for 'which critical minerals are riskiest / most exposed to export controls', 'how risky is the supply of X', 'how exposed is the EU/US/Japan to export-controlled X', 'rank minerals by geopolitical risk'. " +
+      "Omit commodity for the league table across minerals. Not a forecast or a probability; no governance index is used. For what a cut by one country would do, use supply_disruption instead. Follow with search_documents for measures since 2024.",
+    input_schema: {
+      type: "object",
+      properties: {
+        commodity: { type: "string", description: "Optional mineral, e.g. cobalt, gallium, rare earths, graphite, nickel, lithium, tungsten. Omit for the league table." },
+        importer: { type: "string", description: "Optional importing country or 'EU' for the importer view, e.g. EU, United States, Japan, South Korea, India." },
+        rank_by: { type: "string", enum: ["restriction_weighted_hhi", "controlled_share", "hhi"], description: "League table ranking (default restriction_weighted_hhi)." },
+        top_n: { type: "number", description: "League table rows to detail (default 15, max 40)." },
+      },
+      required: [],
     },
   },
   {
@@ -821,6 +841,12 @@ async function executeTool(
     extras.maps.push(...(out.maps ?? []));
     return out.content;
   }
+  if (name === "supply_risk") {
+    const out = await supplyRisk(input);
+    extras.evidence.push(...(out.evidence ?? []));
+    extras.datasets.push(...(out.datasets ?? []));
+    return out.content;
+  }
   if (name === "drill_intercepts") {
     const out = await drillIntercepts(input);
     extras.evidence.push(...(out.evidence ?? []));
@@ -1155,6 +1181,10 @@ function stepLabel(name: string, input: Record<string, unknown>): string {
     case "supply_disruption": {
       const c = String(input.country ?? "").trim(), m = String(input.commodity ?? "").trim();
       return c && m ? `Running the scenario: ${c} cuts ${m} supply` : "Running the supply-disruption scenario";
+    }
+    case "supply_risk": {
+      const m = String(input.commodity ?? "").trim(), i = String(input.importer ?? "").trim();
+      return m ? `Assessing supply risk for ${m}${i ? ` (importer: ${i})` : ""}` : "Ranking critical minerals by supply risk";
     }
     case "supply_concentration":
       return "Looking up who supplies it, country by country";

@@ -301,7 +301,12 @@ export async function supplyDisruption(input: Record<string, unknown>): Promise<
     const withP = events.filter((e) => e.price_change_12m_pct !== null);
     const withA = events.filter((e) => e.annual_price_change_pct && (e.annual_price_change_pct.year_before_to_year_of !== null || e.annual_price_change_pct.year_of_to_year_after !== null));
     if (!withP.length && withA.length) statements.push(`Annual price around these dates (${seriesInfo?.series_name ?? "USGS annual series"}; year on year, coarse): ${withA.slice(-6).map((e) => { const a = e.annual_price_change_pct!; const f = (x: number | null) => (x === null ? "n/a" : `${x > 0 ? "+" : ""}${x}%`); return `${e.date}: ${f(a.year_before_to_year_of)} into that year, ${f(a.year_of_to_year_after)} the next year`; }).join("; ")}.`);
-    if (withP.length) statements.push(`Price 12 months after these dates (${seriesInfo?.series_name ?? "monthly series"}): ${withP.slice(-6).map((e) => `${e.date}: ${e.price_change_12m_pct! > 0 ? "+" : ""}${e.price_change_12m_pct}% (percentile ${e.percentile_of_12m_change_vs_all_months_since_1990} of all 12-month changes since 1990)`).join("; ")}.`);
+    if (withP.length) {
+      const ch = withP.map((e) => e.price_change_12m_pct!);
+      const up = ch.filter((x) => x > 0).length, down = ch.filter((x) => x < 0).length;
+      statements.push(`Summary of price moves: of ${withP.length} restriction date${withP.length === 1 ? "" : "s"} with a monthly price, the price was higher 12 months later after ${up} and lower after ${down} (range ${Math.min(...ch) > 0 ? "+" : ""}${Math.min(...ch)}% to ${Math.max(...ch) > 0 ? "+" : ""}${Math.max(...ch)}%), so the record shows no consistent price response.`.replace(", so the record shows no consistent price response", up === 0 || down === 0 ? "" : ", so the record shows no consistent price response"));
+      statements.push(`Price 12 months after each date, oldest first (${seriesInfo?.series_name ?? "monthly series"}; copy these values exactly): ${withP.slice(-6).map((e) => `${e.date}: ${e.price_change_12m_pct! > 0 ? "+" : ""}${e.price_change_12m_pct}% (percentile ${e.percentile_of_12m_change_vs_all_months_since_1990} of all 12-month changes since 1990)`).join("; ")}.`);
+    }
   } else statements.push(`The OECD inventory (2009-2024) records no export restriction introduced or tightened by ${C.name} on ${m.label.toLowerCase()}.`);
   caveats.push("Price moves after a restriction are not caused by it alone: demand, other supply changes and the wider commodity cycle move prices at the same time. Read them as what happened, not as an estimate of what this scenario would do. The OECD inventory ends in 2024; later measures (for example China's 2025 rare-earth and magnet controls) are not in it - search the documents for them.");
   if (!monthly.length && series) caveats.push(`Only annual prices exist for ${m.label.toLowerCase()} (${seriesInfo?.series_name ?? "USGS series"}; older years from the USGS DS140 historical unit values), so price changes are year on year and coarse.`);
@@ -320,6 +325,7 @@ export async function supplyDisruption(input: Record<string, unknown>): Promise<
       how_to_answer:
         "Quote the statements for every number. Structure: supply lost, who is exposed, who else produces (and that capacity is nameplate, not spare), the project pipeline as recorded, and the history of this country's restrictions with what prices did. " +
         "BEFORE answering, call search_documents with document_search_query (the restriction history above ends in 2024, so measures from 2025 onward - bans, quotas, export controls - are only in the documents) and add what they say, cited, as a short 'recent measures and policy context' part; if they hold nothing, say the record above ends in 2024. " +
+        "Show the restriction history as a table copied from the per-date values (do not retype them in a sentence), quote the summary of price moves, and do not single out any measure as the cause of a rise or fall. " +
         "Never give a probability that the event happens, never forecast the price, and never add producers, importers or projects not listed here. Say which caveats matter for the reader.",
       document_search_query: `${C.name} ${m.label} export ban quota export controls restrictions 2025 2026`,
       credits: Object.values(CREDITS),

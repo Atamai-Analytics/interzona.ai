@@ -826,6 +826,16 @@ export default function Home() {
         )}
         {who && !(who.role === "guest" && who.ended) && (
           <Link
+            href="/tools/risk"
+            className="shrink-0 md:self-center flex items-center gap-1.5 rounded-lg border border-rose-600 bg-rose-900/30 px-2.5 py-1.5 text-xs md:text-sm font-medium text-rose-100 hover:bg-rose-800/50"
+            title="Supply risk: concentration and export controls by mineral, an importer's exposure, and what-if scenarios for a country cutting supply"
+          >
+            <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M8 1.8 14.5 13.5h-13z" /><path d="M8 6v3.6" /><circle cx="8" cy="11.6" r="0.6" fill="currentColor" /></svg>
+            Supply risk
+          </Link>
+        )}
+        {who && !(who.role === "guest" && who.ended) && (
+          <Link
             href="/tools/multivariate"
             className="shrink-0 md:self-center flex items-center gap-1.5 rounded-lg border border-emerald-600 bg-emerald-900/40 px-2.5 py-1.5 text-xs md:text-sm font-medium text-emerald-100 hover:bg-emerald-800/60"
             title="Correlation, PCA, clustering, maps, UMAP and t-SNE on database samples or your own CSV"

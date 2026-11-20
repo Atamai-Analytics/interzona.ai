@@ -125,7 +125,7 @@ export async function supplyRisk(input: Record<string, unknown>): Promise<Out> {
       content: JSON.stringify({
         what: "Geopolitical supply-risk league table of critical-mineral stages: concentration of production and the share coming from producers with export controls in force. Recorded behaviour, not a forecast.",
         ranked_by: rankBy, statements,
-        rows: top.map((x) => ({ mineral: x.r.label, stage: STAGE_LABEL[x.r.usgs_stage] ?? x.r.usgs_stage, year: x.s.group.data_year, top_producer: x.s.top, hhi: x.s.hhi, supply_under_export_controls_pct: x.s.controlled_share_pct, of_which_bans_or_quotas_pct: x.s.bans_or_quotas_share_pct, under_any_measure_incl_taxes_pct: x.s.any_measure_share_pct, restriction_weighted_hhi: x.s.restriction_weighted_hhi, controlled_producers: x.s.controlled_producers.slice(0, 5), new_measures_2020_2024: x.s.new_measures_2020_2024 })),
+        rows: top.map((x) => ({ mineral_key: x.r.mineral, mineral: x.r.label, stage: STAGE_LABEL[x.r.usgs_stage] ?? x.r.usgs_stage, year: x.s.group.data_year, top_producer: x.s.top, hhi: x.s.hhi, supply_under_export_controls_pct: x.s.controlled_share_pct, of_which_bans_or_quotas_pct: x.s.bans_or_quotas_share_pct, under_any_measure_incl_taxes_pct: x.s.any_measure_share_pct, restriction_weighted_hhi: x.s.restriction_weighted_hhi, controlled_producers: x.s.controlled_producers.slice(0, 5), new_measures_2020_2024: x.s.new_measures_2020_2024 })),
         stages_covered: scored.length,
         how_to_read: HOW,
         how_to_answer: "Quote the statements and the rows for every number; explain the two dimensions (concentration, export controls in force) and the restriction-weighted HHI in one or two plain sentences; then search the documents for measures since 2024 and cite them. Do not add minerals, producers or measures not listed, and do not turn this into a probability or a price forecast.",
@@ -191,6 +191,7 @@ export async function supplyRisk(input: Record<string, unknown>): Promise<Out> {
   const flags = [...new Set(stages.map((x) => x.r.flag).filter(Boolean))];
   return {
     content: JSON.stringify({
+      mineral_key: mm.mineral, mineral: mm.label,
       what: `Geopolitical supply risk for ${mm.label} by stage: concentration and export controls in force (${YEAR}). Recorded behaviour, not a forecast.`,
       statements,
       stages: stages.map(({ r, s }) => ({ stage: STAGE_LABEL[r.usgs_stage] ?? r.usgs_stage, year: s.group.data_year, hhi: s.hhi, top_producer: s.top, supply_under_export_controls_pct: s.controlled_share_pct, of_which_bans_or_quotas_pct: s.bans_or_quotas_share_pct, under_any_measure_incl_taxes_pct: s.any_measure_share_pct, restriction_weighted_hhi: s.restriction_weighted_hhi, producers: s.producers.slice(0, 10).map((p) => ({ country: p.country, share_pct: r1(p.share), export_controls: p.control, ban_or_quota: p.hard, export_taxes: p.fiscal, measures: p.types, new_measures_2020_2024: p.new_since_2020 })) })),

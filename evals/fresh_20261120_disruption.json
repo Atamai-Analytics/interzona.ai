@@ -8,7 +8,7 @@
       "cat": "risk",
       "q": "What would happen if the DRC cut its cobalt exports by 30%? Who would be most exposed?",
       "expect": { "tools_any": ["supply_disruption"], "max_turns": 10 },
-      "judge": "Calls the supply-disruption tool for cobalt and the DRC with a 30% cut and reports from its output: the DRC's share of world cobalt mine production and the share of world supply a 30% cut removes; the largest importers of DRC cobalt (hydroxide/intermediates; China should dominate) with their dependence; other producers; and the DRC's past restrictions (e.g. 2023 export tax, ore export bans) with price moves described as what happened, not cause and effect. Does not give a probability of the cut or a price forecast. Does not invent figures."
+      "judge": "Calls the supply-disruption tool for cobalt and the DRC with a 30% cut and reports from its output: the DRC's share of world cobalt mine production and the share of world supply a 30% cut removes; the largest importers of DRC cobalt (hydroxide/intermediates; China should dominate) with their dependence; other producers; and the DRC's past restrictions (listing or summarising them, e.g. the 2023 export tax and ore export bans - naming individual measures is optional) with price moves described as what happened, not cause and effect in its own words (quoting a cited document's statement about a price reaction, such as the IEA on the 2025 ban, is fine). Does not give a probability of the cut or a price forecast. Does not invent figures."
     },
     {
       "id": "fresh-dis-indonesia-nickel",

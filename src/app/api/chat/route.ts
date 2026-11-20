@@ -8,6 +8,7 @@ import { drillIntercepts } from "@/lib/intercepts";
 import { supplyConcentration } from "@/lib/supply";
 import { tradeComparison } from "@/lib/trade";
 import { facilityList } from "@/lib/facilities";
+import { supplyDisruption } from "@/lib/disruption";
 
 // Sources whose licence requires a credit in every answer that uses them. If the final answer does not mention the source, the
 // credit line is appended (models forget it now and then even when told to).
@@ -342,6 +343,26 @@ const tools: Anthropic.ToolUnion[] = [
         top_n: { type: "number", description: "League table rows, default 12, max 20." },
       },
       required: [],
+    },
+  },
+  {
+    name: "supply_disruption",
+    description:
+      "SCENARIO tool: what happens if a country cuts (or bans) its supply of a critical mineral at one stage. Computes from recorded data: the share of world supply lost (USGS 2025 tables), " +
+      "which importers are exposed (CEPII BACI trade 2022-2024 average: each importer's imports from that country and their share of its imports of those product codes, plus the EU-27 and a watch list), " +
+      "who else produces and which facilities exist outside the country (USGS facility lists with owners; nameplate capacity, not spare), the project pipeline in our records, and that country's past export restrictions " +
+      "on the mineral (OECD inventory 2009-2024) with what prices did afterwards. USE THIS for 'what if China bans X', 'what happens if the DRC cuts cobalt exports', 'who is exposed if Indonesia stops nickel', " +
+      "'how vulnerable is the EU to a cut in Chinese graphite', 'scenario', 'disruption', 'supply shock'. Quote its statements for every number, and always follow it with search_documents (its document_search_query) for measures since 2024 and policy context. " +
+      "It is not a forecast: never give a probability of the event or a price prediction. Covers 35 minerals; gallium, germanium, indium and rhenium have no usable trade codes (grouped HS codes), so it reports supply and history only for them.",
+    input_schema: {
+      type: "object",
+      properties: {
+        commodity: { type: "string", description: "Mineral, e.g. cobalt, nickel, lithium, rare earths, graphite, gallium, copper, tungsten, antimony, aluminium (bauxite/alumina/metal)." },
+        country: { type: "string", description: "Country whose supply is cut, e.g. China, DRC, Indonesia, Chile, Russia, South Africa." },
+        stage: { type: "string", description: "Optional: mine, refined (or processing / smelter / refinery), or intermediate. Default: the USGS stage where the country's share is largest." },
+        cut_pct: { type: "number", description: "Percentage of the country's supply cut, 1-100 (default 100 = full stop)." },
+      },
+      required: ["commodity", "country"],
     },
   },
   {
@@ -793,6 +814,13 @@ async function executeTool(
     extras.datasets.push(...(out.datasets ?? []));
     return out.content;
   }
+  if (name === "supply_disruption") {
+    const out = await supplyDisruption(input);
+    extras.evidence.push(...(out.evidence ?? []));
+    extras.datasets.push(...(out.datasets ?? []));
+    extras.maps.push(...(out.maps ?? []));
+    return out.content;
+  }
   if (name === "drill_intercepts") {
     const out = await drillIntercepts(input);
     extras.evidence.push(...(out.evidence ?? []));
@@ -1124,6 +1152,10 @@ function stepLabel(name: string, input: Record<string, unknown>): string {
     }
     case "assay_next":
       return "Testing which extra element would separate the deposit types";
+    case "supply_disruption": {
+      const c = String(input.country ?? "").trim(), m = String(input.commodity ?? "").trim();
+      return c && m ? `Running the scenario: ${c} cuts ${m} supply` : "Running the supply-disruption scenario";
+    }
     case "supply_concentration":
       return "Looking up who supplies it, country by country";
     case "trade_comparison":
@@ -1155,7 +1187,7 @@ function chooseEffort(topics: TopicId[], userText = ""): Effort {
   if (process.env.CHAT_EFFORT && ["low", "medium", "high"].includes(process.env.CHAT_EFFORT)) return process.env.CHAT_EFFORT as Effort;
   const analytic = topics.some((t) => t === "geochemistry_workflow" || t === "geochemistry_scripts" || t === "project_economics");
   // Side-by-side comparisons, rankings and trends need care so the summary agrees with the numbers.
-  const comparative = /\b(compar\w*|versus|vs\.?|rank\w*|trend\w*|split|decompos\w*|break ?down|drove|driver|sensitiv\w*|exposure|exposed|elasticit\w*|correlat\w*)\b/i.test(userText);
+  const comparative = /\b(compar\w*|versus|vs\.?|rank\w*|trend\w*|split|decompos\w*|break ?down|drove|driver|sensitiv\w*|exposure|exposed|elasticit\w*|correlat\w*|scenarios?|disrupt\w*|what if|vulnerab\w*)\b/i.test(userText);
   return analytic || comparative ? "medium" : "low";
 }
 
@@ -1163,7 +1195,7 @@ function chooseEffort(topics: TopicId[], userText = ""): Effort {
 const toolsWithoutWeb: Anthropic.ToolUnion[] = tools.filter((t) => !("name" in t && (t.name === "web_search" || t.name === "web_fetch")));
 
 const SIMPLE_TOPICS: TopicId[] = ["financials", "markets", "occurrences", "africa"];
-const NOT_SIMPLE = /\b(compar\w*|versus|vs\.?|rank\w*|trend\w*|since|over the|histor\w*|moved|why|explain\w*|analy[sz]\w*|summari[sz]\w*|reliab\w*|caveat\w*|forecast\w*|predict\w*|explor\w*|plot|chart|diagram|top \d+|which|who|best|worst|most|least|between|all|every|list|what does|literature|reports? says?|will|would|future|outlook|expect\w*|project(ed|ions?)|next (year|decade)|20[3-9]\d|us dollars?|usd|us\$|convert\w*|exchange rates?|fx|ebitda|interest cover|leverage|net debt|effective tax|sensitiv\w*|exposure|exposed|elasticit\w*|regress\w*|correlat\w*|beta|map\w*|where|located|locations?|positions?|sites?|assets?|own\w*|stakes?|plants?|refiner\w*|smelter\w*|facilit\w*|capacit\w*|largest|biggest|smallest|output)\b/i;
+const NOT_SIMPLE = /\b(compar\w*|versus|vs\.?|rank\w*|trend\w*|since|over the|histor\w*|moved|why|explain\w*|analy[sz]\w*|summari[sz]\w*|reliab\w*|caveat\w*|forecast\w*|predict\w*|explor\w*|plot|chart|diagram|top \d+|which|who|best|worst|most|least|between|all|every|list|what does|literature|reports? says?|will|would|future|outlook|expect\w*|project(ed|ions?)|next (year|decade)|20[3-9]\d|us dollars?|usd|us\$|convert\w*|exchange rates?|fx|ebitda|interest cover|leverage|net debt|effective tax|sensitiv\w*|exposure|exposed|elasticit\w*|regress\w*|correlat\w*|beta|map\w*|where|located|locations?|positions?|sites?|assets?|own\w*|stakes?|plants?|refiner\w*|smelter\w*|facilit\w*|capacit\w*|largest|biggest|smallest|output|scenarios?|disrupt\w*|bans?|banned|cuts?|stops?|shocks?|what if|vulnerab\w*|risks?)\b/i;
 // Maps, locations and company assets stay on MODEL (2026-11-01): the small model skipped company_assets and named catalogue sites instead.
 // Capacity and size rankings too (2026-11-11): the small model dropped the published product/measure caveats on USGS facility capacities.
 

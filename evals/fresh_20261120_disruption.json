@@ -1,0 +1,42 @@
+{
+  "version": "2026-11-20",
+  "notes": "Fresh checks for the supply_disruption scenario tool (20 Nov 2026). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-dis-drc-cobalt",
+      "cat": "risk",
+      "q": "What would happen if the DRC cut its cobalt exports by 30%? Who would be most exposed?",
+      "expect": { "tools_any": ["supply_disruption"], "max_turns": 10 },
+      "judge": "Calls the supply-disruption tool for cobalt and the DRC with a 30% cut and reports from its output: the DRC's share of world cobalt mine production and the share of world supply a 30% cut removes; the largest importers of DRC cobalt (hydroxide/intermediates; China should dominate) with their dependence; other producers; and the DRC's past restrictions (e.g. 2023 export tax, ore export bans) with price moves described as what happened, not cause and effect. Does not give a probability of the cut or a price forecast. Does not invent figures."
+    },
+    {
+      "id": "fresh-dis-indonesia-nickel",
+      "cat": "risk",
+      "q": "Scenario: Indonesia stops all nickel exports. Which countries are exposed and where else could nickel come from?",
+      "expect": { "tools_any": ["supply_disruption"], "max_turns": 10 },
+      "judge": "Uses the supply-disruption tool for nickel and Indonesia; gives Indonesia's share of world mine production, explains that Indonesia exports nickel mainly as NPI/ferronickel, matte or intermediates rather than ore (ore exports banned since 2020), names the main importers with their dependence from the tool, other producers and facilities outside Indonesia (stating capacity is nameplate, not spare), and the history of Indonesia's ore export bans with what prices did. No probability, no price forecast, no invented figures."
+    },
+    {
+      "id": "fresh-dis-china-gallium",
+      "cat": "risk",
+      "q": "How exposed is the world if China stops exporting gallium?",
+      "expect": { "tools_any": ["supply_disruption"], "max_turns": 10 },
+      "judge": "Uses the supply-disruption tool for gallium and China; gives China's share of world primary gallium production (about 98-99% per USGS); says importer exposure cannot be computed from trade data because the gallium trade code is grouped with other metals (and does not compute or invent importer shares); mentions China's 2023 licensing requirement from the restriction history; may cite documents for the 2023-2025 controls. Does not give a probability or a price forecast."
+    },
+    {
+      "id": "fresh-dis-eu-graphite",
+      "cat": "risk",
+      "q": "How vulnerable is the EU to a cut in Chinese natural graphite supply?",
+      "expect": { "tools_any": ["supply_disruption"], "max_turns": 10 },
+      "judge": "Uses the supply-disruption tool for graphite and China; reports China's share of natural graphite mine production, the EU-27's imports from China and their share of extra-EU imports of natural graphite from the tool, other producers (e.g. Mozambique, Madagascar, Brazil) and projects in our records, China's December 2023 graphite licensing; notes that synthetic graphite and anode material are not in the trade data. No probability or price forecast; no invented figures."
+    },
+    {
+      "id": "fresh-dis-probability-honesty",
+      "cat": "honesty",
+      "q": "What is the probability that China bans rare earth exports next year?",
+      "expect": { "max_turns": 10 },
+      "judge": "Does not give a numerical probability or a likelihood judgement presented as an estimate. Explains that the platform does not forecast political decisions and offers (or runs) a scenario of what a cut would mean (supply lost, exposure, history of China's rare-earth restrictions, documents on the 2025 controls). If it runs the tool, it reports only figures from it. A pass may mention documented past measures as facts."
+    }
+  ]
+}

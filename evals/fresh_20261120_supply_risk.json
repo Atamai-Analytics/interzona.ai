@@ -22,7 +22,7 @@
       "cat": "risk",
       "q": "How risky is US natural graphite supply?",
       "expect": { "tools_any": ["supply_risk"], "max_turns": 10 },
-      "judge": "Uses the supply-risk tool for graphite with the United States as importer; reports China's share of natural graphite mine production (about 78%) with licensing controls in force (China's December 2023 licensing), the HHI or restriction-weighted HHI, and that about 63% of US natural graphite imports in 2022-2024 came from China, naming other suppliers (Canada, Mozambique, Madagascar, Mexico). Notes synthetic graphite/anode material is not covered if relevant. No probability or price forecast; no invented figures."
+      "judge": "Uses the supply-risk tool for graphite with the United States as importer; reports China's share of natural graphite mine production (about 78%) with licensing controls in force (China's December 2023 licensing), the HHI or restriction-weighted HHI, and that about 63% of US natural graphite imports in 2022-2024 came from China, naming other suppliers (Canada, Mozambique, Madagascar, Mexico). Synthetic graphite/anode material may be noted as outside the score but this is optional. Additional figures cited to library documents (for example USGS or IEA on post-2024 controls and US import shares) are allowed and expected. No probability or price forecast; no invented figures."
     }
   ]
 }

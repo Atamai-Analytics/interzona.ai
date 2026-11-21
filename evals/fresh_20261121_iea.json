@@ -40,7 +40,7 @@
       "expect": {
         "max_turns": 10
       },
-      "judge": "Uses the supply-risk tool (or the IEA/USGS data) and names, from its output, battery-grade graphite (China about 94%), magnet rare earth refining (China about 84%), cobalt refining (China about 76%), lithium refining (China about 74%) and gallium primary production (China about 99%) among the most concentrated processing stages; attributes the refining shares for graphite, rare earths, cobalt and lithium to the IEA (naming the Outlook is optional) and does not say those refining stages have no figures. No invented figures."
+      "judge": "Uses the supply-risk tool (or the IEA/USGS data) and names, from its output, battery-grade graphite (China about 94%), magnet rare earth refining (China about 84%), cobalt refining (China about 76%), lithium refining (China about 74%) (gallium primary production, China about 99%, may also appear but is optional) among the most concentrated processing stages; attributes the refining shares for graphite, rare earths, cobalt and lithium to the IEA (naming the Outlook is optional) and does not say those refining stages have no figures. No invented figures."
     }
   ]
 }

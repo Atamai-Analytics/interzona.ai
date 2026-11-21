@@ -18,8 +18,9 @@ type LeagueRow = {
   mineral_key: string; mineral: string; stage: string; year: number; top_producer: { country: string; share_pct: number } | null; hhi: number;
   supply_under_export_controls_pct: number | null; of_which_bans_or_quotas_pct: number | null; under_any_measure_incl_taxes_pct: number | null;
   restriction_weighted_hhi: number; controlled_producers: string[]; new_measures_2020_2024: number;
+  stability_weighted_hhi: number; low_stability_share_pct: number | null; supply_weighted_stability: number | null;
 };
-type Producer = { country: string; share_pct: number; export_controls: boolean; ban_or_quota: boolean; export_taxes: boolean; measures: string | null; new_measures_2020_2024: number };
+type Producer = { country: string; share_pct: number; export_controls: boolean; ban_or_quota: boolean; export_taxes: boolean; measures: string | null; new_measures_2020_2024: number; political_stability_score: number | null };
 type Detail = {
   mineral_key: string; mineral: string; statements: string[]; notes: string[];
   stages: { stage: string; year: number; hhi: number; top_producer: { country: string; share_pct: number } | null; supply_under_export_controls_pct: number | null; of_which_bans_or_quotas_pct: number | null; restriction_weighted_hhi: number; producers: Producer[] }[];
@@ -30,6 +31,8 @@ const RANKS = [
   { key: "restriction_weighted_hhi", label: "Risk score", note: "concentration among producers with export controls in force (0-10,000)" },
   { key: "controlled_share", label: "Share under controls", note: "share of world supply from producers with export controls in force" },
   { key: "hhi", label: "Concentration (HHI)", note: "Herfindahl-Hirschman index of production (0-10,000)" },
+  { key: "stability_weighted_hhi", label: "Stability-weighted", note: "concentration weighted by producers' political instability (World Bank WGI, 0-10,000)" },
+  { key: "low_stability_share", label: "Low-stability supply", note: "share of world supply from producers with low political stability (World Bank WGI estimate below -1)" },
 ] as const;
 const IMPORTERS = ["", "EU", "United States", "Japan", "South Korea", "India", "China", "United Kingdom"];
 const STAGES = [
@@ -42,6 +45,7 @@ const CREDITS = [
   "U.S. Geological Survey, Mineral Commodity Summaries 2026 (public domain)",
   "OECD Inventory of Export Restrictions on Industrial Raw Materials (2009-2024)",
   "CEPII BACI (version 202601, HS12), Gaulier and Zignago (2010), Etalab Open Licence 2.0",
+  "Worldwide Governance Indicators, 2026 Update, World Bank (www.govindicators.org), CC BY 4.0",
 ];
 const fmt = (v: number | null | undefined) => (v === null || v === undefined ? "–" : v.toLocaleString("en-US"));
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
@@ -200,7 +204,7 @@ export function RiskApp() {
           {!league && !error && <p className="text-sm text-gray-400">Loading…</p>}
           {league && (
             <>
-              <ul className="list-disc space-y-1 pl-5 text-xs text-gray-300">{league.statements.slice(1, 3).map((s, i) => <li key={i}>{s}</li>)}</ul>
+              <ul className="list-disc space-y-1 pl-5 text-xs text-gray-300">{league.statements.filter((s) => /both highly concentrated|licensing only|Political stability/.test(s)).map((s, i) => <li key={i}>{s}</li>)}</ul>
               <div className="max-h-[480px] overflow-auto">
                 <table className="w-full text-sm">
                   <thead className="sticky top-0 bg-gray-900 text-xs text-gray-400">
@@ -214,6 +218,7 @@ export function RiskApp() {
                       <th className="py-1 pl-3 text-right font-medium">Of which bans or quotas</th>
                       <th className="py-1 pl-3 text-left font-medium">Risk score</th>
                       <th className="py-1 pl-3 text-right font-medium">New measures 2020-24</th>
+                      <th className="py-1 pl-3 text-right font-medium" title="Share of world supply from producers with a World Bank WGI political-stability estimate below -1">Low-stability supply</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -228,6 +233,7 @@ export function RiskApp() {
                         <td className="py-1 pl-3 text-right tabular-nums text-gray-400">{fmt(r.of_which_bans_or_quotas_pct)}%</td>
                         <td className="py-1 pl-3 whitespace-nowrap tabular-nums"><Bar value={r.restriction_weighted_hhi} max={maxScore} tone="bg-rose-500" /> <span className="ml-1">{fmt(r.restriction_weighted_hhi)}</span></td>
                         <td className="py-1 pl-3 text-right tabular-nums text-gray-400">{r.new_measures_2020_2024}</td>
+                        <td className="py-1 pl-3 text-right tabular-nums text-gray-400">{fmt(r.low_stability_share_pct)}%</td>
                       </tr>
                     ))}
                   </tbody>
@@ -275,6 +281,7 @@ export function RiskApp() {
                           <th className="px-2 py-1 text-left font-medium">Status</th>
                           <th className="px-2 py-1 text-left font-medium">Measures in force</th>
                           <th className="px-2 py-1 text-right font-medium">New 2020-24</th>
+                          <th className="px-2 py-1 text-right font-medium" title="World Bank WGI Political Stability score, 0-100 (2025)">Political stability</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -290,6 +297,7 @@ export function RiskApp() {
                             </td>
                             <td className="px-2 py-1 text-gray-400">{p.measures ?? "–"}</td>
                             <td className="px-2 py-1 text-right tabular-nums text-gray-400">{p.new_measures_2020_2024}</td>
+                            <td className={`px-2 py-1 text-right tabular-nums ${p.political_stability_score !== null && p.political_stability_score < 46 ? "text-rose-300" : "text-gray-400"}`}>{p.political_stability_score ?? "–"}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -359,7 +367,8 @@ export function RiskApp() {
 
         <p className="text-xs text-gray-500">
           Sources: {CREDITS.join("; ")}; European Commission RMIS (EU import reliance and recycling rates). Production shares are USGS estimates and show where material is produced, not who owns it.
-          The score reflects recorded export measures, not political stability or intentions; no governance index is used. The OECD inventory ends in 2024.
+          The risk score reflects recorded export measures, not intentions; the OECD inventory ends in 2024. Political stability scores are the World Bank&apos;s Worldwide Governance Indicators (2026 update, 0-100, perception-based);
+          the World Bank advises they are not definitive criteria for investment or other critical financial decisions.
         </p>
       </main>
     </div>

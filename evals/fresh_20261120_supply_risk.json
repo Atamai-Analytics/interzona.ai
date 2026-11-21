@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-20",
+  "version": "2026-11-20b",
   "notes": "Fresh checks for the supply_risk tool (20 Nov 2026). Not part of the gate.",
   "ids": [],
   "questions": [
@@ -7,22 +7,49 @@
       "id": "fresh-risk-league",
       "cat": "risk",
       "q": "Which critical minerals have the highest geopolitical supply risk?",
-      "expect": { "tools_any": ["supply_risk"], "max_turns": 10 },
-      "judge": "Calls the supply-risk tool (league table) and ranks mineral stages from its output (gallium, niobium, bismuth, tungsten and natural graphite at the top by restriction-weighted HHI). Explains in plain words that the ranking combines concentration of production with the share of supply from producers with export controls in force in 2024, and that several top entries rest on licensing only, which may be routine or work as a ban. Mentions that measures after 2024 are not in the score (documents may be cited for them). Does not cite World Bank governance scores, give probabilities or forecast prices. No invented figures."
+      "expect": {
+        "tools_any": [
+          "supply_risk"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Calls the supply-risk tool (league table) and ranks mineral stages from its output (gallium, niobium, bismuth, tungsten and natural graphite at the top by restriction-weighted HHI). Explains in plain words that the ranking combines concentration of production with the share of supply from producers with export controls in force in 2024, and that several top entries rest on licensing only, which may be routine or work as a ban. Mentions that measures after 2024 are not in the score (documents may be cited for them). Figures from the tool's output (number of stages, scores, shares) are expected and count as supported. If it cites World Bank governance (WGI) scores it presents them as perception-based; does not give probabilities or forecast prices. No invented figures."
     },
     {
       "id": "fresh-risk-eu-cobalt",
       "cat": "risk",
       "q": "How exposed is the EU to export-controlled cobalt supply?",
-      "expect": { "tools_any": ["supply_risk"], "max_turns": 10 },
-      "judge": "Uses the supply-risk tool for cobalt with the EU as importer; reports that the DRC (about 73% of mine supply) has a ban or quota in force and that about 90% of world mine supply comes from producers with export controls; gives the EU's extra-EU imports of the stage's products and the share from controlled exporters (about 20%) with main suppliers, and EU import reliance (81% primary, 1% refined) and recycling rate (22%) from the 2023 CRM assessment. May note that the EU mostly buys refined cobalt made elsewhere (e.g. China) so direct exposure understates indirect dependence. No probability or price forecast; no invented figures."
+      "expect": {
+        "tools_any": [
+          "supply_risk"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Uses the supply-risk tool for cobalt with the EU as importer; reports that the DRC (about 73% of mine supply) has a ban or quota in force and that about 90% of world mine supply comes from producers with export controls; gives the EU's extra-EU imports of the stage's products and the share from controlled exporters (about 20%) with main suppliers, and EU import reliance (81% primary, 1% refined) and recycling rate (22%) from the 2023 CRM assessment. May note that the EU mostly buys refined cobalt made elsewhere (e.g. China) so direct exposure understates indirect dependence. No probability and no price forecast of its own (quoting an attributed outlook from a library document, e.g. S&P Global, is allowed); no invented figures."
     },
     {
       "id": "fresh-risk-graphite-us",
       "cat": "risk",
       "q": "How risky is US natural graphite supply?",
-      "expect": { "tools_any": ["supply_risk"], "max_turns": 10 },
-      "judge": "Uses the supply-risk tool for graphite with the United States as importer; reports China's share of natural graphite mine production (about 78%) with licensing controls in force (China's December 2023 licensing), the HHI or restriction-weighted HHI, and that about 63% of US natural graphite imports in 2022-2024 came from China, naming other suppliers (Canada, Mozambique, Madagascar, Mexico). Synthetic graphite/anode material may be noted as outside the score but this is optional. Additional figures cited to library documents (for example USGS or IEA on post-2024 controls and US import shares) are allowed and expected. No probability or price forecast; no invented figures."
+      "expect": {
+        "tools_any": [
+          "supply_risk"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Uses the supply-risk tool for graphite with the United States as importer; reports China's share of natural graphite mine production (about 78%) with licensing controls in force (China's December 2023 licensing), optionally the HHI or restriction-weighted HHI, and that about 63% of US natural graphite imports in 2022-2024 came from China, naming other suppliers (Canada, Mozambique, Madagascar, Mexico). Synthetic graphite/anode material may be noted as outside the score but this is optional. Additional figures cited to library documents (for example USGS or IEA on post-2024 controls and US import shares) are allowed and expected. No probability or price forecast; no invented figures."
+    },
+    {
+      "id": "fresh-risk-stability",
+      "cat": "risk",
+      "q": "Which critical minerals depend most on politically unstable producer countries?",
+      "expect": {
+        "tools_any": [
+          "supply_risk"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Uses the supply-risk tool (ranked by low-stability share or stability-weighted HHI) and reports from its output that cobalt (DR Congo, about 73% of mine supply) and tantalum (about 69%) have the largest shares of supply from low-political-stability producers, with smaller shares for titanium minerals, tin and copper; explains that 'low stability' means a World Bank Worldwide Governance Indicators Political Stability estimate below -1 (WGI 2026 update, which covers 2025 - either year is correct), credits the World Bank WGI, and says the scores are perception-based and not definitive criteria for investment decisions. Does not call Brazil, South Africa or China low-stability. No probabilities, no price forecasts, no invented figures."
     }
   ]
 }

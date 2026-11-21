@@ -163,6 +163,15 @@ export async function supplyDisruption(input: Record<string, unknown>): Promise<
     statements.push(`There is no USGS world production table for ${m.label.toLowerCase()} at the ${stage.trade_form} stage, so the share of world supply lost cannot be computed; only the trade, facility and history sections apply.`);
   }
 
+  // ---- 1b. the country's political stability (World Bank WGI, perception-based) -----------------------------------------------------
+  const gv = (await q(`SELECT year, max(score) FILTER (WHERE dimension = 'PV')::float8 AS pv, max(estimate) FILTER (WHERE dimension = 'PV')::float8 AS est, avg(score)::float8 AS avg6
+     FROM core.country_governance WHERE iso3 = '${esc(C.iso3)}' AND year = (SELECT max(year) FROM core.country_governance) GROUP BY year`))[0];
+  if (gv && gv.pv !== null) {
+    const est = Number(gv.est);
+    statements.push(`${C.name}'s political stability (World Bank Worldwide Governance Indicators, ${gv.year}): score ${Math.round(Number(gv.pv))}/100, estimate ${est.toFixed(2)} (${est < -1 ? "low: more than one standard deviation below the world average" : est < 0 ? "below the world average" : "at or above the world average"}); average of the six governance scores ${Math.round(Number(gv.avg6))}/100. Perception-based; not a forecast and not definitive criteria for investment decisions.`);
+    evidence.push({ kind: "data", label: "Worldwide Governance Indicators, 2026 Update, World Bank (www.govindicators.org), CC BY 4.0", detail: `${C.name} political stability ${gv.year}` });
+  }
+
   // ---- 2. trade exposure -------------------------------------------------------------------------------------------------------------
   let trade: Q | null = null;
   if (!stage.hs6.length) caveats.push("No trade codes are loaded for this mineral and stage, so importer exposure cannot be computed.");

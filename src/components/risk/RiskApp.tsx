@@ -84,6 +84,99 @@ function DataTable({ d, max = 40 }: { d: Dataset; max?: number }) {
   );
 }
 
+/** Plain-language guide to the numbers on this page (collapsed by default). */
+function HowToRead() {
+  const h3 = "mt-4 text-sm font-semibold text-gray-100";
+  const p = "mt-1 text-sm leading-relaxed text-gray-300";
+  const li = "text-sm leading-relaxed text-gray-300";
+  return (
+    <details className={`${card} group`}>
+      <summary className="cursor-pointer list-none text-sm font-semibold text-rose-300 hover:text-rose-200">
+        <span className="mr-1 inline-block transition-transform group-open:rotate-90">▸</span> How to read this page
+      </summary>
+      <div className="mt-2 max-w-4xl">
+        <p className={p}>
+          The page answers one question: <b>how easily could supply of a mineral, at one stage, be disrupted by the countries that produce it?</b> Each number looks at a different part of that.
+        </p>
+
+        <h3 className={h3}>The numbers</h3>
+        <ul className="mt-1 list-disc space-y-2 pl-5">
+          <li className={li}>
+            <b>Concentration (HHI, 0–10,000)</b>: how few countries produce it (the sum of each producer&apos;s squared percentage share). Under 1,500 is spread out (copper mining, about 1,000);
+            over 2,500 is highly concentrated; 10,000 means one country makes everything (gallium, about 9,800). It asks: if one country stops, how much is lost?
+          </li>
+          <li className={li}>
+            <b>Supply under export controls (%)</b>: how much of world supply comes from countries that already have an export ban, quota or licence on it (in force in 2024).
+            <span className="mx-1 rounded bg-rose-900/60 px-1.5 text-rose-100">ban or quota</span> is a hard restriction (for example the DRC on cobalt).
+            <span className="mx-1 rounded bg-amber-900/60 px-1.5 text-amber-100">licensing only</span> is ambiguous: it can be a routine permit (South Africa&apos;s precious-metal export approvals, Brazil&apos;s niobium
+            authorisations) or work as a ban (China&apos;s gallium and graphite controls; Indonesia&apos;s nickel-ore ban, which the data record as licensing). When a high number rests on licensing only, check the documents.
+          </li>
+          <li className={li}>
+            <b>Risk score (restriction-weighted HHI, 0–10,000)</b>, the main ranking: concentration counted only over producers that have export controls. High means supply sits in a few countries that have already
+            shown they will control exports. Gallium scores 9,803 (China makes 99% and has licensing controls); magnesium scores almost nothing although China makes 86%, because the record shows no Chinese export controls on it.
+          </li>
+          <li className={li}>
+            <b>Political stability</b> (World Bank Worldwide Governance Indicators): each producer&apos;s score from 0 to 100 (DR Congo 28, Russia 49, China 66, Australia 79), which measures perceived risk of
+            instability, conflict or terrorism. <b>Low-stability supply</b> is the share of world supply from countries well below the world average (a stability estimate below −1, about one standard deviation;
+            27 of 207 countries); for example cobalt 73% (DRC) and tantalum 69%. The <b>stability-weighted</b> score is concentration weighted by how unstable each producer is. This catches a different risk from
+            export controls: disruption by conflict or a coup rather than by policy.
+          </li>
+          <li className={li}><b>New measures 2020–24</b>: how many restrictions producers introduced or tightened recently, a rough trend signal.</li>
+        </ul>
+
+        <h3 className={h3}>Reading the combinations</h3>
+        <div className="mt-1 overflow-auto rounded border border-gray-800">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-900 text-xs text-gray-400">
+              <tr><th className="px-2 py-1 text-left font-medium">Concentration</th><th className="px-2 py-1 text-left font-medium">Controls or instability</th><th className="px-2 py-1 text-left font-medium">What it means</th><th className="px-2 py-1 text-left font-medium">Examples</th></tr>
+            </thead>
+            <tbody className="text-gray-300">
+              <tr className="border-t border-gray-800"><td className="px-2 py-1">High</td><td className="px-2 py-1">High</td><td className="px-2 py-1">The real chokepoints: few suppliers who already restrict or are unstable</td><td className="px-2 py-1">Gallium, graphite, tungsten, rare earths (China); cobalt (DRC)</td></tr>
+              <tr className="border-t border-gray-800"><td className="px-2 py-1">High</td><td className="px-2 py-1">Low</td><td className="px-2 py-1">Concentrated but no record of restricting: a latent risk if policy changes</td><td className="px-2 py-1">Magnesium (China), tellurium</td></tr>
+              <tr className="border-t border-gray-800"><td className="px-2 py-1">Low</td><td className="px-2 py-1">High</td><td className="px-2 py-1">Many suppliers, several restrict: manageable by diversifying</td><td className="px-2 py-1">Copper mining</td></tr>
+              <tr className="border-t border-gray-800"><td className="px-2 py-1">Low</td><td className="px-2 py-1">Low</td><td className="px-2 py-1">Lowest risk</td><td className="px-2 py-1">Barite, zirconium</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className={h3}>For a specific buyer: the importer view</h3>
+        <p className={p}>
+          Pick an importer to see how much of its own imports come from controlled or unstable suppliers. This can differ a lot from the world picture. For EU cobalt, 90% of world mine supply is under
+          controls, but only about 20% of the EU&apos;s direct imports of cobalt intermediates come from controlled exporters, because the EU buys mostly refined cobalt, much of it refined in China; its real
+          exposure is indirect and direct trade understates it. For US natural graphite, 63% of imports come from China, which has controls: high and direct.
+        </p>
+
+        <h3 className={h3}>Then ask &ldquo;what if?&rdquo;</h3>
+        <p className={p}>
+          The scenario builder below takes one country and mineral and shows world supply lost, who is exposed, who else produces, the project pipeline in our records, and what prices did after the
+          country&apos;s past restrictions. The risk table tells you where to look; the scenario tells you how much it matters.
+        </p>
+
+        <h3 className={h3}>What it does not tell you</h3>
+        <ul className="mt-1 list-disc space-y-1 pl-5">
+          <li className={li}><b>Not a forecast</b>: it is recorded behaviour and perceptions, not a prediction that anything will happen.</li>
+          <li className={li}>
+            <b>Export controls are counted to 2024</b>. Later moves, such as China&apos;s 2025 rare-earth and magnet controls or the DRC&apos;s 2025 cobalt ban and quotas, are not in the score, so cobalt and rare earths
+            are probably understated. Ask in the chat, which searches the document library for them.
+          </li>
+          <li className={li}><b>Production location, not ownership</b>: a mine in Chile owned by a Chinese company counts as Chile.</li>
+          <li className={li}><b>Mostly mining</b>: processing stages are covered only where USGS publishes them (copper refining, alumina, gallium, titanium sponge and a few others).</li>
+          <li className={li}><b>Stability scores are perception surveys</b>; the World Bank advises they are not definitive criteria for investment or other critical financial decisions.</li>
+        </ul>
+
+        <h3 className={h3}>A good way to use it</h3>
+        <ol className="mt-1 list-decimal space-y-1 pl-5">
+          <li className={li}>Rank by risk score, then by low-stability supply, to shortlist minerals.</li>
+          <li className={li}>Open a mineral to see who produces it and why they are flagged, especially &ldquo;licensing only&rdquo; against &ldquo;ban or quota&rdquo;.</li>
+          <li className={li}>Add your importer to see your own exposure.</li>
+          <li className={li}>Run a scenario on the main producer.</li>
+          <li className={li}>Ask the chat about measures since 2024.</li>
+        </ol>
+      </div>
+    </details>
+  );
+}
+
 export function RiskApp() {
   const [rankBy, setRankBy] = useState<(typeof RANKS)[number]["key"]>("restriction_weighted_hhi");
   const [league, setLeague] = useState<{ rows: LeagueRow[]; statements: string[]; dataset?: Dataset } | null>(null);
@@ -183,6 +276,7 @@ export function RiskApp() {
 
       <main className="mx-auto max-w-7xl space-y-4 p-4">
         {error && <p className="rounded border border-red-800 bg-red-950/40 px-3 py-2 text-sm text-red-200">{error}</p>}
+        <HowToRead />
 
         {/* ---- league table ---- */}
         <section className={`${card} space-y-3`}>

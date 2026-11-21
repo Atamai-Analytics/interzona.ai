@@ -18,7 +18,7 @@ const YEAR = 2024; // last year of the OECD inventory
 const CONTROL = ["Export prohibition", "Export quota", "Licensing requirement", "Qualified exporters list", "Domestic market obligation", "Captive mining"];
 const HARD = ["Export prohibition", "Export quota", "Domestic market obligation", "Captive mining"];
 const FISCAL = ["Export tax", "Export surtax", "Fiscal tax on exports", "VAT tax rebate reduction / withdrawal", "Minimum export price / price reference for exports"];
-const STAGE_LABEL: Record<string, string> = { mine_production: "mine production", refinery_production: "refinery production", smelter_production: "smelter production", primary_production: "primary production", sponge_production: "sponge production", production: "production" };
+const STAGE_LABEL: Record<string, string> = { iea_refining: "refining (IEA 2025)", iea_battery_grade: "battery-grade graphite (IEA 2025)", mine_production: "mine production", refinery_production: "refinery production", smelter_production: "smelter production", primary_production: "primary production", sponge_production: "sponge production", production: "production" };
 const ALIASES: Record<string, string> = { ree: "rare_earths", "rare earth": "rare_earths", "rare earths": "rare_earths", aluminum: "aluminium", bauxite: "aluminium", alumina: "aluminium", pgm: "platinum", pgms: "platinum", columbium: "niobium", "phosphate rock": "phosphate", "natural graphite": "graphite", chrome: "chromium", chromite: "chromium", zircon: "zirconium", "magnesium metal": "magnesium" };
 const RMIS: Record<string, string[]> = { graphite: ["Graphite-natural"], rare_earths: ["Rare Earth Elements"], titanium: ["Titanium", "Titanium metal"], magnesium: ["Magnesium"] };
 const EU27 = ["AUT", "BEL", "BGR", "HRV", "CYP", "CZE", "DNK", "EST", "FIN", "FRA", "DEU", "GRC", "HUN", "IRL", "ITA", "LVA", "LTU", "LUX", "MLT", "NLD", "POL", "PRT", "ROU", "SVK", "SVN", "ESP", "SWE"];
@@ -30,6 +30,7 @@ const CREDITS = {
   baci: "CEPII BACI (version 202601, HS12), Gaulier and Zignago (2010), Etalab Open Licence 2.0",
   rmis: "European Commission, Raw Materials Information System (2023 CRM assessment indicators)",
   wgi: "Worldwide Governance Indicators, 2026 Update, World Bank (www.govindicators.org), CC BY 4.0",
+  iea: "IEA (2026), Critical Minerals Data Explorer / Global Critical Minerals Outlook 2026, IEA, Paris, Licence: CC BY 4.0",
 };
 
 const HOW =
@@ -39,6 +40,7 @@ const HOW =
   "Restriction-weighted HHI = the Herfindahl-Hirschman index counted over producers with export controls in force only (0-10,000): high when supply is concentrated in countries that already control exports. " +
   "The export-control measures are recorded behaviour, not intentions; political stability is reported separately from the World Bank WGI. The OECD inventory ends in 2024: measures since then (for example China's 2025 rare-earth and magnet controls, the DRC's 2025 cobalt ban and quotas) are not counted - search the documents for them. " +
   "USGS shares are estimates and count named countries only; production location is not ownership. " +
+  "Stages marked (IEA 2025) are refining shares from the IEA Global Critical Minerals Outlook 2026 (base year 2025 of its projections; top six countries named, so HHI is a lower bound; export measures matched on any product of the mineral); USGS has no refining table for cobalt, lithium, nickel, graphite or rare earths. IEA projections for 2030-2040 are scenarios built from announced projects, not forecasts of policy. " +
   "Political stability: the World Bank Worldwide Governance Indicators (2026 update, data year 2025) score each country 0-100 on Political Stability and Absence of Violence/Terrorism (a composite of perception surveys, with a 90% confidence band); " +
   "the stability-weighted HHI weights each producer's squared share by (100 - its score)/100, and 'low stability' means a Political Stability estimate below -1 (about one standard deviation below the world average; 27 of 207 countries in 2025). These are perceptions of risk, not forecasts, and the World Bank advises they are not definitive criteria for investment or other critical financial decisions.";
 
@@ -69,6 +71,66 @@ async function stageData(ids: number[]) {
   // standard-normal scale); the 2026 0-100 score is compressed (median 68, bottom third below 60, which would include Brazil and South Africa).
   const cut = (await q(`SELECT max(year) AS y, count(*) FILTER (WHERE estimate < -1) AS k, count(*) AS n FROM core.country_governance WHERE dimension = 'PV' AND year = (SELECT max(year) FROM core.country_governance)`))[0];
   return { groups, shares, measures, recent, gov, govYear: Number(cut?.y ?? 0), lowCount: Number(cut?.k ?? 0), scoredCount: Number(cut?.n ?? 0) };
+}
+
+// ---- IEA refining stages (Global Critical Minerals Outlook 2026, markets.iea_cm_supply) ----------------------------------------------
+// USGS gives only mine production for cobalt, lithium, nickel, graphite and rare earths; IEA gives refining (and battery-grade graphite) by
+// country. Each IEA stage is added to the same structures as a USGS stage (negative synthetic ids) so scoreStage works unchanged. Shares are of
+// IEA's total; only the top six countries are named (HHI is a lower bound). Export measures are matched on ANY product of the mineral (IEA
+// stages do not map to HS codes one to one).
+const IEA_STAGE: Record<string, string> = { Refining: "iea_refining", "Battery grade": "iea_battery_grade" };
+async function addIeaStages(d: Awaited<ReturnType<typeof stageData>>, rows: Row[], mineral: string | null) {
+  const sup = await q(`SELECT s.mineral_key, s.stage, s.country, s.iso3, s.row_kind, s.value, m.label, m.restriction_commodities
+     FROM markets.iea_cm_supply s JOIN markets.risk_minerals m ON m.mineral = s.mineral_key
+     WHERE s.year = 2025 AND s.stage IN ('Refining', 'Battery grade') ${mineral ? `AND s.mineral_key = '${esc(mineral)}'` : ""}`, 500);
+  const keys = [...new Set(sup.map((r) => `${r.mineral_key}|${r.stage}`))];
+  let k = 0;
+  for (const key of keys) {
+    const [mk, st] = key.split("|");
+    const part = sup.filter((r) => r.mineral_key === mk && r.stage === st);
+    const tot = Number(part.find((r) => r.row_kind === "total")?.value ?? 0);
+    if (!(tot > 0)) continue;
+    const id = -1000 - k++;
+    const ctry = part.filter((r) => r.row_kind === "country").map((r) => ({ group_id: id, country: String(r.country), iso3: String(r.iso3 ?? "").trim(), share: (100 * Number(r.value)) / tot }));
+    const hhi = ctry.reduce((a, c) => a + c.share * c.share, 0);
+    d.groups.push({ id, group_id: id, commodity: "IEA", stage: IEA_STAGE[st], data_year: 2025, is_estimate: true, hhi_named: hhi, top1_country: ctry[0]?.country, top1_share_pct: ctry[0]?.share });
+    d.shares.push(...ctry);
+    const rc = arr(part[0].restriction_commodities);
+    const isos = ctry.map((c) => `'${esc(c.iso3)}'`).join(",");
+    if (rc.length && isos) {
+      const ms = await q(`SELECT e.country_iso3 AS iso3, string_agg(DISTINCT e.measure_type, '; ' ORDER BY e.measure_type) AS types,
+           bool_or(e.measure_type IN (${CONTROL.map((c) => `'${esc(c)}'`).join(",")})) AS control, bool_or(e.measure_type IN (${HARD.map((c) => `'${esc(c)}'`).join(",")})) AS hard, bool_or(e.measure_type IN (${FISCAL.map((c) => `'${esc(c)}'`).join(",")})) AS fiscal
+         FROM markets.export_restrictions e WHERE e.commodity IN (${rc.map((c) => `'${esc(c)}'`).join(",")}) AND e.country_iso3 IN (${isos})
+           AND e.year = ${YEAR} AND coalesce(e.direction_of_change, '') <> 'elimination' AND NOT (e.measure_type = 'Export tax' AND e.value_text = '0') GROUP BY 1`, 200);
+      d.measures.push(...ms.map((m) => ({ ...m, id })));
+      const re = await q(`SELECT e.country_iso3 AS iso3, count(DISTINCT (e.measure_type, e.date_introduced)) AS k, max(e.date_introduced)::date::text AS last FROM markets.export_restrictions e
+         WHERE e.commodity IN (${rc.map((c) => `'${esc(c)}'`).join(",")}) AND e.country_iso3 IN (${isos}) AND e.direction_of_change IN ('introduction', 'increase', 'reintroduction') AND e.date_introduced >= '2020-01-01' GROUP BY 1`, 200);
+      d.recent.push(...re.map((m) => ({ ...m, id })));
+      const have = new Set(d.gov.map((g) => String(g.iso3).trim()));
+      const need = ctry.map((c) => c.iso3).filter((i) => i && !have.has(i));
+      if (need.length) d.gov.push(...(await q(`SELECT iso3, max(score) FILTER (WHERE dimension = 'PV')::float8 AS pv, max(estimate) FILTER (WHERE dimension = 'PV')::float8 AS pv_est, avg(score)::float8 AS avg6
+         FROM core.country_governance WHERE year = ${d.govYear} AND iso3 IN (${need.map((i) => `'${esc(i)}'`).join(",")}) GROUP BY 1`)));
+    }
+    rows.push({ id, mineral: mk, label: String(part[0].label), usgs_commodity: "IEA", usgs_stage: IEA_STAGE[st], hs6: [], restriction_commodities: rc, trade_form: "refined",
+      flag: "IEA projection base year 2025 (Global Critical Minerals Outlook 2026); top six countries named, so HHI is a lower bound; export measures matched on any product of the mineral." });
+  }
+}
+
+/** IEA base-case outlook for one mineral: top producer, top-three share and HHI (top six) by stage and year, 2025-2040. */
+async function ieaOutlook(mineral: string) {
+  const sup = await q(`SELECT stage, year, country, row_kind, value FROM markets.iea_cm_supply WHERE mineral_key = '${esc(mineral)}' ORDER BY stage, year, value DESC`, 500);
+  const out: { stage: string; year: number; top: string; top_share_pct: number | null; top3_share_pct: number | null; hhi_top6: number; total_kt: number }[] = [];
+  for (const st of [...new Set(sup.map((r) => String(r.stage)))]) {
+    for (const y of [...new Set(sup.filter((r) => r.stage === st).map((r) => Number(r.year)))]) {
+      const part = sup.filter((r) => r.stage === st && Number(r.year) === y);
+      const tot = Number(part.find((r) => r.row_kind === "total")?.value ?? 0);
+      const ctry = part.filter((r) => r.row_kind === "country");
+      if (!(tot > 0) || !ctry.length) continue;
+      const sh = ctry.map((r) => (100 * Number(r.value)) / tot);
+      out.push({ stage: st, year: y, top: String(ctry[0].country), top_share_pct: r1(sh[0]), top3_share_pct: r1(sh.slice(0, 3).reduce((a, b) => a + b, 0)), hhi_top6: Math.round(sh.reduce((a, b) => a + b * b, 0)), total_kt: Math.round(tot) });
+    }
+  }
+  return out;
 }
 
 function scoreStage(id: number, d: Awaited<ReturnType<typeof stageData>>) {
@@ -122,6 +184,8 @@ export async function supplyRisk(input: Record<string, unknown>): Promise<Out> {
   if (!mineralIn) {
     const rows = await loadRows();
     const d = await stageData(rows.map((r) => r.id));
+    await addIeaStages(d, rows, null);
+    evidence.push({ kind: "data", label: CREDITS.iea, detail: "refining and battery-grade graphite shares by country, 2025 (projection base year)" });
     const scored = rows.map((r) => ({ r, s: scoreStage(r.id, d) })).filter((x) => x.s) as { r: Row; s: NonNullable<ReturnType<typeof scoreStage>> }[];
     const key = (x: (typeof scored)[number]) => (rankBy === "hhi" ? x.s.hhi : rankBy === "controlled_share" ? x.s.controlled_share_pct ?? 0 : rankBy === "stability_weighted_hhi" ? x.s.stability_weighted_hhi : rankBy === "low_stability_share" ? x.s.low_stability_share_pct ?? 0 : x.s.restriction_weighted_hhi);
     scored.sort((a, b) => key(b) - key(a) || b.s.hhi - a.s.hhi);
@@ -150,7 +214,7 @@ export async function supplyRisk(input: Record<string, unknown>): Promise<Out> {
         stages_covered: scored.length,
         how_to_read: HOW,
         how_to_answer: "Quote the statements and the rows for every number; explain the two dimensions (concentration, export controls in force) and the restriction-weighted HHI in one or two plain sentences; then search the documents for measures since 2024 and cite them. Do not add minerals, producers or measures not listed, and do not turn this into a probability or a price forecast. Whenever you quote a political-stability figure, name the source as the World Bank Worldwide Governance Indicators (2026 update) and say in one phrase that the scores are perception-based and, as the World Bank advises, not definitive criteria for investment decisions.",
-        credits: [CREDITS.usgs, CREDITS.oecd, CREDITS.wgi],
+        credits: [CREDITS.usgs, CREDITS.oecd, CREDITS.wgi, CREDITS.iea],
       }),
       evidence,
       datasets: [dataset],
@@ -165,13 +229,25 @@ export async function supplyRisk(input: Record<string, unknown>): Promise<Out> {
   const rows = await loadRows(String(mm.mineral));
   if (!rows.length) return { content: `${mm.label} has no USGS production table by country, so no supply-risk score can be computed; the supply-disruption scenario tool still gives trade and restriction history.` };
   const d = await stageData(rows.map((r) => r.id));
+  await addIeaStages(d, rows, String(mm.mineral));
+  const outlook = await ieaOutlook(String(mm.mineral));
+  if (outlook.length) evidence.push({ kind: "data", label: CREDITS.iea, detail: `${mm.label}: projected supply by country 2025-2040 (base case)` });
   const stages = rows.map((r) => ({ r, s: scoreStage(r.id, d) })).filter((x) => x.s) as { r: Row; s: NonNullable<ReturnType<typeof scoreStage>> }[];
   const statements: string[] = [];
   const datasets: Dataset[] = [];
   for (const { r, s } of stages) {
     const st = STAGE_LABEL[r.usgs_stage] ?? r.usgs_stage;
-    statements.push(`${r.label}, ${st} (${s.group.data_year}${s.group.is_estimate ? ", USGS estimate" : ""}): top producer ${s.top?.country} ${s.top?.share_pct}%, HHI ${s.hhi}; ${s.controlled_share_pct}% of world supply comes from producers with export controls in force in ${YEAR}${s.controlled_producers.length ? ` (${s.controlled_producers.slice(0, 6).join(", ")})` : ""}, of which ${s.bans_or_quotas_share_pct}% under bans or quotas, and ${s.any_measure_share_pct}% counting export taxes too; restriction-weighted HHI ${s.restriction_weighted_hhi}; producers introduced or tightened ${s.new_measures_2020_2024} measures in 2020-2024. Political stability (World Bank WGI ${d.govYear}): supply-weighted average score ${s.supply_weighted_stability ?? "n/a"}/100, ${s.low_stability_share_pct}% of supply from low-stability producers (WGI estimate below -1), stability-weighted HHI ${s.stability_weighted_hhi}${(s.share_without_stability_score_pct ?? 0) > 0 ? ` (${s.share_without_stability_score_pct}% of supply from producers without a score, weighted at 0.5)` : ""}.`);
+    statements.push(`${r.label}, ${st} (${s.group.data_year}${r.usgs_commodity === "IEA" ? ", IEA base year of its projections" : s.group.is_estimate ? ", USGS estimate" : ""}): top producer ${s.top?.country} ${s.top?.share_pct}%, HHI ${s.hhi}; ${s.controlled_share_pct}% of world supply comes from producers with export controls in force in ${YEAR}${s.controlled_producers.length ? ` (${s.controlled_producers.slice(0, 6).join(", ")})` : ""}, of which ${s.bans_or_quotas_share_pct}% under bans or quotas, and ${s.any_measure_share_pct}% counting export taxes too; restriction-weighted HHI ${s.restriction_weighted_hhi}; producers introduced or tightened ${s.new_measures_2020_2024} measures in 2020-2024. Political stability (World Bank WGI ${d.govYear}): supply-weighted average score ${s.supply_weighted_stability ?? "n/a"}/100, ${s.low_stability_share_pct}% of supply from low-stability producers (WGI estimate below -1), stability-weighted HHI ${s.stability_weighted_hhi}${(s.share_without_stability_score_pct ?? 0) > 0 ? ` (${s.share_without_stability_score_pct}% of supply from producers without a score, weighted at 0.5)` : ""}.`);
     datasets.push({ id: `risk-${r.id}`, title: `${r.label}, ${st}: producers and export measures in force (${YEAR})`, columns: ["Producer", "Share (%)", "Export controls in force", "Ban or quota", "Export taxes etc. in force", "Measures in force", "New or tightened measures 2020-2024", "Latest new measure", "Political stability score (WGI, 0-100)", "Average of six WGI scores"], rows: s.producers.slice(0, 20).map((p) => [p.country, r1(p.share), p.control ? "yes" : "no", p.hard ? "yes" : "no", p.fiscal ? "yes" : "no", p.types, p.new_since_2020, p.last_new, p.stability, p.governance_avg]) });
+  }
+
+  // IEA outlook: projected concentration 2025 -> 2035 -> 2040 by stage (base case: announced projects weighted by likelihood)
+  for (const st of [...new Set(outlook.map((o) => o.stage))]) {
+    const o = outlook.filter((x) => x.stage === st).sort((a, b) => a.year - b.year);
+    const a = o.find((x) => x.year === 2025), b = o.find((x) => x.year === 2035), c = o.find((x) => x.year === 2040);
+    if (!a || !b) continue;
+    const dir = b.hhi_top6 < a.hhi_top6 - 250 ? "less concentrated" : b.hhi_top6 > a.hhi_top6 + 250 ? "more concentrated" : "about as concentrated";
+    statements.push(`IEA outlook (Global Critical Minerals Outlook 2026, base case - a projection from announced projects weighted by their likelihood, not recorded data), ${mm.label} ${st.toLowerCase()}: ${a.top} ${a.top_share_pct}% of ${a.total_kt.toLocaleString("en-US")} kt in 2025 (top three ${a.top3_share_pct}%, HHI of the six named countries ${a.hhi_top6}); in 2035 ${b.top} ${b.top_share_pct}% (top three ${b.top3_share_pct}%, HHI ${b.hhi_top6})${c ? `, in 2040 ${c.top} ${c.top_share_pct}%` : ""} - ${dir} by 2035.`);
   }
 
   // importer view: share of the importer's imports of each stage's codes coming from exporters with controls in force
@@ -219,6 +295,7 @@ export async function supplyRisk(input: Record<string, unknown>): Promise<Out> {
       statements,
       stages: stages.map(({ r, s }) => ({ stage: STAGE_LABEL[r.usgs_stage] ?? r.usgs_stage, year: s.group.data_year, hhi: s.hhi, top_producer: s.top, supply_under_export_controls_pct: s.controlled_share_pct, of_which_bans_or_quotas_pct: s.bans_or_quotas_share_pct, under_any_measure_incl_taxes_pct: s.any_measure_share_pct, restriction_weighted_hhi: s.restriction_weighted_hhi, producers: s.producers.slice(0, 10).map((p) => ({ country: p.country, share_pct: r1(p.share), export_controls: p.control, ban_or_quota: p.hard, export_taxes: p.fiscal, measures: p.types, new_measures_2020_2024: p.new_since_2020, political_stability_score: p.stability, governance_average: p.governance_avg })), stability_weighted_hhi: s.stability_weighted_hhi, low_stability_share_pct: s.low_stability_share_pct, supply_weighted_stability: s.supply_weighted_stability })),
       importer_view: importer,
+      iea_outlook: outlook.length ? { note: "IEA base-case projections (Global Critical Minerals Outlook 2026): operating and announced projects weighted by probability of coming online; top six countries named.", rows: outlook } : null,
       notes: flags,
       how_to_read: HOW,
       how_to_answer: "Quote the statements for every number; explain concentration, the share under export controls and the restriction-weighted HHI in plain words; give the importer view if asked; then search the documents for measures since 2024 and cite them. Never give a probability or a price forecast, and do not add producers or measures not listed. For what a cut would do, offer the supply-disruption scenario. Whenever you quote a political-stability figure, name the source as the World Bank Worldwide Governance Indicators (2026 update) and say in one phrase that the scores are perception-based and, as the World Bank advises, not definitive criteria for investment decisions.",

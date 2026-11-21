@@ -36,6 +36,32 @@ const label = (g: Group, all: Group[]) => {
   return same ? `${stageName(g)} (${g.detail.replace(/^(mine production|reserves)[:,]?\s*/i, "").replace(/\s*\(.*$/, "") || g.detail})` : stageName(g);
 };
 
+// IEA Global Critical Minerals Outlook 2026 refining shares (markets.iea_cm_supply): USGS publishes no refinery table for cobalt, lithium,
+// nickel, graphite or rare earths, so these are returned beside the USGS stages, labelled as IEA (2025 = base year of its projections).
+const IEA_KEY: Record<string, string> = { Cobalt: "cobalt", Lithium: "lithium", Nickel: "nickel", "Graphite (Natural)": "graphite", "Rare Earths": "rare_earths", Copper: "copper" };
+const IEA_CREDIT = "IEA (2026), Critical Minerals Data Explorer / Global Critical Minerals Outlook 2026, Licence: CC BY 4.0";
+async function ieaRefining(keys: string[]) {
+  if (!keys.length) return [];
+  const rows = (await runReadOnlyQuery(`SELECT mineral, mineral_key, stage, year, country, row_kind, value FROM markets.iea_cm_supply
+     WHERE mineral_key IN (${keys.map((k) => `'${k}'`).join(",")}) AND stage IN ('Refining', 'Battery grade') AND year IN (2025, 2035) ORDER BY mineral_key, stage, year, value DESC`, 500)).rows as unknown as { mineral: string; mineral_key: string; stage: string; year: number; country: string; row_kind: string; value: number }[];
+  const out: { mineral: string; stage: string; source: string; shares_2025: { country: string; share_pct: number | null }[]; top3_share_2025_pct: number | null; top_2035: string | null; hhi_named_2025: number }[] = [];
+  for (const k of [...new Set(rows.map((r) => `${r.mineral_key}|${r.stage}`))]) {
+    const [mk, st] = k.split("|");
+    const yr = (y: number) => rows.filter((r) => r.mineral_key === mk && r.stage === st && Number(r.year) === y);
+    const a = yr(2025), b = yr(2035);
+    const ta = Number(a.find((r) => r.row_kind === "total")?.value ?? 0), tb = Number(b.find((r) => r.row_kind === "total")?.value ?? 0);
+    if (!(ta > 0)) continue;
+    const ca = a.filter((r) => r.row_kind === "country"), cb = b.filter((r) => r.row_kind === "country");
+    const sh = ca.map((r) => (100 * Number(r.value)) / ta);
+    out.push({
+      mineral: a[0].mineral, stage: st === "Battery grade" ? "battery-grade graphite production (IEA)" : "refining (IEA)", source: IEA_CREDIT,
+      shares_2025: ca.map((r, i) => ({ country: r.country, share_pct: r1(sh[i]) })), top3_share_2025_pct: r1(sh.slice(0, 3).reduce((x, y) => x + y, 0)),
+      top_2035: cb[0] && tb > 0 ? `${cb[0].country} ${r1((100 * Number(cb[0].value)) / tb)}% (IEA base-case projection)` : null, hhi_named_2025: Math.round(sh.reduce((x, y) => x + y * y, 0)),
+    });
+  }
+  return out;
+}
+
 export async function supplyConcentration(input: Record<string, unknown>): Promise<Out> {
   const query = String(input.commodity ?? "").trim();
   const stageIn = String(input.stage ?? "").trim().toLowerCase().replace(/\s+/g, "_");
@@ -66,6 +92,7 @@ export async function supplyConcentration(input: Record<string, unknown>): Promi
         what: "League table of the critical minerals whose supply is most concentrated, from the USGS Mineral Commodity Summaries 2026",
         stage: STAGES[stage], year, ranked_by: rankBy === "hhi" ? "HHI of named countries" : "share of the largest country", commodities_covered: sel.length,
         rows: sorted.slice(0, topN).map((g) => ({ commodity: g.commodity, detail: g.detail, largest: g.top1_country, largest_share_pct: r1(num(g.top1_share_pct)), top3_share_pct: r1(num(g.top3_share_pct)), hhi_named: Math.round(Number(g.hhi_named)), named_coverage_pct: r1(num(g.named_coverage_pct)), flags: g.flags })),
+        iea_refining_stages_for_processing_questions: stage === "mine_production" ? await ieaRefining(Object.values(IEA_KEY)) : undefined,
         other_production_stages_same_year: stage === "mine_production"
           ? all
               .filter((g) => g.data_year === year && ["refinery_production", "smelter_production", "primary_production", "sponge_production", "production"].includes(g.stage))
@@ -73,6 +100,8 @@ export async function supplyConcentration(input: Record<string, unknown>): Promi
               .slice(0, 12)
               .map((g) => ({ commodity: g.commodity, stage: stageName(g), largest: g.top1_country, largest_share_pct: r1(num(g.top1_share_pct)), top3_share_pct: r1(num(g.top3_share_pct)) }))
           : undefined,
+        iea_refining_stages: stage !== "mine_production" && stage !== "reserves" ? await ieaRefining(Object.values(IEA_KEY)) : undefined,
+        iea_note: stage !== "mine_production" && stage !== "reserves" ? "USGS publishes no refining table for cobalt, lithium, nickel, graphite or rare earths; iea_refining_stages gives their refining shares from the IEA Global Critical Minerals Outlook 2026 (2025 base year, top six countries named) - include them in any answer about processing or refining and credit the IEA." : undefined,
         not_in_this_table: "Commodities USGS does not break down by country for this stage, and boron, silicon and scandium (see how_to_read). Stages differ by commodity: a commodity with no refinery row has no refining figure here.",
         how_to_read: HOW_TO_READ,
         credit: CREDIT,
@@ -136,7 +165,8 @@ export async function supplyConcentration(input: Record<string, unknown>): Promi
     content: JSON.stringify({
       what: `Who supplies ${match.join(" / ")}: country shares at each stage, from the USGS Mineral Commodity Summaries 2026`,
       commodity: match, year_shown: year, stages: out, headline_by_stage: top1s,
-      stages_not_available: "Only the stages above are in the USGS tables for this commodity; if refining or processing is not listed, there is no figure here and none should be quoted.",
+      iea_refining: await ieaRefining(match.map((m) => IEA_KEY[m]).filter(Boolean)),
+      stages_not_available: "Only the stages above are in the USGS tables for this commodity. If USGS lists no refining stage, use iea_refining when it is present (IEA Global Critical Minerals Outlook 2026, 2025 base year; credit the IEA); if neither has a figure, say there is none and do not quote one.",
       how_to_read: HOW_TO_READ,
       credit: CREDIT,
     }),

@@ -1,0 +1,46 @@
+{
+  "version": "2026-11-21",
+  "notes": "Fresh checks for the IEA Global Critical Minerals Outlook 2026 data (markets.iea_cm_supply / iea_cm_demand) and its use in supply_risk and supply_disruption (21 Nov 2026). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-iea-li-demand",
+      "cat": "markets",
+      "q": "How much lithium will the world need in 2040, and how much of that is for electric vehicles?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Answers from the IEA Global Critical Minerals Outlook 2026 data: total lithium demand in 2040 of about 932 kt in the Stated Policies scenario (about 748 kt Current Policies, about 1,227 kt High Demand), (the 2025 base of about 275 kt is optional), with EVs about 765 kt in Stated Policies in 2040. Names the scenarios (other cited projections from the library may be added if attributed), says demand is in lithium content (not LCE), says these are IEA scenario projections not forecasts, and credits the IEA. No invented figures."
+    },
+    {
+      "id": "fresh-iea-cobalt-refining",
+      "cat": "risk",
+      "q": "Who refines cobalt, and will refining be less concentrated by 2035?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Uses the IEA data (via the supply-risk tool or a query): China about 76% of cobalt refining in 2025, Finland about 8.5%, then Canada, Indonesia and Japan at 2-3%; in IEA's 2035 base case China is still about 75% (Indonesia's rise to about 5% is optional), so refining stays about as concentrated. Makes clear the 2035 figures are IEA projections (wording such as 'IEA base case' or 'projection from announced projects' is enough) (mentioning that USGS publishes no cobalt refining table is optional). Credits the IEA. Other figures from the same IEA table (mining totals, 2030 or 2040 rows, refined totals) are supported. No invented figures."
+    },
+    {
+      "id": "fresh-iea-china-refined-lithium",
+      "cat": "risk",
+      "q": "What if China stopped exporting refined lithium?",
+      "expect": {
+        "tools_any": [
+          "supply_disruption"
+        ],
+        "max_turns": 10
+      },
+      "judge": "Uses the supply-disruption tool for refined lithium and China; reports that China refines about 74% of world lithium (IEA 2025, about 235 of 319 kt) and IEA projects about 66% in 2035; names the other refiners (Chile about 16%, Argentina about 5%, Australia about 2%); gives importer exposure from the tool for lithium chemicals; makes clear the 2035 figure is an IEA projection ('IEA base case' wording is enough). Quoting an attributed past price move from a library document is allowed; it must not forecast prices itself. No probability, no price forecast, no invented figures."
+    },
+    {
+      "id": "fresh-iea-processing-league",
+      "cat": "risk",
+      "q": "Which critical-mineral processing stages are the most concentrated?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Uses the supply-risk tool (or the IEA/USGS data) and names, from its output, battery-grade graphite (China about 94%), magnet rare earth refining (China about 84%), cobalt refining (China about 76%), lithium refining (China about 74%) and gallium primary production (China about 99%) among the most concentrated processing stages; attributes the refining shares for graphite, rare earths, cobalt and lithium to the IEA (naming the Outlook is optional) and does not say those refining stages have no figures. No invented figures."
+    }
+  ]
+}

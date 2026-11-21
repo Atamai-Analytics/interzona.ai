@@ -125,7 +125,7 @@ export async function supplyDisruption(input: Record<string, unknown>): Promise<
     stage = ranked[0]?.share > 0 ? ranked[0].s : [...stages].sort((a, b) => (expShare.get(b.id) ?? -1) - (expShare.get(a.id) ?? -1))[0];
   }
   if (!stage) return { content: `No stages are set up for ${m.label}.` };
-  const stageName = stage.usgs_stage ? STAGE_LABEL[stage.usgs_stage] ?? stage.usgs_stage : `${stage.trade_form} trade (no USGS production table)`;
+  let stageName = stage.usgs_stage ? STAGE_LABEL[stage.usgs_stage] ?? stage.usgs_stage : `${stage.trade_form} trade (no USGS production table)`;
   const evidence: Evidence[] = [];
   const statements: string[] = [];
   const caveats: string[] = [];
@@ -138,7 +138,42 @@ export async function supplyDisruption(input: Record<string, unknown>): Promise<
   // ---- 1. supply lost ------------------------------------------------------------------------------------------------------------------
   let supply: Q | null = null;
   const g = stage.usgs_stage ? groups.find((x) => x.commodity === stage!.usgs_commodity && x.stage === stage!.usgs_stage) : undefined;
-  if (g) {
+  // IEA Global Critical Minerals Outlook 2026: refining (and battery-grade graphite) by country, base year 2025 and projections to 2040, for
+  // copper, cobalt, lithium, nickel, graphite and rare earths. Used for the supply lost when a refined/intermediate stage is asked for and USGS
+  // has no refining table; otherwise reported as context.
+  const iea = await q(`SELECT stage, year, country, iso3, row_kind, value FROM markets.iea_cm_supply WHERE mineral_key = '${esc(m.mineral)}' AND year IN (2025, 2035)`, 300);
+  const ieaShare = (st: string, y: number, iso: string) => {
+    const tot = Number(iea.find((r) => r.stage === st && Number(r.year) === y && r.row_kind === "total")?.value ?? 0);
+    const row = iea.find((r) => r.stage === st && Number(r.year) === y && String(r.iso3 ?? "").trim() === iso);
+    return tot > 0 ? { share: row ? (100 * Number(row.value)) / tot : null, kt: row ? Number(row.value) : null, total: tot } : null;
+  };
+  const refStage = iea.some((r) => r.stage === "Refining") ? "Refining" : iea.some((r) => r.stage === "Battery grade") ? "Battery grade" : null;
+  const useIea = !!refStage && (want === "refined" || want === "intermediate") && (!g || g.stage === "mine_production");
+  if (useIea) {
+    const a = ieaShare(refStage!, 2025, C.iso3), b = ieaShare(refStage!, 2035, C.iso3);
+    stageName = refStage === "Battery grade" ? "battery-grade graphite (IEA)" : "refining (IEA)";
+    evidence.push({ kind: "data", label: "IEA (2026), Critical Minerals Data Explorer / Global Critical Minerals Outlook 2026, Licence: CC BY 4.0", detail: `${m.label} ${refStage.toLowerCase()} by country, 2025 and 2035` });
+    const others = iea.filter((r) => r.stage === refStage && Number(r.year) === 2025 && r.row_kind === "country" && String(r.iso3 ?? "").trim() !== C.iso3).sort((x, y) => Number(y.value) - Number(x.value));
+    if (a && a.share !== null) {
+      supply = { table: `IEA ${m.label} ${refStage.toLowerCase()}, 2025 (base year of the Outlook 2026 projections)`, unit: "kt", country_quantity: Math.round(a.kt! * 10) / 10, country_share_pct: r1(a.share), lost_quantity: Math.round((a.kt! * cut) / 10) / 10, lost_share_of_world_pct: r1((a.share * cut) / 100), world_total: Math.round(a.total), projected_2035_share_pct: b?.share !== null && b ? r1(b.share) : null,
+        other_producers: others.slice(0, 6).map((r) => ({ country: nameOf(r.iso3, r.country), share_pct: r1((100 * Number(r.value)) / a.total) })) };
+      statements.push(`${C.name} accounts for ${r1(a.share)}% of world ${m.label.toLowerCase()} ${refStage === "Battery grade" ? "battery-grade graphite production" : "refining"} in 2025 (IEA Global Critical Minerals Outlook 2026, base year of its projections; ${(Math.round(a.kt! * 10) / 10).toLocaleString("en-US")} of ${Math.round(a.total).toLocaleString("en-US")} kt); a ${cut}% cut removes about ${r1((a.share * cut) / 100)}% of world supply at this stage.${b && b.share !== null ? ` IEA's base case projects ${C.name} at ${r1(b.share)}% in 2035 (from announced projects weighted by likelihood - a projection, not recorded data).` : ""}`);
+      if (others.length) statements.push(`The other named refiners in 2025 (IEA): ${others.slice(0, 5).map((r) => `${nameOf(r.iso3, r.country)} ${r1((100 * Number(r.value)) / a.total)}%`).join(", ")}.`);
+      datasets.push({ id: "dis-supply-iea", title: `Who else refines: ${m.label}, ${refStage.toLowerCase()}, 2025 (IEA)`, columns: ["Country", "Share (%)", "Quantity (kt)"], rows: iea.filter((r) => r.stage === refStage && Number(r.year) === 2025 && r.row_kind !== "total").sort((x, y) => Number(y.value) - Number(x.value)).map((r) => [nameOf(r.iso3, r.country), r1((100 * Number(r.value)) / a.total), Math.round(Number(r.value) * 10) / 10]) });
+      caveats.push("Refining shares are from the IEA Global Critical Minerals Outlook 2026 (2025 is the base year of its projections; only the top six countries are named); USGS publishes no refining table for this mineral.");
+    } else statements.push(`IEA names no ${refStage.toLowerCase()} figure for ${C.name} for ${m.label.toLowerCase()} (only the top six countries are named); its share is within 'rest of world'.`);
+  } else if (iea.length && C.iso3) {
+    const parts: string[] = [];
+    for (const st of [...new Set(iea.map((r) => String(r.stage)))]) {
+      const a = ieaShare(st, 2025, C.iso3), b = ieaShare(st, 2035, C.iso3);
+      if (a && a.share !== null) parts.push(`${st.toLowerCase()} ${r1(a.share)}% in 2025${b && b.share !== null ? `, projected ${r1(b.share)}% in 2035` : ""}`);
+    }
+    if (parts.length) {
+      statements.push(`IEA Global Critical Minerals Outlook 2026 (base case; 2030-2040 are projections from announced projects, not recorded data): ${C.name}'s share of world ${m.label.toLowerCase()} ${parts.join("; ")}.`);
+      evidence.push({ kind: "data", label: "IEA (2026), Critical Minerals Data Explorer / Global Critical Minerals Outlook 2026, Licence: CC BY 4.0", detail: `${m.label} by country` });
+    }
+  }
+  if (g && !useIea) {
     evidence.push({ kind: "data", label: CREDITS.usgs, detail: `${g.commodity} ${STAGE_LABEL[String(g.stage)] ?? g.stage}, ${g.data_year}${g.is_estimate ? " (estimate)" : ""}` });
     const rows = shares.filter((s) => s.group_id === g.group_id);
     const mine = rows.find((s) => s.iso3 === C.iso3);
@@ -159,7 +194,7 @@ export async function supplyDisruption(input: Record<string, unknown>): Promise<
       if (others.length) statements.push(`The other listed producers: ${others.slice(0, 5).map((s) => `${nameOf(s.iso3, s.country)} ${r1(n(s.share_pct))}%`).join(", ")}.`);
     } else statements.push(`USGS gives no ${STAGE_LABEL[String(g.stage)] ?? g.stage} figure for ${C.name} (${mine ? String(mine.row_kind).replace(/_/g, " ") : "not listed"}), so the share of world supply lost cannot be computed; the trade and history sections still apply.`);
     datasets.push({ id: `dis-supply-${g.group_id}`, title: `Who else produces: ${g.commodity}, ${STAGE_LABEL[String(g.stage)] ?? g.stage}, ${g.data_year}`, columns: ["Country", "Share (%)", `Quantity (${String(g.unit).trim()})`], rows: listed.slice(0, 15).map((s) => [nameOf(s.iso3, s.country), r1(n(s.share_pct)), n(s.value_num)]) });
-  } else {
+  } else if (!useIea) {
     statements.push(`There is no USGS world production table for ${m.label.toLowerCase()} at the ${stage.trade_form} stage, so the share of world supply lost cannot be computed; only the trade, facility and history sections apply.`);
   }
 

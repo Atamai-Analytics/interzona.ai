@@ -2287,7 +2287,7 @@
       "expect": {
         "max_turns": 8
       },
-      "judge": "Names the Democratic Republic of the Congo as the largest cobalt producer with a share of roughly 70 to 78 percent of world mine production (from the USGS 2026 tables), and the next producers (for example Indonesia). Says the figures are USGS estimates and where the share is measured against, and does not explain the share by causes such as policy unless it cites a source. Does not invent a refining share."
+      "judge": "Names the Democratic Republic of the Congo as the largest cobalt producer with a share of roughly 70 to 78 percent of world mine production (from the USGS 2026 tables), and the next producers (for example Indonesia). Says the figures are USGS estimates and where the share is measured against, and does not explain the share by causes such as policy unless it cites a source. Does not invent a refining share (UPDATE 21 Nov 2026: a refining share attributed to the IEA Global Critical Minerals Outlook 2026 - China about 76% of cobalt refining in 2025 - is supported)."
     },
     {
       "id": "supply-lithium-refining-none",
@@ -2296,7 +2296,7 @@
       "expect": {
         "max_turns": 8
       },
-      "judge": "Says plainly that the USGS data used here has no country breakdown of lithium refining (it is mine production and reserves only), and does not state a specific refining share as if it came from the data. It may offer the lithium mine-production shares instead, or a document-library answer that is clearly cited and clearly different from the USGS table."
+      "judge": "Says the USGS tables have no country breakdown of lithium refining (mine production and reserves only). A refining share is allowed only if it is attributed to the IEA Global Critical Minerals Outlook 2026 (China about 74% of lithium refining in 2025, Chile about 16%) and not presented as USGS data. UPDATE 21 Nov 2026: IEA refining shares were added to the supply tool, so quoting them with the IEA credit is correct; stating a refining share with no source, or calling it USGS data, fails."
     },
     {
       "id": "supply-league",

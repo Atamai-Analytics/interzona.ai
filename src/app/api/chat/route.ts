@@ -332,7 +332,7 @@ const tools: Anthropic.ToolUnion[] = [
       "Gives the largest producers with their share, the top-three share and the HHI, how much of the world the named countries cover, and what USGS withheld. " +
       "USE THIS for 'who dominates cobalt / lithium / graphite / rare earth production', 'what share of X does China produce or refine', 'which critical minerals are most concentrated', 'where are the reserves', 'is mining or refining more concentrated'. " +
       "With a commodity it shows the stages USGS publishes for it; without one it ranks the critical minerals by concentration at one stage (default mine production, 2025 estimate). " +
-      "Only stages in the USGS tables exist: if a stage is not returned (for example lithium refining), say there is no figure and do not quote one. These are estimates of where material is produced, not who owns it, and say nothing about causes or risk. " +
+      "USGS has refinery figures for only some minerals; for cobalt, lithium, nickel, graphite and rare earths the tool also returns refining shares from the IEA Global Critical Minerals Outlook 2026 (credit the IEA). If neither source has a stage, say there is no figure and do not quote one. These are estimates of where material is produced, not who owns it, and say nothing about causes or risk. " +
       "Boron, silicon and scandium are not available.",
     input_schema: {
       type: "object",
@@ -354,7 +354,7 @@ const tools: Anthropic.ToolUnion[] = [
       "who else produces and which facilities exist outside the country (USGS facility lists with owners; nameplate capacity, not spare), the project pipeline in our records, and that country's past export restrictions " +
       "on the mineral (OECD inventory 2009-2024) with what prices did afterwards. USE THIS for 'what if China bans X', 'what happens if the DRC cuts cobalt exports', 'who is exposed if Indonesia stops nickel', " +
       "'how vulnerable is the EU to a cut in Chinese graphite', 'scenario', 'disruption', 'supply shock'. Quote its statements for every number, and always follow it with search_documents (its document_search_query) for measures since 2024 and policy context. " +
-      "It is not a forecast: never give a probability of the event or a price prediction. Covers 35 minerals; gallium, germanium, indium and rhenium have no usable trade codes (grouped HS codes), so it reports supply and history only for them.",
+      "It is not a forecast: never give a probability of the event or a price prediction. For refined lithium, cobalt, nickel, rare earths or battery-grade graphite (stage 'refined') the supply lost comes from IEA 2025 refining shares, with IEA's 2035 projection. Covers 35 minerals; gallium, germanium, indium and rhenium have no usable trade codes (grouped HS codes), so it reports supply and history only for them.",
     input_schema: {
       type: "object",
       properties: {
@@ -373,7 +373,7 @@ const tools: Anthropic.ToolUnion[] = [
       "(bans, quotas, licensing, from the OECD export-restriction inventory; bans/quotas shown separately because licensing can be a routine permit or a de facto ban), with a single ranking number, the restriction-weighted HHI " +
       "(concentration counted over controlled producers only). Optional importer view (e.g. EU, United States, Japan): share of that importer's 2022-2024 imports of the stage's products coming from exporters with controls in force, plus EU import reliance and recycling rates (EU RMIS). " +
       "USE THIS for 'which critical minerals are riskiest / most exposed to export controls', 'how risky is the supply of X', 'how exposed is the EU/US/Japan to export-controlled X', 'rank minerals by geopolitical risk'. " +
-      "Omit commodity for the league table across minerals. Also gives each producer's World Bank WGI political-stability score (0-100), the share of supply from low-stability producers (WGI estimate below -1) and a stability-weighted HHI (rank_by stability_weighted_hhi or low_stability_share). Not a forecast or a probability. For what a cut by one country would do, use supply_disruption instead. Follow with search_documents for measures since 2024.",
+      "Omit commodity for the league table across minerals. Adds refining stages from the IEA Global Critical Minerals Outlook 2026 (cobalt, lithium, nickel, rare earths, battery-grade graphite, copper; USGS has no refining table for most) and, for one mineral, IEA's 2025-2040 concentration outlook. Also gives each producer's World Bank WGI political-stability score (0-100), the share of supply from low-stability producers (WGI estimate below -1) and a stability-weighted HHI (rank_by stability_weighted_hhi or low_stability_share). Not a forecast or a probability. For what a cut by one country would do, use supply_disruption instead. Follow with search_documents for measures since 2024.",
     input_schema: {
       type: "object",
       properties: {

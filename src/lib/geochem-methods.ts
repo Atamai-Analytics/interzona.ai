@@ -73,6 +73,7 @@ export const DATASET_NAMES: Record<string, string> = {
   NORWAY_NGU_GEOCHEMISTRY: "Norway (NGU mineral soils and till, aqua regia, 1980-2025)",
   MAURITANIA_USGS_PRISM: "Mauritania (PRISM-I/II soils, regolith, stream sediment and rock, 1999-2004)",
   AFGHANISTAN_USGS_BASELINE: "Afghanistan (USGS deposit baselines: Aynak, Balkhab, Hajigak, Nuqra Khana, 2019-20)",
+  SAUDI_SGS_NGD: "Saudi Arabia (SGS regional stream sediments: Yanbu, Al Madinah, Wadi al 'Ays quadrangles)",
   EUROPE_GEMAS: "Europe (GEMAS agricultural and grazing-land soils, 2008-09)",
   IRELAND_GSI_TELLUS: "Ireland (GSI Tellus topsoils, stream sediments and SE Ireland rocks, 2011-22)",
   NI_GSNI_TELLUS: "Northern Ireland (GSNI Tellus soils, 2004-06)",

@@ -20,6 +20,7 @@ const SURVEYS: Record<string, string> = {
   NORWAY_NGU_GEOCHEMISTRY: "Norway (NGU)",
   MAURITANIA_USGS_PRISM: "Mauritania (PRISM)",
   AFGHANISTAN_USGS_BASELINE: "Afghanistan (USGS)",
+  SAUDI_SGS_NGD: "Saudi Arabia (SGS)",
   EUROPE_GEMAS: "Europe (GEMAS)",
   IRELAND_GSI_TELLUS: "Ireland (GSI Tellus)",
   NI_GSNI_TELLUS: "Northern Ireland (GSNI Tellus)",

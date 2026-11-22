@@ -1,0 +1,38 @@
+{
+  "version": "2026-11-22",
+  "notes": "Fresh checks for the Saudi Geological Survey NGD stream sediments (SAUDI_SGS_NGD) loaded 22 Nov 2026. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-saudi-what",
+      "cat": "geochem",
+      "q": "What geochemistry do you have for Saudi Arabia?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Says there are Saudi Geological Survey regional stream sediments (about 1,900 samples) from three quadrangles in the western Arabian Shield (Yanbu al Bahr, Al Madinah, Wadi al 'Ays), plus a few hundred USGS rock samples; says the rest of the country is not covered. Mentions four-acid ICP-OES / AAS analyses or the element range, and credits the Saudi Geological Survey. Does not claim national coverage."
+    },
+    {
+      "id": "fresh-saudi-li-ree",
+      "cat": "geochem",
+      "q": "Are there lithium or rare earth anomalies in the Saudi stream sediment data?",
+      "expect": {
+        "tools_any": [
+          "run_sql",
+          "find_geochemical_anomalies"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Uses SAUDI_SGS_NGD stream-sediment Li and REE (e.g. Ce, La, Nd, Y) values and names the highest values or anomalous areas with ppm units and the quadrangle(s) they fall in. Says the data cover only three quadrangles. Credits the Saudi Geological Survey. Does not invent deposits."
+    },
+    {
+      "id": "fresh-saudi-pge",
+      "cat": "geochem",
+      "q": "Do the Saudi stream sediments show any platinum-group metal anomalies, for example ruthenium?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Warns that the ruthenium (and iridium / rhenium) values in the SGS data are not credible (far above crustal abundance from ICP-OES) and does NOT present them as PGE anomalies; may note that Pt and Pd detections sit at the detection limit. Credits the Saudi Geological Survey."
+    }
+  ]
+}

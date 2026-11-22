@@ -72,6 +72,7 @@ const CREDITS: [RegExp, string][] = [
   [/ireland_gsi_tellus|gsi_tellus/i, "Contains Irish Public Sector Data (Geological Survey Ireland) licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) licence"],
   [/ni_gsni_tellus|gsni_tellus/i, "Contains UK public sector information (Geological Survey of Northern Ireland) licensed under the UK Open Government Licence v3.0"],
   [/europe_gemas|gemas/i, "GEMAS project (EuroGeoSurveys / Eurometaux; Reimann et al. 2014), via EGDI, CC BY 4.0"],
+  [/saudi_sgs_ngd|sgs_ngd/i, "Geochemical Atlas of the Kingdom of Saudi Arabia, regional stream-sediment data (National Geological Database) © Saudi Geological Survey (SGS)"],
   [/afghanistan_usgs_baseline/i, "U.S. Geological Survey pre-mining environmental baseline data releases (Aynak, Balkhab, Hajigak, Nuqra Khana), public domain"],
   [/mauritania_usgs_prism|prism_mrt/i, "U.S. Geological Survey Open-File Report 2013-1280 (PRISM-II), with the Ministry of Petroleum, Energy and Mines of Mauritania"],
   [/norway_ngu|ngu_minres/i, "Contains data under the Norwegian licence for Open Government data (NLOD) made available by the Geological Survey of Norway (NGU)"],

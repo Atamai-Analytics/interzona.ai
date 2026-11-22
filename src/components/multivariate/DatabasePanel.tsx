@@ -29,6 +29,7 @@ const DATASET_NAMES: Record<string, string> = {
   NORWAY_NGU_GEOCHEMISTRY: "Norway (NGU soils)",
   MAURITANIA_USGS_PRISM: "Mauritania (PRISM)",
   AFGHANISTAN_USGS_BASELINE: "Afghanistan (USGS baselines)",
+  SAUDI_SGS_NGD: "Saudi Arabia (SGS stream sediments)",
   EUROPE_GEMAS: "Europe (GEMAS soils)",
   IRELAND_GSI_TELLUS: "Ireland (GSI Tellus soils, stream sediment, rock)",
   NI_GSNI_TELLUS: "Northern Ireland (GSNI Tellus soils)",

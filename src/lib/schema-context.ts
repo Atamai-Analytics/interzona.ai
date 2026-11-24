@@ -459,6 +459,15 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   14 known only from the 2018 Southwest Asia release") - never count releases yourself.
   Mention an older figure for a site that has a 2024 figure only if the user asks for history. For Europe, Russia, Central Asia, Japan, Canada, Australia and the Middle East the 2024 table is the only
   USGS capacity source.
+  NON-USGS FACILITY ROWS (source_system 'CRM_ATLAS_FORLINI', release 'Critical Raw Materials Atlas (V. Forlini; status checked 2026)',
+  loaded 23 Nov 2026): 20 European sites USGS does not list - rare-earth separation and metals (Solvay La Rochelle, Less Common Metals UK,
+  REEtec Herøya under construction), silicon (Wacker Burghausen, Ferroglobe Sabón), hafnium (Framatome Jarrie), tungsten (Wolfram St. Martin),
+  Cobre Las Cruces copper mine, coking coal (JSW; OKD Karviná closed Jan 2026), Woxna graphite (care and maintenance), Green Lithium Teesside
+  (planned) and battery / magnet recyclers (stage_group 'Recycling plant': cylib, tozero, Hydrovolt, Librec, Altilium, Mecaware, HyProMag UK,
+  Ionic Technologies). They have NO capacities ('capacity not published', measure 'no capacity in source'), positions at the town point,
+  and status as checked by the Atlas author (facility_status). For these rows the SOURCE line is "Source: Critical Raw Materials Atlas
+  (V. Forlini, 2026, MIT licence)" - not U.S. Geological Survey; the author calls it a seed dataset, so name the operator's own site when
+  stating anything important about one plant.
   QUERY core.facility_capacity_published FOR ANY CAPACITY ANSWER (all USGS facility sources: US, Africa, these four and the 2024 table): it is
   facility_capacity plus ready-made columns - facility_key (THE unit to list and count, one line each: one USGS facility at one site; three
   Baotou separation plants share one site, and Nkana open pits A and E share one USGS id, so neither occurrence_id nor usgs_facility_id

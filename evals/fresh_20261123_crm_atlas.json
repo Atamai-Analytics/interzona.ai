@@ -1,0 +1,42 @@
+{
+  "version": "2026-11-23",
+  "notes": "Fresh checks for the 20 European facilities from the Critical Raw Materials Atlas (CRM_ATLAS_FORLINI) loaded 23 Nov 2026. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-atlas-ree-europe",
+      "cat": "facilities",
+      "q": "Which rare earth separation or metal plants are there in Europe?",
+      "expect": {
+        "tools_any": [
+          "facility_list",
+          "run_sql"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Names Solvay La Rochelle (France, rare-earth separation, operating) and Less Common Metals (UK, rare-earth metals and alloys), and mentions REEtec Herøya (Norway) as under construction; may add others (e.g. Neo/Silmet in Estonia, USGS rows such as Treibacher). Attributes the Solvay, LCM and REEtec rows to the Critical Raw Materials Atlas (naming the USGS as well is fine for USGS rows) and says no capacities are given for them. Gives the countries."
+    },
+    {
+      "id": "fresh-atlas-battery-recyclers",
+      "cat": "facilities",
+      "q": "List battery recycling plants in Europe in your data.",
+      "expect": {
+        "tools_any": [
+          "facility_list",
+          "run_sql"
+        ],
+        "max_turns": 12
+      },
+      "judge": "Lists battery recyclers from the data, including several of Hydrovolt (Norway), Librec (Switzerland), Altilium (UK), tozero and cylib (Germany), Mecaware (France), with status (operating / under construction / planned). Credits the Critical Raw Materials Atlas for these rows, says positions are town-level and capacities are not given. Does not claim the list is complete."
+    },
+    {
+      "id": "fresh-atlas-silicon-germany",
+      "cat": "facilities",
+      "q": "Are there silicon or polysilicon plants in Germany?",
+      "expect": {
+        "max_turns": 10
+      },
+      "judge": "Names Wacker Burghausen (polysilicon / silicon, operating) from the data and attributes it to the Critical Raw Materials Atlas (not the USGS); may also list any USGS silicon facilities in Germany. Says no capacity figure is held for Wacker Burghausen."
+    }
+  ]
+}

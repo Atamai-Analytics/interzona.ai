@@ -61,6 +61,7 @@ export async function limitRestrictedRows(sql: string, rows: Cell[]): Promise<{ 
 const CREDITS: [RegExp, string][] = [
   [/greenland_geus|greenland/i, "Geological Survey of Denmark and Greenland (GEUS) and the Mineral Resources Authority (MMR), Government of Greenland; Greenland Mineral Resources Portal; CC BY 4.0"],
   [/argentina_segemar|argentin|sigam|segemar/i, "SEGEMAR / SIGAM, Argentina (CC BY 4.0)"],
+  [/crm_atlas_forlini|critical raw materials atlas/i, "Critical Raw Materials Atlas (Vincenzo Forlini, 2026), https://vincenzo-forlini.github.io/Critical-Raw-Materials-Atlas/, MIT licence"],
   [/finland_gtk/i, "Geological Survey of Finland (GTK), CC BY 4.0"],
   [/sweden_sgu/i, "Geological Survey of Sweden (SGU), CC0"],
   [/spain_igme|igme/i, "Source: © NC Geological Survey of Spain (IGME); FOREGS campaigns via IGME"],

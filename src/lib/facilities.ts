@@ -14,7 +14,10 @@ type FRow = {
 };
 
 const esc = (s: string) => s.replace(/'/g, "''");
-const STAGE_ORDER = ["Mine", "Brine operation", "Concentrator", "Smelter", "Refinery", "Other processing plant"];
+const STAGE_ORDER = ["Mine", "Brine operation", "Concentrator", "Smelter", "Refinery", "Other processing plant", "Recycling plant"];
+const ATLAS = "Critical Raw Materials Atlas";
+/** Source line for a release: USGS releases are credited to the USGS, the Atlas rows (CRM_ATLAS_FORLINI) to their author. */
+const sourceLine = (release: string) => release.startsWith(ATLAS) ? "Critical Raw Materials Atlas (V. Forlini, 2026, MIT licence) - European plants USGS does not list, no capacities, status checked 2026" : `U.S. Geological Survey, ${release}`;
 
 /** "USGS Southwest Asia mineral-industry GIS compilation (Minerals Yearbook 2018 data)" -> "2018 data - USGS Southwest Asia compilation". */
 function shortRelease(r: FRow): string {
@@ -89,15 +92,15 @@ export async function facilityList(input: Record<string, unknown>): Promise<Out>
     : (STAGE_ORDER.indexOf(a.stage_group) - STAGE_ORDER.indexOf(b.stage_group) || a.name.localeCompare(b.name)));
   const shown = sorted.slice(0, limit);
   const outRows = shown.map((r, i) => ({
-    row: i + 1, stage: r.stage_group, facility: r.name, data_year: r.data_year, release: shortRelease(r),
+    row: i + 1, stage: r.stage_group, facility: r.name, country: r.country, data_year: r.data_year, release: shortRelease(r),
     capacity_as_published: r.capacity_as_published, measure: r.measure, status_as_published: r.status, owners: r.owners,
     shared_capacity: r.shared_capacity_note ? "shared - count once" : null,
   }));
   const dataset: Dataset = {
     id: "facilities-" + Date.now().toString(36),
     title: `USGS facilities: ${where} (${total} lines on ${sites} sites)`,
-    columns: ["#", "Stage", "Facility", "Data year", "Release", "Capacity (as published)", "Measure", "Status (USGS assumption)", "Owners"],
-    rows: outRows.map((r) => [r.row, r.stage, r.facility, r.data_year, r.release, r.capacity_as_published, r.measure, r.status_as_published, r.owners]),
+    columns: ["#", "Stage", "Facility", "Country", "Data year", "Release", "Capacity (as published)", "Measure", "Status as published", "Owners"],
+    rows: outRows.map((r) => [r.row, r.stage, r.facility, r.country, r.data_year, r.release, r.capacity_as_published, r.measure, r.status_as_published, r.owners]),
   };
   const releases = [...new Set(rows.map((r) => r.release))];
 
@@ -109,14 +112,14 @@ export async function facilityList(input: Record<string, unknown>): Promise<Out>
         "Every table you show must have the columns Stage, Facility, Data year, Release, Capacity (as published) and Measure, filled from 'rows' for EVERY row (mines included). " +
         "One table row per entry in 'rows': never merge, group or summarise rows (no 'Baluba (2 lines)', no '5 facilities without capacity' row); if you leave rows out, say how many with the numbers in 'statements'. " +
         (order === "capacity" && total > shown.length ? `Rows are sorted by the largest published capacity number and cut to ${shown.length}; say 'top ${shown.length} of ${total}'. ` : "") +
-        "Capacities of different stages or measures are never added. Status is USGS's assumption for the data year, not verified. Name every release in the source line.",
+        "Capacities of different stages or measures are never added. Status is USGS's assumption for the data year, not verified (Atlas rows: status as checked by the Atlas author in 2026). Name every release in the source line.",
       statements,
       rows: outRows,
       rows_shown: shown.length,
       rows_total: total,
-      source_lines: releases.map((r) => `U.S. Geological Survey, ${r}`),
+      source_lines: releases.map(sourceLine),
     }),
-    evidence: releases.map((r) => ({ kind: "data" as const, label: `U.S. Geological Survey, ${r}` })),
+    evidence: releases.map((r) => ({ kind: "data" as const, label: sourceLine(r) })),
     datasets: [dataset],
   };
 }

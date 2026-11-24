@@ -288,16 +288,16 @@ const tools: Anthropic.ToolUnion[] = [
   {
     name: "facility_list",
     description:
-      "USGS mineral FACILITIES with capacities (mines, concentrators, smelters, refineries, other plants) for a country and/or commodity: the 2024 Minerals Yearbook table plus the older USGS regional releases (US, Africa, China, Southwest Asia, Indo-Pacific, Latin America), newest figure per complex. " +
+      "USGS mineral FACILITIES with capacities (mines, concentrators, smelters, refineries, other plants) for a country and/or commodity: the 2024 Minerals Yearbook table plus the older USGS regional releases (US, Africa, China, Southwest Asia, Indo-Pacific, Latin America), newest figure per complex, plus 20 European plants and recyclers USGS lacks (release 'Critical Raw Materials Atlas', no capacities, status checked 2026 - e.g. Solvay La Rochelle rare-earth separation, Less Common Metals, battery and magnet recyclers). " +
       "Returns computed counts (total lines, sites, by release, by stage) as ready-made statements and every row labelled with stage, data year and release. " +
       "USE THIS for 'which mines / smelters / refineries are there in X', 'capacity of ... plants in X', 'how many processing plants in X by stage', 'largest copper mines in Chile' (order='capacity'). Quote its statements for every count. " +
       "For 'smelters', 'plants', 'processing' or 'refineries' questions leave stage empty and present all processing stages (Smelter, Refinery, Other processing plant): many processing plants - HPAL/MHP, leach, SX-EW, matte plants - are filed as 'Other processing plant'. Use stage only when the user names exactly one stage, and use stage='Mine' for questions about mines.",
     input_schema: {
       type: "object",
       properties: {
-        country: { type: "string", description: "Country as in the occurrence catalogue, e.g. Zambia, Indonesia, Chile, China, Germany, South Africa, Australia." },
+        country: { type: "string", description: "Country as in the occurrence catalogue, e.g. Zambia, Indonesia, Chile, China, Germany, South Africa, Australia. One country only - for a region ('Europe', 'Africa') leave it EMPTY, set commodity, and keep the rows whose country is in that region." },
         commodity: { type: "string", description: "Commodity substring, e.g. copper, nickel, lithium, rare (rare earths), cobalt." },
-        stage: { type: "string", enum: ["Mine", "Concentrator", "Smelter", "Refinery", "Brine operation", "Other processing plant"], description: "Optional: one stage only." },
+        stage: { type: "string", enum: ["Mine", "Concentrator", "Smelter", "Refinery", "Brine operation", "Other processing plant", "Recycling plant"], description: "Optional: one stage only ('Recycling plant' = battery / magnet / scrap recyclers, Atlas rows only)." },
         order: { type: "string", enum: ["stage", "capacity"], description: "stage (default: grouped by stage, then name) or capacity (largest published capacity number first - for 'largest ...')." },
         limit: { type: "number", description: "Rows to return (default and max 150; counts always cover the whole list)." },
       },

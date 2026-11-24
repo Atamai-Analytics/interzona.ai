@@ -7,7 +7,7 @@ import { addBaseLayer } from "@/lib/leafletBase";
 // Facility map for the supply-risk scenario: one circle per USGS facility line outside the country that is cut, coloured by stage.
 
 export type RiskPoint = { lat: number; lon: number; label: string; group: string; detail?: string };
-const COLOURS: Record<string, string> = { Mine: "#f59e0b", "Brine operation": "#38bdf8", Concentrator: "#a3e635", Smelter: "#f472b6", Refinery: "#c084fc", "Other processing plant": "#2dd4bf" };
+const COLOURS: Record<string, string> = { Mine: "#f59e0b", "Brine operation": "#38bdf8", Concentrator: "#a3e635", Smelter: "#f472b6", Refinery: "#c084fc", "Other processing plant": "#2dd4bf", "Recycling plant": "#4ade80" };
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
 export default function RiskMap({ points }: { points: RiskPoint[] }) {

@@ -1,0 +1,435 @@
+{
+ "prereg": "evals/forecast/PREREG.md",
+ "run": "2026-10-27T15:33:31",
+ "series": {
+  "52": "Uranium, NUEXCO, Restricted Price, Nuexco exchange spot, US$ per pound (IMF)",
+  "53": "Cobalt, minimum 99.80% purity, LME spot price, USD/ton (IMF)",
+  "54": "Palladium, LME spot price, USD/ troy ounce (IMF)",
+  "55": "Platinum, LME spot price, USD/troy ounce (IMF)",
+  "56": "Gold, Fixing Committee of the London Bullion Market Association, London 3 PM fixed price, US$ per troy ounce (IMF)",
+  "57": "Silver, London Bullion Market Association, USD/troy ounce (IMF)",
+  "58": "Copper, grade A cathode, LME spot price, CIF European ports, US$ per metric ton (IMF)",
+  "59": "Nickel, melting grade, LME spot price, CIF European ports, US$ per metric ton (IMF)",
+  "60": "Tin, standard grade, LME spot price, US$ per metric ton (IMF)",
+  "61": "Zinc, high grade 98% pure, US$ per metric ton (IMF)",
+  "62": "Lead, 99.97% pure, LME spot price, CIF European Ports, US$ per metric ton (IMF)",
+  "63": "Aluminum, 99.5% minimum purity, LME spot price, CIF UK ports, US$ per metric ton (IMF)",
+  "64": "China import Iron Ore Fines 62% FE spot (CFR Tianjin port), US dollars per metric ton (IMF)",
+  "40": "Phosphate rock (World Bank Pink Sheet)",
+  "41": "Potassium chloride (World Bank Pink Sheet)"
+ },
+ "horizons": {
+  "1": {
+   "selection_mae": {
+    "naive": 0.05415,
+    "drift": 0.05524,
+    "ses": 0.05616,
+    "meanrev": 0.05509,
+    "mom": 0.05491,
+    "reg": 0.05607
+   },
+   "chosen": "naive",
+   "test_mae": {
+    "naive": 0.04589,
+    "drift": 0.0463,
+    "ses": 0.04772,
+    "meanrev": 0.04618,
+    "mom": 0.04604,
+    "reg": 0.04618
+   },
+   "test_skill_vs_naive": {
+    "naive": 0.0,
+    "drift": -0.0089,
+    "ses": -0.0398,
+    "meanrev": -0.0063,
+    "mom": -0.0033,
+    "reg": -0.0063
+   },
+   "chosen_skill": 0.0,
+   "chosen_skill_ci95": [
+    0.0,
+    0.0
+   ],
+   "series_beating_naive": 0,
+   "n_series": 15,
+   "ships_point_forecast": false,
+   "direction_hit_rate": null,
+   "interval_coverage_test": {
+    "50": 0.40167802831672783,
+    "80": 0.7126376507603566
+   },
+   "per_series": {
+    "52": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "53": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "54": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "55": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "56": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "57": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "58": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "59": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "60": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "61": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "62": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "63": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "64": {
+     "skill": 0.0,
+     "n": 127
+    },
+    "40": {
+     "skill": 0.0,
+     "n": 128
+    },
+    "41": {
+     "skill": 0.0,
+     "n": 128
+    }
+   },
+   "test_origins": 128
+  },
+  "3": {
+   "selection_mae": {
+    "naive": 0.11502,
+    "drift": 0.11896,
+    "ses": 0.11657,
+    "meanrev": 0.11984,
+    "mom": 0.1186,
+    "reg": 0.12414
+   },
+   "chosen": "naive",
+   "test_mae": {
+    "naive": 0.09954,
+    "drift": 0.10062,
+    "ses": 0.10052,
+    "meanrev": 0.09952,
+    "mom": 0.09913,
+    "reg": 0.09849
+   },
+   "test_skill_vs_naive": {
+    "naive": 0.0,
+    "drift": -0.0109,
+    "ses": -0.0099,
+    "meanrev": 0.0002,
+    "mom": 0.004,
+    "reg": 0.0105
+   },
+   "chosen_skill": 0.0,
+   "chosen_skill_ci95": [
+    0.0,
+    0.0
+   ],
+   "series_beating_naive": 0,
+   "n_series": 15,
+   "ships_point_forecast": false,
+   "direction_hit_rate": null,
+   "interval_coverage_test": {
+    "50": 0.39211507725093236,
+    "80": 0.717101758124667
+   },
+   "per_series": {
+    "52": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "53": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "54": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "55": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "56": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "57": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "58": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "59": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "60": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "61": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "62": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "63": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "64": {
+     "skill": 0.0,
+     "n": 125
+    },
+    "40": {
+     "skill": 0.0,
+     "n": 126
+    },
+    "41": {
+     "skill": 0.0,
+     "n": 126
+    }
+   },
+   "test_origins": 128
+  },
+  "6": {
+   "selection_mae": {
+    "naive": 0.18343,
+    "drift": 0.19451,
+    "ses": 0.18461,
+    "meanrev": 0.19719,
+    "mom": 0.19267,
+    "reg": 0.20589
+   },
+   "chosen": "naive",
+   "test_mae": {
+    "naive": 0.15152,
+    "drift": 0.15413,
+    "ses": 0.15233,
+    "meanrev": 0.1499,
+    "mom": 0.15193,
+    "reg": 0.14701
+   },
+   "test_skill_vs_naive": {
+    "naive": 0.0,
+    "drift": -0.0172,
+    "ses": -0.0054,
+    "meanrev": 0.0107,
+    "mom": -0.0027,
+    "reg": 0.0297
+   },
+   "chosen_skill": 0.0,
+   "chosen_skill_ci95": [
+    0.0,
+    0.0
+   ],
+   "series_beating_naive": 0,
+   "n_series": 15,
+   "ships_point_forecast": false,
+   "direction_hit_rate": null,
+   "interval_coverage_test": {
+    "50": 0.4252183406113537,
+    "80": 0.7243449781659389
+   },
+   "per_series": {
+    "52": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "53": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "54": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "55": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "56": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "57": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "58": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "59": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "60": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "61": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "62": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "63": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "64": {
+     "skill": 0.0,
+     "n": 122
+    },
+    "40": {
+     "skill": 0.0,
+     "n": 123
+    },
+    "41": {
+     "skill": 0.0,
+     "n": 123
+    }
+   },
+   "test_origins": 128
+  },
+  "12": {
+   "selection_mae": {
+    "naive": 0.28412,
+    "drift": 0.30878,
+    "ses": 0.28489,
+    "meanrev": 0.31877,
+    "mom": 0.2984,
+    "reg": 0.3321
+   },
+   "chosen": "naive",
+   "test_mae": {
+    "naive": 0.22841,
+    "drift": 0.23583,
+    "ses": 0.22893,
+    "meanrev": 0.21947,
+    "mom": 0.23571,
+    "reg": 0.2173
+   },
+   "test_skill_vs_naive": {
+    "naive": 0.0,
+    "drift": -0.0325,
+    "ses": -0.0023,
+    "meanrev": 0.0392,
+    "mom": -0.0319,
+    "reg": 0.0487
+   },
+   "chosen_skill": 0.0,
+   "chosen_skill_ci95": [
+    0.0,
+    0.0
+   ],
+   "series_beating_naive": 0,
+   "n_series": 15,
+   "ships_point_forecast": false,
+   "direction_hit_rate": null,
+   "interval_coverage_test": {
+    "50": 0.4494833524684271,
+    "80": 0.7416762342135477
+   },
+   "per_series": {
+    "52": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "53": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "54": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "55": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "56": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "57": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "58": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "59": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "60": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "61": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "62": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "63": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "64": {
+     "skill": 0.0,
+     "n": 116
+    },
+    "40": {
+     "skill": 0.0,
+     "n": 117
+    },
+    "41": {
+     "skill": 0.0,
+     "n": 117
+    }
+   },
+   "test_origins": 128
+  }
+ }
+}

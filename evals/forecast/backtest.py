@@ -14,7 +14,8 @@ con = psycopg2.connect(host=ENV["PGHOST"], port=ENV.get("PGPORT", 5432), dbname=
 con.set_session(readonly=True, autocommit=True)
 cur = con.cursor()
 
-SERIES = [52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 40, 41]
+# 25 Nov 2026: World Bank Pink Sheet series only (IMF PCPS held back pending IMF permission for commercial reuse). Earlier runs used IMF 52-64 + WB 40, 41.
+SERIES = [50, 49, 51, 44, 47, 46, 48, 45, 42, 43, 40, 41]
 HORIZONS = [1, 3, 6, 12]
 MODELS = ["naive", "drift", "ses", "meanrev", "mom", "reg"]
 SEL_START, SEL_END, TEST_START = "2005-01", "2015-12", "2016-01"

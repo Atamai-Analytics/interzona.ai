@@ -1,4 +1,4 @@
-import { SGS_SAUDI_ENABLED, WGI_ENABLED } from "@/lib/flags";
+import { IMF_PRICES_ENABLED, SGS_SAUDI_ENABLED, WGI_ENABLED } from "@/lib/flags";
 // Generated from the original single-prompt version by splitting it into a short always-on core and per-subject
 // notes. The notes are loaded for a question by selectTopics() (keywords over the user's messages) or on request
 // through the get_reference_notes tool, which keeps the cached prefix small. Template literals: no backticks or
@@ -2121,10 +2121,13 @@ markets.price_series / markets.prices: commodity PRICES (all in US dollars). pri
   NULL for some USGS commodities with no matching commodity row), commodity_label, frequency (monthly or
   annual), unit, price_basis, description); prices has one row per period (series_id, period_start,
   period_end, value, value_low / value_high for a USGS price RANGE (value is then NULL), is_estimate).
-  260 series. Sources and what they mean: WORLD_BANK_PINK_SHEET (14 monthly series from 1960: copper,
+  ${IMF_PRICES_ENABLED ? "260" : "245"} series. Sources and what they mean: WORLD_BANK_PINK_SHEET (14 monthly series from 1960: copper,
   aluminium, nickel, zinc, lead, tin, iron ore, gold, silver, platinum, potash, phosphate rock, two
-  coals) and IMF_PCPS (15 monthly series from 1980 incl. uranium (Nuexco spot, US$ per pound), cobalt (LME
-  spot), palladium and platinum) are real market monthly averages in nominal US dollars through 2026;
+  coals) ${IMF_PRICES_ENABLED ? `and IMF_PCPS (15 monthly series from 1980 incl. uranium (Nuexco spot, US$ per pound), cobalt (LME
+  spot), palladium and platinum) are` : `is`} real market monthly averages in nominal US dollars through 2026 (credit 'World Bank Commodity Price Data
+  (The Pink Sheet), CC BY 4.0'; the World Bank sources the quotes from LME, LBMA, Bloomberg, Platts and others);${IMF_PRICES_ENABLED ? "" : ` there is NO
+  monthly uranium, cobalt or palladium price at present - say so plainly without giving a reason or naming a provider, use the USGS annual figures
+  where they exist, and do not quote monthly prices for them from memory or a web search;`}
   USGS_MCS_2026 (168 annual series, 2021-2025; 2025 is a USGS estimate, is_estimate = true) gives recent
   annual average prices for about 90 mineral commodities such as lithium carbonate, NdPr oxide, graphite,
   vanadium pentoxide, gallium and germanium, and is the only price source for several critical minerals;

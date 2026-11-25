@@ -2,6 +2,7 @@ import { runReadOnlyQuery } from "@/lib/db";
 import { creditsForSource } from "@/lib/licence";
 import { ELEMENTS, fromPpm, resolveElement } from "@/lib/composite";
 import { INTERCEPT_SOURCES, SOURCE_LABEL, gradeSql } from "@/lib/intercepts";
+import { IMF_PRICES_ENABLED } from "@/lib/flags";
 
 // Server side of the Drill intercepts page: find drill holes that have downhole assay intervals for an element (Tasmania MRT, South Australia SARIG, Athabasca OF 7792, SGU Sweden)
 // and load their intervals. The compositing itself runs in the browser (src/lib/composite.ts). Read-only role; every value that reaches SQL is a
@@ -120,7 +121,9 @@ const PRICE_SERIES: Record<string, { series: number; unit: "$/oz" | "$/t" | "$/l
   Co: { series: 53, unit: "$/t", perMetal: 1 },
   U: { series: 52, unit: "$/lb", perMetal: 1 / 0.848, note: "converted from US$ per lb U3O8 to per lb of uranium" },
 };
-export const PRICED_ELEMENTS = Object.keys(PRICE_SERIES);
+// Pd, Co and U exist only as IMF series, which are held back while IMF_PRICES_ENABLED is false.
+const IMF_ONLY = new Set(["Pd", "Co", "U"]);
+export const PRICED_ELEMENTS = Object.keys(PRICE_SERIES).filter((e) => IMF_PRICES_ENABLED || !IMF_ONLY.has(e));
 
 export type LatestPrice = { element: string; price: number; unit: string; period: string; series: string; source: string; note?: string };
 
@@ -137,7 +140,7 @@ export async function latestPrices(elements: string[]): Promise<Record<string, L
   );
   const bySeries = new Map(res.rows.map((r) => [Number(r.series_id), r]));
   for (const e of want) {
-    const d = PRICE_SERIES[e];
+    const d = IMF_PRICES_ENABLED || !IMF_ONLY.has(e) ? PRICE_SERIES[e] : undefined;
     const r = d ? bySeries.get(d.series) : undefined;
     if (!d || !r) continue;
     out[e] = {

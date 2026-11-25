@@ -13,7 +13,8 @@ for l in open(os.path.join(HERE, "..", "..", ".env.local"), encoding="utf8"):
     if "=" in l and not l.startswith("#"):
         k, v = l.rstrip("\r\n").split("=", 1); ENV[k] = v.strip('"')
 DRY = "--dry-run" in sys.argv
-SERIES = [52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 40, 41]
+# 25 Nov 2026: World Bank Pink Sheet series only (IMF PCPS held back pending IMF permission for commercial reuse). Earlier runs used IMF 52-64 + WB 40, 41.
+SERIES = [50, 49, 51, 44, 47, 46, 48, 45, 42, 43, 40, 41]
 HORIZONS = [1, 3, 6, 12]
 grid = np.round(np.arange(1.0, 2.5001, 0.01), 2)
 read = psycopg2.connect(host=ENV["PGHOST"], port=ENV.get("PGPORT", 5432), dbname=ENV["PGDATABASE"], user=ENV["PGUSER"], password=ENV["PGPASSWORD"])
@@ -75,7 +76,7 @@ for h in HORIZONS:
     print(f"h={h}: multipliers 50%={c['50']:.2f} 80%={c['80']:.2f}")
 bt = json.load(open(os.path.join(HERE, "backtest_results.json"), encoding="utf8"))
 rr = json.load(open(os.path.join(HERE, "ranges_rolling_results.json"), encoding="utf8"))
-PROTOCOL = ("Pre-registered back-test (evals/forecast/PREREG.md, PREREG_3.md): monthly IMF and World Bank price series, selection origins 2005-2015, test origins 2016 onward. "
+PROTOCOL = ("Pre-registered back-test (evals/forecast/PREREG.md, PREREG_3.md): 12 monthly World Bank Pink Sheet price series (IMF series used until 25 Nov 2026, now held back pending IMF permission), selection origins 2005-2015, test origins 2016 onward. "
             "Models tried: naive, drift, exponential smoothing, mean reversion, momentum, and a regression on both. Ranges are centred on the latest price (no-change) and widened by a factor re-estimated each month from the trailing 120 months of known outcomes.")
 bt_rows = []
 for h in HORIZONS:

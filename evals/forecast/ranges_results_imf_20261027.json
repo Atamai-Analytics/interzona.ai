@@ -1,0 +1,450 @@
+{
+ "prereg": "evals/forecast/PREREG_2.md",
+ "run": "2026-10-27T15:34:18",
+ "horizons": {
+  "1": {
+   "multiplier": {
+    "50": 1.67,
+    "80": 2.19
+   },
+   "selection_coverage": {
+    "50": 0.501,
+    "80": 0.801
+   },
+   "test_coverage_uncalibrated": {
+    "50": 0.402,
+    "80": 0.713
+   },
+   "test_coverage_calibrated": {
+    "50": 0.575,
+    "80": 0.934
+   },
+   "accepted": false,
+   "per_series_test": {
+    "52": {
+     "name": "Uranium, NUEXCO, Restricted Price, Nuexc",
+     "c50": 0.66,
+     "c80": 0.95,
+     "n": 127
+    },
+    "53": {
+     "name": "Cobalt, minimum 99.80% purity, LME spot ",
+     "c50": 0.61,
+     "c80": 0.91,
+     "n": 127
+    },
+    "54": {
+     "name": "Palladium, LME spot price, USD/ troy oun",
+     "c50": 0.57,
+     "c80": 0.96,
+     "n": 127
+    },
+    "55": {
+     "name": "Platinum, LME spot price, USD/troy ounce",
+     "c50": 0.65,
+     "c80": 0.95,
+     "n": 127
+    },
+    "56": {
+     "name": "Gold, Fixing Committee of the London Bul",
+     "c50": 0.67,
+     "c80": 0.97,
+     "n": 127
+    },
+    "57": {
+     "name": "Silver, London Bullion Market Associatio",
+     "c50": 0.68,
+     "c80": 0.95,
+     "n": 127
+    },
+    "58": {
+     "name": "Copper, grade A cathode, LME spot price,",
+     "c50": 0.64,
+     "c80": 0.94,
+     "n": 127
+    },
+    "59": {
+     "name": "Nickel, melting grade, LME spot price, C",
+     "c50": 0.77,
+     "c80": 0.98,
+     "n": 127
+    },
+    "60": {
+     "name": "Tin, standard grade, LME spot price, US$",
+     "c50": 0.68,
+     "c80": 0.96,
+     "n": 127
+    },
+    "61": {
+     "name": "Zinc, high grade 98% pure, US$ per metri",
+     "c50": 0.69,
+     "c80": 0.97,
+     "n": 127
+    },
+    "62": {
+     "name": "Lead, 99.97% pure, LME spot price, CIF E",
+     "c50": 0.61,
+     "c80": 0.98,
+     "n": 127
+    },
+    "63": {
+     "name": "Aluminum, 99.5% minimum purity, LME spot",
+     "c50": 0.65,
+     "c80": 0.95,
+     "n": 127
+    },
+    "64": {
+     "name": "China import Iron Ore Fines 62% FE spot ",
+     "c50": 0.43,
+     "c80": 0.95,
+     "n": 127
+    },
+    "40": {
+     "name": "Phosphate rock (World Bank Pink Sheet)",
+     "c50": 0.32,
+     "c80": 0.79,
+     "n": 128
+    },
+    "41": {
+     "name": "Potassium chloride (World Bank Pink Shee",
+     "c50": 0.02,
+     "c80": 0.8,
+     "n": 128
+    }
+   }
+  },
+  "3": {
+   "multiplier": {
+    "50": 1.66,
+    "80": 1.48
+   },
+   "selection_coverage": {
+    "50": 0.503,
+    "80": 0.802
+   },
+   "test_coverage_uncalibrated": {
+    "50": 0.392,
+    "80": 0.717
+   },
+   "test_coverage_calibrated": {
+    "50": 0.579,
+    "80": 0.853
+   },
+   "accepted": false,
+   "per_series_test": {
+    "52": {
+     "name": "Uranium, NUEXCO, Restricted Price, Nuexc",
+     "c50": 0.75,
+     "c80": 0.94,
+     "n": 125
+    },
+    "53": {
+     "name": "Cobalt, minimum 99.80% purity, LME spot ",
+     "c50": 0.53,
+     "c80": 0.78,
+     "n": 125
+    },
+    "54": {
+     "name": "Palladium, LME spot price, USD/ troy oun",
+     "c50": 0.64,
+     "c80": 0.86,
+     "n": 125
+    },
+    "55": {
+     "name": "Platinum, LME spot price, USD/troy ounce",
+     "c50": 0.65,
+     "c80": 0.89,
+     "n": 125
+    },
+    "56": {
+     "name": "Gold, Fixing Committee of the London Bul",
+     "c50": 0.59,
+     "c80": 0.82,
+     "n": 125
+    },
+    "57": {
+     "name": "Silver, London Bullion Market Associatio",
+     "c50": 0.64,
+     "c80": 0.85,
+     "n": 125
+    },
+    "58": {
+     "name": "Copper, grade A cathode, LME spot price,",
+     "c50": 0.66,
+     "c80": 0.86,
+     "n": 125
+    },
+    "59": {
+     "name": "Nickel, melting grade, LME spot price, C",
+     "c50": 0.74,
+     "c80": 0.94,
+     "n": 125
+    },
+    "60": {
+     "name": "Tin, standard grade, LME spot price, US$",
+     "c50": 0.62,
+     "c80": 0.86,
+     "n": 125
+    },
+    "61": {
+     "name": "Zinc, high grade 98% pure, US$ per metri",
+     "c50": 0.66,
+     "c80": 0.94,
+     "n": 125
+    },
+    "62": {
+     "name": "Lead, 99.97% pure, LME spot price, CIF E",
+     "c50": 0.66,
+     "c80": 0.94,
+     "n": 125
+    },
+    "63": {
+     "name": "Aluminum, 99.5% minimum purity, LME spot",
+     "c50": 0.61,
+     "c80": 0.83,
+     "n": 125
+    },
+    "64": {
+     "name": "China import Iron Ore Fines 62% FE spot ",
+     "c50": 0.5,
+     "c80": 0.92,
+     "n": 125
+    },
+    "40": {
+     "name": "Phosphate rock (World Bank Pink Sheet)",
+     "c50": 0.3,
+     "c80": 0.68,
+     "n": 126
+    },
+    "41": {
+     "name": "Potassium chloride (World Bank Pink Shee",
+     "c50": 0.15,
+     "c80": 0.71,
+     "n": 126
+    }
+   }
+  },
+  "6": {
+   "multiplier": {
+    "50": 1.54,
+    "80": 1.45
+   },
+   "selection_coverage": {
+    "50": 0.503,
+    "80": 0.801
+   },
+   "test_coverage_uncalibrated": {
+    "50": 0.425,
+    "80": 0.724
+   },
+   "test_coverage_calibrated": {
+    "50": 0.573,
+    "80": 0.852
+   },
+   "accepted": false,
+   "per_series_test": {
+    "52": {
+     "name": "Uranium, NUEXCO, Restricted Price, Nuexc",
+     "c50": 0.83,
+     "c80": 0.97,
+     "n": 122
+    },
+    "53": {
+     "name": "Cobalt, minimum 99.80% purity, LME spot ",
+     "c50": 0.4,
+     "c80": 0.8,
+     "n": 122
+    },
+    "54": {
+     "name": "Palladium, LME spot price, USD/ troy oun",
+     "c50": 0.6,
+     "c80": 0.9,
+     "n": 122
+    },
+    "55": {
+     "name": "Platinum, LME spot price, USD/troy ounce",
+     "c50": 0.65,
+     "c80": 0.88,
+     "n": 122
+    },
+    "56": {
+     "name": "Gold, Fixing Committee of the London Bul",
+     "c50": 0.48,
+     "c80": 0.73,
+     "n": 122
+    },
+    "57": {
+     "name": "Silver, London Bullion Market Associatio",
+     "c50": 0.61,
+     "c80": 0.84,
+     "n": 122
+    },
+    "58": {
+     "name": "Copper, grade A cathode, LME spot price,",
+     "c50": 0.59,
+     "c80": 0.88,
+     "n": 122
+    },
+    "59": {
+     "name": "Nickel, melting grade, LME spot price, C",
+     "c50": 0.75,
+     "c80": 0.95,
+     "n": 122
+    },
+    "60": {
+     "name": "Tin, standard grade, LME spot price, US$",
+     "c50": 0.57,
+     "c80": 0.83,
+     "n": 122
+    },
+    "61": {
+     "name": "Zinc, high grade 98% pure, US$ per metri",
+     "c50": 0.59,
+     "c80": 0.94,
+     "n": 122
+    },
+    "62": {
+     "name": "Lead, 99.97% pure, LME spot price, CIF E",
+     "c50": 0.66,
+     "c80": 0.92,
+     "n": 122
+    },
+    "63": {
+     "name": "Aluminum, 99.5% minimum purity, LME spot",
+     "c50": 0.6,
+     "c80": 0.82,
+     "n": 122
+    },
+    "64": {
+     "name": "China import Iron Ore Fines 62% FE spot ",
+     "c50": 0.57,
+     "c80": 0.93,
+     "n": 122
+    },
+    "40": {
+     "name": "Phosphate rock (World Bank Pink Sheet)",
+     "c50": 0.32,
+     "c80": 0.67,
+     "n": 123
+    },
+    "41": {
+     "name": "Potassium chloride (World Bank Pink Shee",
+     "c50": 0.38,
+     "c80": 0.72,
+     "n": 123
+    }
+   }
+  },
+  "12": {
+   "multiplier": {
+    "50": 1.41,
+    "80": 1.42
+   },
+   "selection_coverage": {
+    "50": 0.502,
+    "80": 0.803
+   },
+   "test_coverage_uncalibrated": {
+    "50": 0.449,
+    "80": 0.742
+   },
+   "test_coverage_calibrated": {
+    "50": 0.58,
+    "80": 0.832
+   },
+   "accepted": false,
+   "per_series_test": {
+    "52": {
+     "name": "Uranium, NUEXCO, Restricted Price, Nuexc",
+     "c50": 0.84,
+     "c80": 0.99,
+     "n": 116
+    },
+    "53": {
+     "name": "Cobalt, minimum 99.80% purity, LME spot ",
+     "c50": 0.41,
+     "c80": 0.73,
+     "n": 116
+    },
+    "54": {
+     "name": "Palladium, LME spot price, USD/ troy oun",
+     "c50": 0.55,
+     "c80": 0.88,
+     "n": 116
+    },
+    "55": {
+     "name": "Platinum, LME spot price, USD/troy ounce",
+     "c50": 0.74,
+     "c80": 0.89,
+     "n": 116
+    },
+    "56": {
+     "name": "Gold, Fixing Committee of the London Bul",
+     "c50": 0.55,
+     "c80": 0.65,
+     "n": 116
+    },
+    "57": {
+     "name": "Silver, London Bullion Market Associatio",
+     "c50": 0.61,
+     "c80": 0.81,
+     "n": 116
+    },
+    "58": {
+     "name": "Copper, grade A cathode, LME spot price,",
+     "c50": 0.62,
+     "c80": 0.84,
+     "n": 116
+    },
+    "59": {
+     "name": "Nickel, melting grade, LME spot price, C",
+     "c50": 0.74,
+     "c80": 0.97,
+     "n": 116
+    },
+    "60": {
+     "name": "Tin, standard grade, LME spot price, US$",
+     "c50": 0.6,
+     "c80": 0.78,
+     "n": 116
+    },
+    "61": {
+     "name": "Zinc, high grade 98% pure, US$ per metri",
+     "c50": 0.6,
+     "c80": 0.95,
+     "n": 116
+    },
+    "62": {
+     "name": "Lead, 99.97% pure, LME spot price, CIF E",
+     "c50": 0.66,
+     "c80": 0.94,
+     "n": 116
+    },
+    "63": {
+     "name": "Aluminum, 99.5% minimum purity, LME spot",
+     "c50": 0.5,
+     "c80": 0.78,
+     "n": 116
+    },
+    "64": {
+     "name": "China import Iron Ore Fines 62% FE spot ",
+     "c50": 0.67,
+     "c80": 0.92,
+     "n": 116
+    },
+    "40": {
+     "name": "Phosphate rock (World Bank Pink Sheet)",
+     "c50": 0.27,
+     "c80": 0.6,
+     "n": 117
+    },
+    "41": {
+     "name": "Potassium chloride (World Bank Pink Shee",
+     "c50": 0.34,
+     "c80": 0.75,
+     "n": 117
+    }
+   }
+  }
+ }
+}

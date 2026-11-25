@@ -73,7 +73,7 @@ export function InterceptsApp() {
   const [p2u, setP2u] = useState("$/oz");
   const [rec1, setRec1] = useState(100);
   const [rec2, setRec2] = useState(100);
-  // 'Use the latest prices': monthly averages from the database (World Bank Pink Sheet, IMF), per unit of metal.
+  // 'Use the latest prices': monthly averages from the database (World Bank Pink Sheet; IMF series only while IMF_PRICES_ENABLED), per unit of metal.
   type Latest = { price: number; unit: string; period: string; series: string; source: string; note?: string };
   const [useLatest, setUseLatest] = useState(false);
   const [latest, setLatest] = useState<{ p1: Latest; p2: Latest } | null>(null);

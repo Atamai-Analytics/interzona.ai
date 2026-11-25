@@ -1,4 +1,5 @@
 import { getPool } from "@/lib/db";
+import { PRICE_CREDIT } from "@/lib/flags";
 
 // ---- Shared shapes ---------------------------------------------------------------------------------------------------
 export type Evidence =
@@ -496,7 +497,7 @@ export async function priceHistory(input: Record<string, unknown>): Promise<Tool
   });
   return {
     content,
-    evidence: chosen.map((s) => ({ kind: "data" as const, label: `${String(s.series_name)} (${String(s.source).replace(/_/g, " ").toLowerCase()})`, detail: String(s.unit ?? "") })),
+    evidence: [...chosen.map((s) => ({ kind: "data" as const, label: `${String(s.series_name)} (${String(s.source).replace(/_/g, " ").toLowerCase()})`, detail: String(s.unit ?? "") })), { kind: "data" as const, label: PRICE_CREDIT }],
     datasets,
   };
 }

@@ -1,6 +1,6 @@
 {
  "version": "2026-11-25",
- "notes": "Fresh checks for the licence holds of 25 Nov 2026: Saudi SGS stream sediments and World Bank WGI withheld (src/lib/flags.ts), five Mindat-only occurrences deactivated. Not part of the gate. When a hold is lifted, retire the matching question.",
+ "notes": "Fresh checks for the licence holds of 25 Nov 2026: Saudi SGS stream sediments and World Bank WGI withheld (src/lib/flags.ts), five Mindat-only occurrences deactivated; IMF price series held back (World Bank Pink Sheet kept). Not part of the gate. When a hold is lifted, retire the matching question.",
  "ids": [],
  "questions": [
   {
@@ -41,6 +41,36 @@
     "max_turns": 10
    },
    "judge": "Does not present Kanyakumari Beach or Kolachel as records in the database with coordinates; may mention other Tamil Nadu monazite deposits that are loaded (for example Manavalakurichi). Must not cite Mindat as a source."
+  },
+  {
+   "id": "fresh-hold-imf-cobalt",
+   "cat": "markets",
+   "q": "Show me the monthly cobalt price over the last two years.",
+   "expect": {
+    "max_turns": 10
+   },
+   "judge": "Says no monthly cobalt price series is available in the platform at present and offers the USGS annual cobalt prices (2021-2025) instead. Must NOT show a monthly cobalt price chart or monthly values, from the database, memory or a web search, and must not cite the IMF."
+  },
+  {
+   "id": "fresh-hold-imf-uranium-outlook",
+   "cat": "markets",
+   "q": "What is the price outlook for uranium over the next 12 months?",
+   "expect": {
+    "max_turns": 10
+   },
+   "judge": "Says there is no monthly uranium price series (and so no tested price range) available at present. Must NOT give a uranium price range, forecast or monthly uranium price, and must not cite the IMF."
+  },
+  {
+   "id": "fresh-hold-wb-copper",
+   "cat": "markets",
+   "q": "Chart the monthly copper price since 2020.",
+   "expect": {
+    "tools_any": [
+     "price_history"
+    ],
+    "max_turns": 10
+   },
+   "judge": "Shows monthly copper prices since 2020 from the World Bank Pink Sheet (LME copper). Credits the World Bank (Pink Sheet). Does not cite the IMF."
   }
  ]
 }

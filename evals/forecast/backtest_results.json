@@ -1,49 +1,46 @@
 {
  "prereg": "evals/forecast/PREREG.md",
- "run": "2026-10-27T15:33:31",
+ "run": "2026-11-25T10:34:43",
  "series": {
-  "52": "Uranium, NUEXCO, Restricted Price, Nuexco exchange spot, US$ per pound (IMF)",
-  "53": "Cobalt, minimum 99.80% purity, LME spot price, USD/ton (IMF)",
-  "54": "Palladium, LME spot price, USD/ troy ounce (IMF)",
-  "55": "Platinum, LME spot price, USD/troy ounce (IMF)",
-  "56": "Gold, Fixing Committee of the London Bullion Market Association, London 3 PM fixed price, US$ per troy ounce (IMF)",
-  "57": "Silver, London Bullion Market Association, USD/troy ounce (IMF)",
-  "58": "Copper, grade A cathode, LME spot price, CIF European ports, US$ per metric ton (IMF)",
-  "59": "Nickel, melting grade, LME spot price, CIF European ports, US$ per metric ton (IMF)",
-  "60": "Tin, standard grade, LME spot price, US$ per metric ton (IMF)",
-  "61": "Zinc, high grade 98% pure, US$ per metric ton (IMF)",
-  "62": "Lead, 99.97% pure, LME spot price, CIF European Ports, US$ per metric ton (IMF)",
-  "63": "Aluminum, 99.5% minimum purity, LME spot price, CIF UK ports, US$ per metric ton (IMF)",
-  "64": "China import Iron Ore Fines 62% FE spot (CFR Tianjin port), US dollars per metric ton (IMF)",
+  "50": "Platinum (World Bank Pink Sheet)",
+  "49": "Gold (World Bank Pink Sheet)",
+  "51": "Silver (World Bank Pink Sheet)",
+  "44": "Copper (World Bank Pink Sheet)",
+  "47": "Nickel (World Bank Pink Sheet)",
+  "46": "Tin (World Bank Pink Sheet)",
+  "48": "Zinc (World Bank Pink Sheet)",
+  "45": "Lead (World Bank Pink Sheet)",
+  "42": "Aluminum (World Bank Pink Sheet)",
+  "43": "Iron ore, cfr spot (World Bank Pink Sheet)",
   "40": "Phosphate rock (World Bank Pink Sheet)",
   "41": "Potassium chloride (World Bank Pink Sheet)"
  },
  "horizons": {
   "1": {
    "selection_mae": {
-    "naive": 0.05415,
-    "drift": 0.05524,
-    "ses": 0.05616,
-    "meanrev": 0.05509,
-    "mom": 0.05491,
-    "reg": 0.05607
+    "naive": 0.05403,
+    "drift": 0.05502,
+    "ses": 0.05613,
+    "meanrev": 0.05538,
+    "mom": 0.05509,
+    "reg": 0.05682
    },
    "chosen": "naive",
    "test_mae": {
-    "naive": 0.04589,
-    "drift": 0.0463,
-    "ses": 0.04772,
-    "meanrev": 0.04618,
-    "mom": 0.04604,
-    "reg": 0.04618
+    "naive": 0.04346,
+    "drift": 0.044,
+    "ses": 0.045,
+    "meanrev": 0.04365,
+    "mom": 0.04366,
+    "reg": 0.04381
    },
    "test_skill_vs_naive": {
     "naive": 0.0,
-    "drift": -0.0089,
-    "ses": -0.0398,
-    "meanrev": -0.0063,
-    "mom": -0.0033,
-    "reg": -0.0063
+    "drift": -0.0125,
+    "ses": -0.0355,
+    "meanrev": -0.0045,
+    "mom": -0.0047,
+    "reg": -0.0081
    },
    "chosen_skill": 0.0,
    "chosen_skill_ci95": [
@@ -51,102 +48,90 @@
     0.0
    ],
    "series_beating_naive": 0,
-   "n_series": 15,
+   "n_series": 12,
    "ships_point_forecast": false,
    "direction_hit_rate": null,
    "interval_coverage_test": {
-    "50": 0.40167802831672783,
-    "80": 0.7126376507603566
+    "50": 0.39276485788113696,
+    "80": 0.7189922480620154
    },
    "per_series": {
-    "52": {
+    "50": {
      "skill": 0.0,
-     "n": 127
+     "n": 129
     },
-    "53": {
+    "49": {
      "skill": 0.0,
-     "n": 127
+     "n": 129
     },
-    "54": {
+    "51": {
      "skill": 0.0,
-     "n": 127
+     "n": 129
     },
-    "55": {
+    "44": {
      "skill": 0.0,
-     "n": 127
+     "n": 129
     },
-    "56": {
+    "47": {
      "skill": 0.0,
-     "n": 127
+     "n": 129
     },
-    "57": {
+    "46": {
      "skill": 0.0,
-     "n": 127
+     "n": 129
     },
-    "58": {
+    "48": {
      "skill": 0.0,
-     "n": 127
+     "n": 129
     },
-    "59": {
+    "45": {
      "skill": 0.0,
-     "n": 127
+     "n": 129
     },
-    "60": {
+    "42": {
      "skill": 0.0,
-     "n": 127
+     "n": 129
     },
-    "61": {
+    "43": {
      "skill": 0.0,
-     "n": 127
-    },
-    "62": {
-     "skill": 0.0,
-     "n": 127
-    },
-    "63": {
-     "skill": 0.0,
-     "n": 127
-    },
-    "64": {
-     "skill": 0.0,
-     "n": 127
+     "n": 129
     },
     "40": {
      "skill": 0.0,
-     "n": 128
+     "n": 129
     },
     "41": {
      "skill": 0.0,
-     "n": 128
+     "n": 129
     }
    },
-   "test_origins": 128
+   "test_origins": 129
   },
   "3": {
    "selection_mae": {
-    "naive": 0.11502,
-    "drift": 0.11896,
-    "ses": 0.11657,
-    "meanrev": 0.11984,
-    "mom": 0.1186,
-    "reg": 0.12414
+    "naive": 0.11647,
+    "drift": 0.11928,
+    "ses": 0.11821,
+    "meanrev": 0.12144,
+    "mom": 0.1203,
+    "reg": 0.12677
    },
    "chosen": "naive",
    "test_mae": {
-    "naive": 0.09954,
-    "drift": 0.10062,
-    "ses": 0.10052,
-    "meanrev": 0.09952,
-    "mom": 0.09913,
-    "reg": 0.09849
+    "naive": 0.09226,
+    "drift": 0.09363,
+    "ses": 0.09318,
+    "meanrev": 0.09169,
+    "mom": 0.0918,
+    "reg": 0.09138
    },
    "test_skill_vs_naive": {
     "naive": 0.0,
-    "drift": -0.0109,
-    "ses": -0.0099,
-    "meanrev": 0.0002,
-    "mom": 0.004,
-    "reg": 0.0105
+    "drift": -0.0149,
+    "ses": -0.01,
+    "meanrev": 0.0062,
+    "mom": 0.0049,
+    "reg": 0.0095
    },
    "chosen_skill": 0.0,
    "chosen_skill_ci95": [
@@ -154,102 +139,90 @@
     0.0
    ],
    "series_beating_naive": 0,
-   "n_series": 15,
+   "n_series": 12,
    "ships_point_forecast": false,
    "direction_hit_rate": null,
    "interval_coverage_test": {
-    "50": 0.39211507725093236,
-    "80": 0.717101758124667
+    "50": 0.38713910761154857,
+    "80": 0.7139107611548556
    },
    "per_series": {
-    "52": {
+    "50": {
      "skill": 0.0,
-     "n": 125
+     "n": 127
     },
-    "53": {
+    "49": {
      "skill": 0.0,
-     "n": 125
+     "n": 127
     },
-    "54": {
+    "51": {
      "skill": 0.0,
-     "n": 125
+     "n": 127
     },
-    "55": {
+    "44": {
      "skill": 0.0,
-     "n": 125
+     "n": 127
     },
-    "56": {
+    "47": {
      "skill": 0.0,
-     "n": 125
+     "n": 127
     },
-    "57": {
+    "46": {
      "skill": 0.0,
-     "n": 125
+     "n": 127
     },
-    "58": {
+    "48": {
      "skill": 0.0,
-     "n": 125
+     "n": 127
     },
-    "59": {
+    "45": {
      "skill": 0.0,
-     "n": 125
+     "n": 127
     },
-    "60": {
+    "42": {
      "skill": 0.0,
-     "n": 125
+     "n": 127
     },
-    "61": {
+    "43": {
      "skill": 0.0,
-     "n": 125
-    },
-    "62": {
-     "skill": 0.0,
-     "n": 125
-    },
-    "63": {
-     "skill": 0.0,
-     "n": 125
-    },
-    "64": {
-     "skill": 0.0,
-     "n": 125
+     "n": 127
     },
     "40": {
      "skill": 0.0,
-     "n": 126
+     "n": 127
     },
     "41": {
      "skill": 0.0,
-     "n": 126
+     "n": 127
     }
    },
-   "test_origins": 128
+   "test_origins": 129
   },
   "6": {
    "selection_mae": {
-    "naive": 0.18343,
-    "drift": 0.19451,
-    "ses": 0.18461,
-    "meanrev": 0.19719,
-    "mom": 0.19267,
-    "reg": 0.20589
+    "naive": 0.18672,
+    "drift": 0.19531,
+    "ses": 0.188,
+    "meanrev": 0.19842,
+    "mom": 0.1972,
+    "reg": 0.20876
    },
    "chosen": "naive",
    "test_mae": {
-    "naive": 0.15152,
-    "drift": 0.15413,
-    "ses": 0.15233,
-    "meanrev": 0.1499,
-    "mom": 0.15193,
-    "reg": 0.14701
+    "naive": 0.13986,
+    "drift": 0.143,
+    "ses": 0.14053,
+    "meanrev": 0.13796,
+    "mom": 0.13883,
+    "reg": 0.13579
    },
    "test_skill_vs_naive": {
     "naive": 0.0,
-    "drift": -0.0172,
-    "ses": -0.0054,
-    "meanrev": 0.0107,
-    "mom": -0.0027,
-    "reg": 0.0297
+    "drift": -0.0225,
+    "ses": -0.0048,
+    "meanrev": 0.0136,
+    "mom": 0.0074,
+    "reg": 0.0291
    },
    "chosen_skill": 0.0,
    "chosen_skill_ci95": [
@@ -257,102 +230,90 @@
     0.0
    ],
    "series_beating_naive": 0,
-   "n_series": 15,
+   "n_series": 12,
    "ships_point_forecast": false,
    "direction_hit_rate": null,
    "interval_coverage_test": {
-    "50": 0.4252183406113537,
-    "80": 0.7243449781659389
+    "50": 0.42473118279569894,
+    "80": 0.7237903225806451
    },
    "per_series": {
-    "52": {
+    "50": {
      "skill": 0.0,
-     "n": 122
+     "n": 124
     },
-    "53": {
+    "49": {
      "skill": 0.0,
-     "n": 122
+     "n": 124
     },
-    "54": {
+    "51": {
      "skill": 0.0,
-     "n": 122
+     "n": 124
     },
-    "55": {
+    "44": {
      "skill": 0.0,
-     "n": 122
+     "n": 124
     },
-    "56": {
+    "47": {
      "skill": 0.0,
-     "n": 122
+     "n": 124
     },
-    "57": {
+    "46": {
      "skill": 0.0,
-     "n": 122
+     "n": 124
     },
-    "58": {
+    "48": {
      "skill": 0.0,
-     "n": 122
+     "n": 124
     },
-    "59": {
+    "45": {
      "skill": 0.0,
-     "n": 122
+     "n": 124
     },
-    "60": {
+    "42": {
      "skill": 0.0,
-     "n": 122
+     "n": 124
     },
-    "61": {
+    "43": {
      "skill": 0.0,
-     "n": 122
-    },
-    "62": {
-     "skill": 0.0,
-     "n": 122
-    },
-    "63": {
-     "skill": 0.0,
-     "n": 122
-    },
-    "64": {
-     "skill": 0.0,
-     "n": 122
+     "n": 124
     },
     "40": {
      "skill": 0.0,
-     "n": 123
+     "n": 124
     },
     "41": {
      "skill": 0.0,
-     "n": 123
+     "n": 124
     }
    },
-   "test_origins": 128
+   "test_origins": 129
   },
   "12": {
    "selection_mae": {
-    "naive": 0.28412,
-    "drift": 0.30878,
-    "ses": 0.28489,
-    "meanrev": 0.31877,
-    "mom": 0.2984,
-    "reg": 0.3321
+    "naive": 0.28846,
+    "drift": 0.31285,
+    "ses": 0.28915,
+    "meanrev": 0.31048,
+    "mom": 0.30528,
+    "reg": 0.3193
    },
    "chosen": "naive",
    "test_mae": {
-    "naive": 0.22841,
-    "drift": 0.23583,
-    "ses": 0.22893,
-    "meanrev": 0.21947,
-    "mom": 0.23571,
-    "reg": 0.2173
+    "naive": 0.20642,
+    "drift": 0.21339,
+    "ses": 0.20686,
+    "meanrev": 0.19828,
+    "mom": 0.20936,
+    "reg": 0.19806
    },
    "test_skill_vs_naive": {
     "naive": 0.0,
-    "drift": -0.0325,
-    "ses": -0.0023,
-    "meanrev": 0.0392,
-    "mom": -0.0319,
-    "reg": 0.0487
+    "drift": -0.0338,
+    "ses": -0.0021,
+    "meanrev": 0.0394,
+    "mom": -0.0142,
+    "reg": 0.0405
    },
    "chosen_skill": 0.0,
    "chosen_skill_ci95": [
@@ -360,76 +321,64 @@
     0.0
    ],
    "series_beating_naive": 0,
-   "n_series": 15,
+   "n_series": 12,
    "ships_point_forecast": false,
    "direction_hit_rate": null,
    "interval_coverage_test": {
-    "50": 0.4494833524684271,
-    "80": 0.7416762342135477
+    "50": 0.4611581920903955,
+    "80": 0.7344632768361582
    },
    "per_series": {
-    "52": {
+    "50": {
      "skill": 0.0,
-     "n": 116
+     "n": 118
     },
-    "53": {
+    "49": {
      "skill": 0.0,
-     "n": 116
+     "n": 118
     },
-    "54": {
+    "51": {
      "skill": 0.0,
-     "n": 116
+     "n": 118
     },
-    "55": {
+    "44": {
      "skill": 0.0,
-     "n": 116
+     "n": 118
     },
-    "56": {
+    "47": {
      "skill": 0.0,
-     "n": 116
+     "n": 118
     },
-    "57": {
+    "46": {
      "skill": 0.0,
-     "n": 116
+     "n": 118
     },
-    "58": {
+    "48": {
      "skill": 0.0,
-     "n": 116
+     "n": 118
     },
-    "59": {
+    "45": {
      "skill": 0.0,
-     "n": 116
+     "n": 118
     },
-    "60": {
+    "42": {
      "skill": 0.0,
-     "n": 116
+     "n": 118
     },
-    "61": {
+    "43": {
      "skill": 0.0,
-     "n": 116
-    },
-    "62": {
-     "skill": 0.0,
-     "n": 116
-    },
-    "63": {
-     "skill": 0.0,
-     "n": 116
-    },
-    "64": {
-     "skill": 0.0,
-     "n": 116
+     "n": 118
     },
     "40": {
      "skill": 0.0,
-     "n": 117
+     "n": 118
     },
     "41": {
      "skill": 0.0,
-     "n": 117
+     "n": 118
     }
    },
-   "test_origins": 128
+   "test_origins": 129
   }
  }
 }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Coverage } from "@/lib/coverage";
+import { IMF_PRICES_ENABLED } from "@/lib/flags";
 
 const n = (v: number) => v.toLocaleString("en-US");
 /** 80,132,032 -> "about 80 million"; 2,535,335 -> "about 2.5 million" (row counts here are planner estimates, so round them). */
@@ -53,7 +54,7 @@ function tiles(c: Coverage | null): Tile[] {
     {
       title: "Commodity prices",
       figure: c ? `${c.priceSeries} series` : "Hundreds of series",
-      detail: `Monthly prices from the IMF and World Bank${c?.latestMonthly ? ` to ${monthName(c.latestMonthly)}` : ""}, plus annual USGS series, and BIS exchange rates.`,
+      detail: `Monthly prices from the ${IMF_PRICES_ENABLED ? "IMF and World Bank" : "World Bank (Pink Sheet)"}${c?.latestMonthly ? ` to ${monthName(c.latestMonthly)}` : ""}, plus annual USGS series, and BIS exchange rates.`,
     },
     {
       title: "Projects and ownership",

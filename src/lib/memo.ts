@@ -10,6 +10,7 @@ import { creditsForSource, creditsFromText } from "@/lib/licence";
 import { redis } from "@/lib/redis";
 import { MEMO_CASES, type MemoCase } from "@/lib/memo-cases";
 import type { MapData } from "@/lib/types";
+import { PRICE_CREDIT } from "@/lib/flags";
 
 // Investor memo: a 2-page brief for one region and commodity, built ONLY from stored data and the document library (no generated prose): the leads from the anomaly screen,
 // the deposit-type signature of the enriched rocks, the catalogued occurrences, who holds the projects, short quoted passages from the literature with their sources, price
@@ -259,7 +260,7 @@ export async function buildMemo(caseId: string): Promise<Memo> {
     const out = await priceHistory({ commodity: c.priceCommodity });
     const ds = out.datasets?.[0];
     if (!ds) return null;
-    dataCredits.add("Commodity prices (World Bank, IMF and USGS)");
+    dataCredits.add(PRICE_CREDIT);
     return { title: ds.title, columns: ds.columns, rows: ds.rows.slice(-12) };
   })();
 

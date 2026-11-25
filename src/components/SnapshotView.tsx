@@ -1,5 +1,6 @@
 import type { Snapshot } from "@/lib/snapshot";
 import { chartSvgString } from "@/lib/chart";
+import { IMF_PRICES_ENABLED } from "@/lib/flags";
 
 // Light, print-first rendering of one company snapshot. Used by both the signed-in page and the shared-link page.
 
@@ -182,7 +183,7 @@ export function SnapshotView({ s, sharedUntil }: { s: Snapshot; sharedUntil?: st
         {s.notes.map((n, i) => (
           <li key={i}>{n}</li>
         ))}
-        <li>Sources: company annual reports and filings held in the Interzona library; Bank for International Settlements exchange rates; World Bank, IMF and USGS commodity prices where a price link is shown.</li>
+        <li>Sources: company annual reports and filings held in the Interzona library; Bank for International Settlements exchange rates; {IMF_PRICES_ENABLED ? "World Bank, IMF and USGS" : "World Bank (Pink Sheet, CC BY 4.0) and USGS"} commodity prices where a price link is shown.</li>
       </ul>
       <p className="mt-4 border-t border-gray-300 pt-2 text-[10px] text-gray-500">
         Built automatically from stored data with no generated commentary; check important figures against the filings listed. Not investment advice.

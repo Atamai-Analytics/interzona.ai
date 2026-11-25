@@ -45,7 +45,7 @@ import { companyAssets } from "@/lib/assets";
 import type { MapData } from "@/lib/types";
 import { makeSanitizer, wantsTechnicalDetail } from "@/lib/sanitize";
 import { companyFinancials, peerComparison, priceHistory, priceSensitivity, operatingData, OPERATING_METRIC_NAMES, SENSITIVITY_METRICS, FINANCIAL_METRICS, type Dataset, type Evidence } from "@/lib/finance-tools";
-import { SGS_SAUDI_ENABLED, WGI_ENABLED } from "@/lib/flags";
+import { IMF_PRICES_ENABLED, PRICE_CREDIT, SGS_SAUDI_ENABLED, WGI_ENABLED } from "@/lib/flags";
 
 export const runtime = "nodejs";
 export const maxDuration = 240;
@@ -149,7 +149,7 @@ const tools: Anthropic.ToolUnion[] = [
   {
     name: "price_history",
     description:
-      "Commodity price history from the stored price series (World Bank and IMF monthly series, USGS annual prices). Finds the best-matching series for a commodity name, " +
+      "Commodity price history from the stored price series (" + (IMF_PRICES_ENABLED ? "World Bank and IMF monthly series" : "World Bank Pink Sheet monthly series") + ", USGS annual prices). Finds the best-matching series for a commodity name, " +
       "returns summary statistics and yearly averages, and the user is shown a line chart and a downloadable data file automatically. " +
       "Use for 'how has the price of X moved', price levels in a given year, and price comparisons. To overlay several series, call once with series_ids " +
       "(take the ids from other_matching_series of an earlier call). Prices are in US dollars; read each series' unit.",
@@ -1059,7 +1059,7 @@ type StreamEvent =
 // the kinds of data consulted. Built from what the tools actually returned, not from the model's own account.
 function dataLabelForSql(sql: string): string {
   if (/markets\.fx_rates/.test(sql)) return "Exchange rates (Bank for International Settlements)";
-  if (/markets\./.test(sql)) return "Commodity prices (World Bank, IMF and USGS)";
+  if (/markets\./.test(sql)) return PRICE_CREDIT;
   if (/financials\./.test(sql)) return "Company financial statements (filings and annual reports)";
   if (/docs\./.test(sql)) return "Document library";
   if (/geochem\./.test(sql)) return "Sample geochemistry (national geological survey datasets)";

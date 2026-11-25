@@ -1,7 +1,8 @@
 import { runReadOnlyQuery } from "@/lib/db";
 import type { Dataset, Evidence } from "@/lib/types";
+import { IMF_PRICES_ENABLED, PRICE_CREDIT } from "@/lib/flags";
 
-// Price outlook: ranges around the latest monthly price, not a forecast. markets.price_outlook holds, for 15 monthly IMF and World Bank series, 50% and 80% ranges at 1, 3, 6 and 12 months,
+// Price outlook: ranges around the latest monthly price, not a forecast. markets.price_outlook holds, for 12 monthly World Bank Pink Sheet series (IMF series held back since 25 Nov 2026), 50% and 80% ranges at 1, 3, 6 and 12 months,
 // centred on the latest price (no-change) and widened by a factor re-estimated from the trailing 120 months of known outcomes. markets.price_outlook_backtest holds the pre-registered back-test
 // (selection 2005-2015, test 2016 onward): no tested model beat "no change" at any horizon, so no point forecast is published; the ranges hit their stated share on the test period.
 
@@ -11,7 +12,8 @@ const ALIASES: [RegExp, string][] = [
   [/uranium|u3o8/i, "Uranium"], [/cobalt/i, "Cobalt"], [/palladium/i, "Palladium"], [/platinum/i, "Platinum"], [/gold/i, "Gold"], [/silver/i, "Silver"], [/copper/i, "Copper"],
   [/nickel/i, "Nickel"], [/\btin\b/i, "Tin"], [/zinc/i, "Zinc"], [/\blead\b/i, "Lead"], [/alumin/i, "Aluminum"], [/iron/i, "Iron Ore"], [/phosph/i, "Phosphate"], [/potash|potass/i, "Potassium"],
 ];
-const COVERED = "uranium, cobalt, palladium, platinum, gold, silver, copper, nickel, tin, zinc, lead, aluminium, iron ore, phosphate rock, potash (potassium chloride)";
+const COVERED = IMF_PRICES_ENABLED ? "uranium, cobalt, palladium, platinum, gold, silver, copper, nickel, tin, zinc, lead, aluminium, iron ore, phosphate rock, potash (potassium chloride)" : "platinum, gold, silver, copper, nickel, tin, zinc, lead, aluminium, iron ore, phosphate rock, potash (potassium chloride)";
+const HELD = ["Uranium", "Cobalt", "Palladium"]; // IMF-only monthly series, held back while IMF_PRICES_ENABLED is false
 const num = (x: unknown) => Number(x);
 const sig = (x: number) => (Math.abs(x) >= 1000 ? Math.round(x).toLocaleString("en-US") : Math.abs(x) >= 100 ? x.toFixed(0) : Math.abs(x) >= 10 ? x.toFixed(1) : x.toFixed(2));
 
@@ -23,11 +25,12 @@ export async function priceOutlook(input: Record<string, unknown>): Promise<Out>
   const hit = ALIASES.find(([re]) => re.test(q));
   if (!hit) return { content: `No monthly price series for "${q}", so there is no price outlook for it. Monthly series cover: ${COVERED}. Lithium, rare earths, graphite and most other critical minerals have only annual USGS prices here, which are too few for a tested range. Say so and do not estimate one.` };
   const key = hit[1];
+  if (!IMF_PRICES_ENABLED && HELD.includes(key)) return { content: `There is no monthly ${key.toLowerCase()} price series available in the platform at present, so there is no price outlook for it. USGS annual average prices exist for some years; say so and do not estimate a range. Monthly series cover: ${COVERED}.` };
   const rows = (await runReadOnlyQuery(
     `SELECT o.series_id, s.series_name, s.unit, s.source, to_char(o.as_of_month,'YYYY-MM') AS as_of_month, o.horizon_months, o.last_price, o.lo50, o.hi50, o.lo80, o.hi80
        FROM markets.price_outlook o JOIN markets.price_series s USING (series_id)
       WHERE s.series_name ILIKE '${key === "Iron Ore" ? "%Iron Ore%" : key + "%"}' AND o.as_of_month = (SELECT max(as_of_month) FROM markets.price_outlook)
-      ORDER BY (s.source='IMF_PCPS') DESC, o.series_id, o.horizon_months`, 20)).rows as unknown as Row[];
+      ORDER BY o.series_id, o.horizon_months`, 20)).rows as unknown as Row[];
   if (!rows.length) return { content: `The price outlook table has no rows for ${key}.` };
   const sid = rows[0].series_id;
   const mine = rows.filter((r) => r.series_id === sid);
@@ -60,15 +63,15 @@ export async function priceOutlook(input: Record<string, unknown>): Promise<Out>
       how_to_read: [
         "These are ranges around the latest monthly price, not a forecast: the centre is 'no change' and nothing here says which way the price will go.",
         "In a back-test (selection 2005-2015, test 2016 onward, rules written before running) NO tested model beat 'no change' at 1, 3, 6 or 12 months, so we publish no point forecast and no direction.",
-        "About half of past outcomes fell inside the 50% range and about 80% inside the 80% range across the 15 series (see back_test); for a single series the share can differ, and low-volatility or administered prices such as phosphate and potash were inside less often (see this_series_test_coverage_80pct).",
+        "About half of past outcomes fell inside the 50% range and about 80% inside the 80% range across the 12 World Bank series (see back_test); for a single series the share can differ, and low-volatility or administered prices such as phosphate and potash were inside less often (see this_series_test_coverage_80pct).",
         "A price outside the range is possible: roughly one outcome in five fell outside the 80% range.",
         "Do not describe the range as a prediction, a target, a bullish or bearish view or a probability that the price will reach a level; say 'in the past, one month/year-ahead prices stayed inside a range of this width about 4 times in 5'.",
       ],
       back_test: covered,
       not_covered: `Monthly series exist only for ${COVERED}. Lithium, rare earths, graphite and other critical minerals have only annual USGS prices here and no tested range.`,
-      ranges_updated: "monthly, after the IMF and World Bank series are refreshed",
+      ranges_updated: "monthly, after the World Bank series are refreshed",
     }),
-    evidence: [{ kind: "data", label: `Price outlook: ${r0.series_name}`, detail: `Ranges from a back-tested method (selection 2005-2015, test 2016 onward); latest price ${r0.as_of_month}. Not a forecast.` }],
+    evidence: [{ kind: "data", label: PRICE_CREDIT }, { kind: "data", label: `Price outlook: ${r0.series_name}`, detail: `Ranges from a back-tested method (selection 2005-2015, test 2016 onward); latest price ${r0.as_of_month}. Not a forecast.` }],
     datasets: [dataset],
   };
 }

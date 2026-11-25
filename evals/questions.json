@@ -1785,7 +1785,7 @@
         "images_min": 0,
         "max_turns": 6
       },
-      "judge": "Reports a fit of each company's revenue against the uranium price over its stored years (Cameco 2016-2025, 10 years; Kazatomprom 2017-2025, 9 years). Same-year R-squared is about 0.56 for Cameco (moderate) and about 0.97 for Kazatomprom (strong); elasticity about 0.4 for Cameco and about 1.2 for Kazatomprom. If it also reports lagged-price fits it must say it tried both rather than showing only the better one. States that this is a historical association, not a forecast or proof of cause, and that nine or ten years is a small sample. Does not state a specific company event as fact unless it came from the data."
+      "judge": "Reports a fit of each company's revenue against the uranium price over its stored years (Cameco 2016-2025, 10 years; Kazatomprom 2017-2025, 9 years). Same-year R-squared is about 0.56 for Cameco (moderate) and about 0.97 for Kazatomprom (strong); elasticity about 0.4 for Cameco and about 1.2 for Kazatomprom. If it also reports lagged-price fits it must say it tried both rather than showing only the better one. States that this is a historical association, not a forecast or proof of cause, and that nine or ten years is a small sample. Does not state a specific company event as fact unless it came from the data. WHILE THE IMF PRICE SERIES ARE HELD BACK (src/lib/flags.ts IMF_PRICES_ENABLED = false, since 25 Nov 2026) there is no monthly market uranium price, so the expected answer instead fits revenue against each company's own average realised uranium price from its annual reports and says so (Cameco 2016-2025, R-squared about 0.83, elasticity about 0.9; Kazatomprom 2018-2025, R-squared about 0.99, elasticity about 1.1; Energy Fuels has too little history to fit). Either version passes if its figures match the price it says it used."
     },
     {
       "id": "sens-lynas-realised",
@@ -1872,7 +1872,7 @@
         ],
         "max_turns": 6
       },
-      "judge": "Fits each company's revenue against the uranium price over its stored years and ranks exposure. Kazatomprom's same-year fit is strong (R-squared about 0.97); Cameco's is moderate (about 0.56); Energy Fuels' is moderate or weaker and the answer flags that its percentage sensitivity is uncertain because its revenue is small. Says it is a historical association over a small sample, not a forecast."
+      "judge": "Fits each company's revenue against the uranium price over its stored years and ranks exposure. Kazatomprom's same-year fit is strong (R-squared about 0.97); Cameco's is moderate (about 0.56); Energy Fuels' is moderate or weaker and the answer flags that its percentage sensitivity is uncertain because its revenue is small. Says it is a historical association over a small sample, not a forecast. WHILE THE IMF PRICE SERIES ARE HELD BACK (src/lib/flags.ts IMF_PRICES_ENABLED = false, since 25 Nov 2026) there is no monthly market uranium price, so the expected answer instead fits revenue against each company's own average realised uranium price from its annual reports and says so (Cameco 2016-2025, R-squared about 0.83, elasticity about 0.9; Kazatomprom 2018-2025, R-squared about 0.99, elasticity about 1.1; Energy Fuels has too little history to fit). Either version passes if its figures match the price it says it used."
     },
     {
       "id": "demo-lithium",

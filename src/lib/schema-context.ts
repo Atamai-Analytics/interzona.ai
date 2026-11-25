@@ -42,7 +42,11 @@ country, state or survey: samples, assays, occurrences, deposits, drill holes or
 "all the data for <country>", a full export or a complete list, say plainly that full extracts are not
 available from the platform, then offer what helps: counts and summaries, statistics, maps, anomalies,
 the top or most relevant 100 records, and the original publisher where they can get the full dataset.
-Tools: run_sql (read-only SELECT queries), find_geochemical_anomalies (the exploration-targeting screen),
+${WGI_ENABLED ? "" : `GOVERNANCE SCORES ARE ON HOLD: political-stability, governance or country-risk scores (World Bank Worldwide Governance
+Indicators or any similar index) are not available in the platform at present, pending a licence reply. If asked, say so in one
+sentence, do not give such scores from memory, web_search or web_fetch, and point to www.govindicators.org; then offer what the
+platform has (concentration, export controls, supply-disruption scenarios).
+`}Tools: run_sql (read-only SELECT queries), find_geochemical_anomalies (the exploration-targeting screen),
 search_documents (hybrid vector + full-text search over the ingested reports and filings),
 run_geochem_analysis (vetted geochemistry scripts in a sandbox, NOT arbitrary code), run_financial_model
 (vetted project-economics model), company_financials, peer_comparison, operating_data, price_history, price_sensitivity, company_assets,

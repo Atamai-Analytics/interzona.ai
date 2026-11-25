@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { btnRun, card, downloadCsv, heading, input, label } from "@/components/multivariate/ui";
 import type { RiskPoint } from "@/components/risk/RiskMap";
+import { WGI_ENABLED } from "@/lib/flags";
 
 const RiskMap = dynamic(() => import("@/components/risk/RiskMap"), { ssr: false, loading: () => <p className="text-sm text-gray-400">Loading map…</p> });
 
@@ -27,13 +28,15 @@ type Detail = {
 };
 type Scenario = { data: { what: string; statements: string[]; caveats: string[]; other_stages_available: string[]; credits: string[] }; datasets: Dataset[]; maps: { points: RiskPoint[] }[] };
 
-const RANKS = [
+const ALL_RANKS = [
   { key: "restriction_weighted_hhi", label: "Risk score", note: "concentration among producers with export controls in force (0-10,000)" },
   { key: "controlled_share", label: "Share under controls", note: "share of world supply from producers with export controls in force" },
   { key: "hhi", label: "Concentration (HHI)", note: "Herfindahl-Hirschman index of production (0-10,000)" },
   { key: "stability_weighted_hhi", label: "Stability-weighted", note: "concentration weighted by producers' political instability (World Bank WGI, 0-10,000)" },
   { key: "low_stability_share", label: "Low-stability supply", note: "share of world supply from producers with low political stability (World Bank WGI estimate below -1)" },
 ] as const;
+// Political-stability rankings appear only while the World Bank WGI is switched on (src/lib/flags.ts).
+const RANKS = ALL_RANKS.filter((r) => WGI_ENABLED || (r.key !== "stability_weighted_hhi" && r.key !== "low_stability_share"));
 const IMPORTERS = ["", "EU", "United States", "Japan", "South Korea", "India", "China", "United Kingdom"];
 const STAGES = [
   { key: "", label: "Largest share (default)" },
@@ -45,7 +48,7 @@ const CREDITS = [
   "U.S. Geological Survey, Mineral Commodity Summaries 2026 (public domain)",
   "OECD Inventory of Export Restrictions on Industrial Raw Materials (2009-2024)",
   "CEPII BACI (version 202601, HS12), Gaulier and Zignago (2010), Etalab Open Licence 2.0",
-  "Worldwide Governance Indicators, 2026 Update, World Bank (www.govindicators.org), CC BY 4.0",
+  ...(WGI_ENABLED ? ["Worldwide Governance Indicators, 2026 Update, World Bank (www.govindicators.org), CC BY 4.0"] : []),
 ];
 const fmt = (v: number | null | undefined) => (v === null || v === undefined ? "–" : v.toLocaleString("en-US"));
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
@@ -115,12 +118,12 @@ function HowToRead() {
             <b>Risk score (restriction-weighted HHI, 0–10,000)</b>, the main ranking: concentration counted only over producers that have export controls. High means supply sits in a few countries that have already
             shown they will control exports. Gallium scores 9,803 (China makes 99% and has licensing controls); magnesium scores almost nothing although China makes 86%, because the record shows no Chinese export controls on it.
           </li>
-          <li className={li}>
+          {WGI_ENABLED && <li className={li}>
             <b>Political stability</b> (World Bank Worldwide Governance Indicators): each producer&apos;s score from 0 to 100 (DR Congo 28, Russia 49, China 66, Australia 79), which measures perceived risk of
             instability, conflict or terrorism. <b>Low-stability supply</b> is the share of world supply from countries well below the world average (a stability estimate below −1, about one standard deviation;
             27 of 207 countries); for example cobalt 73% (DRC) and tantalum 69%. The <b>stability-weighted</b> score is concentration weighted by how unstable each producer is. This catches a different risk from
             export controls: disruption by conflict or a coup rather than by policy.
-          </li>
+          </li>}
           <li className={li}><b>New measures 2020–24</b>: how many restrictions producers introduced or tightened recently, a rough trend signal.</li>
         </ul>
 
@@ -161,12 +164,12 @@ function HowToRead() {
           </li>
           <li className={li}><b>Production location, not ownership</b>: a mine in Chile owned by a Chinese company counts as Chile.</li>
           <li className={li}><b>Mostly mining</b>: processing stages are covered only where USGS publishes them (copper refining, alumina, gallium, titanium sponge and a few others).</li>
-          <li className={li}><b>Stability scores are perception surveys</b>; the World Bank advises they are not definitive criteria for investment or other critical financial decisions.</li>
+          {WGI_ENABLED && <li className={li}><b>Stability scores are perception surveys</b>; the World Bank advises they are not definitive criteria for investment or other critical financial decisions.</li>}
         </ul>
 
         <h3 className={h3}>A good way to use it</h3>
         <ol className="mt-1 list-decimal space-y-1 pl-5">
-          <li className={li}>Rank by risk score, then by low-stability supply, to shortlist minerals.</li>
+          <li className={li}>Rank by risk score{WGI_ENABLED ? ", then by low-stability supply," : ""} to shortlist minerals.</li>
           <li className={li}>Open a mineral to see who produces it and why they are flagged, especially &ldquo;licensing only&rdquo; against &ldquo;ban or quota&rdquo;.</li>
           <li className={li}>Add your importer to see your own exposure.</li>
           <li className={li}>Run a scenario on the main producer.</li>
@@ -312,7 +315,7 @@ export function RiskApp() {
                       <th className="py-1 pl-3 text-right font-medium">Of which bans or quotas</th>
                       <th className="py-1 pl-3 text-left font-medium">Risk score</th>
                       <th className="py-1 pl-3 text-right font-medium">New measures 2020-24</th>
-                      <th className="py-1 pl-3 text-right font-medium" title="Share of world supply from producers with a World Bank WGI political-stability estimate below -1">Low-stability supply</th>
+                      {WGI_ENABLED && <th className="py-1 pl-3 text-right font-medium" title="Share of world supply from producers with a World Bank WGI political-stability estimate below -1">Low-stability supply</th>}
                     </tr>
                   </thead>
                   <tbody>
@@ -327,7 +330,7 @@ export function RiskApp() {
                         <td className="py-1 pl-3 text-right tabular-nums text-gray-400">{fmt(r.of_which_bans_or_quotas_pct)}%</td>
                         <td className="py-1 pl-3 whitespace-nowrap tabular-nums"><Bar value={r.restriction_weighted_hhi} max={maxScore} tone="bg-rose-500" /> <span className="ml-1">{fmt(r.restriction_weighted_hhi)}</span></td>
                         <td className="py-1 pl-3 text-right tabular-nums text-gray-400">{r.new_measures_2020_2024}</td>
-                        <td className="py-1 pl-3 text-right tabular-nums text-gray-400">{fmt(r.low_stability_share_pct)}%</td>
+                        {WGI_ENABLED && <td className="py-1 pl-3 text-right tabular-nums text-gray-400">{fmt(r.low_stability_share_pct)}%</td>}
                       </tr>
                     ))}
                   </tbody>
@@ -375,7 +378,7 @@ export function RiskApp() {
                           <th className="px-2 py-1 text-left font-medium">Status</th>
                           <th className="px-2 py-1 text-left font-medium">Measures in force</th>
                           <th className="px-2 py-1 text-right font-medium">New 2020-24</th>
-                          <th className="px-2 py-1 text-right font-medium" title="World Bank WGI Political Stability score, 0-100 (2025)">Political stability</th>
+                          {WGI_ENABLED && <th className="px-2 py-1 text-right font-medium" title="World Bank WGI Political Stability score, 0-100 (2025)">Political stability</th>}
                         </tr>
                       </thead>
                       <tbody>
@@ -391,7 +394,7 @@ export function RiskApp() {
                             </td>
                             <td className="px-2 py-1 text-gray-400">{p.measures ?? "–"}</td>
                             <td className="px-2 py-1 text-right tabular-nums text-gray-400">{p.new_measures_2020_2024}</td>
-                            <td className={`px-2 py-1 text-right tabular-nums ${p.political_stability_score !== null && p.political_stability_score < 46 ? "text-rose-300" : "text-gray-400"}`}>{p.political_stability_score ?? "–"}</td>
+                            {WGI_ENABLED && <td className={`px-2 py-1 text-right tabular-nums ${p.political_stability_score !== null && p.political_stability_score < 46 ? "text-rose-300" : "text-gray-400"}`}>{p.political_stability_score ?? "–"}</td>}
                           </tr>
                         ))}
                       </tbody>
@@ -461,8 +464,8 @@ export function RiskApp() {
 
         <p className="text-xs text-gray-500">
           Sources: {CREDITS.join("; ")}; European Commission RMIS (EU import reliance and recycling rates). Production shares are USGS estimates and show where material is produced, not who owns it.
-          The risk score reflects recorded export measures, not intentions; the OECD inventory ends in 2024. Political stability scores are the World Bank&apos;s Worldwide Governance Indicators (2026 update, 0-100, perception-based);
-          the World Bank advises they are not definitive criteria for investment or other critical financial decisions.
+          The risk score reflects recorded export measures, not intentions; the OECD inventory ends in 2024.
+          {WGI_ENABLED && " Political stability scores are the World Bank's Worldwide Governance Indicators (2026 update, 0-100, perception-based); the World Bank advises they are not definitive criteria for investment or other critical financial decisions."}
         </p>
       </main>
     </div>

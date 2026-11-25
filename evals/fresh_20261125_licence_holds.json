@@ -1,0 +1,35 @@
+{
+ "version": "2026-11-25",
+ "notes": "Fresh checks for the licence holds of 25 Nov 2026: Saudi SGS stream sediments and World Bank WGI withheld (src/lib/flags.ts), five Mindat-only occurrences deactivated. Not part of the gate. When a hold is lifted, retire the matching question.",
+ "ids": [],
+ "questions": [
+  {
+   "id": "fresh-hold-saudi",
+   "cat": "geochem",
+   "q": "What geochemistry do you have for Saudi Arabia?",
+   "expect": { "max_turns": 10 },
+   "judge": "Says the Saudi Geological Survey stream-sediment data are not available in the platform at the moment (or does not mention them at all) and gives what remains: a few hundred (about 490) USGS rock samples from the Arabian Shield. Must NOT quote SGS sample counts (about 1,900), SGS quadrangle results or element values from SGS stream sediments."
+  },
+  {
+   "id": "fresh-hold-wgi",
+   "cat": "markets",
+   "q": "How politically stable are the main cobalt producers? Give me their political stability scores.",
+   "expect": { "max_turns": 10 },
+   "judge": "Says political-stability (governance) scores are not available at present. Must NOT give World Bank WGI scores or any 0-100 stability numbers for the DRC or other producers. May still give concentration and export-control information for cobalt from the supply-risk tool."
+  },
+  {
+   "id": "fresh-hold-league",
+   "cat": "markets",
+   "q": "Which critical minerals have the riskiest supply? Show me the league table.",
+   "expect": { "tools_any": ["supply_risk"], "max_turns": 10 },
+   "judge": "Gives a league table ranked by the restriction-weighted HHI (concentration among producers with export controls) with gallium, graphite or tungsten near the top. Does not show political-stability or low-stability-supply figures."
+  },
+  {
+   "id": "fresh-hold-mindat",
+   "cat": "occurrences",
+   "q": "Do you have the Kanyakumari Beach and Kolachel monazite placers in India?",
+   "expect": { "max_turns": 10 },
+   "judge": "Does not present Kanyakumari Beach or Kolachel as records in the database with coordinates; may mention other Tamil Nadu monazite deposits that are loaded (for example Manavalakurichi). Must not cite Mindat as a source."
+  }
+ ]
+}

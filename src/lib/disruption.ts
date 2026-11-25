@@ -1,5 +1,6 @@
 import { runReadOnlyQuery } from "@/lib/db";
 import type { Dataset, Evidence, MapData, MapPoint } from "@/lib/types";
+import { WGI_ENABLED } from "@/lib/flags";
 
 // Supply-disruption scenario: "what if <country> cuts <x>% of its <mineral> supply at <stage>?". Joins, through the risk crosswalk
 // (markets.risk_minerals / risk_mineral_stages, gold_schema/build_risk_crosswalk.py), the USGS supply tables, CEPII BACI trade, USGS
@@ -199,7 +200,7 @@ export async function supplyDisruption(input: Record<string, unknown>): Promise<
   }
 
   // ---- 1b. the country's political stability (World Bank WGI, perception-based) -----------------------------------------------------
-  const gv = (await q(`SELECT year, max(score) FILTER (WHERE dimension = 'PV')::float8 AS pv, max(estimate) FILTER (WHERE dimension = 'PV')::float8 AS est, avg(score)::float8 AS avg6
+  const gv = !WGI_ENABLED ? undefined : (await q(`SELECT year, max(score) FILTER (WHERE dimension = 'PV')::float8 AS pv, max(estimate) FILTER (WHERE dimension = 'PV')::float8 AS est, avg(score)::float8 AS avg6
      FROM core.country_governance WHERE iso3 = '${esc(C.iso3)}' AND year = (SELECT max(year) FROM core.country_governance) GROUP BY year`))[0];
   if (gv && gv.pv !== null) {
     const est = Number(gv.est);

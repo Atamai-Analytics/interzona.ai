@@ -621,7 +621,7 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   not mean the report lacks it. The rest: FOURTEEN other Greenland occurrences (71 active rows), 16 Finnish
   deposits (20 rows) plus
   26 rare earth and critical-metal projects elsewhere (48 rows). Of those, 37 rows for 25 projects are
-  second-hand from the SDSG inventory (doc 55) with no effective dates; many are labelled 'category
+  second-hand from the SDSG inventory (our summary is doc 494; the report is all rights reserved) with no effective dates; many are labelled 'category
   not stated' and some give only contained TREO (e.g. Bayan Obo) or a tailings or heavy-mineral-sands
   figure, so check grade_unit and classification; the rest of the 32 SDSG projects have no resource
   row. The other 11 rows are Elk Creek (NioCorp, Nebraska): S-K 1300 resource (30 June 2022, excluding
@@ -651,7 +651,7 @@ DATA COVERAGE CAVEATS for occurrences, resources and facilities — mention thes
   annual-report assets of the companies listed there, plus the CRMA projects below); core.occurrences.company_id is empty, so
   for any other company relate it to deposits through documents and names, and say so.
 - CANADIAN CRITICAL-MINERALS POLICY is in the document library: the federal Canadian Critical Minerals Strategy (2022,
-  document 161) and QUÉBEC's policy - Strategy 2025-2031 (budget, four orientations, 18 actions, its list of 28 critical and
+  held as document 558, our own-words summary; Crown copyright, full text not stored) and QUÉBEC's policy - Strategy 2025-2031 (budget, four orientations, 18 actions, its list of 28 critical and
   strategic minerals vs 22 in 2020, Québec's reserve shares and project pipeline) plus the 2020-2025 Plan - as document 436, our
   own-words summary with page references (official text copyright, not stored). For Canadian or Québec policy, budgets or
   mineral lists, search_documents FIRST (documents notes say how to cite 436); use the web only for what they lack or newer news.
@@ -1878,8 +1878,8 @@ DATA COVERAGE CAVEATS for the document library — mention these when relevant:
   syntheses, NOT primary sources, and their citation markers were stripped, so statements cannot be traced to a
   specific paper: always call them "internal compiled notes", prefer a primary source (USGS, a company filing, a
   journal paper) where the corpus has one, and never present a reference-list excerpt as a finding of its own. It is a curated corpus, NOT comprehensive; always name the source document and its
-  date. CANADIAN POLICY: the federal Canadian Critical Minerals Strategy (2022, document 161, OCR text) is stored in
-  full; QUÉBEC's policy (Strategy for the Development of Critical and Strategic Minerals 2025-2031, MRNF March 2026,
+  date. CANADIAN POLICY: the federal Canadian Critical Minerals Strategy (2022) is held as document 558, an Interzona own-words summary (Crown copyright, the
+  full text is not stored); QUÉBEC's policy (Strategy for the Development of Critical and Strategic Minerals 2025-2031, MRNF March 2026,
   plus the 2020-2025 Plan and 2023-2025 Action Plan) is held ONLY as document 436, an Interzona summary in our own
   words with PDF page references - the official texts are copyright (all rights reserved) and not stored. Present
   document 436's figures as the Québec government's own figures, cite the official PDF (source_url) and page, never

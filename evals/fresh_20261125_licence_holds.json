@@ -71,6 +71,63 @@
     "max_turns": 10
    },
    "judge": "Shows monthly copper prices since 2020 from the World Bank Pink Sheet (LME copper). Credits the World Bank (Pink Sheet). Does not cite the IMF."
+  },
+  {
+   "id": "fresh-lib-canada-strategy",
+   "cat": "documents",
+   "q": "Which minerals does the Canadian Critical Minerals Strategy treat as priorities, and what does it list overall?",
+   "expect": {
+    "tools_any": [
+     "search_documents"
+    ],
+    "max_turns": 10
+   },
+   "judge": "Uses the Canadian Critical Minerals Strategy (2022) from the document library: names the six priority minerals (lithium, graphite, nickel, cobalt, copper and rare earth elements) and that the list has 31 critical minerals. Cites the strategy (an Interzona summary is fine). Does not quote long passages."
+  },
+  {
+   "id": "fresh-lib-hafnium-ai",
+   "cat": "documents",
+   "q": "What does the British Geological Survey say about hafnium and other minerals needed for AI data centres?",
+   "expect": {
+    "tools_any": [
+     "search_documents"
+    ],
+    "max_turns": 10
+   },
+   "judge": "Draws on the BGS report on mineral requirements of digital technologies (data centres, AI, quantum computing) and gives at least one concrete point from it about hafnium or the other minerals it covers. Cites the BGS report. Does not quote long passages."
+  },
+  {
+   "id": "fresh-lib-atlantic-council",
+   "cat": "documents",
+   "q": "What did the Atlantic Council stress test of US critical-mineral supply chains look at?",
+   "expect": {
+    "tools_any": [
+     "search_documents"
+    ],
+    "max_turns": 10
+   },
+   "judge": "Describes the Atlantic Council issue brief stress-testing US supply chains: a Chinese export ban on neodymium, dysprosium and/or manganese plus an extreme-weather shock, and a rating of US response tools. Cites the Atlantic Council brief. Does not quote long passages."
+  },
+  {
+   "id": "fresh-lib-hinrich-magnets",
+   "cat": "documents",
+   "q": "According to the Hinrich Foundation, how close is the world to a rare earth magnet supply chain outside China?",
+   "expect": {
+    "tools_any": [
+     "search_documents"
+    ],
+    "max_turns": 10
+   },
+   "judge": "Draws on the Hinrich Foundation report From mine to magnet (Paterson, September 2026): says the non-China magnet chain is still years from being adequate, with at least one concrete point (capacity, timelines or heavy rare earth gap). Cites it. Does not quote long passages."
+  },
+  {
+   "id": "fresh-lib-held-sp",
+   "cat": "documents",
+   "q": "What does the S&P Global gallium market report say about gallium prices?",
+   "expect": {
+    "max_turns": 10
+   },
+   "judge": "Does NOT present content from an S&P Global gallium market report (it is not available in the platform). May say no such report is available and offer other gallium sources (USGS, IEA, prices). Must not invent S&P figures."
   }
  ]
 }

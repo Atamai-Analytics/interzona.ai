@@ -288,18 +288,11 @@
       "id": "px-uranium-latest",
       "cat": "prices",
       "q": "What is the latest uranium spot price you have, and for which month?",
-      "truth": {
-        "u": "SELECT value FROM markets.prices WHERE series_id=52 ORDER BY period_start DESC LIMIT 1"
-      },
+      "notes_hold": "While IMF_PRICES_ENABLED is false (since 25 Nov 2026) the IMF uranium series (52) is held back. To restore the original check, put back truth u = SELECT value FROM markets.prices WHERE series_id=52 ORDER BY period_start DESC LIMIT 1 and expect.numbers [{truth: u, tol: 0.01}], and drop the judge.",
       "expect": {
-        "numbers": [
-          {
-            "truth": "u",
-            "tol": 0.01
-          }
-        ],
         "max_turns": 3
-      }
+      },
+      "judge": "Says plainly that no uranium spot (monthly market) price is available in the platform at present, without inventing or recalling a figure from memory or a web search. May offer company realised uranium prices or other help instead."
     },
     {
       "id": "px-li-usgs",

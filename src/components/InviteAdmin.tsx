@@ -14,7 +14,9 @@ type Row = {
   stats: { questions: number; units: number; lastSeen: number | null; up: number; down: number };
 };
 type Limits = { maxDays: number; maxDaily: number; maxActive: number };
-type ListReply = { role: "owner" | "inviter"; name?: string; limits?: Limits; active?: number; invites: Row[] };
+type Req = { t: number; kind: string; text: string; about: string; name: string };
+type ListReply = { role: "owner" | "inviter"; name?: string; limits?: Limits; active?: number; invites: Row[]; requests?: Req[] };
+const KIND_LABEL: Record<string, string> = { coverage: "Missing data or coverage", feature: "New feature or tool", wrong: "Something wrong in an answer", other: "Other" };
 type LogRow = { t: number; q: string; units: number; tools?: string[] };
 
 const when = (s: number | null) => (s ? new Date(s * 1000).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }) : "never");
@@ -30,6 +32,7 @@ async function api(body?: unknown, query = "") {
 export function InviteAdmin() {
   const [rows, setRows] = useState<Row[] | null>(null);
   const [me, setMe] = useState<{ role: "owner" | "inviter"; name?: string; limits?: Limits; active?: number }>({ role: "owner" });
+  const [reqs, setReqs] = useState<Req[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [note, setNote] = useState("");
@@ -45,6 +48,7 @@ export function InviteAdmin() {
       const d = (await api(undefined)) as ListReply;
       setRows(d.invites);
       setMe({ role: d.role ?? "owner", name: d.name, limits: d.limits, active: d.active });
+      setReqs(d.requests ?? []);
       if (d.limits) {
         setDays((v) => Math.min(v, d.limits!.maxDays));
         setLimit((v) => Math.min(v, d.limits!.maxDaily));
@@ -204,6 +208,27 @@ export function InviteAdmin() {
           </div>
         )}
       </section>
+
+      {inviter && (
+        <section>
+          <h2 className="mb-2 text-sm font-semibold">Improvement requests from your invitees</h2>
+          {reqs.length === 0 ? (
+            <p className="text-sm text-gray-500">None yet. Guests can send one with &quot;Suggest an improvement&quot; at the top of the app.</p>
+          ) : (
+            <ul className="space-y-2">
+              {reqs.map((r, k) => (
+                <li key={k} className="rounded-lg border border-gray-800 p-3 text-sm">
+                  <p className="text-xs text-gray-400">
+                    {when(r.t)} · {r.name} · {KIND_LABEL[r.kind] ?? r.kind}
+                    {r.about && <> · {r.about}</>}
+                  </p>
+                  <p className="mt-1 whitespace-pre-wrap">{r.text}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
     </div>
   );
 }

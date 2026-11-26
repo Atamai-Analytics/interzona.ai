@@ -3,9 +3,9 @@
 import type * as Leaflet from "leaflet";
 import { tileConfig } from "@/lib/mapTiles";
 
-export function addBaseLayer(L: typeof Leaflet, instance: Leaflet.Map) {
+export function addBaseLayer(L: typeof Leaflet, instance: Leaflet.Map): Leaflet.TileLayer {
   const tiles = tileConfig();
-  L.tileLayer(tiles.url, {
+  const layer = L.tileLayer(tiles.url, {
     maxZoom: tiles.maxZoom,
     tileSize: tiles.tileSize,
     zoomOffset: tiles.zoomOffset,
@@ -47,4 +47,5 @@ export function addBaseLayer(L: typeof Leaflet, instance: Leaflet.Map) {
       true
     );
   }
+  return layer;
 }

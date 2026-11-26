@@ -1,12 +1,17 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Conversation, Evidence } from "@/lib/types";
 import { chartSvgString } from "@/lib/chart";
 
+const PrintMap = dynamic(() => import("@/components/PrintMap"), { ssr: false });
+
 // A light-themed, print-only rendering of one conversation. It is mounted only while exporting; "Save as PDF" in the print dialog
-// produces the PDF. Visible on paper only (hidden on screen).
+// produces the PDF. It sits off-screen (not display:none, so the maps can be measured and drawn) and is the only thing printed.
+// onReady fires once every map's basemap has loaded (at once when there are no maps), so the page prints a complete picture.
 
 function Sources({ evidence }: { evidence: Evidence[] }) {
   const docs = new Map<string, number[]>();
@@ -44,7 +49,19 @@ function Sources({ evidence }: { evidence: Evidence[] }) {
   );
 }
 
-export function PrintView({ conv }: { conv: Conversation }) {
+export function PrintView({ conv, onReady }: { conv: Conversation; onReady?: () => void }) {
+  const total = conv.messages.reduce((n, m) => n + (m.role === "assistant" ? (m.maps?.length ?? 0) : 0), 0);
+  const loaded = useRef(0);
+  const notify = useRef(onReady);
+  notify.current = onReady;
+  useEffect(() => {
+    loaded.current = 0;
+    if (total === 0) notify.current?.();
+  }, [conv, total]);
+  const mapLoaded = () => {
+    loaded.current += 1;
+    if (loaded.current === total) notify.current?.();
+  };
   const when = new Date(conv.updatedAt).toLocaleString("en-GB", { dateStyle: "long", timeStyle: "short" });
   return (
     <div className="bg-white p-6 text-sm leading-relaxed text-black [&_table]:my-2 [&_table]:border-collapse [&_td]:border [&_td]:border-gray-400 [&_td]:px-2 [&_td]:py-1 [&_th]:border [&_th]:border-gray-400 [&_th]:bg-gray-100 [&_th]:px-2 [&_th]:py-1 [&_th]:text-left [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-2 [&_h1]:mb-1 [&_h1]:text-xl [&_h1]:font-semibold [&_h2]:mt-3 [&_h2]:font-semibold [&_h3]:mt-2 [&_h3]:font-semibold">
@@ -62,8 +79,10 @@ export function PrintView({ conv }: { conv: Conversation }) {
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content}</ReactMarkdown>
             {m.datasets?.map((d) => (d.chart ? <div key={d.id} dangerouslySetInnerHTML={{ __html: chartSvgString(d.chart, d.title) }} /> : null))}
             {m.maps?.map((mp) => (
-              <div key={mp.id} className="my-2 break-inside-avoid">
-                <div className="text-[11px] text-gray-600">Map shown in the app: {mp.title} ({mp.points.length} places{mp.points.length > 15 ? ", first 15 listed" : ""})</div>
+              <div key={mp.id} className="my-2">
+                <PrintMap map={mp} onReady={mapLoaded} />
+                <div className="break-inside-avoid">
+                <div className="text-[11px] text-gray-600">Places on the map{mp.points.length > 15 ? " (first 15 of " + mp.points.length + ")" : ""}</div>
                 <table>
                   <thead>
                     <tr>
@@ -84,6 +103,7 @@ export function PrintView({ conv }: { conv: Conversation }) {
                     ))}
                   </tbody>
                 </table>
+                </div>
               </div>
             ))}
             {m.images?.map((img, j) => (

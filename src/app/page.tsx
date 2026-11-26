@@ -17,6 +17,7 @@ import { FeedbackBar } from "@/components/FeedbackBar";
 import { ShareAnswer } from "@/components/ShareAnswer";
 import { HistoryPanel } from "@/components/HistoryPanel";
 import { PrintView } from "@/components/PrintView";
+import { RequestButton } from "@/components/RequestButton";
 
 // Leaflet touches window on import, so the map is loaded in the browser only.
 const MapView = dynamic(() => import("@/components/MapView"), { ssr: false });
@@ -603,6 +604,7 @@ export default function Home() {
     downloadText(`${slug(c.title)}.md`, toMarkdown(c), "text/markdown;charset=utf-8");
   }
 
+  const printReady = useRef<() => void>(() => undefined);
   function exportPdf() {
     setPrintConv(buildConversation());
   }
@@ -617,8 +619,18 @@ export default function Home() {
       setPrintConv(null);
     };
     window.addEventListener("afterprint", after, { once: true });
-    const t = setTimeout(() => window.print(), 250);
+    // Wait until the maps in the export have drawn (PrintView calls printReady), but never more than 8 seconds.
+    let printed = false;
+    const go = () => {
+      if (printed) return;
+      printed = true;
+      window.print();
+    };
+    printReady.current = () => setTimeout(go, 300);
+    const t = setTimeout(go, 8000);
     return () => {
+      printed = true;
+      printReady.current = () => undefined;
       clearTimeout(t);
       window.removeEventListener("afterprint", after);
       document.title = previousTitle;
@@ -898,6 +910,14 @@ export default function Home() {
                 <Link href="/admin/invites" className="underline">
                   Invitations
                 </Link>
+                <Link href="/admin/requests" className="underline">
+                  Requests
+                </Link>
+              </span>
+            )}
+            {!(who.role === "guest" && who.ended) && (
+              <span className="md:mt-1 md:block">
+                <RequestButton />
               </span>
             )}
             <button onClick={signOut} className="md:mt-1 md:block md:ml-auto ml-auto underline">
@@ -1140,8 +1160,8 @@ export default function Home() {
       {toast && <div className="fixed bottom-4 right-4 z-50 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 text-sm text-gray-100 shadow-lg">{toast}</div>}
     </div>
     {printConv && (
-      <div className="hidden print:block">
-        <PrintView conv={printConv} />
+      <div aria-hidden className="pointer-events-none fixed left-[-10000px] top-0 w-[760px] print:static print:left-auto print:w-auto">
+        <PrintView conv={printConv} onReady={() => printReady.current()} />
       </div>
     )}
     </>

@@ -6,13 +6,7 @@ import { addBaseLayer } from "@/lib/leafletBase";
 import "leaflet/dist/leaflet.css";
 import { MAX_EXPORT_ROWS, csvWithCredits } from "@/lib/csv";
 
-// Group colours: the three anomaly classes get fixed, meaningful colours; any other group takes the next palette colour.
-const FIXED: Record<string, string> = {
-  "New lead (no known occurrence nearby)": "#f59e0b",
-  "Near an occurrence of a different commodity": "#a78bfa",
-  "Near a known occurrence of this commodity": "#34d399",
-};
-const PALETTE = ["#60a5fa", "#f472b6", "#fbbf24", "#34d399", "#c084fc", "#fb7185", "#2dd4bf", "#a3e635"];
+import { mapGroups } from "@/lib/mapColors";
 
 function csvText(m: MapData, credits: string[]) {
   return csvWithCredits(
@@ -26,12 +20,7 @@ export default function MapView({ map, credits = [], light = false }: { map: Map
   const el = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
 
-  const groups = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const p of map.points) counts.set(p.group, (counts.get(p.group) ?? 0) + 1);
-    let i = 0;
-    return [...counts.entries()].map(([name, n]) => ({ name, n, color: FIXED[name] ?? PALETTE[i++ % PALETTE.length] }));
-  }, [map]);
+  const groups = useMemo(() => mapGroups(map), [map]);
 
   useEffect(() => {
     let cancelled = false;

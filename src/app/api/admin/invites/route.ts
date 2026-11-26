@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession, inviterLimits, sameOrigin } from "@/lib/auth";
 import { createInvite, getInvite, inviteLog, listInvites, revokeInvite } from "@/lib/invites";
 import { redisConfigured } from "@/lib/redis";
+import { listRequests } from "@/lib/requests";
 
 export const dynamic = "force-dynamic";
 
@@ -34,7 +35,15 @@ export async function GET(req: NextRequest) {
   const own = all.filter((i) => i.createdBy === w.name).map((i) => ({ ...i, stats: { ...i.stats, units: 0 } }));
   const limits = inviterLimits();
   return NextResponse.json(
-    { role: "inviter", name: w.name, limits, active: own.filter((i) => i.status === "active").length, invites: own },
+    {
+      role: "inviter",
+      name: w.name,
+      limits,
+      active: own.filter((i) => i.status === "active").length,
+      invites: own,
+      // Improvement requests from the people this inviter invited (requests are addressed to the team; questions stay private).
+      requests: (await listRequests({ invitedBy: w.name }).catch(() => [])).map((r) => ({ t: r.t, kind: r.kind, text: r.text, about: r.about, name: r.who.name ?? "" })),
+    },
     { headers: { "Cache-Control": "no-store" } }
   );
 }

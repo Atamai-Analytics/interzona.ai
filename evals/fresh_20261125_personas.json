@@ -306,7 +306,7 @@
    "expect": {
     "max_turns": 6
    },
-   "judge": "Gives the ownership only from sources it can cite (documents or records): Ivanhoe Mines and Zijin Mining with about 39.6% each, Crystal River about 0.8% and the DRC government 20%, OR says the platform's ownership records do not hold Kamoa-Kakula and cites a document if it finds one. Must not present uncited stakes as database facts."
+   "judge": "Gives the ownership only from sources it can cite (documents or records): Ivanhoe Mines and Zijin Mining with about 39.6% each, Crystal River about 0.8% and the DRC government 20%, OR says the platform's ownership records do not hold Kamoa-Kakula and cites a document if it finds one. Must not present uncited stakes as database facts. UPDATE 26 Nov 2026: core.occurrence_ownership now holds these four stakes for Kamoa-Kakula (occurrence 1199605, source Ivanhoe Mines' project page and Q2 2026 results, as of 2026); answering from 'our ownership records' and naming that Ivanhoe source is correct."
   },
   {
    "id": "inv-memo-graphite",

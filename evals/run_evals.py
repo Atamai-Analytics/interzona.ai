@@ -353,7 +353,9 @@ def main():
     small = [r for r in results if any("haiku" in m for m in r.get("models", []))]
     if small:
         big = [r for r in results if r not in small]
-        lines += ["", f"Routing: {len(small)} of {len(results)} runs used the small model (mean {statistics.mean(r['cost_eq'] for r in small):,.0f} tokens, {statistics.mean(r['seconds'] for r in small):.1f} s); the other {len(big)} used the main model (mean {statistics.mean(r['cost_eq'] for r in big):,.0f} tokens, {statistics.mean(r['seconds'] for r in big):.1f} s). Small-model questions: " + ", ".join(sorted({r['id'] for r in small}))]
+        big_txt = (f"the other {len(big)} used the main model (mean {statistics.mean(r['cost_eq'] for r in big):,.0f} tokens, "
+                   f"{statistics.mean(r['seconds'] for r in big):.1f} s)") if big else "none used the main model"
+        lines += ["", f"Routing: {len(small)} of {len(results)} runs used the small model (mean {statistics.mean(r['cost_eq'] for r in small):,.0f} tokens, {statistics.mean(r['seconds'] for r in small):.1f} s); {big_txt}. Small-model questions: " + ", ".join(sorted({r['id'] for r in small}))]
     lines += ["", "## Failures", ""]
     for qid, rs in by_q.items():
         bad = [x for x in rs if not x["passed"]]

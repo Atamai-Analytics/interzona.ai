@@ -56,6 +56,10 @@ export async function priceOutlook(input: Record<string, unknown>): Promise<Out>
   const covered = bt.map((b) => ({ horizon_months: b.horizon_months, best_model_in_selection: b.best_model_selection, any_model_beat_no_change: b.beat_naive_in_selection, point_forecast_published: b.point_forecast_ships, share_of_outcomes_inside_50pct_range_2016_on: num(b.test_coverage50), share_inside_80pct_range_2016_on: num(b.test_coverage80) }));
   return {
     content: JSON.stringify({
+      must_include_sentence:
+        "This is a range, not a forecast: in our back-test (2016 onward) no model beat simply assuming no change, so we publish ranges, not a predicted price. " +
+        `Prices: ${PRICE_CREDIT}. ` +
+        "(Put these two sentences, or ones saying the same, in every answer that uses these ranges, however short.)",
       series: r0.series_name, source: r0.source, unit, latest_month: r0.as_of_month, latest_price: num(r0.last_price),
       data_quality_warning: staleWarning,
       ranges: mine.map((r) => ({ looking_ahead_months: r.horizon_months, range_50pct: [num(r.lo50), num(r.hi50)], range_80pct: [num(r.lo80), num(r.hi80)] })),

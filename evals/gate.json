@@ -108,7 +108,7 @@
         ],
         "max_turns": 8
       },
-      "judge": "Uses the supply-risk tool for rare earths: gives mining and refining (IEA 2025 refining stage) concentration with China as the dominant producer, the share of supply from producers with export controls in force (OECD inventory, 2024) and the restriction-weighted HHI. Says the OECD inventory ends in 2024 so later measures (China 2025 rare earth and magnet controls) are not counted, and mentions or searches for them. No political-stability scores, no probability or price forecast."
+      "judge": "Uses the supply-risk tool for rare earths: gives mining and refining (IEA 2025 refining stage) concentration with China as the dominant producer, the share of supply from producers with export controls in force (OECD inventory, 2024) and the restriction-weighted HHI. Says the OECD inventory ends in 2024 so later measures (China 2025 rare earth and magnet controls) are not counted, and mentions or searches for them. No political-stability scores, no probability or price forecast. (IEA's 2025-2040 concentration projection, clearly labelled as an IEA projection and not a forecast, is allowed: the tool returns it and the prompt asks for it.)"
     },
     {
       "id": "pol-graphite-cut",

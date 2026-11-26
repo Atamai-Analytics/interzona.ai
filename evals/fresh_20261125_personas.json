@@ -53,7 +53,7 @@
     ],
     "max_turns": 6
    },
-   "judge": "Gives the number of CRMA strategic projects whose materials include lithium (26 in the database) and splits them into EU and non-EU (third-country) projects, naming several. Credits the European Commission list."
+   "judge": "Gives the number of CRMA strategic projects whose materials include lithium (26 in the database) and splits them into EU and non-EU (third-country) projects, naming several. (The source credit is shown in the app's sources panel and need not be in the text.)"
   },
   {
    "id": "pol-eiti-zambia",
@@ -62,7 +62,7 @@
    "expect": {
     "max_turns": 8
    },
-   "judge": "Uses the EITI data for Zambia: gives the latest fiscal year available and total government revenue from the extractive (mining) sector in US dollars, with the main revenue streams (for example mineral royalty, corporate income tax). Credits EITI with country and year. Says figures are as reported to EITI."
+   "judge": "Uses the EITI data for Zambia: gives the latest fiscal year available and total government revenue from the extractive (mining) sector in US dollars, ideally with the main revenue streams (for example mineral royalty, corporate income tax). Says figures are as reported to EITI."
   },
   {
    "id": "pol-iea-lithium-2040",
@@ -110,7 +110,7 @@
     ],
     "max_turns": 6
    },
-   "judge": "States the CRMA 2030 benchmarks for strategic raw materials: at least 10% of EU consumption from EU extraction, 40% from EU processing, 25% from EU recycling, and no more than 65% of EU consumption of any strategic raw material at any relevant stage from a single third country. Cites the regulation (EU) 2024/1252."
+   "judge": "States the CRMA 2030 benchmarks for strategic raw materials: at least 10% of EU consumption from EU extraction, 40% from EU processing, 25% from EU recycling, and no more than 65% of EU consumption of any strategic raw material at any relevant stage from a single third country. Names the Critical Raw Materials Act (citing the regulation number is a plus)."
   },
   {
    "id": "pol-us-graphite-imports",
@@ -204,7 +204,7 @@
    "expect": {
     "max_turns": 6
    },
-   "judge": "Says that INGEMMET's Peruvian stream sediment data are not loaded (licence not yet cleared) or that the platform has no Peruvian stream sediment survey, and offers what it does hold for Peru (for example any USGS samples or occurrences) without inventing data."
+   "judge": "Says that the platform holds no Peruvian stream sediment survey (INGEMMET's data are not loaded; mentioning the licence is a plus) and does not invent data. Offering what it can do for Peru instead (occurrences, any USGS samples, documents) is a plus."
   },
   {
    "id": "geo-greenland-ree-deposits",
@@ -231,7 +231,7 @@
    "expect": {
     "max_turns": 6
    },
-   "judge": "Explains that full extracts are not available (downloads are capped at 100 rows, no whole-country lists), then offers a useful alternative: the top anomalies, a map, statistics, and the publisher (SGU) for the full dataset."
+   "judge": "Explains that full extracts are not available (whole-country or whole-survey lists are not provided; mentioning the 100-row download cap is a plus), then offers a useful alternative: the top anomalies, a map, statistics, and the publisher (SGU) for the full dataset."
   },
   {
    "id": "inv-li-australia-resources",
@@ -262,7 +262,7 @@
    "expect": {
     "max_turns": 8
    },
-   "judge": "Names rare earth projects with recent US government (DoD/DoW, DOE, Commerce, EXIM, DFC) funding or conditional commitments, with the agency, amount and date where given, from the document library and/or a cited web search. Says which are conditional, letters of interest or non-binding rather than committed money. Cites its sources."
+   "judge": "Names rare earth projects with recent US government (DoD/DoW, DOE, Commerce, EXIM, DFC) funding or conditional commitments, with the agency, amount and date where given, from the document library and/or a web search, and says which are conditional, letters of interest or non-binding rather than committed money. Names its sources (detailed per-claim links are a plus)."
   },
   {
    "id": "inv-nickel-outlook",

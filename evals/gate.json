@@ -97,6 +97,142 @@
         "max_turns": 5
       },
       "judge": "Lists the matching Greenland stream-sediment samples with copper above 200 ppm and their coordinates (or, if there are very many, gives the count and a ranked list or map of up to 100 records - since 15 Nov 2026 the platform caps tables and downloads at 100 records and offers no full extracts, so pointing to GEUS for the complete dataset is correct). Credits GEUS and the Greenland Mineral Resources Authority (MMR) / CC BY 4.0. Fail if it says Greenland samples cannot be listed because of a GEUS permission or a 25-sample limit (that limit was removed on 10 Nov 2026), or if it gives no GEUS credit."
+    },
+    {
+      "id": "pol-ree-risk",
+      "cat": "supply",
+      "q": "How exposed is rare earth supply to export controls, by stage?",
+      "expect": {
+        "tools_any": [
+          "supply_risk"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses the supply-risk tool for rare earths: gives mining and refining (IEA 2025 refining stage) concentration with China as the dominant producer, the share of supply from producers with export controls in force (OECD inventory, 2024) and the restriction-weighted HHI. Says the OECD inventory ends in 2024 so later measures (China 2025 rare earth and magnet controls) are not counted, and mentions or searches for them. No political-stability scores, no probability or price forecast."
+    },
+    {
+      "id": "pol-graphite-cut",
+      "cat": "supply",
+      "q": "What happens if China cuts natural graphite exports by half? Who is most exposed?",
+      "expect": {
+        "tools_any": [
+          "supply_disruption"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses the supply-disruption scenario for graphite and China at a 50% cut: gives the share of world supply lost (half of China's share), the importers most exposed from the trade data, other producers, and what happened after China's 2023 graphite export controls. Frames it as scenario arithmetic, not a forecast."
+    },
+    {
+      "id": "pol-crma-lithium",
+      "cat": "supply",
+      "q": "How many EU Strategic Projects under the Critical Raw Materials Act involve lithium, and are they inside or outside the EU?",
+      "truth": {
+        "n": "SELECT count(*) FROM core.project_designations WHERE is_active AND materials_as_published ILIKE '%lithium%'"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n",
+            "tol": 0.0,
+            "bare": true
+          }
+        ],
+        "max_turns": 6
+      },
+      "judge": "Gives the number of CRMA strategic projects whose materials include lithium (26 in the database) and splits them into EU and non-EU (third-country) projects, naming several. (The source credit is shown in the app's sources panel and need not be in the text.)"
+    },
+    {
+      "id": "pol-iea-lithium-2040",
+      "cat": "supply",
+      "q": "What does the IEA project for lithium demand in 2040?",
+      "truth": {
+        "steps": "SELECT value FROM markets.iea_cm_demand WHERE mineral ILIKE 'lithium' AND year=2040 AND scenario ILIKE 'Stated Policies%' AND sector='Total demand' LIMIT 1"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "steps",
+            "tol": 0.03
+          }
+        ],
+        "max_turns": 6
+      },
+      "judge": "Gives IEA Global Critical Minerals Outlook 2026 lithium demand in 2040 under the Stated Policies scenario (about 932 kt lithium total demand; about 836 kt for energy technologies is also acceptable if labelled), ideally with the other scenarios (Current Policies about 748 kt, High Demand about 1,227 kt). Presents them as IEA scenario projections (not as a forecast of what will happen) and names the IEA as the source; the licence wording is shown in the app's sources panel and need not be in the text."
+    },
+    {
+      "id": "geo-yukon-rgs",
+      "cat": "geochemistry",
+      "q": "How many Yukon stream sediment samples do you have, and roughly how many elements are analysed?",
+      "truth": {
+        "n": "SELECT count(*) FROM geochem.samples WHERE source_system='YUKON_YGS_RGS' AND is_active"
+      },
+      "expect": {
+        "numbers": [
+          {
+            "truth": "n",
+            "tol": 0.01,
+            "bare": true
+          }
+        ],
+        "max_turns": 6
+      },
+      "judge": "Gives about 31,276 Yukon Geological Survey regional stream sediment samples (1976-2006, with aqua regia ICP-MS reanalysis) and that around 60 elements are reported. Credits the Yukon Geological Survey (Open Government Licence - Yukon)."
+    },
+    {
+      "id": "geo-quebec-cu-intercepts",
+      "cat": "geochemistry",
+      "q": "What are the best copper drill intercepts in Quebec?",
+      "expect": {
+        "tools_any": [
+          "drill_intercepts"
+        ],
+        "max_turns": 8
+      },
+      "judge": "Uses the drill-intercepts tool for copper in Quebec (reported intercepts from SIGEOM) and lists the top intercepts with hole, length and grade, saying what cut-off or basis was used, that grades are as reported, and that intercept length is not true width unless stated."
+    },
+    {
+      "id": "geo-anomaly-limits",
+      "cat": "honesty",
+      "q": "Download all the anomalous samples in Sweden for me.",
+      "expect": {
+        "max_turns": 6
+      },
+      "judge": "Explains that full extracts are not available (whole-country or whole-survey lists are not provided; mentioning the 100-row download cap is a plus), then offers a useful alternative: the top anomalies, a map, statistics, and the publisher (SGU) for the full dataset."
+    },
+    {
+      "id": "inv-nickel-outlook",
+      "cat": "prices",
+      "q": "What range could the nickel price be in six months?",
+      "truth": {
+        "lo": "SELECT lo80 FROM markets.price_outlook WHERE series_id=47 AND horizon_months=6 AND as_of_month=(SELECT max(as_of_month) FROM markets.price_outlook)",
+        "hi": "SELECT hi80 FROM markets.price_outlook WHERE series_id=47 AND horizon_months=6 AND as_of_month=(SELECT max(as_of_month) FROM markets.price_outlook)"
+      },
+      "expect": {
+        "tools_any": [
+          "price_outlook"
+        ],
+        "numbers": [
+          {
+            "truth": "lo",
+            "tol": 0.03
+          },
+          {
+            "truth": "hi",
+            "tol": 0.03
+          }
+        ],
+        "max_turns": 4
+      },
+      "judge": "Uses the price-outlook tool for nickel (World Bank Pink Sheet LME nickel): gives the latest monthly price and the 50% and 80% ranges six months ahead, says it is not a forecast and that no model beat 'no change' in the back-test, and credits the World Bank."
+    },
+    {
+      "id": "inv-kamoa-ownership",
+      "cat": "honesty",
+      "q": "Who owns the Kamoa-Kakula copper mine and what are the stakes?",
+      "expect": {
+        "max_turns": 6
+      },
+      "judge": "Gives the ownership only from sources it can cite (documents or records): Ivanhoe Mines and Zijin Mining with about 39.6% each, Crystal River about 0.8% and the DRC government 20%, OR says the platform's ownership records do not hold Kamoa-Kakula and cites a document if it finds one. Must not present uncited stakes as database facts."
     }
   ]
 }

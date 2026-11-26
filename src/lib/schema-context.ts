@@ -172,7 +172,16 @@ core.commodities: commodity_id, commodity_name, commodity_symbol, commodity_cate
 core.jurisdictions: jurisdiction_id, name, level (COUNTRY/STATE_PROVINCE), parent_jurisdiction_id,
   iso_code, iso_code3.
 core.companies: company_id, name, short_name, ticker, exchange, hq_jurisdiction_id, company_type,
-  stage, primary_commodity_id, market_cap_usd (mostly NULL).
+  stage, primary_commodity_id, market_cap_usd (mostly NULL), website.
+core.company_funding_rounds: announced PRIVATE funding rounds of critical-minerals technology start-ups (39 rows, 26 Nov 2026; one row per
+  company = its latest round announced Nov 2025 - Nov 2026): funding_round_id, company_id (-> core.companies, company_type
+  'Technology start-up'), round_type (as announced: Seed, Series A, ...), amount_usd (NULL = undisclosed: Solar Materials, Altilium),
+  amount_original + currency_original (rounds announced in EUR/GBP/AUD/INR/CAD; EUR/GBP/AUD converted at the BIS monthly average, the
+  others as reported by the press), announced_date, lead_investors, segment (MAGNETS, REFINING_PROCESSING, RECYCLING, EXTRACTION_TECH,
+  EXPLORATION_TECH, MOTORS), activity (what the company does), source_url (cite it), verification (COMPANY_ANNOUNCEMENT, NEWS_REPORT, or
+  REGULATORY_FILING for Vulcan Elements = SEC Form D, no company announcement), notes (READ them: some amounts include loans or are
+  "up to" or "more than" figures, e.g. AEM, Mangrove Lithium, Allonnia; some exclude debt). Lead list: Fundable's Nov 2026 infographic
+  (library doc 567) - Fundable is not the source of any value. Not a complete record of sector financing; say so.
 core.projects: project_id, name, company_id, jurisdiction_id, status, primary_commodity_id, asset_type, occurrence_id, description,
   source_document_id, geom (point, SRID 4326; use ST_Y(geom) AS lat, ST_X(geom) AS lon), location_precision (SITE / TOWN / CITY), location_source
   (publisher, dataset, licence and matched feature; credit it). Two kinds of rows: company assets from annual reports (see the financials notes) and the 106 EU Critical Raw

@@ -1,0 +1,37 @@
+{
+  "version": "2026-11-26",
+  "notes": "Fresh checks for core.company_funding_rounds (39 start-up rounds, loaded 26 Nov 2026). Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-funding-largest",
+      "cat": "fresh",
+      "q": "Which critical minerals start-ups raised the most money in the past year?",
+      "truth": {
+        "n": "SELECT count(*) FROM core.company_funding_rounds WHERE is_active"
+      },
+      "expect": {"tools_any": ["run_sql"], "max_turns": 10},
+      "judge": "Lists the largest announced rounds from core.company_funding_rounds: Vulcan Elements about US$430.7M (from an SEC Form D, no company announcement - should be flagged), Redwood Materials US$425M Series E, Mariana Minerals US$310M Series B, Noveon Magnetics US$215M Series C, General Flash US$128M. Gives round types and dates. Says the list covers 39 companies' latest rounds and is not a complete record of sector financing. FAIL if it invents rounds or amounts not in the table, or presents Vulcan's figure as a company announcement."
+    },
+    {
+      "id": "fresh-funding-exploration-ai",
+      "cat": "fresh",
+      "q": "Which AI or technology mineral exploration start-ups have raised funding recently, and who invested?",
+      "truth": {
+        "n": "SELECT count(*) FROM core.company_funding_rounds WHERE segment = 'EXPLORATION_TECH'"
+      },
+      "expect": {"tools_any": ["run_sql"], "max_turns": 10},
+      "judge": "Names the EXPLORATION_TECH rounds: Atana Elements US$27.5M seed (Lowercarbon Capital), Lithosquare US$25M seed (World Fund, Kindred Capital), Terra AI US$20M Series A (Khosla Ventures, BHP Ventures), Quminex CAD 1.5M (about US$1.06M) pre-seed (Quantacet). May also mention extraction-technology firms if labelled as such. Cites sources or says they come from company announcements/news reports. FAIL if it invents companies or investors."
+    },
+    {
+      "id": "fresh-funding-magnets-caveats",
+      "cat": "fresh",
+      "q": "How much did rare earth magnet start-ups raise, and are any of those figures uncertain?",
+      "truth": {
+        "n": "SELECT round(sum(amount_usd)/1e6) FROM core.company_funding_rounds WHERE segment = 'MAGNETS'"
+      },
+      "expect": {"tools_any": ["run_sql"], "max_turns": 10},
+      "judge": "Uses the MAGNETS segment (Vulcan Elements, Noveon Magnetics, alqem, Entellus Industries, HIT Mag; about US$662M in total) and may add magnet-free motor companies (AEM, Vimag Labs) or rare-earth refiners if it says so. Flags uncertainties from the notes: Vulcan's amount is from an SEC Form D with no company announcement; Noveon's round included a secondary sale; alqem and HIT Mag were announced in EUR and converted. A total must match the rows it lists. FAIL if it claims the figures are a complete record of the sector."
+    }
+  ]
+}

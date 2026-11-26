@@ -1,0 +1,355 @@
+{
+ "version": "2026-11-25",
+ "notes": "Persona question sets written before the hand-picked pilot (25 Nov 2026): supply-chain and policy analysts (pol-), exploration geologists (geo-), investors (inv-). Aimed at tools the gate barely covers (supply_risk, supply_disruption, facility_list, trade, EITI, IEA outlook, policy documents, anomaly screen, drill intercepts, geostatistics data, ownership, price outlook and sensitivity, memos) plus honesty about gaps. Candidates for the gate once stable. Rubrics for 6 questions loosened after the first run (answers were sound; rubrics over-specified). Product gap seen: investor memos exist only for 3 topics (Greenland REE, Argentina lithium, Quebec lithium).",
+ "ids": [],
+ "questions": [
+  {
+   "id": "pol-ree-risk",
+   "cat": "supply",
+   "q": "How exposed is rare earth supply to export controls, by stage?",
+   "expect": {
+    "tools_any": [
+     "supply_risk"
+    ],
+    "max_turns": 8
+   },
+   "judge": "Uses the supply-risk tool for rare earths: gives mining and refining (IEA 2025 refining stage) concentration with China as the dominant producer, the share of supply from producers with export controls in force (OECD inventory, 2024) and the restriction-weighted HHI. Says the OECD inventory ends in 2024 so later measures (China 2025 rare earth and magnet controls) are not counted, and mentions or searches for them. No political-stability scores, no probability or price forecast."
+  },
+  {
+   "id": "pol-graphite-cut",
+   "cat": "supply",
+   "q": "What happens if China cuts natural graphite exports by half? Who is most exposed?",
+   "expect": {
+    "tools_any": [
+     "supply_disruption"
+    ],
+    "max_turns": 8
+   },
+   "judge": "Uses the supply-disruption scenario for graphite and China at a 50% cut: gives the share of world supply lost (half of China's share), the importers most exposed from the trade data, other producers, and what happened after China's 2023 graphite export controls. Frames it as scenario arithmetic, not a forecast."
+  },
+  {
+   "id": "pol-indonesia-nickel",
+   "cat": "documents",
+   "q": "What export restrictions has Indonesia placed on nickel ore since 2014?",
+   "expect": {
+    "max_turns": 8
+   },
+   "judge": "Describes Indonesia's nickel ore export restrictions since 2014 from the OECD export-restriction inventory (and documents if used): the January 2014 export prohibition, the 2017 changes (an export tax and licensing for some ore), the January 2020 tightening, and how the inventory records the measure from late 2021 (licensing). Either the OECD record's own wording or a plain-language history is fine, as long as dates come from the sources and are not invented."
+  },
+  {
+   "id": "pol-crma-lithium",
+   "cat": "supply",
+   "q": "How many EU Strategic Projects under the Critical Raw Materials Act involve lithium, and are they inside or outside the EU?",
+   "truth": {
+    "n": "SELECT count(*) FROM core.project_designations WHERE is_active AND materials_as_published ILIKE '%lithium%'"
+   },
+   "expect": {
+    "numbers": [
+     {
+      "truth": "n",
+      "tol": 0.0,
+      "bare": true
+     }
+    ],
+    "max_turns": 6
+   },
+   "judge": "Gives the number of CRMA strategic projects whose materials include lithium (26 in the database) and splits them into EU and non-EU (third-country) projects, naming several. Credits the European Commission list."
+  },
+  {
+   "id": "pol-eiti-zambia",
+   "cat": "supply",
+   "q": "How much did the Zambian government receive from mining in the latest year reported to EITI?",
+   "expect": {
+    "max_turns": 8
+   },
+   "judge": "Uses the EITI data for Zambia: gives the latest fiscal year available and total government revenue from the extractive (mining) sector in US dollars, with the main revenue streams (for example mineral royalty, corporate income tax). Credits EITI with country and year. Says figures are as reported to EITI."
+  },
+  {
+   "id": "pol-iea-lithium-2040",
+   "cat": "supply",
+   "q": "What does the IEA project for lithium demand in 2040?",
+   "truth": {
+    "steps": "SELECT value FROM markets.iea_cm_demand WHERE mineral ILIKE 'lithium' AND year=2040 AND scenario ILIKE 'Stated Policies%' AND sector='Total demand' LIMIT 1"
+   },
+   "expect": {
+    "numbers": [
+     {
+      "truth": "steps",
+      "tol": 0.03
+     }
+    ],
+    "max_turns": 6
+   },
+   "judge": "Gives IEA Global Critical Minerals Outlook 2026 lithium demand in 2040 under the Stated Policies scenario (about 932 kt lithium total demand; about 836 kt for energy technologies is also acceptable if labelled), ideally with the other scenarios (Current Policies about 748 kt, High Demand about 1,227 kt). Presents them as IEA scenario projections (not as a forecast of what will happen) and names the IEA as the source; the licence wording is shown in the app's sources panel and need not be in the text."
+  },
+  {
+   "id": "pol-cobalt-refining",
+   "cat": "supply",
+   "q": "Where is cobalt refined, and how concentrated is it?",
+   "expect": {
+    "max_turns": 8
+   },
+   "judge": "Uses the IEA refining shares (Global Critical Minerals Outlook 2026, 2025 base year): China about three quarters of cobalt refining, then other countries such as Finland, Canada or Belgium if given. Notes that USGS has no cobalt refining table by country. Credits the IEA."
+  },
+  {
+   "id": "pol-ree-separation-outside-china",
+   "cat": "supply",
+   "q": "Which rare earth separation or refining plants operate outside China?",
+   "expect": {
+    "max_turns": 10
+   },
+   "judge": "Lists rare earth separation or refining facilities outside China from the facility records and documents, including at least Lynas Malaysia (Kuantan) and some of MP Materials Mountain Pass, Neo Performance Materials Sillamae (Estonia), Solvay La Rochelle, or Energy Fuels White Mesa, with status. Does not present China facilities as outside China. Says the list may be incomplete."
+  },
+  {
+   "id": "pol-eu-crma-benchmarks",
+   "cat": "documents",
+   "q": "What are the 2030 benchmarks in the EU Critical Raw Materials Act?",
+   "expect": {
+    "tools_any": [
+     "search_documents"
+    ],
+    "max_turns": 6
+   },
+   "judge": "States the CRMA 2030 benchmarks for strategic raw materials: at least 10% of EU consumption from EU extraction, 40% from EU processing, 25% from EU recycling, and no more than 65% of EU consumption of any strategic raw material at any relevant stage from a single third country. Cites the regulation (EU) 2024/1252."
+  },
+  {
+   "id": "pol-us-graphite-imports",
+   "cat": "supply",
+   "q": "Where does the United States import natural graphite from, and how much comes from countries with export controls?",
+   "expect": {
+    "tools_any": [
+     "supply_risk",
+     "supply_disruption",
+     "run_sql"
+    ],
+    "max_turns": 8
+   },
+   "judge": "Uses the trade data (CEPII BACI, 2022-2024) to give the main supplier countries of US natural graphite imports, with China the largest, and the share from exporters with export controls in force. Credits BACI."
+  },
+  {
+   "id": "geo-yukon-rgs",
+   "cat": "geochemistry",
+   "q": "How many Yukon stream sediment samples do you have, and roughly how many elements are analysed?",
+   "truth": {
+    "n": "SELECT count(*) FROM geochem.samples WHERE source_system='YUKON_YGS_RGS' AND is_active"
+   },
+   "expect": {
+    "numbers": [
+     {
+      "truth": "n",
+      "tol": 0.01,
+      "bare": true
+     }
+    ],
+    "max_turns": 6
+   },
+   "judge": "Gives about 31,276 Yukon Geological Survey regional stream sediment samples (1976-2006, with aqua regia ICP-MS reanalysis) and that around 60 elements are reported. Credits the Yukon Geological Survey (Open Government Licence - Yukon)."
+  },
+  {
+   "id": "geo-ireland-surveys",
+   "cat": "geochemistry",
+   "q": "What geochemistry do you have for the Republic of Ireland?",
+   "expect": {
+    "max_turns": 8
+   },
+   "judge": "Describes the GSI Tellus survey (about 33,800 samples: topsoils, stream sediments and rocks, most of the country except the south-west) and the GSI NW Midlands historic company soil surveys (about 352,600 samples, mostly Cu-Pb-Zn). Credits GSI. Mentioning that Northern Ireland's GSNI Tellus is a separate UK survey is a plus, not required."
+  },
+  {
+   "id": "geo-tellus-li-anomaly",
+   "cat": "geochemistry",
+   "q": "Are there lithium anomalies in the Irish Tellus stream sediments or soils?",
+   "expect": {
+    "tools_any": [
+     "find_geochemical_anomalies",
+     "run_sql"
+    ],
+    "max_turns": 10
+   },
+   "judge": "Screens the Irish Tellus data for lithium (anomaly screen or SQL), gives the highest values or anomalous areas with locations (for example in the south-east Leinster granite area if that is what the data show), compares within one survey and method, and says these are screening leads, not discoveries. Shows a map or says where the samples are."
+  },
+  {
+   "id": "geo-quebec-cu-intercepts",
+   "cat": "geochemistry",
+   "q": "What are the best copper drill intercepts in Quebec?",
+   "expect": {
+    "tools_any": [
+     "drill_intercepts"
+    ],
+    "max_turns": 8
+   },
+   "judge": "Uses the drill-intercepts tool for copper in Quebec (reported intercepts from SIGEOM) and lists the top intercepts with hole, length and grade, saying what cut-off or basis was used, that grades are as reported, and that intercept length is not true width unless stated."
+  },
+  {
+   "id": "geo-tas-tungsten",
+   "cat": "occurrences",
+   "q": "Where are the tungsten deposits in Tasmania and what types are they?",
+   "expect": {
+    "max_turns": 8
+   },
+   "judge": "Lists Tasmanian tungsten occurrences/deposits from the records (for example King Island Dolphin, Kara, Mount Bischoff or others the data hold), with deposit type or style where recorded (skarn, greisen/vein) and status, and shows a map. Does not invent resource figures."
+  },
+  {
+   "id": "geo-nsw-gold-caveats",
+   "cat": "geochemistry",
+   "q": "Can I compare gold values across all the NSW stream sediment samples?",
+   "expect": {
+    "max_turns": 6
+   },
+   "judge": "Warns that NSW (GSNSW) geochemistry is mostly exploration-company data from many laboratories and methods (different digests, detection limits, fire assay vs aqua regia), so gold values should be compared within one method family or one company survey, not across the whole dataset. Offers a way to filter by method or survey."
+  },
+  {
+   "id": "geo-peru-honesty",
+   "cat": "honesty",
+   "q": "Show me the stream sediment geochemistry for Peru.",
+   "expect": {
+    "max_turns": 6
+   },
+   "judge": "Says that INGEMMET's Peruvian stream sediment data are not loaded (licence not yet cleared) or that the platform has no Peruvian stream sediment survey, and offers what it does hold for Peru (for example any USGS samples or occurrences) without inventing data."
+  },
+  {
+   "id": "geo-greenland-ree-deposits",
+   "cat": "occurrences",
+   "q": "Which rare earth deposits in Greenland have resource estimates, and how big are they?",
+   "expect": {
+    "max_turns": 8
+   },
+   "judge": "Names Greenland REE deposits with resources from the records, at least Kvanefjeld (Kuannersuit; JORC total about 1,010 Mt, 11.14 Mt contained TREO) and Tanbreez, and possibly Motzfeldt or Sarfartoq, with the estimate date or caveat that some figures are old or not classified. Does not add tonnages across overlapping zones."
+  },
+  {
+   "id": "geo-sweden-till-cu",
+   "cat": "geochemistry",
+   "q": "What till geochemistry does SGU provide for Sweden, and what can I map with it?",
+   "expect": {
+    "max_turns": 6
+   },
+   "judge": "Describes SGU till/soil geochemistry (about 61,000 samples, CC0), the elements and methods, and what can be mapped with it (maps, anomaly screen; the geostatistics/kriging page is a plus, not required). Credits SGU."
+  },
+  {
+   "id": "geo-anomaly-limits",
+   "cat": "honesty",
+   "q": "Download all the anomalous samples in Sweden for me.",
+   "expect": {
+    "max_turns": 6
+   },
+   "judge": "Explains that full extracts are not available (downloads are capped at 100 rows, no whole-country lists), then offers a useful alternative: the top anomalies, a map, statistics, and the publisher (SGU) for the full dataset."
+  },
+  {
+   "id": "inv-li-australia-resources",
+   "cat": "occurrences",
+   "q": "Which Australian lithium projects have reported resources, and who owns them?",
+   "expect": {
+    "max_turns": 8
+   },
+   "judge": "Lists Australian lithium deposits with resource estimates from the records (for example Greenbushes, Pilgangoora, Mount Holland, Kathleen Valley or others held), with owners where recorded, the reporting basis or source (GA, company reports) and dates. Does not add resources across different classifications or dates without saying so."
+  },
+  {
+   "id": "inv-mp-materials-trend",
+   "cat": "financials",
+   "q": "How has MP Materials' revenue and operating result moved from 2022 to 2025?",
+   "expect": {
+    "tools_any": [
+     "company_financials",
+     "peer_comparison"
+    ],
+    "max_turns": 6
+   },
+   "judge": "Uses the company-financials tool for MP Materials, giving revenue and an operating result (operating income or EBITDA) for each stored year 2022-2025 in US dollars, with the direction of change (revenue fell sharply from 2022 as NdPr prices dropped). Cites the filings."
+  },
+  {
+   "id": "inv-us-funding-ree",
+   "cat": "documents",
+   "q": "Which rare earth projects have received US government funding commitments recently?",
+   "expect": {
+    "max_turns": 8
+   },
+   "judge": "Names rare earth projects with recent US government (DoD/DoW, DOE, Commerce, EXIM, DFC) funding or conditional commitments, with the agency, amount and date where given, from the document library and/or a cited web search. Says which are conditional, letters of interest or non-binding rather than committed money. Cites its sources."
+  },
+  {
+   "id": "inv-nickel-outlook",
+   "cat": "prices",
+   "q": "What range could the nickel price be in six months?",
+   "truth": {
+    "lo": "SELECT lo80 FROM markets.price_outlook WHERE series_id=47 AND horizon_months=6 AND as_of_month=(SELECT max(as_of_month) FROM markets.price_outlook)",
+    "hi": "SELECT hi80 FROM markets.price_outlook WHERE series_id=47 AND horizon_months=6 AND as_of_month=(SELECT max(as_of_month) FROM markets.price_outlook)"
+   },
+   "expect": {
+    "tools_any": [
+     "price_outlook"
+    ],
+    "numbers": [
+     {
+      "truth": "lo",
+      "tol": 0.03
+     },
+     {
+      "truth": "hi",
+      "tol": 0.03
+     }
+    ],
+    "max_turns": 4
+   },
+   "judge": "Uses the price-outlook tool for nickel (World Bank Pink Sheet LME nickel): gives the latest monthly price and the 50% and 80% ranges six months ahead, says it is not a forecast and that no model beat 'no change' in the back-test, and credits the World Bank."
+  },
+  {
+   "id": "inv-albemarle-sensitivity",
+   "cat": "financials",
+   "q": "How sensitive is Albemarle's revenue to the lithium price?",
+   "expect": {
+    "max_turns": 6
+   },
+   "judge": "Either runs the price-sensitivity tool for Albemarle and reports the fit (R-squared) and elasticity with the price used and the small-sample caveat, OR explains clearly why a fitted sensitivity is not reliable (for example only five annual USGS lithium prices and no company realised prices) and shows revenue and price side by side with the direction of the relationship. Must not invent an elasticity."
+  },
+  {
+   "id": "inv-kamoa-ownership",
+   "cat": "honesty",
+   "q": "Who owns the Kamoa-Kakula copper mine and what are the stakes?",
+   "expect": {
+    "max_turns": 6
+   },
+   "judge": "Gives the ownership only from sources it can cite (documents or records): Ivanhoe Mines and Zijin Mining with about 39.6% each, Crystal River about 0.8% and the DRC government 20%, OR says the platform's ownership records do not hold Kamoa-Kakula and cites a document if it finds one. Must not present uncited stakes as database facts."
+  },
+  {
+   "id": "inv-memo-graphite",
+   "cat": "memo",
+   "q": "Prepare an investor memo on East African graphite.",
+   "expect": {
+    "max_turns": 10
+   },
+   "judge": "Either produces a structured memo on East African graphite with named projects, statuses, supply context, risks and sources (and a not-advice note), OR says honestly that memos exist only for a few set topics and offers a concrete chat analysis of East African graphite (projects, facilities, supply concentration, trade, companies, documents). Must not pretend a memo exists."
+  },
+  {
+   "id": "inv-copper-supply-pipeline",
+   "cat": "supply",
+   "q": "Which large copper projects are in development worldwide, according to your data?",
+   "expect": {
+    "max_turns": 10
+   },
+   "judge": "Lists copper projects in development or construction from the records (facility and project tables, Austrade/NRCan/CRMA lists, company documents), with country, owner where recorded, stage and capacity if given, and says the list reflects what the platform holds, not a complete pipeline."
+  },
+  {
+   "id": "inv-price-history-gold",
+   "cat": "prices",
+   "q": "Chart the gold price since 2020 and tell me the source.",
+   "expect": {
+    "tools_any": [
+     "price_history"
+    ],
+    "max_turns": 4
+   },
+   "judge": "Shows monthly gold prices since 2020 from the World Bank Pink Sheet and credits the World Bank (Pink Sheet, CC BY 4.0). Does not cite the IMF."
+  },
+  {
+   "id": "inv-lynas-vs-mp",
+   "cat": "compare",
+   "q": "Compare Lynas and MP Materials on revenue and margin over the last three years.",
+   "expect": {
+    "tools_any": [
+     "peer_comparison",
+     "company_financials"
+    ],
+    "max_turns": 6
+   },
+   "judge": "Uses the comparison tool to put Lynas (AUD, June year end) and MP Materials (USD, December year end) side by side in US dollars for comparable years, with revenue and an operating or net margin, and notes the different fiscal year ends and the currency conversion used."
+  }
+ ]
+}

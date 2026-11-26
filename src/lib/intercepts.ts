@@ -186,6 +186,7 @@ async function reported(input: Record<string, unknown>, el: string, d: ElDef, ar
       `Grade x length is in ${gxlLabel(d)} (call it gram-metres only for g/t grades); it rewards both grade and width; say which ranking you used. A high grade over a very short length can be a single vein or a nugget.`,
       `Left out of the ranking: grades over 100 % or intercepts longer than the hole (source errors), and by default grades above ${d.exceptional} ${u}, which are usually unit or typing errors in the source (e.g. 50,000 g/t gold) but can occasionally be real bonanza grades. Say how many were left out; the examples are listed; set include_exceptional to rank them too. 'length longer than the log unit holding it' marks intercepts that may summarise several units or contain a typing error: mention it when quoting such a row.`,
       "These are intercepts reported in government assessment records over decades, not resource estimates and not NI 43-101 disclosure; do not imply economic grades or continuity.",
+      "Intercept lengths are downhole (core) lengths, not true widths, unless the source says otherwise: the orientation of the mineralisation is not known. Say so when quoting them.",
       "Only Québec (SIGÉOM) holds reported intercepts. For Tasmania or Athabasca drill holes use mode 'composite' (calculated from the downhole assays).",
       maps.length ? "A map of the ranked holes is shown to the user automatically; the full table is downloadable." : "",
     ].filter(Boolean),

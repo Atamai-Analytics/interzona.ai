@@ -470,6 +470,7 @@ const tools: Anthropic.ToolUnion[] = [
     description:
       "Hybrid vector + full-text search over ingested documents (reports, filings, investor decks). " +
       "Use for narrative/literature questions rather than structured data questions. " +
+      "IEA Global Critical Minerals Outlook NUMBERS (demand by mineral, sector and scenario to 2050; supply and refining by country to 2040) are in the database tables markets.iea_cm_demand and markets.iea_cm_supply: query them with run_sql FIRST for any IEA demand or supply figure, and use this search only for the IEA narrative around them. " +
       "Results are balanced across documents (at most max_per_document chunks per document, default 2, among " +
       "comparably relevant matches) so one large report cannot crowd out others. For questions that compare or " +
       "synthesise ACROSS sources use result_limit 8-10 with the default. For a deep dive into ONE named document, " +

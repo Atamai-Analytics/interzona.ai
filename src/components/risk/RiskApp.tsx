@@ -302,11 +302,11 @@ export function RiskApp() {
           {league && (
             <>
               <ul className="list-disc space-y-1 pl-5 text-xs text-gray-300">{league.statements.filter((s) => /both highly concentrated|licensing only|Political stability/.test(s)).map((s, i) => <li key={i}>{s}</li>)}</ul>
-              <div className="max-h-[480px] overflow-auto">
-                <table className="w-full text-sm">
+              <div className="max-h-[480px] overflow-auto pr-4 [scrollbar-gutter:stable]">
+                <table className="w-full min-w-[960px] text-sm">
                   <thead className="sticky top-0 bg-gray-900 text-xs text-gray-400">
                     <tr>
-                      <th className="py-1 text-left font-medium">#</th>
+                      <th className="w-8 py-1 pr-2 text-right font-medium">#</th>
                       <th className="py-1 pr-3 text-left font-medium">Mineral</th>
                       <th className="py-1 pr-3 text-left font-medium">Stage</th>
                       <th className="py-1 text-left font-medium">Top producer</th>
@@ -314,14 +314,14 @@ export function RiskApp() {
                       <th className="py-1 pl-3 text-right font-medium">Under controls</th>
                       <th className="py-1 pl-3 text-right font-medium">Of which bans or quotas</th>
                       <th className="py-1 pl-3 text-left font-medium">Risk score</th>
-                      <th className="py-1 pl-3 text-right font-medium">New measures 2020-24</th>
+                      <th className="py-1 pl-3 pr-2 text-right font-medium">New measures 2020-24</th>
                       {WGI_ENABLED && <th className="py-1 pl-3 text-right font-medium" title="Share of world supply from producers with a World Bank WGI political-stability estimate below -1">Low-stability supply</th>}
                     </tr>
                   </thead>
                   <tbody>
                     {league.rows.map((r, i) => (
                       <tr key={`${r.mineral_key}-${r.stage}`} onClick={() => pick(r.mineral_key)} className={`cursor-pointer border-t border-gray-800 hover:bg-gray-800/50 ${mineral === r.mineral_key ? "bg-rose-900/20" : ""}`}>
-                        <td className="py-1 text-gray-500 tabular-nums">{i + 1}</td>
+                        <td className="w-8 py-1 pr-2 text-right text-gray-500 tabular-nums">{i + 1}</td>
                         <td className="py-1 pr-3">{r.mineral}</td>
                         <td className="py-1 pr-3 text-gray-400">{r.stage}</td>
                         <td className="py-1 text-gray-300">{r.top_producer ? `${r.top_producer.country} ${r.top_producer.share_pct}%` : "–"}</td>
@@ -329,7 +329,7 @@ export function RiskApp() {
                         <td className="py-1 pl-3 text-right tabular-nums">{fmt(r.supply_under_export_controls_pct)}%</td>
                         <td className="py-1 pl-3 text-right tabular-nums text-gray-400">{fmt(r.of_which_bans_or_quotas_pct)}%</td>
                         <td className="py-1 pl-3 whitespace-nowrap tabular-nums"><Bar value={r.restriction_weighted_hhi} max={maxScore} tone="bg-rose-500" /> <span className="ml-1">{fmt(r.restriction_weighted_hhi)}</span></td>
-                        <td className="py-1 pl-3 text-right tabular-nums text-gray-400">{r.new_measures_2020_2024}</td>
+                        <td className="py-1 pl-3 pr-2 text-right tabular-nums text-gray-400">{r.new_measures_2020_2024}</td>
                         {WGI_ENABLED && <td className="py-1 pl-3 text-right tabular-nums text-gray-400">{fmt(r.low_stability_share_pct)}%</td>}
                       </tr>
                     ))}

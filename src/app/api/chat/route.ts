@@ -1249,6 +1249,8 @@ export async function POST(req: NextRequest) {
   // Saved answers (src/lib/demo-cache.ts): a demo card's question returns its reviewed, saved answer without any model cost. The owner records a new one by
   // sending x-demo-record; scripts that send the guard bypass header always get a live answer, so evals keep testing the real thing.
   const recording = session?.r === "owner" && req.headers.get("x-demo-record") === "1";
+  // An inviter (partner sign-in) only manages invitations; the middleware already blocks them here, this is the second check.
+  if (session?.r === "inviter") return NextResponse.json({ error: "This sign-in can only manage invitations." }, { status: 403 });
   if (!recording && !req.headers.has("x-guard-bypass") && session) {
     const invite = session.r === "guest" && session.i ? await getInvite(session.i).catch(() => null) : null;
     const allowed = session.r === "owner" || (invite !== null && inviteStatus(invite) === "active");
@@ -1424,7 +1426,7 @@ export async function POST(req: NextRequest) {
             }
             emitUsage();
             if (shareable && session && !signal.aborted) {
-              const id = await rememberAnswer(captured, lastQuestion, { r: session.r, i: session.i }).catch(() => null);
+              const id = await rememberAnswer(captured, lastQuestion, { r: session.r as "owner" | "guest", i: session.i }).catch(() => null);
               if (id) emit({ type: "answer", id });
             }
             emit({ type: "done" });

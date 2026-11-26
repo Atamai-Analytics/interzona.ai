@@ -5,12 +5,15 @@
 export const SESSION_COOKIE = "iz_session";
 
 export type Session = {
-  /** "owner" signed in with the app password; "guest" arrived through a personal invite link. */
-  r: "owner" | "guest";
+  /** "owner" signed in with the app password; "guest" arrived through a personal invite link; "inviter" is a partner (e.g. marketing) who
+   *  signed in with the inviter password and may only create and manage their own invitations. */
+  r: "owner" | "guest" | "inviter";
   /** Invite id (guests only). */
   i?: string;
-  /** Display name (guests only). */
+  /** Display name (guests and inviters). */
   n?: string;
+  /** Inviter only: fingerprint of the inviter password at sign-in, so changing or removing that password signs the inviter out at once. */
+  v?: string;
   /** Expiry, seconds since the epoch. */
   e: number;
 };
@@ -49,8 +52,9 @@ export async function verifySession(value: string | undefined | null): Promise<S
   if (diff !== 0) return null;
   try {
     const s = JSON.parse(new TextDecoder().decode(fromB64url(payload))) as Session;
-    if ((s.r !== "owner" && s.r !== "guest") || typeof s.e !== "number" || s.e < Math.floor(Date.now() / 1000)) return null;
+    if ((s.r !== "owner" && s.r !== "guest" && s.r !== "inviter") || typeof s.e !== "number" || s.e < Math.floor(Date.now() / 1000)) return null;
     if (s.r === "guest" && (typeof s.i !== "string" || !s.i)) return null;
+    if (s.r === "inviter" && (typeof s.n !== "string" || !s.n || typeof s.v !== "string" || !s.v)) return null;
     return s;
   } catch {
     return null;

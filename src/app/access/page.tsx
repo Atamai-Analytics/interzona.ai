@@ -29,7 +29,7 @@ export default async function Access({ searchParams }: { searchParams: Promise<{
           <p className="mt-3 text-sm text-gray-400">This demo is by invitation. Please use the personal link you were sent.</p>
         )}
         <details className="mt-6 text-sm text-gray-400">
-          <summary className="cursor-pointer select-none">Owner sign-in</summary>
+          <summary className="cursor-pointer select-none">Team sign-in</summary>
           <AccessForm next={next} />
         </details>
       </div>

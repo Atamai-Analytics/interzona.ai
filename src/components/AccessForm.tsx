@@ -14,7 +14,8 @@ export function AccessForm({ next }: { next: string }) {
     try {
       const res = await fetch("/api/access/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password }) });
       if (res.ok) {
-        window.location.assign(next);
+        const data = (await res.json().catch(() => null)) as { next?: string } | null;
+        window.location.assign(data?.next ?? next);
         return;
       }
       setError(((await res.json().catch(() => null)) as { error?: string } | null)?.error ?? "Sign-in failed.");
@@ -27,7 +28,7 @@ export function AccessForm({ next }: { next: string }) {
   return (
     <form onSubmit={submit} className="mt-4 space-y-3">
       <label className="block text-xs text-gray-400" htmlFor="pw">
-        Owner password
+        Password
       </label>
       <input
         id="pw"

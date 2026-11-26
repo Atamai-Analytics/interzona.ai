@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 // Any signed-in visitor (owner or invited guest) can turn one of their own recent answers into a 30-day link to a frozen copy.
 export async function POST(req: NextRequest) {
   const s = await getSession(req);
-  if (!s) return NextResponse.json({ error: "Please sign in." }, { status: 401 });
+  if (!s || s.r === "inviter") return NextResponse.json({ error: "Please sign in." }, { status: 401 });
   if (!sameOrigin(req)) return NextResponse.json({ error: "That request was not allowed." }, { status: 403 });
   if (!redisConfigured() && process.env.NODE_ENV === "production") return NextResponse.json({ error: "Sharing is not available right now." }, { status: 503 });
   const body = (await req.json().catch(() => null)) as { id?: unknown } | null;

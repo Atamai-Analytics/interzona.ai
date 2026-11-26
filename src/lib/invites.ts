@@ -14,6 +14,8 @@ export type Invite = {
   expires: number;
   dailyLimit: number;
   revoked: boolean;
+  /** Who created it: absent or "owner" for the owner, otherwise the inviter's name (e.g. "Guy"). */
+  createdBy?: string;
 };
 export type InviteStats = { questions: number; units: number; lastSeen: number | null; up: number; down: number };
 export type { InviteStatus } from "@/lib/invite-state";
@@ -32,18 +34,30 @@ const parse = (raw: unknown): Invite | null => {
   }
 };
 
-export async function createInvite(input: { name: string; note?: string; days?: number; dailyLimit?: number }): Promise<{ invite: Invite; token: string }> {
+export async function createInvite(input: {
+  name: string;
+  note?: string;
+  days?: number;
+  dailyLimit?: number;
+  createdBy?: string;
+  /** Upper bounds (an inviter's are lower than the owner's 90 days / 200 a day). */
+  maxDays?: number;
+  maxDaily?: number;
+}): Promise<{ invite: Invite; token: string }> {
   const name = input.name.trim().slice(0, 80);
   if (!name) throw new Error("Give the invitation a name (the person or firm it is for).");
-  const days = Math.min(Math.max(Math.floor(input.days ?? 14), 1), 90);
+  const maxDays = Math.min(input.maxDays ?? 90, 90);
+  const maxDaily = Math.min(input.maxDaily ?? 200, 200);
+  const days = Math.min(Math.max(Math.floor(input.days ?? 14), 1), maxDays);
   const invite: Invite = {
     id: crypto.randomBytes(6).toString("hex"),
     name,
     note: (input.note ?? "").trim().slice(0, 200),
     created: now(),
     expires: now() + days * 86400,
-    dailyLimit: Math.min(Math.max(Math.floor(input.dailyLimit ?? 30), 1), 200),
+    dailyLimit: Math.min(Math.max(Math.floor(input.dailyLimit ?? 30), 1), maxDaily),
     revoked: false,
+    ...(input.createdBy && input.createdBy !== "owner" ? { createdBy: input.createdBy.slice(0, 40) } : {}),
   };
   const token = "iv_" + crypto.randomBytes(24).toString("base64url");
   await redis([

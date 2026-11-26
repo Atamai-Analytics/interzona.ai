@@ -4,7 +4,8 @@ import { readInviteStatus } from "@/lib/invite-state";
 import { redisConfigured } from "@/lib/redis";
 
 // Public: snapshot share links (signed, expiring tokens checked in the page), invite links, the sign-in page and its API, and the two logo images
-// the sign-in page shows. Everything else needs the owner password or a personal invite link; /admin needs the owner.
+// the sign-in page shows. Everything else needs the owner password or a personal invite link; /admin needs the owner, except that an inviter
+// (partner password) may use /admin/invites for their own invitations and nothing else.
 const PUBLIC = ["/s/", "/m/", "/a/", "/invite/", "/access", "/api/access/"];
 const PUBLIC_FILES = ["/interzona-mark.png", "/mapbox-logo.png"];
 
@@ -50,6 +51,19 @@ export async function middleware(req: NextRequest) {
     if (status === "unknown" && !wantsPage)
       return NextResponse.json({ error: "We couldn't check your invitation just now. Please try again in a moment.", code: "invite_check_failed" }, { status: 503, headers: { "Retry-After": "10" } });
     return NextResponse.next();
+  }
+
+  // An inviter (partner with the inviter password) may only use the invitations page and its API; everything else, including the app's
+  // data and AI tools, sends them back to the invitations page. (They can create an invitation for themselves to try the app as a guest.)
+  if (session?.r === "inviter") {
+    if (path === "/admin/invites" || path === "/api/admin/invites" || path === "/api/session") return NextResponse.next();
+    if (wantsPage) {
+      const url = req.nextUrl.clone();
+      url.pathname = "/admin/invites";
+      url.search = "";
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.json({ error: "This sign-in can only manage invitations.", code: "forbidden" }, { status: 403 });
   }
 
   if (session && (!isAdmin || session.r === "owner")) return NextResponse.next();

@@ -10,8 +10,11 @@ type Row = {
   expires: number;
   dailyLimit: number;
   status: "active" | "expired" | "revoked";
+  createdBy?: string;
   stats: { questions: number; units: number; lastSeen: number | null; up: number; down: number };
 };
+type Limits = { maxDays: number; maxDaily: number; maxActive: number };
+type ListReply = { role: "owner" | "inviter"; name?: string; limits?: Limits; active?: number; invites: Row[] };
 type LogRow = { t: number; q: string; units: number; tools?: string[] };
 
 const when = (s: number | null) => (s ? new Date(s * 1000).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }) : "never");
@@ -26,6 +29,7 @@ async function api(body?: unknown, query = "") {
 
 export function InviteAdmin() {
   const [rows, setRows] = useState<Row[] | null>(null);
+  const [me, setMe] = useState<{ role: "owner" | "inviter"; name?: string; limits?: Limits; active?: number }>({ role: "owner" });
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [note, setNote] = useState("");
@@ -38,7 +42,13 @@ export function InviteAdmin() {
 
   const load = useCallback(async () => {
     try {
-      setRows(((await api(undefined)) as { invites: Row[] }).invites);
+      const d = (await api(undefined)) as ListReply;
+      setRows(d.invites);
+      setMe({ role: d.role ?? "owner", name: d.name, limits: d.limits, active: d.active });
+      if (d.limits) {
+        setDays((v) => Math.min(v, d.limits!.maxDays));
+        setLimit((v) => Math.min(v, d.limits!.maxDaily));
+      }
       setError(null);
     } catch (e) {
       setError((e as Error).message);
@@ -82,10 +92,27 @@ export function InviteAdmin() {
     }
   }
 
+  const inviter = me.role === "inviter";
+  const maxDays = me.limits?.maxDays ?? 90;
+  const maxDaily = me.limits?.maxDaily ?? 200;
   const field = "w-full rounded-md border border-gray-700 bg-gray-900 px-3 py-2 text-sm text-gray-100 outline-none focus:border-gray-500";
   return (
     <div className="space-y-8">
       {error && <p className="rounded-md border border-red-800 bg-red-950/40 p-3 text-sm text-red-300">{error}</p>}
+
+      {inviter && me.limits && (
+        <div className="rounded-lg border border-gray-800 bg-gray-900/50 p-4 text-xs text-gray-300">
+          <p>
+            You can invite people to the Interzona Critical Minerals AI Platform. Each link is personal: send it to one person only. Each
+            invitation lasts up to {me.limits.maxDays} days with up to {me.limits.maxDaily} questions a day, and you can have{" "}
+            {me.limits.maxActive} active at once ({me.active ?? 0} now).
+          </p>
+          <p className="mt-2 text-gray-400">
+            Please describe the platform as an invitation-only, free prototype: no pricing or subscriptions yet. To try it yourself, create an
+            invitation for yourself and open the link. You see how much each invitation is used, not what people ask.
+          </p>
+        </div>
+      )}
 
       <form onSubmit={create} className="grid gap-3 rounded-lg border border-gray-800 p-4 sm:grid-cols-2">
         <h2 className="text-sm font-semibold sm:col-span-2">New invitation</h2>
@@ -94,16 +121,16 @@ export function InviteAdmin() {
           <input className={field + " mt-1"} value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Jane Smith, Acme Capital" maxLength={80} />
         </label>
         <label className="text-xs text-gray-400">
-          Note (only you see this)
+          {inviter ? "Note (you and the account owner see this)" : "Note (only you see this)"}
           <input className={field + " mt-1"} value={note} onChange={(e) => setNote(e.target.value)} maxLength={200} />
         </label>
         <label className="text-xs text-gray-400">
-          Valid for (days, 1–90)
-          <input className={field + " mt-1"} type="number" min={1} max={90} value={days} onChange={(e) => setDays(Number(e.target.value))} />
+          Valid for (days, 1–{maxDays})
+          <input className={field + " mt-1"} type="number" min={1} max={maxDays} value={days} onChange={(e) => setDays(Number(e.target.value))} />
         </label>
         <label className="text-xs text-gray-400">
-          Questions per day (1–200)
-          <input className={field + " mt-1"} type="number" min={1} max={200} value={limit} onChange={(e) => setLimit(Number(e.target.value))} />
+          Questions per day (1–{maxDaily})
+          <input className={field + " mt-1"} type="number" min={1} max={maxDaily} value={limit} onChange={(e) => setLimit(Number(e.target.value))} />
         </label>
         <button type="submit" disabled={busy || !name.trim()} className="rounded-md bg-gray-100 px-3 py-2 text-sm font-medium text-gray-900 disabled:opacity-50 sm:col-span-2">
           {busy ? "Creating…" : "Create invitation link"}
@@ -125,7 +152,7 @@ export function InviteAdmin() {
       )}
 
       <section>
-        <h2 className="mb-2 text-sm font-semibold">Invitations</h2>
+        <h2 className="mb-2 text-sm font-semibold">{inviter ? "Your invitations" : "Invitations"}</h2>
         {rows === null ? (
           <p className="text-sm text-gray-500">Loading…</p>
         ) : rows.length === 0 ? (
@@ -135,17 +162,23 @@ export function InviteAdmin() {
             {rows.map((r) => (
               <div key={r.id} className="rounded-lg border border-gray-800 p-3 text-sm">
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="font-medium">{r.name}</span>
+                  <span className="font-medium">
+                    {r.name}
+                    {!inviter && r.createdBy && <span className="ml-2 rounded bg-sky-900/50 px-1.5 py-0.5 text-xs font-normal text-sky-300">by {r.createdBy}</span>}
+                  </span>
                   <span className={STATUS_STYLE[r.status]}>{r.status}</span>
                 </div>
                 {r.note && <p className="text-xs text-gray-500">{r.note}</p>}
                 <p className="mt-1 text-xs text-gray-400">
-                  Expires {when(r.expires)} · {r.dailyLimit} questions/day · {r.stats.questions} asked · 👍 {r.stats.up} · 👎 {r.stats.down} · last seen {when(r.stats.lastSeen)} · {Math.round(r.stats.units / 1000).toLocaleString("en-US")}k cost units
+                  Expires {when(r.expires)} · {r.dailyLimit} questions/day · {r.stats.questions} asked · 👍 {r.stats.up} · 👎 {r.stats.down} · last seen {when(r.stats.lastSeen)}
+                  {!inviter && <> · {Math.round(r.stats.units / 1000).toLocaleString("en-US")}k cost units</>}
                 </p>
                 <div className="mt-2 flex gap-2">
-                  <button className="rounded-md border border-gray-700 px-2 py-1 text-xs" onClick={() => showLog(r.id)}>
-                    {openLog?.id === r.id ? "Hide questions" : "Recent questions"}
-                  </button>
+                  {!inviter && (
+                    <button className="rounded-md border border-gray-700 px-2 py-1 text-xs" onClick={() => showLog(r.id)}>
+                      {openLog?.id === r.id ? "Hide questions" : "Recent questions"}
+                    </button>
+                  )}
                   {r.status === "revoked" ? (
                     <button className="rounded-md border border-gray-700 px-2 py-1 text-xs" onClick={() => setRevoked(r.id, false)}>
                       Switch back on

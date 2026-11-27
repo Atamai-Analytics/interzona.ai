@@ -1,0 +1,35 @@
+{
+  "version": "2026-11-27",
+  "notes": "Fresh checks for the licensed Stratellar controls data (export_controls tool, supply_risk statement), loaded 27 Nov 2026. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-strat-ree-status",
+      "cat": "fresh",
+      "q": "Are China's rare earth export controls in force or suspended?",
+      "expect": {"tools_any": ["export_controls"], "max_turns": 8},
+      "judge": "Uses Stratellar records: says China's April 2025 medium/heavy rare-earth licensing (MOFCOM/GACC Announcement No. 18 of 2025) is in force, while the rare-earth parts of the October 2025 package (Announcements 56, 57, 61 and 62 of 2025; 55 superhard materials and 58 batteries/graphite are other parts of the same package and need not be listed) are suspended, the suspension continued from 11 November 2026 to 10 January 2027 (Announcement No. 58 of 2026). Gives statuses with dates and the legal-status as-of date (12 November 2026), keeps announcements apart from their clauses, says the coverage is selective/historical and not legal or compliance advice, and credits Stratellar (stratellar.com). FAIL if it presents the statuses as current legal standing without the as-of date, or omits the Stratellar credit."
+    },
+    {
+      "id": "fresh-strat-graphite",
+      "cat": "fresh",
+      "q": "What export controls has China put on graphite?",
+      "expect": {"tools_any": ["export_controls"], "max_turns": 8},
+      "judge": "Lists Stratellar's graphite clauses: China's 2023 graphite export licensing (MOFCOM/GACC Announcement No. 39 of 2023), the October 2025 lithium-battery and artificial-graphite anode package (Announcement No. 58 of 2025, suspended to 10 January 2027), and the December 2024 US-specific measures (Announcement No. 46 of 2024) with their recorded statuses and dates; may mention the US anode-material trade investigation if labelled as a US measure. Gives the as-of date, says it is selective and not legal advice, credits Stratellar. FAIL if it invents measures not in the records or gives no dates."
+    },
+    {
+      "id": "fresh-strat-bulk",
+      "cat": "fresh",
+      "q": "List every export control clause in your Stratellar data with all the details.",
+      "expect": {"max_turns": 8},
+      "judge": "Either shows at most 25 Stratellar records (one export_controls call, newest first) OR declines the full dump; in both cases explains that at most 25 Stratellar records can be shown at a time, invites the user to narrow by country, material or measure type, names the source as Stratellar (stratellar.com), and does not describe statuses as 'current' (they are as of 12 Nov 2026). Does not page through the data with repeated calls. Count RECORDS, not items: a record whose clause label covers a range (e.g. 'Items 1-5 (1C909-1C913)' or 'Items 1-2') is ONE record, and an unfiltered call returns exactly 25 records. FAIL only if the answer contains more than 25 distinct clause records counted this way."
+    },
+    {
+      "id": "fresh-strat-gallium-risk",
+      "cat": "fresh",
+      "q": "How exposed is gallium supply to export controls?",
+      "expect": {"tools_any": ["supply_risk"], "max_turns": 8},
+      "judge": "Uses the supply-risk tool for gallium (China dominant; OECD 2024 controls; restriction-weighted HHI) and reports the separate Stratellar count of recorded control clauses (with its as-of date, as selective and not counted in the score), or lists the clauses with export_controls (China's 2023 gallium/germanium licensing, Announcement No. 23 of 2023, and the December 2024 US-specific measures). Credits Stratellar for those. No forecast."
+    }
+  ]
+}

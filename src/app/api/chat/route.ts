@@ -10,6 +10,7 @@ import { tradeComparison } from "@/lib/trade";
 import { facilityList } from "@/lib/facilities";
 import { supplyDisruption } from "@/lib/disruption";
 import { supplyRisk } from "@/lib/risk";
+import { exportControls } from "@/lib/controls";
 
 // Sources whose licence requires a credit in every answer that uses them. If the final answer does not mention the source, the
 // credit line is appended (models forget it now and then even when told to).
@@ -374,7 +375,7 @@ const tools: Anthropic.ToolUnion[] = [
       "(bans, quotas, licensing, from the OECD export-restriction inventory; bans/quotas shown separately because licensing can be a routine permit or a de facto ban), with a single ranking number, the restriction-weighted HHI " +
       "(concentration counted over controlled producers only). Optional importer view (e.g. EU, United States, Japan): share of that importer's 2022-2024 imports of the stage's products coming from exporters with controls in force, plus EU import reliance and recycling rates (EU RMIS). " +
       "USE THIS for 'which critical minerals are riskiest / most exposed to export controls', 'how risky is the supply of X', 'how exposed is the EU/US/Japan to export-controlled X', 'rank minerals by geopolitical risk'. " +
-      "Omit commodity for the league table across minerals. Adds refining stages from the IEA Global Critical Minerals Outlook 2026 (cobalt, lithium, nickel, rare earths, battery-grade graphite, copper; USGS has no refining table for most) and, for one mineral, IEA's 2025-2040 concentration outlook." + (WGI_ENABLED ? " Also gives each producer's World Bank WGI political-stability score (0-100), the share of supply from low-stability producers (WGI estimate below -1) and a stability-weighted HHI (rank_by stability_weighted_hhi or low_stability_share)." : " Political-stability scores are not available at present.") + " Not a forecast or a probability. For what a cut by one country would do, use supply_disruption instead. Follow with search_documents for measures since 2024.",
+      "Omit commodity for the league table across minerals. Adds refining stages from the IEA Global Critical Minerals Outlook 2026 (cobalt, lithium, nickel, rare earths, battery-grade graphite, copper; USGS has no refining table for most) and, for one mineral, IEA's 2025-2040 concentration outlook." + (WGI_ENABLED ? " Also gives each producer's World Bank WGI political-stability score (0-100), the share of supply from low-stability producers (WGI estimate below -1) and a stability-weighted HHI (rank_by stability_weighted_hhi or low_stability_share)." : " Political-stability scores are not available at present.") + " Not a forecast or a probability. For what a cut by one country would do, use supply_disruption instead. For individual measures since 2024 use export_controls (Stratellar) and search_documents.",
     input_schema: {
       type: "object",
       properties: {
@@ -382,6 +383,25 @@ const tools: Anthropic.ToolUnion[] = [
         importer: { type: "string", description: "Optional importing country or 'EU' for the importer view, e.g. EU, United States, Japan, South Korea, India." },
         rank_by: { type: "string", enum: ["restriction_weighted_hhi", "controlled_share", "hhi", ...(WGI_ENABLED ? ["stability_weighted_hhi", "low_stability_share"] : [])], description: WGI_ENABLED ? "League table ranking (default restriction_weighted_hhi; stability_weighted_hhi or low_stability_share for political-stability questions)." : "League table ranking (default restriction_weighted_hhi)." },
         top_n: { type: "number", description: "League table rows to detail (default 15, max 40)." },
+      },
+      required: [],
+    },
+  },
+  {
+    name: "export_controls",
+    description:
+      "Individual EXPORT-CONTROL and related policy CLAUSES from Stratellar (formerly the Strategic Materials Policy Tracker), licensed: selected measures by China, the United States and Canada on rare earths, NdFeB magnets, " +
+      "graphite, lithium, gallium, germanium, antimony, tungsten, cobalt and nickel, including measures since 2024 that the OECD inventory in supply_risk does not cover (e.g. China's April 2025 medium/heavy rare-earth licensing, " +
+      "the October 2025 package and its suspension to 10 January 2027, US Section 232 actions). Each clause comes with its instrument, measure type, materials, dated status history and status at the release's legal-status as-of date, and the official source link. " +
+      "USE THIS for 'what export controls does China have on X', 'is the rare-earth / graphite / gallium control in force or suspended', 'when does the suspension end', 'what has the US done on X'. " +
+      "For 'list all / every control' CALL IT ONCE WITH NO FILTERS (do not refuse without calling): it returns the 25 most recent records with the required credit and a note on narrowing. " +
+      "Returns at most 25 records per call (licence limit): narrow by issuer, commodity or measure_type; never page through the data to reproduce it. Selective and historical, not legal advice.",
+    input_schema: {
+      type: "object",
+      properties: {
+        commodity: { type: "string", description: "Optional material, e.g. rare earths, magnets, graphite, gallium, germanium, antimony, tungsten, lithium, dysprosium." },
+        issuer: { type: "string", description: "Optional issuing country: china, us (United States) or canada." },
+        measure_type: { type: "string", description: "Optional measure type, e.g. export_licensing, export_prohibition, suspension, end_use_restriction, extraterritorial_licensing, investment_divestiture, trade_investigation." },
       },
       required: [],
     },
@@ -849,6 +869,12 @@ async function executeTool(
     extras.datasets.push(...(out.datasets ?? []));
     return out.content;
   }
+  if (name === "export_controls") {
+    const out = await exportControls(input);
+    extras.evidence.push(...(out.evidence ?? []));
+    extras.datasets.push(...(out.datasets ?? []));
+    return out.content;
+  }
   if (name === "drill_intercepts") {
     const out = await drillIntercepts(input);
     extras.evidence.push(...(out.evidence ?? []));
@@ -903,6 +929,11 @@ async function executeTool(
     return parts.join("\n\n");
   }
   if (name === "run_sql") {
+    // Licensed Stratellar data (25 records per extract, no bulk access): only through export_controls / supply_risk, never free SQL
+    // (several capped calls in one query could otherwise add up to more than 25 records).
+    if (/stratellar/i.test(String(input.sql ?? ""))) {
+      return JSON.stringify({ error: "Stratellar export-control data can only be read with the export_controls tool (licence limit: at most 25 records at a time)." });
+    }
     const result = await runReadOnlyQuery(input.sql as string);
     // Licence limit (src/lib/licence.ts): individual Greenland (GEUS) samples are cut to a short list before anything is shown, mapped or offered for download.
     const limited = await limitRestrictedRows(String(input.sql ?? ""), result.rows as Record<string, unknown>[]);
@@ -1188,6 +1219,10 @@ function stepLabel(name: string, input: Record<string, unknown>): string {
       const m = String(input.commodity ?? "").trim(), i = String(input.importer ?? "").trim();
       return m ? `Assessing supply risk for ${m}${i ? ` (importer: ${i})` : ""}` : "Ranking critical minerals by supply risk";
     }
+    case "export_controls": {
+      const m = String(input.commodity ?? "").trim(), i = String(input.issuer ?? "").trim();
+      return `Looking up export-control clauses${m ? ` on ${m}` : ""}${i ? ` (${i})` : ""} (Stratellar)`;
+    }
     case "supply_concentration":
       return "Looking up who supplies it, country by country";
     case "trade_comparison":
@@ -1227,10 +1262,11 @@ function chooseEffort(topics: TopicId[], userText = ""): Effort {
 const toolsWithoutWeb: Anthropic.ToolUnion[] = tools.filter((t) => !("name" in t && (t.name === "web_search" || t.name === "web_fetch")));
 
 const SIMPLE_TOPICS: TopicId[] = ["financials", "markets", "occurrences", "africa"];
-const NOT_SIMPLE = /\b(compar\w*|versus|vs\.?|rank\w*|trend\w*|since|over the|histor\w*|moved|why|explain\w*|analy[sz]\w*|summari[sz]\w*|reliab\w*|caveat\w*|forecast\w*|predict\w*|explor\w*|plot|chart|diagram|top \d+|which|who|best|worst|most|least|between|all|every|list|what does|literature|reports? says?|will|would|future|outlook|expect\w*|project(ed|ions?)|next (year|decade)|20[3-9]\d|us dollars?|usd|us\$|convert\w*|exchange rates?|fx|ebitda|interest cover|leverage|net debt|effective tax|sensitiv\w*|exposure|exposed|elasticit\w*|regress\w*|correlat\w*|beta|map\w*|where|located|locations?|positions?|sites?|assets?|own\w*|stakes?|plants?|refiner\w*|smelter\w*|facilit\w*|capacit\w*|largest|biggest|smallest|output|scenarios?|disrupt\w*|bans?|banned|cuts?|stops?|shocks?|what if|vulnerab\w*|risks?|ranges?|how (high|low)|go (up|down)|heading|in \w+ (months?|years?)|months? (ahead|from now))\b/i;
+const NOT_SIMPLE = /\b(compar\w*|versus|vs\.?|rank\w*|trend\w*|since|over the|histor\w*|moved|why|explain\w*|analy[sz]\w*|summari[sz]\w*|reliab\w*|caveat\w*|forecast\w*|predict\w*|explor\w*|plot|chart|diagram|top \d+|which|who|best|worst|most|least|between|all|every|list|what does|literature|reports? says?|will|would|future|outlook|expect\w*|project(ed|ions?)|next (year|decade)|20[3-9]\d|us dollars?|usd|us\$|convert\w*|exchange rates?|fx|ebitda|interest cover|leverage|net debt|effective tax|sensitiv\w*|exposure|exposed|elasticit\w*|regress\w*|correlat\w*|beta|map\w*|where|located|locations?|positions?|sites?|assets?|own\w*|stakes?|plants?|refiner\w*|smelter\w*|facilit\w*|capacit\w*|largest|biggest|smallest|output|scenarios?|disrupt\w*|bans?|banned|cuts?|stops?|shocks?|what if|vulnerab\w*|risks?|controls?|suspen\w*|licen[cs]\w*|sanction\w*|ranges?|how (high|low)|go (up|down)|heading|in \w+ (months?|years?)|months? (ahead|from now))\b/i;
 // Maps, locations and company assets stay on MODEL (2026-11-01): the small model skipped company_assets and named catalogue sites instead.
 // Capacity and size rankings too (2026-11-11): the small model dropped the published product/measure caveats on USGS facility capacities.
 // Price ranges too (2026-11-26): the small model dropped the "no model beat no change" back-test sentence from price-outlook answers.
+// Export controls too (2026-11-27): Stratellar answers need dated statuses, the as-of date, credit and the selective/not-legal-advice caveat.
 
 /** A question is "simple" when it asks for one fact from structured data: one user turn, short, only lookup subjects, no analytic wording. */
 function isSimpleLookup(topics: TopicId[], userMessages: string[]): boolean {

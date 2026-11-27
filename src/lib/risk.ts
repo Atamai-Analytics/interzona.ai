@@ -1,6 +1,7 @@
 import { runReadOnlyQuery } from "@/lib/db";
 import type { Dataset, Evidence } from "@/lib/types";
 import { WGI_ENABLED } from "@/lib/flags";
+import { stratellarSummary } from "@/lib/controls";
 
 // Geopolitical supply risk by mineral and stage, from observed behaviour rather than governance perceptions: how concentrated production is
 // (USGS MCS 2026) and how much of it comes from producers with export controls in force (OECD export-restriction inventory, 2024), plus,
@@ -43,7 +44,7 @@ const HOW =
   "Export controls = an export ban, quota, licensing requirement (including non-automatic licensing, which can work as a ban: Indonesia's nickel-ore ban has been recorded as licensing since November 2021, and China's 2023 gallium, germanium and graphite controls are licensing), " +
   "qualified-exporter list, domestic market obligation or captive-mining rule in force in 2024 on that stage's products in the OECD inventory; fiscal measures (export taxes, rebate cuts, minimum prices) are counted separately. " +
   "Restriction-weighted HHI = the Herfindahl-Hirschman index counted over producers with export controls in force only (0-10,000): high when supply is concentrated in countries that already control exports. " +
-  `The export-control measures are recorded behaviour, not intentions${WGI_ENABLED ? "; political stability is reported separately from the World Bank WGI" : ""}. The OECD inventory ends in 2024: measures since then (for example China's 2025 rare-earth and magnet controls, the DRC's 2025 cobalt ban and quotas) are not counted - search the documents for them. ` +
+  `The export-control measures are recorded behaviour, not intentions${WGI_ENABLED ? "; political stability is reported separately from the World Bank WGI" : ""}. The OECD inventory ends in 2024: measures since then (for example China's 2025 rare-earth and magnet controls, the DRC's 2025 cobalt ban and quotas) are not counted in the scores - for one mineral the tool adds Stratellar's recorded clauses (selective, dated) as a separate statement; the export_controls tool lists them, and the documents cover others (e.g. the DRC cobalt measures). ` +
   "USGS shares are estimates and count named countries only; production location is not ownership. " +
   "Stages marked (IEA 2025) are refining shares from the IEA Global Critical Minerals Outlook 2026 (base year 2025 of its projections; top six countries named, so HHI is a lower bound; export measures matched on any product of the mineral); USGS has no refining table for cobalt, lithium, nickel, graphite or rare earths. IEA projections for 2030-2040 are scenarios built from announced projects, not forecasts of policy." +
   (WGI_ENABLED ? HOW_WGI : " Political-stability (governance) scores are not available in this tool at present.");
@@ -291,6 +292,12 @@ export async function supplyRisk(input: Record<string, unknown>): Promise<Out> {
       evidence.push({ kind: "data", label: CREDITS.baci, detail: "2022-2024 imports by supplier" });
     }
   }
+  // Measures since the OECD inventory ends (2024): counts only from the licensed Stratellar controls data (no record content here).
+  const strat = await stratellarSummary(String(mm.mineral).replace(/_/g, " ")).catch(() => null);
+  if (strat) {
+    statements.push(strat.statement);
+    evidence.push({ kind: "data", label: strat.credit, detail: "counts of recorded control clauses by issuer and status (selective; not legal advice)" });
+  }
   const flags = [...new Set(stages.map((x) => x.r.flag).filter(Boolean))];
   return {
     content: JSON.stringify({
@@ -302,7 +309,8 @@ export async function supplyRisk(input: Record<string, unknown>): Promise<Out> {
       iea_outlook: outlook.length ? { note: "IEA base-case projections (Global Critical Minerals Outlook 2026): operating and announced projects weighted by probability of coming online; top six countries named.", rows: outlook } : null,
       notes: flags,
       how_to_read: HOW,
-      how_to_answer: "Quote the statements for every number; explain concentration, the share under export controls and the restriction-weighted HHI in plain words; give the importer view if asked; then search the documents for measures since 2024 and cite them. Never give a probability or a price forecast, and do not add producers or measures not listed. For what a cut would do, offer the supply-disruption scenario." + (WGI_ENABLED ? " Whenever you quote a political-stability figure, name the source as the World Bank Worldwide Governance Indicators (2026 update) and say in one phrase that the scores are perception-based and, as the World Bank advises, not definitive criteria for investment decisions." : " Political-stability (governance) scores are not available at present: say so, do not supply WGI or other governance scores from memory or from a web search, and point the user to www.govindicators.org if they want them."),
+      stratellar_since_2024: strat ? { note: "Counts of control clauses recorded by Stratellar (licensed; selective and historical, legal status as of the date given); not part of the OECD-based scores.", credit: strat.credit } : null,
+      how_to_answer: "Quote the statements for every number; explain concentration, the share under export controls and the restriction-weighted HHI in plain words; give the importer view if asked; for measures since 2024 quote the Stratellar statement if present (credit it with its as-of date, say it is selective and not counted in the scores) and offer export_controls for the individual clauses, then search the documents for anything else and cite them. Never give a probability or a price forecast, and do not add producers or measures not listed. For what a cut would do, offer the supply-disruption scenario." + (WGI_ENABLED ? " Whenever you quote a political-stability figure, name the source as the World Bank Worldwide Governance Indicators (2026 update) and say in one phrase that the scores are perception-based and, as the World Bank advises, not definitive criteria for investment decisions." : " Political-stability (governance) scores are not available at present: say so, do not supply WGI or other governance scores from memory or from a web search, and point the user to www.govindicators.org if they want them."),
       credits: Object.values(CREDITS).filter((c) => WGI_ENABLED || c !== CREDITS.wgi),
       caveat_wgi: !WGI_ENABLED ? undefined : "World Bank WGI scores are perception-based composites with confidence bands; the World Bank advises they should not serve as definitive criteria for investment or other critical financial decisions.",
     }),

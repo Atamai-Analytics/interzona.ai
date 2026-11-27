@@ -2030,10 +2030,19 @@ A missing value means not loaded, not zero; say which companies and years are mi
 adjusted EBITDA; say so. Depreciation figures are medium confidence (checked for plausibility against revenue); pre-tax profit, tax and share counts were
 reconciled to reported net income or EPS.
 
+MAJOR COMPANIES (27 Nov 2026): 44 major critical-minerals companies were added (e.g. Freeport-McMoRan, Southern Copper, Codelco, Antofagasta,
+First Quantum, Ivanhoe Mines, Lundin, Zijin, CMOC, Ganfeng, Tianqi Lithium Corporation, Barrick, Huayou, Jinchuan, Shenghe, IGO, MinRes, Nickel
+Industries, Boliden, Jiangxi Copper, Sumitomo Metal Mining, Harita Nickel, Vale Indonesia, Gecamines, China Rare Earth Group, Nornickel, Valterra
+Platinum (formerly Anglo American Platinum), Northam, Anglo American plc, CBMM, Lithium Americas, Sigma, Standard Lithium, ioneer, USA Rare Earth,
+Perpetua, Almonty, Graphite One, Westwater, Largo, AMG, Jupiter Mines) with ticker, exchange, HQ country, website and main commodities, and Taseko
+was renamed Trekor Metals (June 2026). core.external_ids (source_system 'SEC_CIK') holds SEC identifiers. 1,131 USGS ownership rows
+(core.occurrence_ownership.company_id) are linked to a company where the owner named IS that company (or its former name); subsidiaries and
+joint-venture strings are not linked, so a company's USGS-linked sites are not a complete list. The company_assets tool returns these USGS-listed
+sites next to the company's own asset records.
 COMPANY CLASSIFICATION AND ASSETS. core.companies has primary_commodity_id (filled for the 26 single-commodity companies; NULL on purpose for the
 diversified miners Glencore, South32, Rio Tinto, Umicore and for Strategic Metals), company_type and stage. core.company_commodities lists each
 company's commodities (commodity_role PRIMARY or SECONDARY). PEER GROUPS (core.peer_groups, core.peer_group_members): Lithium, Rare earths,
-Rare earth producers, Uranium, Uranium producers, Platinum group metals, Diversified miners, Battery materials, Greenland-focused; when the user
+Rare earth producers, Uranium, Uranium producers, Platinum group metals, Diversified miners, Battery materials, Copper, Graphite, Greenland-focused; when the user
 names a sector or asks for "peers", use peer_comparison or company_financials with the peer_group argument instead of guessing the list, and say
 which group you used and that members without annual statements (for example Pilbara, Liontown, Elevra) are not in the table. Group membership is
 an analyst classification, not a company statement. COMPANY ASSETS (the company_assets tool reads this and plots assets that have a position; occurrence_id links were added for 37 projects on 2026-10-21 by name, country,
@@ -2082,7 +2091,20 @@ only for quarterly or half-year periods and for items those tools do not return.
   year-ends FY2016-FY2026) for Lynas and South32;
   nine for Kazatomprom, Rio Tinto and Sibanye-Stillwater (FY2017-FY2025); eight (FY2018-FY2025) for
   Neo; seven (FY2019-FY2025) for MP Materials. All other
-  companies have only one to three periods, so do not claim long time series for them. Long series can
+  companies have only one to three periods, so do not claim long time series for them.
+  SEC EDGAR ADDITION (27 Nov 2026, created_by 'edgar_xbrl_20261127'; source = the company's annual SEC filings 10-K / 20-F / 40-F, via SEC
+  XBRL company facts; line_items->>'source' says so and line_items->'tags' names the XBRL tag and accession number for each field): annual
+  statements for 27 more companies, so financials.* now covers 56 - Freeport-McMoRan, Southern Copper, BHP (June year-ends), Vale, Teck (C$),
+  Newmont, Barrick, Hudbay, Alcoa, Mosaic, Nutrien, Tronox, Ferroglobe, Largo, Trekor Metals (formerly Taseko, C$), Uranium Energy (July
+  year-ends), NexGen (C$), Denison (C$), Lithium Americas, Sigma Lithium (C$ to 2022, US$ from 2023), Standard Lithium (June year-ends to
+  2024, then December), ioneer (June), Perpetua, USA Rare Earth, Almonty (C$, 2024-2025 only), Westwater, Nouveau Monde Graphite (C$); about
+  ten years for most producers (FY2015/16-FY2025). For these rows: total_debt is NOT stored (filers tag debt inconsistently, so say debt is not
+  available rather than guessing); capital_expenditures is purchases of property, plant and equipment as tagged, which can exclude
+  mineral-property or exploration spending; net_income is attributable to the parent, or total profit where the filer tags no attributable
+  figure (noted in line_items); Vale has no operating cash flow after 2021 (not tagged in the standard form). Values come from the most recent
+  filing reporting each year, so restated comparatives win. Checked against the hand-extracted statements of seven companies (revenue, net
+  income, assets, equity, operating cash flow matched within 0.5% in 39 of 39 company-years apart from restatements). Cite them as "Freeport's
+  2025 annual report on Form 10-K (SEC filing)". Long series can
   contain comparability breaks (for example South32's reporting basis changes between FY2020-21 and
   FY2022-23 and again from FY2024; Cameco equity-accounts its 49% Westinghouse stake only from November
   2023; Kazatomprom FY2018 is the restated figure and FY2018/FY2024 net income include large one-off
@@ -2308,8 +2330,8 @@ CURRENT run_financial_model SCRIPTS:
 - "project_dcf_model": a single-commodity, single-ore-stream discounted cash flow model — NPV,
   IRR, payback period, and a one-way sensitivity ranking (tornado chart) from annual assumptions.
   THIS SCRIPT NEVER TOUCHES THE DATABASE. financials.* in this schema is company-level statements
-  only (balance_sheet/income_statement/cash_flow/statement_items/operating_metrics, about 29 companies,
-  10 or more years for roughly a dozen of them; see the financials coverage note) —
+  only (balance_sheet/income_statement/cash_flow/statement_items/operating_metrics, about 56 companies,
+  10 or more years for about 35 of them; see the financials coverage note) —
   there are NO year-by-year mine plans in interzona_cm. Headline study economics (NPV, IRR, initial capex, some opex and price
   assumptions) exist only for some named projects - see FEASIBILITY ECONOMICS (fs_* facts, e.g. Dumont, Hautalampi, Keliber, Aguablanca) -
   so do not say the database has no capex or project-economics data; say it has none for an unnamed new project.

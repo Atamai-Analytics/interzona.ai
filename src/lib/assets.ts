@@ -48,7 +48,8 @@ export async function companyAssets(input: Record<string, unknown>): Promise<Too
     if (!n) continue;
     const r = await getPool().query(
       `SELECT c.company_id FROM core.companies c
-       WHERE EXISTS (SELECT 1 FROM core.projects p WHERE p.company_id = c.company_id AND p.is_active)
+       WHERE (EXISTS (SELECT 1 FROM core.projects p WHERE p.company_id = c.company_id AND p.is_active)
+              OR EXISTS (SELECT 1 FROM core.occurrence_ownership w WHERE w.company_id = c.company_id AND w.is_active))
          AND (upper(c.ticker) = upper($1) OR c.short_name ILIKE $2 OR c.name ILIKE $2)
        ORDER BY (upper(c.ticker) = upper($1)) DESC, (lower(c.short_name) = lower($1)) DESC, c.company_id LIMIT 1`,
       [n, `%${n}%`]
@@ -76,7 +77,24 @@ export async function companyAssets(input: Record<string, unknown>): Promise<Too
       commodity ? [ids, `%${commodity.replace(/[%_]/g, "")}%`] : [ids]
     )
   ).rows;
-  if (rows.length === 0) return { content: JSON.stringify({ found: false, not_found: unresolved, note: "No asset records are loaded for that company (ownership has been loaded for only some companies)." }) };
+  // Second record source: USGS facility compilations that name the company itself as operator or owner (core.occurrence_ownership.company_id,
+  // linked on the parent's name only, 27 Nov 2026). These are mines, plants and smelters as published for the data year shown, not the company's own list.
+  const usgs = (
+    await getPool().query(
+      `SELECT DISTINCT ON (c.company_id, o.occurrence_id) COALESCE(c.short_name, c.name) AS company, o.occurrence_id, o.name, o.status, o.country_name AS country,
+              o.lat, o.lon, o.position_accuracy, w.ownership_role, w.share_pct::float8 AS share, w.as_of_year, w.source_system,
+              (SELECT string_agg(DISTINCT fc.commodity_name, ', ') FROM core.facility_capacity fc WHERE fc.occurrence_id = o.occurrence_id) AS commodities,
+              (SELECT string_agg(DISTINCT fc.facility_stage, ', ') FROM core.facility_capacity fc WHERE fc.occurrence_id = o.occurrence_id) AS stages
+       FROM core.occurrence_ownership w JOIN core.occurrences o ON o.occurrence_id = w.occurrence_id AND o.is_active
+       JOIN core.companies c ON c.company_id = w.company_id
+       WHERE w.is_active AND w.company_id = ANY($1)
+         AND NOT EXISTS (SELECT 1 FROM core.projects p WHERE p.occurrence_id = o.occurrence_id AND p.company_id = w.company_id AND p.is_active)
+         ${commodity ? "AND (o.commodities::text ILIKE $2 OR EXISTS (SELECT 1 FROM core.facility_capacity fc WHERE fc.occurrence_id = o.occurrence_id AND fc.commodity_name ILIKE $2))" : ""}
+       ORDER BY c.company_id, o.occurrence_id, w.as_of_year DESC NULLS LAST`,
+      commodity ? [ids, `%${commodity.replace(/[%_]/g, "")}%`] : [ids]
+    )
+  ).rows;
+  if (rows.length === 0 && usgs.length === 0) return { content: JSON.stringify({ found: false, not_found: unresolved, note: "No asset records are loaded for that company (ownership has been loaded for only some companies)." }) };
 
   // Every recorded owner of these projects (the company's own stake and its partners), so ownership questions see the whole picture.
   const owners = new Map<number, { owner: string; share_pct: number | null }[]>();
@@ -137,15 +155,41 @@ export async function companyAssets(input: Record<string, unknown>): Promise<Too
     };
   });
 
+  // USGS-listed sites naming the company itself as operator or owner (second record source).
+  const USGS_SRC: Record<string, string> = {
+    USGS_MYB2024: "USGS 2024 Minerals Yearbook facility table", USGS_AFRICA_GIS: "USGS Africa mineral-industry compilation", USGS_CHINA_GIS: "USGS China mineral-industry compilation",
+    USGS_SWASIA_GIS: "USGS Southwest Asia compilation", USGS_INDOPAC_GIS: "USGS Indo-Pacific compilation", USGS_LAC_GIS: "USGS Latin America and Caribbean compilation",
+    USGS_US_FACILITIES: "USGS US facilities compilation", COMPANY_IVANHOE_2026: "Ivanhoe Mines (company pages, 2026)",
+  };
+  let usgsPlaced = 0;
+  for (const u of usgs) {
+    const src = USGS_SRC[String(u.source_system)] ?? String(u.source_system);
+    const role = u.ownership_role === "OPERATOR" ? "operator" : "owner";
+    const placed = typeof u.lat === "number" && typeof u.lon === "number" && u.position_accuracy !== "UNRELIABLE";
+    if (placed) {
+      usgsPlaced++;
+      points.push({ lat: u.lat, lon: u.lon, label: u.name, group: names.length > 1 || ids.length > 1 ? String(u.company) : "USGS-listed site",
+        detail: [[u.stages, word(STATUS_WORD, u.status)].filter(Boolean).join(", "), `${u.company} as ${role}${u.share !== null ? ` ${u.share}%` : ""}${u.as_of_year ? ` (${u.as_of_year} data)` : ""}`,
+          u.commodities ? String(u.commodities) : "", u.country ? String(u.country) : "", `Source: ${src}; position from the catalogue entry, may be approximate`].filter(Boolean).join("\n") });
+    } else unplaced.push(`${u.name}${ids.length > 1 ? ` (${u.company})` : ""}`);
+    assets.push({
+      company: u.company, asset: u.name, type: u.stages ?? null, status: word(STATUS_WORD, u.status), commodity: u.commodities ?? null, country: u.country,
+      interest_pct: u.share, interest_as_of: u.as_of_year, record_source: `${src}${u.as_of_year ? ` (${u.as_of_year} data)` : ""}`,
+      all_recorded_owners: [{ owner: `${u.company} (${role})`, share_pct: u.share }], has_position: placed,
+      position_precision: placed ? "catalogue entry" : null, position_place: placed ? u.name : null,
+    } as (typeof assets)[number]);
+  }
+
   const map: MapData | null =
     points.length >= 2
       ? {
           id: "map-" + Date.now() + "-" + Math.floor(Math.random() * 1e4),
-          title: `${ids.length > 1 ? "Company" : String(rows[0].company)} assets with a known position`,
+          title: `${ids.length > 1 ? "Company" : String((rows[0] ?? usgs[0]).company)} assets with a known position`,
           note: (
             (fromCatalogue ? `${fromCatalogue} position${fromCatalogue === 1 ? "" : "s"} come from the matching catalogue entry and may differ from the actual site by kilometres to tens of kilometres. ` : "") +
             (fromProject ? `${fromProject} come${fromProject === 1 ? "s" : ""} from published mine, deposit and place-name data${approximate ? `; ${approximate === 1 ? "1 of these marks" : `${approximate} of these mark`} only the town or city named for the site, not the plant itself` : ""}. ` : "") +
-            (unplaced.length ? `${unplaced.length} of ${rows.length} assets are not shown because no position could be matched with confidence.` : "")
+            (usgsPlaced ? `${usgsPlaced} USGS-listed site${usgsPlaced === 1 ? "" : "s"} placed at the catalogue position, which can be approximate. ` : "") +
+            (unplaced.length ? `${unplaced.length} of ${assets.length} assets are not shown because no position could be matched with confidence.` : "")
           ).trim(),
           points,
         }
@@ -154,6 +198,7 @@ export async function companyAssets(input: Record<string, unknown>): Promise<Too
     ...(["company", "prospectus", "crma", "nrcan"] as const).filter((k) => recordKinds.has(k)).map((k) => ({ kind: "data", label: RECORD_CREDITS[k], detail: "asset and ownership records" }) as Evidence),
     ...(fromCatalogue ? [{ kind: "data", label: "Mineral occurrence catalogue (positions)", detail: `${fromCatalogue} positions` } as Evidence] : []),
     ...[...credits].map((label) => ({ kind: "data", label, detail: "asset positions" }) as Evidence),
+    ...(usgs.length ? [{ kind: "data", label: "U.S. Geological Survey, Minerals Yearbook facility tables and regional mineral-industry compilations (public domain)", detail: `${usgs.length} sites naming the company as operator or owner` } as Evidence] : []),
   ];
   // Counts worked out here so the answer does not have to tally a long list itself (20 Nov 2026: a Rio Tinto answer listed Robe Valley and
   // West Angelas on one line, counted 36 instead of 37 annual-report assets and then invented a 12th "other" asset to make 48).
@@ -186,7 +231,9 @@ export async function companyAssets(input: Record<string, unknown>): Promise<Too
         "When giving totals (assets, placed / not placed, per source, with / without a stated interest), quote the numbers in counts; do not recount the list, and keep any per-source breakdown equal to counts.by_record_source.",
         "Each asset's record_source names the document it comes from (a company report, the Austrade Prospectus or the EU CRMA strategic-project list); cite that, not \"the annual report\", when saying what is or is not stated. Interests are the company's share as recorded there for the year shown; a blank interest means the share is not stated in the data.",
         "Describe only the assets listed here; do not add other sites or owners from general knowledge. If the user may expect an asset that is missing, say it is not in the records instead of naming it.",
-        "These are the company asset records only. The USGS facility lists (facility_list tool) can name further plants, mines or smelters with this company as an owner, so say 'in the asset records', not 'the only assets in our records' or 'nothing else is recorded'.",
+        ...(usgs.length ? [
+          "Two kinds of record: company asset records (projects, from company reports, the Austrade Prospectus, the CRMA list or NRCan) and USGS-listed sites whose record_source starts with 'USGS' - mines, plants and smelters where a USGS facility table or regional compilation names this company itself as operator or owner, as published for the data year shown (often 2012-2024, so ownership and status may have changed since). Present them separately and say which is which; do not call USGS sites the company's own list. A site run by a subsidiary or joint venture is not linked to the parent, so the USGS list is not complete.",
+        ] : ["These are the company asset records only. The USGS facility lists (facility_list tool) can name further plants, mines or smelters with this company as an owner, so say 'in the asset records', not 'the only assets in our records' or 'nothing else is recorded'."]),
         "Only assets with a catalogue entry or a recorded position can be placed on a map; many processing plants, smelters and in-situ uranium operations have neither. Say how many assets could not be placed.",
         ...(approximate ? [`${approximate} mapped asset(s) are placed only at the town or city named for the site (position_precision "town" or "city"); say so if their exact location matters.`] : []),
         "The data list assets and stakes but not output or size, so do not call an asset the biggest or most important without another source.",

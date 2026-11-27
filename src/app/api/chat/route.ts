@@ -98,7 +98,7 @@ const tools: Anthropic.ToolUnion[] = [
       type: "object",
       properties: {
         companies: { type: "array", items: { type: "string" }, description: "Company names, short names or tickers, e.g. [\"Lynas\", \"Iluka\", \"ALB\"]. Omit if using peer_group." },
-        peer_group: { type: "string", description: "Optional named peer group instead of a company list (Lithium, Rare earths, Rare earth producers, Uranium, Uranium producers, Platinum group metals, Diversified miners, Battery materials, Greenland-focused)." },
+        peer_group: { type: "string", description: "Optional named peer group instead of a company list (Lithium, Rare earths, Rare earth producers, Uranium, Uranium producers, Platinum group metals, Diversified miners, Battery materials, Copper, Graphite, Greenland-focused)." },
         metrics: {
           type: "array",
           items: { type: "string", enum: [...FINANCIAL_METRICS, "all"] },
@@ -141,7 +141,7 @@ const tools: Anthropic.ToolUnion[] = [
       type: "object",
       properties: {
         companies: { type: "array", items: { type: "string" }, description: "Optional company names, short names or tickers." },
-        peer_group: { type: "string", description: "Optional named peer group instead of a company list: Lithium, Rare earths, Rare earth producers, Uranium, Uranium producers, Platinum group metals, Diversified miners, Battery materials, Greenland-focused." },
+        peer_group: { type: "string", description: "Optional named peer group instead of a company list: Lithium, Rare earths, Rare earth producers, Uranium, Uranium producers, Platinum group metals, Diversified miners, Battery materials, Copper, Graphite, Greenland-focused." },
         fiscal_year: { type: "number", description: "Optional fiscal year to align everyone on; default is each company's latest year." },
       },
       required: [],

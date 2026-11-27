@@ -1,0 +1,36 @@
+{
+  "version": "2026-11-27",
+  "notes": "Fresh checks for company depth step A/B (44 companies, USGS ownership links, SEC EDGAR statements for 27 companies), 27 Nov 2026. Not part of the gate.",
+  "ids": [],
+  "questions": [
+    {
+      "id": "fresh-cd-fcx",
+      "cat": "fresh",
+      "q": "What were Freeport-McMoRan's revenue and net income in 2025, and how has revenue changed since 2021?",
+      "truth": {"n": "SELECT round(revenue/1e6) FROM financials.income_statement i JOIN core.companies c USING (company_id) WHERE c.short_name='Freeport' AND period_end_date='2025-12-31' AND i.is_active"},
+      "expect": {"max_turns": 8},
+      "judge": "From the stored statements (SEC filings): 2025 revenue about US$25.9 billion and net income attributable to Freeport about US$2.2 billion; gives the revenue path from 2021 (about US$22.8 billion) through 2025 from the table, and cites Freeport's annual reports on Form 10-K (SEC filings). FAIL if figures differ materially from these or come from memory without citing the filings."
+    },
+    {
+      "id": "fresh-cd-copper-peers",
+      "cat": "fresh",
+      "q": "Compare the net margins of the copper producers in your data for their latest year.",
+      "expect": {"tools_any": ["peer_comparison", "company_financials", "run_sql"], "max_turns": 10},
+      "judge": "Uses the Copper peer group (Freeport-McMoRan, Southern Copper, Hudbay, Trekor Metals (formerly Taseko), Teck) and gives each one's latest-year net margin from the stored statements with the year; notes Teck and Trekor report in Canadian dollars (margins are unaffected); does not invent companies outside the group (may mention that others such as Codelco or Zijin have no statements loaded). Southern Copper's margin should be the highest (about 32% in 2025)."
+    },
+    {
+      "id": "fresh-cd-zijin-assets",
+      "cat": "fresh",
+      "q": "Which mines and plants does Zijin Mining own?",
+      "expect": {"tools_any": ["company_assets"], "max_turns": 8},
+      "judge": "Uses the company-assets tool: lists USGS-listed sites (mines, smelters, refineries) where USGS compilations name Zijin as operator or owner, with countries and data years (e.g. China, Serbia, DR Congo - Kamoa-Kakula 39.6% from Ivanhoe Mines), says these come from USGS facility compilations of various years (2012-2024) and that ownership may have changed, that subsidiaries/joint ventures are not all linked so the list is not complete, and that a map is shown. Does not add sites from general knowledge."
+    },
+    {
+      "id": "fresh-cd-bhp-debt",
+      "cat": "fresh",
+      "q": "What was BHP's total debt and net income in its latest financial year?",
+      "expect": {"max_turns": 8},
+      "judge": "Gives BHP's FY2025 (year to 30 June 2025) net income attributable of about US$9.0 billion from the stored statements (BHP's annual report on Form 20-F), and says total debt is not stored for BHP (not taken from the SEC data) rather than guessing a debt figure; may offer a web search or the annual report for debt, clearly labelled. FAIL if it states a debt figure as if from the database."
+    }
+  ]
+}

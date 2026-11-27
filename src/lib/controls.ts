@@ -68,12 +68,19 @@ export async function exportControls(input: Record<string, unknown>): Promise<Ou
       credit: creditLine,
     };
   });
+  // A status whose stated end date falls between the legal-status as-of date and today: what happened after it is outside this release.
+  const today = new Date().toISOString().slice(0, 10);
+  const lapsing = records.filter((r) => r.status_as_of.until && asof && r.status_as_of.until >= asof && r.status_as_of.until <= today);
   const byStatus = new Map<string, number>();
   for (const r of records) byStatus.set(r.status_as_of.status, (byStatus.get(r.status_as_of.status) ?? 0) + 1);
   const instruments = new Set(records.map((r) => r.instrument));
   const statements = [
     `Stratellar records ${total} clause${total === 1 ? "" : "s"} matching this request${total > records.length ? `; the ${records.length} most recent are listed (the platform shows at most 25 Stratellar records at a time - narrow by country, material or measure type for the rest)` : ""}, from ${instruments.size} instrument${instruments.size === 1 ? "" : "s"}.`,
     `Status as of ${asof} (legal-status cut-off of this release): ${[...byStatus.entries()].map(([s, n]) => `${n} ${s}`).join(", ")}.`,
+    ...(lapsing.length
+      ? [`Recorded end dates reached since ${asof}: ${lapsing.map((r) => `${r.instrument}${r.clause ? ` (${r.clause})` : ""} - ${r.status_as_of.status} until ${r.status_as_of.until}`).join("; ")}. ` +
+         `Whether these were extended, replaced or lapsed is after this release's cut-off and not covered here: say so plainly and point to the official source; do not guess.`]
+      : []),
   ];
   const dataset: Dataset = {
     id: "controls-" + Date.now().toString(36),
